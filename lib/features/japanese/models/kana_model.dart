@@ -31,6 +31,9 @@ class Kana {
 String _shift(String char, int offset) =>
     String.fromCharCode(char.codeUnitAt(0) + offset);
 
+/// Phần Kana để luyện: âm cơ bản (46), âm đục ゛゜ (25) hoặc cả hai (71).
+enum KanaSet { basic, dakuten, all }
+
 /// Bảng 5 cột (a · i · u · e · o); `null` = ô trống.
 typedef KanaRow = List<Kana?>;
 
@@ -40,6 +43,15 @@ abstract final class KanaTable {
 
   /// 25 âm đục (dakuten ゛/ handakuten ゜).
   static List<KanaRow> dakuten(KanaScript script) => _build(_dakuten, script);
+
+  /// Các chữ của [set] (đúng thứ tự trong bảng).
+  static List<Kana> of(KanaScript script, KanaSet set) => [
+    for (final row in [
+      if (set != KanaSet.dakuten) ...basic(script),
+      if (set != KanaSet.basic) ...dakuten(script),
+    ])
+      ...row.nonNulls,
+  ];
 
   static List<Kana> all(KanaScript script, {bool withDakuten = false}) => [
     for (final row in [...basic(script), if (withDakuten) ...dakuten(script)])

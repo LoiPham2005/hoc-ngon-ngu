@@ -8,6 +8,7 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
@@ -30,6 +31,20 @@ class PracticePage extends HookConsumerWidget {
 
     void start(QuizTopic topic) => context.router.push(QuizRoute(topic: topic));
 
+    /// Bài Kana: hỏi luyện âm cơ bản / âm đục / cả hai rồi mới vào bài.
+    Future<void> startKana(
+      String title,
+      QuizTopic Function(KanaSet set) topic, {
+      int scripts = 1,
+    }) async {
+      final set = await showKanaSetSheet(
+        context,
+        title: title,
+        scripts: scripts,
+      );
+      if (set != null) start(topic(set));
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.practice_title)),
       body: ListView(
@@ -48,14 +63,21 @@ class PracticePage extends HookConsumerWidget {
               glyph: m.glyph,
               color: m.color,
               title: m.title(context),
-              onTap: () => start(QuizTopic(m, QuizMode.reading)),
+              onTap: () => startKana(
+                m.title(context),
+                (set) => QuizTopic(m, QuizMode.reading, kanaSet: set),
+              ),
             ),
           _PracticeTile(
             glyph: 'あア',
             color: AppPalette.kanjiN4,
             title: l10n.practice_kanaMix,
             subtitle: l10n.practice_kanaMix_desc,
-            onTap: () => start(const QuizTopic.kanaMix()),
+            onTap: () => startKana(
+              l10n.practice_kanaMix,
+              (set) => QuizTopic.kanaMix(kanaSet: set),
+              scripts: KanaScript.values.length,
+            ),
           ),
           const SizedBox(height: 12),
           SectionTitle(l10n.learn_kanji),
@@ -121,6 +143,65 @@ class _PracticeTile extends StatelessWidget {
         title: Text(title, style: Theme.of(context).textTheme.titleMedium),
         subtitle: subtitle == null ? null : Text(subtitle!),
         trailing: Icon(Icons.play_circle_fill_rounded, color: color, size: 32),
+      ),
+    ),
+  );
+}
+
+/// Bảng chọn phần Kana (vuốt từ dưới lên). [scripts] = số bảng chữ (Kana tổng hợp = 2) để hiện số chữ.
+Future<KanaSet?> showKanaSetSheet(
+  BuildContext context, {
+  required String title,
+  int scripts = 1,
+}) {
+  final l10n = context.l10n;
+  int count(KanaSet set) =>
+      KanaTable.of(KanaScript.hiragana, set).length * scripts;
+  final options = [
+    (KanaSet.basic, l10n.kana_basic, 'あ か さ'),
+    (KanaSet.dakuten, l10n.kana_dakuten, 'が ざ ぱ'),
+    (KanaSet.all, l10n.kanaSet_all, 'あ が ぱ'),
+  ];
+  return showModalBottomSheet<KanaSet>(
+    context: context,
+    showDragHandle: true,
+    builder: (context) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              l10n.practice_pickSet,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 12),
+            for (final (set, label, sample) in options)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: ListTile(
+                    onTap: () => Navigator.of(context).pop(set),
+                    title: Text(
+                      label,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      '$sample · ${l10n.practice_charCount(count(set))}',
+                    ),
+                    trailing: Icon(
+                      Icons.play_circle_fill_rounded,
+                      color: context.colors.primary,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     ),
   );

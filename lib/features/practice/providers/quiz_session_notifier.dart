@@ -14,20 +14,28 @@ enum QuizMode { reading, hanViet, meaning }
 
 /// Chủ đề bài luyện: 1 học phần, hoặc Kana tổng hợp ([module] = null).
 class QuizTopic {
-  const QuizTopic(this.module, this.mode);
+  const QuizTopic(this.module, this.mode, {this.kanaSet = KanaSet.all});
 
   /// Hiragana + Katakana.
-  const QuizTopic.kanaMix() : module = null, mode = QuizMode.reading;
+  const QuizTopic.kanaMix({this.kanaSet = KanaSet.all})
+    : module = null,
+      mode = QuizMode.reading;
 
   final Module? module;
   final QuizMode mode;
 
-  @override
-  bool operator ==(Object other) =>
-      other is QuizTopic && other.module == module && other.mode == mode;
+  /// Bài Kana: luyện âm cơ bản / âm đục / cả hai (bài Kanji bỏ qua).
+  final KanaSet kanaSet;
 
   @override
-  int get hashCode => Object.hash(module, mode);
+  bool operator ==(Object other) =>
+      other is QuizTopic &&
+      other.module == module &&
+      other.mode == mode &&
+      other.kanaSet == kanaSet;
+
+  @override
+  int get hashCode => Object.hash(module, mode, kanaSet);
 }
 
 /// 1 chữ trong bài: [char] hỏi, [answer] đáp án đúng.
@@ -165,7 +173,7 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
       };
       return [
         for (final s in scripts)
-          for (final k in KanaTable.all(s, withDakuten: true)) kana(k),
+          for (final k in KanaTable.of(s, topic.kanaSet)) kana(k),
       ];
     }
     final language = ref.read(localeProvider).languageCode;

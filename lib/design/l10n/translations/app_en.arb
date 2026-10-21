@@ -225,5 +225,15 @@
   "tts_missingTitle": "No Japanese voice",
   "tts_missingAndroid": "This device has no Japanese voice for reading kanji (kana still work). Tap \"Open settings\" → \"Speech Services by Google\" → ⚙ → Install voice data → Japanese. Your phone language stays the same.",
   "tts_missingIos": "This device has no Japanese voice for reading kanji (kana still work). Go to Settings › Accessibility › Spoken Content › Voices › Japanese to download one. Your phone language stays the same.",
-  "tts_openSettings": "Open settings"
+  "tts_openSettings": "Open settings",
+  "practice_pickSet": "What to practise?",
+  "kanaSet_all": "Both",
+  "practice_charCount": "{count} characters",
+  "@practice_charCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -82,12 +82,13 @@ void main() {
 
     final topics = [
       for (final m in Module.values)
-        for (final mode
-            in m.isKanji
-                ? [QuizMode.hanViet, QuizMode.meaning]
-                : [QuizMode.reading])
-          QuizTopic(m, mode),
-      const QuizTopic.kanaMix(),
+        if (m.isKanji)
+          for (final mode in [QuizMode.hanViet, QuizMode.meaning])
+            QuizTopic(m, mode)
+        else
+          for (final set in KanaSet.values)
+            QuizTopic(m, QuizMode.reading, kanaSet: set),
+      for (final set in KanaSet.values) QuizTopic.kanaMix(kanaSet: set),
     ];
 
     for (final topic in topics) {
@@ -111,6 +112,31 @@ void main() {
         },
       );
     }
+
+    test('chọn phần Kana: câu hỏi + đáp án chỉ lấy trong phần đó', () {
+      for (final set in KanaSet.values) {
+        final allowed = {
+          for (final k in KanaTable.of(KanaScript.hiragana, set)) k.char,
+        };
+        final provider = quizSessionProvider(
+          QuizTopic(Module.hiragana, QuizMode.reading, kanaSet: set),
+        );
+        c.listen(provider, (_, _) {});
+        for (var round = 0; round < 10; round++) {
+          for (final q in c.read(provider).questions) {
+            expect(
+              allowed,
+              containsAll(q.options.map((o) => o.char)),
+              reason: set.name,
+            );
+          }
+          c.read(provider.notifier).restart();
+        }
+      }
+      expect(KanaTable.of(KanaScript.hiragana, KanaSet.basic), hasLength(46));
+      expect(KanaTable.of(KanaScript.hiragana, KanaSet.dakuten), hasLength(25));
+      expect(KanaTable.of(KanaScript.katakana, KanaSet.all), hasLength(71));
+    });
 
     test(
       'làm hết bài: chấm điểm, câu sai, cộng thống kê người học, xem kết quả',

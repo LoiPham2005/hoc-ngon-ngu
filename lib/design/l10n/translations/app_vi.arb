@@ -222,5 +222,15 @@
   "tts_missingTitle": "Chưa có giọng đọc tiếng Nhật",
   "tts_missingAndroid": "Máy chưa có giọng đọc tiếng Nhật để đọc Kanji (Kana vẫn nghe được). Bấm \"Mở cài đặt\" → chọn \"Dịch vụ lời nói của Google\" → ⚙ → Cài đặt dữ liệu giọng nói → Tiếng Nhật. Điện thoại vẫn giữ tiếng Việt.",
   "tts_missingIos": "Máy chưa có giọng đọc tiếng Nhật để đọc Kanji (Kana vẫn nghe được). Vào Cài đặt › Trợ năng › Nội dung được đọc › Giọng nói › Tiếng Nhật để tải. Điện thoại vẫn giữ tiếng Việt.",
-  "tts_openSettings": "Mở cài đặt"
+  "tts_openSettings": "Mở cài đặt",
+  "practice_pickSet": "Luyện phần nào?",
+  "kanaSet_all": "Cả hai",
+  "practice_charCount": "{count} chữ",
+  "@practice_charCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
