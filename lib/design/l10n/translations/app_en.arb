@@ -10,7 +10,215 @@
   "common_loading": "Loading...",
   "common_empty": "No data",
   "common_error": "Something went wrong",
+  "common_close": "Close",
+  "common_comingSoon": "Coming soon",
   "connectivity_offline": "No internet connection",
   "connectivity_online": "Back online",
-  "hi": "Hello"
+  "nav_home": "Home",
+  "nav_learn": "Courses",
+  "nav_practice": "Practice",
+  "nav_profile": "Profile",
+  "onboarding_title": "Learn a language every day",
+  "onboarding_subtitle": "Learn characters, practise writing and take short quizzes — a little progress every day.",
+  "onboarding_pick": "Which language do you want to learn?",
+  "onboarding_start": "Start learning",
+  "course_ja": "Japanese",
+  "course_en": "English",
+  "course_ko": "Korean",
+  "course_zh": "Chinese",
+  "module_hiragana": "Hiragana",
+  "module_katakana": "Katakana",
+  "module_kanji": "Kanji {level}",
+  "@module_kanji": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "module_hiragana_desc": "The basic syllabary of Japanese",
+  "module_katakana_desc": "For loanwords and foreign names",
+  "module_kanji_desc": "{count} kanji for this JLPT level",
+  "@module_kanji_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_greetingMorning": "Good morning 👋",
+  "home_greetingAfternoon": "Good afternoon 👋",
+  "home_greetingEvening": "Good evening 👋",
+  "home_streak": "{count, plural, =1{1 day streak} other{{count} day streak}}",
+  "@home_streak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_streakHint": "Study every day to keep the flame 🔥",
+  "home_streakStart": "Study today to start a streak 🔥",
+  "home_todayGoal": "Today's goal",
+  "home_todayProgress": "{done}/{goal} reps",
+  "@home_todayProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "home_goalReached": "Daily goal reached! 🎉",
+  "home_continue": "Continue learning",
+  "home_quickReview": "Quick review · 10 questions",
+  "home_stats": "Your stats",
+  "stat_learned": "Learned",
+  "stat_answered": "Answered",
+  "stat_accuracy": "Accuracy",
+  "learn_title": "Courses",
+  "learn_alphabet": "Alphabets",
+  "learn_kanji": "Kanji by JLPT level",
+  "learn_progress": "{learned}/{total} learned",
+  "@learn_progress": {
+    "placeholders": {
+      "learned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "kana_basic": "Basic sounds",
+  "kana_dakuten": "Voiced sounds ゛ ゜",
+  "kanji_search": "Search by character or meaning…",
+  "kanji_noResult": "No characters found",
+  "detail_strokeOrder": "Stroke order ({count})",
+  "@detail_strokeOrder": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detail_practice": "Practice",
+  "detail_strokeHint": "Small numbers show stroke order · tap ↻ to replay",
+  "detail_practiceHint": "Trace the faded strokes in order · tap 🗑 to clear",
+  "detail_markLearned": "Mark as learned",
+  "detail_learned": "Learned",
+  "detail_hanViet": "Sino-Vietnamese",
+  "detail_meaning": "Meaning",
+  "detail_onyomi": "On reading",
+  "detail_kunyomi": "Kun reading",
+  "detail_strokeCredit": "Stroke data: KanjiVG (CC BY-SA 3.0)",
+  "practice_title": "Practice",
+  "practice_subtitle": "10 multiple-choice questions per round",
+  "practice_kanaMix": "Kana mix",
+  "practice_kanaMix_desc": "Hiragana + Katakana",
+  "practice_quizType": "Ask for",
+  "quiz_mode_hanViet": "Sino-Vietnamese",
+  "quiz_mode_meaning": "Meaning",
+  "quiz_progress": "Question {current}/{total}",
+  "@quiz_progress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "quiz_askReading": "How is this read?",
+  "quiz_askHanViet": "Sino-Vietnamese reading?",
+  "quiz_askMeaning": "What does this mean?",
+  "quiz_correct": "Correct!",
+  "quiz_wrong": "Not quite",
+  "quiz_answerIs": "Answer: {answer}",
+  "@quiz_answerIs": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "quiz_continue": "Continue",
+  "quiz_seeResult": "See results",
+  "quiz_viewDetail": "View character",
+  "quiz_exitTitle": "Stop this round?",
+  "quiz_exitMessage": "Answers so far still count towards your stats.",
+  "quiz_exit": "Stop",
+  "result_score": "{correct}/{total} correct",
+  "@result_score": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "result_great": "Excellent!",
+  "result_good": "Well done!",
+  "result_keepGoing": "Keep going — practise a bit more!",
+  "result_mistakes": "Mistakes to review",
+  "result_perfect": "No mistakes 🎉",
+  "result_retry": "Try again",
+  "result_done": "Done",
+  "profile_title": "Profile",
+  "profile_learner": "Learner",
+  "profile_learning": "Learning {language}",
+  "@profile_learning": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "section_appearance": "Appearance",
+  "appearance_mode": "Mode",
+  "mode_system": "System",
+  "mode_light": "Light",
+  "mode_dark": "Dark",
+  "appearance_accent": "Accent colour",
+  "accent_indigo": "Indigo",
+  "accent_sakura": "Sakura",
+  "accent_emerald": "Emerald",
+  "accent_ocean": "Ocean",
+  "accent_sunset": "Sunset",
+  "section_learning": "Learning",
+  "dailyGoal": "Daily goal",
+  "dailyGoal_value": "{count} reps",
+  "@dailyGoal_value": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appLanguage": "App language",
+  "language_vi": "Tiếng Việt",
+  "language_en": "English",
+  "changeCourse": "Change language to learn",
+  "section_data": "Data",
+  "resetProgress": "Reset progress",
+  "resetProgress_title": "Reset all progress?",
+  "resetProgress_message": "Learned characters, your streak and stats will be erased.",
+  "resetProgress_done": "Progress reset",
+  "section_about": "About",
+  "about_version": "Version",
+  "about_data": "Data sources",
+  "about_data_desc": "Strokes: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · JLPT levels: tanos.co.uk",
+  "update_forceTitle": "Update required",
+  "update_optionalTitle": "A new version is available",
+  "update_forceMessage": "This version is too old, please update.",
+  "update_optionalMessage": "Would you like to update now?",
+  "update_later": "Later",
+  "update_now": "Update now",
+  "error_unexpected": "Something unexpected happened.\nPlease try again.",
+  "error_backHome": "Back to home"
 }

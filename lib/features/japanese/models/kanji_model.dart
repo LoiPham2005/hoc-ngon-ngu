@@ -16,16 +16,18 @@ class Kanji {
     required this.level,
     required this.hanViet,
     required this.meaning,
+    required this.meaningEn,
     required this.onyomi,
     required this.kunyomi,
   });
 
-  /// Từ `assets/japanese/kanji.json`: `{k, lv, hv, vi, on, kun}`.
+  /// Từ `assets/japanese/kanji.json`: `{k, lv, hv, vi, en, on, kun}`.
   factory Kanji.fromJson(Map<String, dynamic> json) => Kanji(
     char: json['k'] as String,
     level: JlptLevel.values.byName(json['lv'] as String),
     hanViet: json['hv'] as String,
     meaning: json['vi'] as String,
+    meaningEn: json['en'] as String,
     onyomi: (json['on'] as List).cast<String>(),
     kunyomi: (json['kun'] as List).cast<String>(),
   );
@@ -38,6 +40,13 @@ class Kanji {
 
   /// Nghĩa tiếng Việt, vd "ngày, mặt trời".
   final String meaning;
+
+  /// Nghĩa tiếng Anh (KANJIDIC), vd "day, sun, japan".
+  final String meaningEn;
+
+  /// Nghĩa theo ngôn ngữ giao diện.
+  String meaningFor(String languageCode) =>
+      languageCode == 'vi' ? meaning : meaningEn;
 
   /// Âm On (katakana) / âm Kun (hiragana, phần đuôi trong ngoặc: ひと(つ)).
   final List<String> onyomi;

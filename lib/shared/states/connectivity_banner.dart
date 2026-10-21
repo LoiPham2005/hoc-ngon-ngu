@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/core/services/connectivity_provider.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
-import 'package:lingua/design/theme/styles/app_color_tokens.dart';
+import 'package:lingua/design/theme/app_colors.dart';
 
 /// Thanh báo mạng ở đầu màn hình, bọc toàn app (`MaterialApp.builder` trong `app.dart`).
 /// Mất mạng → thanh đỏ "Không có kết nối mạng"; có lại → thanh xanh "Đã kết nối lại" 2 giây rồi ẩn.
@@ -33,9 +33,9 @@ class ConnectivityBanner extends HookConsumerWidget {
     }, [reconnected.value]);
 
     final (message, color) = !online
-        ? (context.l10n.connectivity_offline, context.error)
+        ? (context.l10n.connectivity_offline, context.colors.error)
         : reconnected.value
-        ? (context.l10n.connectivity_online, context.success)
+        ? (context.l10n.connectivity_online, context.colors.success)
         : (null, null);
 
     return Column(
@@ -58,13 +58,13 @@ class ConnectivityBanner extends HookConsumerWidget {
                                 ? Icons.wifi_rounded
                                 : Icons.wifi_off_rounded,
                             size: 16,
-                            color: Colors.white,
+                            color: context.colors.onPrimary,
                           ),
                           const SizedBox(width: 8),
                           Text(
                             message,
                             style: Theme.of(context).textTheme.labelMedium
-                                ?.copyWith(color: Colors.white),
+                                ?.copyWith(color: context.colors.onPrimary),
                           ),
                         ],
                       ),

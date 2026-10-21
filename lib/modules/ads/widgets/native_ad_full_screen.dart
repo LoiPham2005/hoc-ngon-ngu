@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 
 /// Native ad toàn màn + nút đóng (AdManager tự mở qua `showNativeFull`).
 class NativeAdFullScreen extends StatelessWidget {
@@ -22,8 +23,8 @@ class NativeAdFullScreen extends StatelessWidget {
             top: MediaQuery.paddingOf(context).top + 8,
             right: 12,
             child: IconButton.filled(
-              style: IconButton.styleFrom(backgroundColor: Colors.black45),
-              icon: const Icon(Icons.close, color: Colors.white),
+              style: IconButton.styleFrom(backgroundColor: AppPalette.scrim),
+              icon: const Icon(Icons.close, color: AppPalette.onAccent),
               onPressed: onClosed,
             ),
           ),

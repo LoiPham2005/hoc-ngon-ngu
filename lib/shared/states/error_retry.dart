@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/styles/app_dimensions.dart';
 
 class ErrorRetry extends StatelessWidget {
   const ErrorRetry({
     super.key,
-    this.message = 'Đã xảy ra lỗi',
+    this.message,
     this.onRetry,
     this.icon = Icons.error_outline,
   });
 
-  final String message;
+  /// `null` → "Đã xảy ra lỗi" theo ngôn ngữ app.
+  final String? message;
   final VoidCallback? onRetry;
   final IconData icon;
 
@@ -25,7 +27,7 @@ class ErrorRetry extends StatelessWidget {
             Icon(icon, size: 64, color: t.colorScheme.error),
             const SizedBox(height: AppDimensions.space16),
             Text(
-              message,
+              message ?? context.l10n.common_error,
               textAlign: TextAlign.center,
               style: t.textTheme.bodyMedium,
             ),
@@ -34,7 +36,7 @@ class ErrorRetry extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Thử lại'),
+                label: Text(context.l10n.common_retry),
               ),
             ],
           ],

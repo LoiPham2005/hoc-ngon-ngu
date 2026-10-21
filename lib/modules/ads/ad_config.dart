@@ -220,7 +220,7 @@ AdConfig _devConfig({required bool ios}) {
 
   // Viết đủ mọi field (kể cả bằng mặc định) để đổi nhanh khi test.
   return AdConfig(
-    showAllAds: true,
+    showAllAds: false,
     preload: true,
     enableInterstitial: true,
     enableAppOpen: true,

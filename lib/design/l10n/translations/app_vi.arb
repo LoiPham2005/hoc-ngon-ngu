@@ -7,7 +7,215 @@
   "common_loading": "Đang tải...",
   "common_empty": "Không có dữ liệu",
   "common_error": "Đã xảy ra lỗi",
+  "common_close": "Đóng",
+  "common_comingSoon": "Sắp ra mắt",
   "connectivity_offline": "Không có kết nối mạng",
   "connectivity_online": "Đã kết nối lại",
-  "hi": "Xin chào"
+  "nav_home": "Trang chủ",
+  "nav_learn": "Khoá học",
+  "nav_practice": "Luyện tập",
+  "nav_profile": "Hồ sơ",
+  "onboarding_title": "Học ngoại ngữ mỗi ngày",
+  "onboarding_subtitle": "Học chữ, tập viết và luyện tập ngắn mỗi ngày — tiến bộ từng chút một.",
+  "onboarding_pick": "Bạn muốn học ngôn ngữ nào?",
+  "onboarding_start": "Bắt đầu học",
+  "course_ja": "Tiếng Nhật",
+  "course_en": "Tiếng Anh",
+  "course_ko": "Tiếng Hàn",
+  "course_zh": "Tiếng Trung",
+  "module_hiragana": "Hiragana",
+  "module_katakana": "Katakana",
+  "module_kanji": "Kanji {level}",
+  "@module_kanji": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "module_hiragana_desc": "Bảng chữ mềm, nền tảng của tiếng Nhật",
+  "module_katakana_desc": "Chữ cứng cho từ mượn và tên riêng",
+  "module_kanji_desc": "{count} chữ Hán theo cấp JLPT",
+  "@module_kanji_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_greetingMorning": "Chào buổi sáng 👋",
+  "home_greetingAfternoon": "Chào buổi chiều 👋",
+  "home_greetingEvening": "Chào buổi tối 👋",
+  "home_streak": "{count} ngày liên tiếp",
+  "@home_streak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_streakHint": "Học mỗi ngày để giữ ngọn lửa 🔥",
+  "home_streakStart": "Học hôm nay để bắt đầu chuỗi ngày 🔥",
+  "home_todayGoal": "Mục tiêu hôm nay",
+  "home_todayProgress": "{done}/{goal} lượt",
+  "@home_todayProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "home_goalReached": "Đã đạt mục tiêu hôm nay! 🎉",
+  "home_continue": "Tiếp tục học",
+  "home_quickReview": "Ôn nhanh 10 câu",
+  "home_stats": "Thống kê của bạn",
+  "stat_learned": "Đã thuộc",
+  "stat_answered": "Câu đã làm",
+  "stat_accuracy": "Chính xác",
+  "learn_title": "Khoá học",
+  "learn_alphabet": "Bảng chữ cái",
+  "learn_kanji": "Kanji theo cấp JLPT",
+  "learn_progress": "{learned}/{total} đã thuộc",
+  "@learn_progress": {
+    "placeholders": {
+      "learned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "kana_basic": "Âm cơ bản",
+  "kana_dakuten": "Âm đục ゛ ゜",
+  "kanji_search": "Tìm theo chữ, âm Hán Việt, nghĩa…",
+  "kanji_noResult": "Không tìm thấy chữ nào",
+  "detail_strokeOrder": "Thứ tự nét ({count})",
+  "@detail_strokeOrder": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detail_practice": "Tập viết",
+  "detail_strokeHint": "Số nhỏ là thứ tự nét · bấm ↻ để xem lại",
+  "detail_practiceHint": "Tô theo nét mờ, đúng thứ tự · bấm 🗑 để viết lại",
+  "detail_markLearned": "Đánh dấu đã thuộc",
+  "detail_learned": "Đã thuộc",
+  "detail_hanViet": "Hán Việt",
+  "detail_meaning": "Nghĩa",
+  "detail_onyomi": "Âm On",
+  "detail_kunyomi": "Âm Kun",
+  "detail_strokeCredit": "Dữ liệu nét chữ: KanjiVG (CC BY-SA 3.0)",
+  "practice_title": "Luyện tập",
+  "practice_subtitle": "Mỗi bài 10 câu trắc nghiệm A–D",
+  "practice_kanaMix": "Kana tổng hợp",
+  "practice_kanaMix_desc": "Hiragana + Katakana",
+  "practice_quizType": "Hỏi theo",
+  "quiz_mode_hanViet": "Âm Hán Việt",
+  "quiz_mode_meaning": "Nghĩa",
+  "quiz_progress": "Câu {current}/{total}",
+  "@quiz_progress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "quiz_askReading": "Chữ này đọc là gì?",
+  "quiz_askHanViet": "Âm Hán Việt của chữ này?",
+  "quiz_askMeaning": "Chữ này nghĩa là gì?",
+  "quiz_correct": "Chính xác!",
+  "quiz_wrong": "Chưa đúng rồi",
+  "quiz_answerIs": "Đáp án: {answer}",
+  "@quiz_answerIs": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "quiz_continue": "Tiếp tục",
+  "quiz_seeResult": "Xem kết quả",
+  "quiz_viewDetail": "Xem chữ này",
+  "quiz_exitTitle": "Dừng bài luyện?",
+  "quiz_exitMessage": "Các câu đã trả lời vẫn được tính vào thống kê.",
+  "quiz_exit": "Dừng",
+  "result_score": "{correct}/{total} câu đúng",
+  "@result_score": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "result_great": "Xuất sắc!",
+  "result_good": "Làm tốt lắm!",
+  "result_keepGoing": "Cố lên, luyện thêm nhé!",
+  "result_mistakes": "Câu sai — ôn lại nhé",
+  "result_perfect": "Không sai câu nào 🎉",
+  "result_retry": "Làm lại",
+  "result_done": "Xong",
+  "profile_title": "Hồ sơ",
+  "profile_learner": "Người học",
+  "profile_learning": "Đang học {language}",
+  "@profile_learning": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "section_appearance": "Giao diện",
+  "appearance_mode": "Chế độ",
+  "mode_system": "Hệ thống",
+  "mode_light": "Sáng",
+  "mode_dark": "Tối",
+  "appearance_accent": "Màu chủ đạo",
+  "accent_indigo": "Chàm",
+  "accent_sakura": "Anh đào",
+  "accent_emerald": "Ngọc bích",
+  "accent_ocean": "Đại dương",
+  "accent_sunset": "Hoàng hôn",
+  "section_learning": "Học tập",
+  "dailyGoal": "Mục tiêu mỗi ngày",
+  "dailyGoal_value": "{count} lượt",
+  "@dailyGoal_value": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appLanguage": "Ngôn ngữ ứng dụng",
+  "language_vi": "Tiếng Việt",
+  "language_en": "English",
+  "changeCourse": "Đổi ngôn ngữ học",
+  "section_data": "Dữ liệu",
+  "resetProgress": "Đặt lại tiến độ",
+  "resetProgress_title": "Đặt lại toàn bộ tiến độ?",
+  "resetProgress_message": "Chữ đã thuộc, chuỗi ngày học và thống kê sẽ bị xoá.",
+  "resetProgress_done": "Đã đặt lại tiến độ",
+  "section_about": "Giới thiệu",
+  "about_version": "Phiên bản",
+  "about_data": "Nguồn dữ liệu",
+  "about_data_desc": "Nét chữ: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · Cấp JLPT: tanos.co.uk",
+  "update_forceTitle": "Cập nhật bắt buộc",
+  "update_optionalTitle": "Đã có phiên bản mới",
+  "update_forceMessage": "Phiên bản hiện tại đã quá cũ, vui lòng cập nhật.",
+  "update_optionalMessage": "Bạn có muốn cập nhật ngay?",
+  "update_later": "Để sau",
+  "update_now": "Cập nhật ngay",
+  "error_unexpected": "Một sự cố không mong muốn đã xảy ra.\nVui lòng thử lại.",
+  "error_backHome": "Quay về trang chủ"
 }

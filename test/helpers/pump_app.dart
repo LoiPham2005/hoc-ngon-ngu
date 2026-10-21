@@ -1,31 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/network/api_client_provider.dart';
+import 'package:lingua/design/l10n/locale_notifier.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
+import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// Pump a widget với ProviderScope + Material wrapper.
-/// Override providers qua `overrides`.
+/// Pump widget với ProviderScope (SharedPreferences giả) + MaterialApp (theme + l10n).
 ///
-/// [settle]: mặc định `true` → `pumpAndSettle()` đợi mọi animation xong.
-/// Đặt `false` khi widget có **animation vô hạn** (spinner/loading indicator) —
-/// `pumpAndSettle` sẽ timeout vì không bao giờ settle; dùng 1 `pump()` thay thế.
+/// [settle]: `false` khi màn có animation vô hạn (spinner) — `pumpAndSettle` sẽ timeout.
+/// [prefs]: giá trị SharedPreferences ban đầu (vd tiến độ học).
 Future<void> pumpApp(
   WidgetTester tester,
   Widget child, {
   List<Override> overrides = const [],
   ThemeMode themeMode = ThemeMode.light,
+  Locale locale = const Locale('vi'),
+  Map<String, Object> prefs = const {},
   bool settle = true,
 }) async {
+  SharedPreferences.setMockInitialValues({
+    'app_locale': locale.languageCode,
+    ...prefs,
+  });
+  final sharedPrefs = await SharedPreferences.getInstance();
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [...apiClientOverrides, ...overrides],
-      child: MaterialApp(
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
-        themeMode: themeMode,
-        home: child,
+      overrides: [
+        ...apiClientOverrides,
+        sharedPrefsProvider.overrideWithValue(sharedPrefs),
+        ...overrides,
+      ],
+      child: Consumer(
+        builder: (context, ref, _) => MaterialApp(
+          theme: AppTheme.build(AppAccent.indigo, Brightness.light),
+          darkTheme: AppTheme.build(AppAccent.indigo, Brightness.dark),
+          themeMode: themeMode,
+          locale: ref.watch(localeProvider),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: child,
+        ),
       ),
     ),
   );
@@ -34,4 +53,16 @@ Future<void> pumpApp(
   } else {
     await tester.pump();
   }
+}
+
+/// Chờ 1 provider đọc asset (I/O thật — giờ giả lập của widget test không tự chạy nó).
+Future<void> loadAsset(
+  WidgetTester tester,
+  Future<Object?> Function(ProviderContainer container) read,
+) async {
+  final container = ProviderScope.containerOf(
+    tester.element(find.byType(MaterialApp)),
+  );
+  await tester.runAsync(() => read(container));
+  await tester.pump();
 }

@@ -1,58 +1,49 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
-import 'package:lingua/features/japanese/widgets/writing_box.dart';
+import 'package:lingua/features/japanese/widgets/detail_layout.dart';
 import 'package:lingua/routes/app_router.dart';
-import 'package:lingua/shared/base/app_scaffold.dart';
 
-/// Chi tiết 1 chữ Kana: thứ tự nét (hoạt ảnh) + ô tập viết.
+/// Chi tiết 1 chữ Kana: cách đọc + thứ tự nét + tập viết.
 @RoutePage()
-class KanaDetailPage extends StatelessWidget {
-  const KanaDetailPage({required this.kana, super.key});
+class KanaDetailPage extends ConsumerWidget {
+  const KanaDetailPage({required this.script, required this.char, super.key});
 
-  final Kana kana;
+  final KanaScript script;
+  final String char;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final all = KanaTable.all(script, withDakuten: true);
+    final kana = all.firstWhere((k) => k.char == char);
     final other = kana.counterpart;
-    return AppScaffold(
-      appBar: AppBar(title: Text('${kana.char} · ${kana.romaji}')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Text(
-                  kana.char,
-                  style: const TextStyle(fontSize: 64, height: 1.1),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(kana.romaji, style: theme.textTheme.headlineSmall),
-                      Text(
-                        kana.script.label,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                ),
-                ActionChip(
-                  label: Text('${other.script.label}: ${other.char}'),
-                  onPressed: () =>
-                      context.router.replace(KanaDetailRoute(kana: other)),
-                ),
-              ],
+    final module = script == KanaScript.hiragana
+        ? Module.hiragana
+        : Module.katakana;
+    final theme = Theme.of(context);
+
+    return DetailLayout(
+      title: module.title(context),
+      char: char,
+      color: module.color,
+      chars: [for (final k in all) k.char],
+      onOpen: (c) =>
+          context.router.replace(KanaDetailRoute(script: script, char: c)),
+      info: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(kana.romaji, style: theme.textTheme.headlineMedium),
+          Text(script.label, style: theme.textTheme.bodySmall),
+          const SizedBox(height: 8),
+          ActionChip(
+            label: Text('${other.script.label} ${other.char}'),
+            onPressed: () => context.router.replace(
+              KanaDetailRoute(script: other.script, char: other.char),
             ),
-            const SizedBox(height: 16),
-            Expanded(child: WritingPanel(char: kana.char)),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

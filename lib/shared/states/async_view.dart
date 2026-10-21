@@ -31,7 +31,7 @@ class AsyncView<T> extends HookWidget {
     this.onRetry,
     this.onRefresh,
     this.isEmpty,
-    this.emptyTitle = 'Không có dữ liệu',
+    this.emptyTitle,
     this.emptyMessage,
     this.showRefreshBar = true,
   });
@@ -52,7 +52,7 @@ class AsyncView<T> extends HookWidget {
 
   /// Điều kiện rỗng. Mặc định: `Iterable`/`Map` rỗng.
   final bool Function(T value)? isEmpty;
-  final String emptyTitle;
+  final String? emptyTitle;
   final String? emptyMessage;
 
   /// Hiện `LinearProgressIndicator` trên data cũ khi đang refresh.

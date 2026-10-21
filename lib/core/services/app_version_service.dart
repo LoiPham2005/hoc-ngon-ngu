@@ -5,6 +5,7 @@ import 'package:lingua/config/app_info.dart';
 import 'package:lingua/core/network/dio_provider.dart';
 import 'package:lingua/core/services/app_version_api.dart';
 import 'package:lingua/core/utils/logger.dart';
+import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,6 +43,7 @@ class AppVersionService {
         : Platform.isAndroid
         ? AppInfo.playStoreUrl
         : AppInfo.appStoreUrl;
+    final l10n = context.l10n;
     await showDialog<void>(
       context: context,
       barrierDismissible: !force,
@@ -49,20 +51,22 @@ class AppVersionService {
         canPop:
             !force, // force: không đóng được, không `exit()` (tránh bị store reject)
         child: AlertDialog(
-          title: Text(force ? 'Cập nhật bắt buộc' : 'Đã có phiên bản mới'),
+          title: Text(
+            force ? l10n.update_forceTitle : l10n.update_optionalTitle,
+          ),
           content: Text(
             '${res.message?.isNotEmpty == true
                 ? res.message
                 : force
-                ? 'Phiên bản hiện tại đã quá cũ, vui lòng cập nhật.'
-                : 'Bạn có muốn cập nhật ngay?'}'
+                ? l10n.update_forceMessage
+                : l10n.update_optionalMessage}'
             '\n\n${pkg.version} → ${res.latestVersion}',
           ),
           actions: [
             if (!force)
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: const Text('Để sau'),
+                child: Text(l10n.update_later),
               ),
             FilledButton(
               onPressed: storeUrl.isEmpty
@@ -71,7 +75,7 @@ class AppVersionService {
                       Uri.parse(storeUrl),
                       mode: LaunchMode.externalApplication,
                     ),
-              child: const Text('Cập nhật ngay'),
+              child: Text(l10n.update_now),
             ),
           ],
         ),

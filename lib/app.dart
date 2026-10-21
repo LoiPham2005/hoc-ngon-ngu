@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -6,9 +7,9 @@ import 'package:lingua/config/app_info.dart';
 import 'package:lingua/config/system_ui_manager.dart';
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/services/quick_actions_service.dart';
-import 'package:lingua/core/services/session_notifier.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
@@ -45,28 +46,33 @@ class _AppView extends HookConsumerWidget {
       return lifecycle.dispose;
     }, const <Object?>[]);
 
-    ref.listen(sessionProvider, (previous, isAuthenticated) {
-      if (previous == true && !isAuthenticated) {
-        appRouter.replaceAll([const LoginRoute()]);
-      }
-      if (previous != isAuthenticated) {
-        AppQuickActions.update(isAuthenticated: isAuthenticated);
-      }
-    });
+    // Đổi ngôn ngữ app → tên shortcut đổi theo.
+    ref.listen(localeProvider, (_, _) => AppQuickActions.update());
+    final theme = ref.watch(themeProvider);
 
     return ToastificationWrapper(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: AppInfo.appName,
-        theme: AppTheme.fromVariant(ref.watch(themeProvider)),
+        theme: AppTheme.build(theme.accent, Brightness.light),
+        darkTheme: AppTheme.build(theme.accent, Brightness.dark),
+        themeMode: theme.mode,
         locale: ref.watch(localeProvider),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: appRouter.config(
           navigatorObservers: () => [TalkerRouteObserver(talker)],
         ),
-        builder: (context, child) => ConnectivityBanner(
-          child: FlutterSmartDialog.init()(context, child),
+        builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+          // Icon status bar sáng/tối theo theme (màn không có AppBar vẫn đúng).
+          value:
+              (Theme.of(context).brightness == Brightness.dark
+                      ? SystemUiOverlayStyle.light
+                      : SystemUiOverlayStyle.dark)
+                  .copyWith(statusBarColor: AppPalette.transparent),
+          child: ConnectivityBanner(
+            child: FlutterSmartDialog.init()(context, child),
+          ),
         ),
       ),
     );

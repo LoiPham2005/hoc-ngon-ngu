@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/styles/app_dimensions.dart';
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
     super.key,
-    this.title = 'Không có dữ liệu',
+    this.title,
     this.message,
     this.icon = Icons.inbox_outlined,
     this.action,
   });
 
-  final String title;
+  /// `null` → "Không có dữ liệu" theo ngôn ngữ app.
+  final String? title;
   final String? message;
   final IconData icon;
   final Widget? action;
@@ -26,7 +28,10 @@ class EmptyWidget extends StatelessWidget {
           children: [
             Icon(icon, size: 64, color: t.colorScheme.outline),
             const SizedBox(height: AppDimensions.space16),
-            Text(title, style: t.textTheme.titleMedium),
+            Text(
+              title ?? context.l10n.common_empty,
+              style: t.textTheme.titleMedium,
+            ),
             if (message != null) ...[
               const SizedBox(height: AppDimensions.space8),
               Text(

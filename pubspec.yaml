@@ -55,7 +55,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_smart_dialog: ^5.1.0
   toastification: ^3.2.0
-  theme_tailor_annotation: ^3.0.1
   intl: ^0.20.2
 
   # Platform
@@ -68,7 +67,6 @@ dependencies:
   google_mobile_ads: ^9.1.0
   app_tracking_transparency: ^2.0.6+1
   purchases_flutter: ^10.0.1
-  local_auth: ^3.0.2
   connectivity_plus: ^7.3.2
   path_parsing: ^1.1.0
 
@@ -84,7 +82,6 @@ dev_dependencies:
   riverpod_generator: ^4.0.3
   json_serializable: ^6.8.0
   freezed: ^3.2.3
-  theme_tailor: ^3.0.1
   retrofit_generator: ^10.2.5
   auto_route_generator: ^10.4.0
   # riverpod_lint: tắt tới khi freezed + theme_tailor hỗ trợ analyzer ^12
@@ -93,7 +90,6 @@ dev_dependencies:
   flutter_flavorizr: ^2.4.1
   flutter_native_splash: ^2.4.7
   rename: ^3.1.0
-  local_auth_platform_interface: ^1.1.0
 
 flutter:
   uses-material-design: true

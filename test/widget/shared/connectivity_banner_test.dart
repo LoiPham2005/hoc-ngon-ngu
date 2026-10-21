@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/services/connectivity_provider.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:lingua/shared/states/connectivity_banner.dart';
@@ -18,7 +19,7 @@ void main() {
     ProviderScope(
       overrides: [isOnlineProvider.overrideWith((ref) => status.stream)],
       child: MaterialApp(
-        theme: AppTheme.light(),
+        theme: AppTheme.build(AppAccent.indigo, Brightness.light),
         locale: const Locale('vi'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

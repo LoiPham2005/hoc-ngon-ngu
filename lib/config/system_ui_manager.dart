@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 
 /// Status bar luôn hiện, nav bar Android luôn ẩn (tự ẩn lại sau 3s nếu user vuốt hiện).
 /// iOS dùng edgeToEdge. `applyUiMode` được gọi lại khi app resume (xem `app.dart`).
@@ -14,9 +15,9 @@ abstract class SystemUIManager {
     ]);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Color(0x00000000),
+        statusBarColor: AppPalette.transparent,
         statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Color(0xFFFFFFFF),
+        systemNavigationBarColor: AppPalette.lightSurface,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:lingua/shared/states/async_view.dart';
 import 'package:lingua/shared/states/empty_widget.dart';
 import 'package:lingua/shared/states/error_retry.dart';
@@ -12,6 +13,9 @@ Widget _host(
   Future<void> Function()? onRefresh,
 }) {
   return MaterialApp(
+    locale: const Locale('vi'),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(
       body: AsyncView<List<String>>(
         state: state,

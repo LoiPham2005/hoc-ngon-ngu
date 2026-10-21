@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/design/l10n/l10n_extensions.dart';
+import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/japanese/providers/strokes_provider.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -30,12 +32,12 @@ class WritingPanel extends HookConsumerWidget {
               ButtonSegment(
                 value: _Mode.order,
                 icon: const Icon(Icons.gesture),
-                label: Text('Thứ tự nét (${strokes.length})'),
+                label: Text(context.l10n.detail_strokeOrder(strokes.length)),
               ),
-              const ButtonSegment(
+              ButtonSegment(
                 value: _Mode.practice,
-                icon: Icon(Icons.edit_outlined),
-                label: Text('Tập viết'),
+                icon: const Icon(Icons.edit_outlined),
+                label: Text(context.l10n.detail_practice),
               ),
             ],
             selected: {mode.value},
@@ -52,16 +54,16 @@ class WritingPanel extends HookConsumerWidget {
           const SizedBox(height: 12),
           Text(
             mode.value == _Mode.order
-                ? 'Số nhỏ = thứ tự nét. Bấm ↻ để xem lại.'
-                : 'Tô theo nét mờ, đúng thứ tự. Bấm 🗑 để viết lại.',
+                ? context.l10n.detail_strokeHint
+                : context.l10n.detail_practiceHint,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodySmall,
           ),
           Text(
-            'Dữ liệu nét chữ: KanjiVG (CC BY-SA 3.0)',
+            context.l10n.detail_strokeCredit,
             textAlign: TextAlign.center,
             style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+              color: context.colors.textMuted,
             ),
           ),
         ],
@@ -86,19 +88,19 @@ class StrokeOrderBox extends HookWidget {
       return null;
     }, [strokes]);
     final progress = useAnimation(controller);
-    final colors = Theme.of(context).colorScheme;
+    final colors = context.colors;
 
     return _Box(
       action: IconButton.filledTonal(
-        tooltip: 'Viết lại',
+        tooltip: context.l10n.common_retry,
         onPressed: () => controller.forward(from: 0),
         icon: const Icon(Icons.replay),
       ),
       painter: _StrokePainter(
         strokes: strokes,
         drawn: progress * strokes.length,
-        ink: colors.onSurface,
-        guide: colors.onSurface.withValues(alpha: 0.12), // nét mờ: chỗ sắp viết
+        ink: colors.text,
+        guide: colors.text.withValues(alpha: 0.12), // nét mờ: chỗ sắp viết
         number: colors.primary,
       ),
     );
@@ -114,11 +116,11 @@ class PracticeBox extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final lines = useState<List<List<Offset>>>(const []);
-    final colors = Theme.of(context).colorScheme;
+    final colors = context.colors;
 
     return _Box(
       action: IconButton.filledTonal(
-        tooltip: 'Xoá',
+        tooltip: context.l10n.common_close,
         onPressed: () => lines.value = const [],
         icon: const Icon(Icons.delete_outline),
       ),
@@ -126,7 +128,7 @@ class PracticeBox extends HookWidget {
         guide: guide,
         lines: lines.value,
         ink: colors.primary,
-        guideColor: colors.onSurface.withValues(alpha: 0.15),
+        guideColor: colors.text.withValues(alpha: 0.15),
       ),
       child: GestureDetector(
         onPanStart: (d) => lines.value = [
@@ -151,14 +153,14 @@ class _Box extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final colors = context.colors;
     return AspectRatio(
       aspectRatio: 1,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: colors.surfaceContainerLowest,
+          color: colors.surface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: colors.outlineVariant),
+          border: Border.all(color: colors.border),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
@@ -166,7 +168,7 @@ class _Box extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: CustomPaint(
-                  painter: _GridPainter(colors.outlineVariant),
+                  painter: _GridPainter(colors.border),
                   foregroundPainter: painter,
                   child: child ?? const SizedBox.expand(),
                 ),
