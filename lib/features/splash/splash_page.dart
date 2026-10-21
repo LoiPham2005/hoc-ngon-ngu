@@ -45,7 +45,10 @@ class SplashPage extends HookConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Assets.images.logo.image(width: 112, height: 112),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(26),
+              child: Assets.images.prod.image(width: 112, height: 112),
+            ),
             const SizedBox(height: 20),
             Text(
               context.l10n.appName,

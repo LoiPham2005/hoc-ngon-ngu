@@ -65,24 +65,7 @@ def make(variant=None):
     return img.resize((1024, 1024), Image.LANCZOS)
 
 
-def splash_foreground():
-    """Chỉ phần bong bóng, nền trong suốt (Android 12 splash tự đặt trong vòng tròn màu)."""
-    img = Image.new('RGBA', (S, S), (0, 0, 0, 0))
-    foreground(ImageDraw.Draw(img))
-    return img.resize((1024, 1024), Image.LANCZOS)
-
-
-def rounded(img):
-    mask = Image.new('L', (S, S), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((0, 0, S, S), radius=S * 0.225, fill=255)
-    out = img.resize((S, S), Image.LANCZOS).convert('RGBA')
-    out.putalpha(mask)
-    return out.resize((1024, 1024), Image.LANCZOS)
-
-
 make().save(f'{OUT}/prod.png')
 make('DEV').save(f'{OUT}/dev.png')
 make('STG').save(f'{OUT}/stg.png')
-rounded(make()).save(f'{OUT}/logo.png')
-splash_foreground().save(f'{OUT}/splash_android12.png')
 print('ok')
