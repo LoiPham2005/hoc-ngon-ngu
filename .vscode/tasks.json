@@ -1,0 +1,276 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "pkgName",
+      "type": "promptString",
+      "description": "New Dart package name (snake_case, vd: my_app)"
+    },
+    {
+      "id": "appName",
+      "type": "promptString",
+      "description": "App display name (vd: My App)"
+    },
+    {
+      "id": "bundleId",
+      "type": "promptString",
+      "description": "Bundle ID (vd: com.example.app)"
+    },
+    {
+      "id": "depAction",
+      "type": "pickString",
+      "description": "Select dependencies action",
+      "options": [
+        {
+          "label": "📦 Get Dependencies (pub get)",
+          "value": "get"
+        },
+        {
+          "label": "🧹 Clean Build Files (clean)",
+          "value": "clean"
+        },
+        {
+          "label": "🚀 Upgrade Dependencies (major versions)",
+          "value": "upgrade"
+        }
+      ],
+      "default": "get"
+    },
+    {
+      "id": "l10nAction",
+      "type": "pickString",
+      "description": "Select localization action",
+      "options": [
+        {
+          "label": "⚡ Generate localizations (gen-l10n)",
+          "value": "l10n"
+        },
+        {
+          "label": "🔄 Sync ARB keys (copy missing keys)",
+          "value": "l10n-sync"
+        },
+        {
+          "label": "🌐 Sync + Auto-translate (Google Translate)",
+          "value": "l10n-sync-translate"
+        }
+      ],
+      "default": "l10n"
+    },
+    {
+      "id": "qualityAction",
+      "type": "pickString",
+      "description": "Select quality check action",
+      "options": [
+        {
+          "label": "🔍 Analyze Code (flutter analyze)",
+          "value": "analyze"
+        },
+        {
+          "label": "💅 Format Code (dart format)",
+          "value": "format"
+        },
+        {
+          "label": "🩹 Fix Code (dart fix --apply)",
+          "value": "fix"
+        }
+      ],
+      "default": "analyze"
+    },
+    {
+      "id": "runFlavor",
+      "type": "pickString",
+      "description": "Select run flavor",
+      "options": [
+        {
+          "label": "🛠️ Development (Dev)",
+          "value": "run-dev"
+        },
+        {
+          "label": "🧪 Staging (Stg)",
+          "value": "run-stg"
+        },
+        {
+          "label": "🚀 Production (Prod)",
+          "value": "run-prod"
+        }
+      ],
+      "default": "run-dev"
+    },
+    {
+      "id": "buildTarget",
+      "type": "pickString",
+      "description": "Select build target",
+      "options": [
+        {
+          "label": "📱 APK - Development (Dev)",
+          "value": "apk-dev"
+        },
+        {
+          "label": "📱 APK - Staging (Stg)",
+          "value": "apk-stg"
+        },
+        {
+          "label": "📱 APK - Production (Prod)",
+          "value": "apk-prod"
+        },
+        {
+          "label": "📦 AAB - Development (Dev)",
+          "value": "aab-dev"
+        },
+        {
+          "label": "📦 AAB - Staging (Stg)",
+          "value": "aab-stg"
+        },
+        {
+          "label": "📦 AAB - Production (Prod - Play Store)",
+          "value": "aab-prod"
+        },
+        {
+          "label": "🍎 iOS .app - Dev (chưa ký, macOS)",
+          "value": "ios-dev"
+        },
+        {
+          "label": "🍎 iOS .app - Staging (chưa ký, macOS)",
+          "value": "ios-stg"
+        },
+        {
+          "label": "🍎 iOS .app - Prod (chưa ký, macOS)",
+          "value": "ios-prod"
+        },
+        {
+          "label": "🍎 IPA - Dev (cần ký)",
+          "value": "ipa-dev"
+        },
+        {
+          "label": "🍎 IPA - Staging (TestFlight — cần ký)",
+          "value": "ipa-stg"
+        },
+        {
+          "label": "🍎 IPA - Prod (TestFlight — cần ký)",
+          "value": "ipa-prod"
+        }
+      ],
+      "default": "apk-dev"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "📦 Deps: Action...",
+      "type": "shell",
+      "command": "make ${input:depAction}",
+      "problemMatcher": [],
+      "detail": "Run make get, clean, or upgrade"
+    },
+    {
+      "label": "⚡ Codegen: Build",
+      "type": "shell",
+      "command": "make gen",
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true },
+      "detail": "build_runner build --delete-conflicting-outputs"
+    },
+    {
+      "label": "⚡ Codegen: Watch",
+      "type": "shell",
+      "command": "make watch",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "reveal": "always" },
+      "detail": "build_runner watch — chạy nền, re-gen khi file thay đổi"
+    },
+    {
+      "label": "🌐 L10n: Action...",
+      "type": "shell",
+      "command": "make ${input:l10nAction}",
+      "problemMatcher": [],
+      "detail": "Run l10n generate, sync, or sync-translate"
+    },
+    {
+      "label": "🔥 Full Gen (Clean + Get + L10n + Gen)",
+      "type": "shell",
+      "command": "make full-gen",
+      "problemMatcher": [],
+      "detail": "Workflow toàn diện — chạy sau khi pull / đổi dependency lớn"
+    },
+    {
+      "label": "🎨 Native: Flavorizr (regen flavors)",
+      "type": "shell",
+      "command": "make gen-flavor",
+      "problemMatcher": [],
+      "detail": "⚠️ Chỉ chạy khi sửa flavorizr.yaml — có thể overwrite native config"
+    },
+    {
+      "label": "🎨 Native: Launcher Icons",
+      "type": "shell",
+      "command": "make gen-icons",
+      "problemMatcher": [],
+      "detail": "flutter_launcher_icons — regen từ assets/icons/"
+    },
+    {
+      "label": "🎨 Native: Splash Screen",
+      "type": "shell",
+      "command": "make gen-splash",
+      "problemMatcher": [],
+      "detail": "flutter_native_splash:create"
+    },
+    {
+      "label": "🔍 Quality: Action...",
+      "type": "shell",
+      "command": "make ${input:qualityAction}",
+      "problemMatcher": ["$dart"],
+      "detail": "Run make analyze, format, or fix"
+    },
+    {
+      "label": "🧪 Test: All",
+      "type": "shell",
+      "command": "make test",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true },
+      "detail": "fvm flutter test"
+    },
+    {
+      "label": "📈 Test: Coverage (HTML)",
+      "type": "shell",
+      "command": "make cov",
+      "problemMatcher": [],
+      "detail": "Test + lcov → coverage/html/index.html (cần `brew install lcov`)"
+    },
+    {
+      "label": "🚀 Run: Flavor...",
+      "type": "shell",
+      "command": "make ${input:runFlavor}",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "reveal": "always" },
+      "detail": "Run app with Dev, Stg, or Prod flavor"
+    },
+    {
+      "label": "📱 Build: App Target...",
+      "type": "shell",
+      "command": "make ${input:buildTarget}",
+      "problemMatcher": [],
+      "detail": "Build APK or AAB for Dev, Stg, or Prod flavor"
+    },
+    {
+      "label": "🛠 Rename: Package",
+      "type": "shell",
+      "command": "make rename-package name=${input:pkgName}",
+      "problemMatcher": [],
+      "detail": "Đổi `name:` ở pubspec.yaml + tất cả `package:xxx/` imports"
+    },
+    {
+      "label": "🛠 Rename: App Display Name",
+      "type": "shell",
+      "command": "make rename-app name=${input:appName}",
+      "problemMatcher": [],
+      "detail": "Đổi tên app hiển thị Android/iOS"
+    },
+    {
+      "label": "🛠 Rename: Bundle ID",
+      "type": "shell",
+      "command": "make rename-bundle-id name=${input:bundleId}",
+      "problemMatcher": [],
+      "detail": "Đổi applicationId Android + Bundle Identifier iOS"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appName": "Lingua",
+  "@appName": {
+    "description": "Application name"
+  },
+  "common_ok": "OK",
+  "common_cancel": "Cancel",
+  "common_retry": "Retry",
+  "common_loading": "Loading...",
+  "common_empty": "No data",
+  "common_error": "Something went wrong",
+  "connectivity_offline": "No internet connection",
+  "connectivity_online": "Back online",
+  "hi": "Hello"
+}

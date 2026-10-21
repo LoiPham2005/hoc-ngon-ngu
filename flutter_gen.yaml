@@ -1,0 +1,13 @@
+flutter_gen:
+  output: lib/gen/
+  line_length: 100
+
+  assets:
+    enabled: true
+    outputs:
+      package_parameter_enabled: false
+      style: dot-delimiter
+      class_name: Assets
+
+  fonts:
+    enabled: false

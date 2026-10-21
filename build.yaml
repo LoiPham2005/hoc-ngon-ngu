@@ -1,0 +1,53 @@
+targets:
+  $default:
+    sources:
+      include:
+        - lib/**
+        - test/**
+        - pubspec.yaml
+        - assets/**
+        - $package$
+      exclude:
+        - "**/*.g.dart"
+        - "**/*.freezed.dart"
+        - "lib/gen/**"
+        - "build/**"
+
+    builders:
+      # ─── JSON SERIALIZABLE ──────────────────────────────────────────
+      json_serializable:
+        options:
+          # Không đổi tên field: backend trả camelCase. JSON snake_case (Remote Config) → khai báo
+          # @JsonSerializable(fieldRename: FieldRename.snake) ngay trên model đó.
+          generic_argument_factories: true
+          explicit_to_json: true
+          include_if_null: false
+          checked: true
+          create_factory: true
+          create_to_json: true
+
+      # ─── FREEZED ────────────────────────────────────────────────────
+      freezed:
+        options:
+          union_key: type
+          union_value_case: snake
+          map: { map: true, when: true, maybe_map: true, maybe_when: true }
+          copy: true
+          equal: true
+          to_string: true
+
+
+
+      # ─── RIVERPOD ───────────────────────────────────────────────────
+      riverpod_generator:
+        generate_for:
+          include:
+            - lib/**
+          exclude:
+            - "**/*.g.dart"
+            - "**/*.freezed.dart"
+
+
+      # ─── FLUTTER GEN ────────────────────────────────────────────────
+      flutter_gen_runner:
+        enabled: true

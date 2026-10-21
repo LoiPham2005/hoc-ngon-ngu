@@ -1,0 +1,200 @@
+{
+  "project_info": {
+    "project_number": "346962283535",
+    "project_id": "demofirebase-a2721",
+    "storage_bucket": "demofirebase-a2721.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:732e055a0c69f6245d277a",
+        "android_client_info": {
+          "package_name": "com.datsan247"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:7c8ccf45c33662b75d277a",
+        "android_client_info": {
+          "package_name": "com.datsan247.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:d1171f3927ca1c695d277a",
+        "android_client_info": {
+          "package_name": "com.datsan247.mobile.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:17fa719438e0808e5d277a",
+        "android_client_info": {
+          "package_name": "com.datsan247.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:5eefb6e865d5c0725d277a",
+        "android_client_info": {
+          "package_name": "com.loipham.lingua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:edf6b2938921afc65d277a",
+        "android_client_info": {
+          "package_name": "com.loipham.lingua.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:b9bdb993a3e016335d277a",
+        "android_client_info": {
+          "package_name": "com.loipham.lingua.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:b7494a8cb85e54c45d277a",
+        "android_client_info": {
+          "package_name": "poly.edu.vn.asm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:a8b34abe4cb644625d277a",
+        "android_client_info": {
+          "package_name": "poly.edu.vn.demo_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:198583059c26b1cd5d277a",
+        "android_client_info": {
+          "package_name": "poly.edu.vn.loginfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

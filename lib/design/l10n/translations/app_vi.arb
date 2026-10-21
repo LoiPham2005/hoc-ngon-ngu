@@ -1,0 +1,13 @@
+{
+  "@@locale": "vi",
+  "appName": "Lingua",
+  "common_ok": "Đồng ý",
+  "common_cancel": "Huỷ",
+  "common_retry": "Thử lại",
+  "common_loading": "Đang tải...",
+  "common_empty": "Không có dữ liệu",
+  "common_error": "Đã xảy ra lỗi",
+  "connectivity_offline": "Không có kết nối mạng",
+  "connectivity_online": "Đã kết nối lại",
+  "hi": "Xin chào"
+}

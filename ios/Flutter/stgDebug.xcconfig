@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-stg.xcconfig"
+#include "Generated.xcconfig"
+
+ASSET_PREFIX=stg
+BUNDLE_NAME=Lingua Stg
+BUNDLE_DISPLAY_NAME=Lingua Stg

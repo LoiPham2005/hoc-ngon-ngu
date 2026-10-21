@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    ════════════════════════════════════════════════════════════════
+    NATIVE AD COLORS
+    ════════════════════════════════════════════════════════════════
+    Match với AppColorTokens (light) trong Dart để giữ visual consistency.
+    -->
+    <color name="ad_background">#FFFFFFFF</color>
+
+    <!-- Text -->
+    <color name="ad_text_primary">#FF1C1B1F</color>
+    <color name="ad_text_secondary">#FF49454F</color>
+    <color name="ad_text_tertiary">#FF79747E</color>
+
+    <!-- Call-to-action button (Material 3 primary) -->
+    <color name="ad_cta_background">#FF6750A4</color>
+    <color name="ad_cta_text">#FFFFFFFF</color>
+
+    <!-- Ad badge (label "Ad" nhỏ ở góc) -->
+    <color name="ad_badge_background">#FFFBBF24</color>
+    <color name="ad_badge_text">#FF000000</color>
+</resources>

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/loipd/.pub-cache/hosted/pub.dev/google_mobile_ads-9.0.0/android/src/main/java/io/flutter/plugins/googlemobileads -name NativeAdFactory*.java)",
+      "Bash(./gradlew :app:compileDevDebugKotlin -q)",
+      "Bash(rm -rf lint_test)",
+      "Bash(cp /Users/loipd/personal/lingua/pubspec.yaml /tmp/pubspec_backup.yaml)",
+      "Bash(curl -s \"https://pub.dev/api/packages/custom_lint\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['latest']['pubspec'].get\\('dependencies',{}\\)\\)\")",
+      "Bash(curl -s \"https://pub.dev/api/packages/custom_lint_builder\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('latest',d['latest']['version']\\); print\\(d['latest']['pubspec'].get\\('dependencies',{}\\).get\\('analyzer'\\)\\)\")",
+      "Bash(curl -s \"https://pub.dev/api/packages/riverpod_lint\")",
+      "Bash(curl -s \"https://pub.dev/api/packages/riverpod_generator\")",
+      "Bash(python3 -c 'import sys,json; d=json.load\\(sys.stdin\\); *)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s \"https://pub.dev/api/packages/riverpod_annotation\")",
+      "Bash(python3 -c \"import sys,json;d=json.load\\(sys.stdin\\);print\\(d['latest']['version']\\)\")",
+      "Bash(curl -s \"https://pub.dev/api/packages/flutter_riverpod\")",
+      "Bash(pod install *)",
+      "Bash(pod update *)",
+      "Bash(git check-ignore *)",
+      "Bash(plutil -lint Runner.xcodeproj/project.pbxproj)",
+      "Bash(cp Podfile.lock /tmp/Podfile.lock.main.bak)",
+      "Bash(rm -f Podfile.lock)",
+      "Bash(curl -s \"https://pub.dev/api/packages/sentry_flutter\")",
+      "Bash(python3 -c \"import sys,json;d=json.load\\(sys.stdin\\);print\\('latest:',d['latest']['version']\\);print\\('sdk:',d['latest']['pubspec']['environment']\\)\")",
+      "Bash(grep -rn \"Logger.error\\($\" .)",
+      "Bash(curl -s \"https://pub.dev/api/packages/talker_flutter\")"
+    ]
+  }
+}

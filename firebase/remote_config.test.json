@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "name": "iOS",
+      "expression": "device.os == 'ios'",
+      "tagColor": "BLUE"
+    }
+  ],
+  "parameters": {
+    "ad_config": {
+      "defaultValue": {
+        "value": "{\"show_all_ads\":true,\"preload\":true,\"enable_interstitial\":true,\"enable_app_open\":true,\"enable_rewarded\":true,\"enable_rewarded_interstitial\":true,\"enable_native\":true,\"enable_banner\":true,\"enable_native_full_after_interstitial\":true,\"rules\":{\"interstitial_interval\":30,\"app_open_interval\":30,\"rewarded_interval\":30,\"native_full_interval\":30,\"max_interstitial_per_session\":5,\"max_app_open_per_session\":4,\"max_rewarded_per_session\":0,\"max_native_full_per_session\":3},\"ad_units\":{\"interstitial\":{\"splash\":{\"id\":\"ca-app-pub-3940256099942544/1033173712\"},\"after_quiz\":{\"id\":\"ca-app-pub-3940256099942544/1033173712\",\"native_full_after\":false}},\"app_open\":{\"splash\":{\"id\":\"ca-app-pub-3940256099942544/9257395921\"},\"resume\":{\"id\":\"ca-app-pub-3940256099942544/9257395921\"}},\"rewarded\":{\"bonus\":{\"id\":\"ca-app-pub-3940256099942544/5224354917\"}},\"rewarded_interstitial\":{\"level_end\":{\"id\":\"ca-app-pub-3940256099942544/5354046379\"}},\"native\":{\"after_interstitial\":{\"id\":\"ca-app-pub-3940256099942544/2247696110\"},\"native_full\":{\"id\":\"ca-app-pub-3940256099942544/2247696110\"},\"language\":{\"id\":\"ca-app-pub-3940256099942544/2247696110\"},\"home\":{\"id\":\"ca-app-pub-3940256099942544/2247696110\"}},\"banner\":{\"home\":{\"id\":\"ca-app-pub-3940256099942544/9214589741\"},\"bottom\":{\"id\":\"ca-app-pub-3940256099942544/2014213617\"}}}}"
+      },
+      "conditionalValues": {
+        "iOS": {
+          "value": "{\"show_all_ads\":true,\"preload\":true,\"enable_interstitial\":true,\"enable_app_open\":true,\"enable_rewarded\":true,\"enable_rewarded_interstitial\":true,\"enable_native\":true,\"enable_banner\":true,\"enable_native_full_after_interstitial\":true,\"rules\":{\"interstitial_interval\":30,\"app_open_interval\":30,\"rewarded_interval\":30,\"native_full_interval\":30,\"max_interstitial_per_session\":5,\"max_app_open_per_session\":4,\"max_rewarded_per_session\":0,\"max_native_full_per_session\":3},\"ad_units\":{\"interstitial\":{\"splash\":{\"id\":\"ca-app-pub-3940256099942544/4411468910\"},\"after_quiz\":{\"id\":\"ca-app-pub-3940256099942544/4411468910\",\"native_full_after\":false}},\"app_open\":{\"splash\":{\"id\":\"ca-app-pub-3940256099942544/5575463023\"},\"resume\":{\"id\":\"ca-app-pub-3940256099942544/5575463023\"}},\"rewarded\":{\"bonus\":{\"id\":\"ca-app-pub-3940256099942544/1712485313\"}},\"rewarded_interstitial\":{\"level_end\":{\"id\":\"ca-app-pub-3940256099942544/6978759866\"}},\"native\":{\"after_interstitial\":{\"id\":\"ca-app-pub-3940256099942544/3986624511\"},\"native_full\":{\"id\":\"ca-app-pub-3940256099942544/3986624511\"},\"language\":{\"id\":\"ca-app-pub-3940256099942544/3986624511\"},\"home\":{\"id\":\"ca-app-pub-3940256099942544/3986624511\"}},\"banner\":{\"home\":{\"id\":\"ca-app-pub-3940256099942544/2435281174\"},\"bottom\":{\"id\":\"ca-app-pub-3940256099942544/8388050270\"}}}}"
+        }
+      },
+      "valueType": "JSON",
+      "description": "Cấu hình quảng cáo (TEST ID của Google) — chỉ dùng cho project test/stg, KHÔNG publish lên prod"
+    },
+    "app_config": {
+      "defaultValue": {
+        "value": "{\"maintenance_mode\":false,\"maintenance_message\":\"Hệ thống đang bảo trì, vui lòng quay lại sau.\",\"notice_enabled\":false,\"notice_title\":\"\",\"notice_body\":\"\",\"notice_url\":\"\",\"policy_url\":\"https://example.com/privacy\",\"terms_url\":\"https://example.com/terms\"}"
+      },
+      "valueType": "JSON",
+      "description": "Bảo trì / thông báo / link chính sách"
+    }
+  }
+}

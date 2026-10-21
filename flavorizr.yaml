@@ -1,0 +1,79 @@
+# ════════════════════════════════════════════════════════════════
+# flutter_flavorizr config — sinh native code cho 3 flavors.
+#
+# ⚠️ FLAVORIZR KHÔNG IDEMPOTENT — chạy lại sẽ ghi đè Info.plist/build.gradle.kts
+# và NHÂN ĐÔI build config trong project.pbxproj → `make gen-flavor` tự chặn khi đã setup.
+# Không sinh code Dart (flavors.dart/main.dart/app.dart): flavor lấy qua
+# `FlavorConfig.current` (đọc `appFlavor` của Flutter).
+#
+# 📋 Workflow:
+#   - Setup lần đầu (mới clone repo): chạy `make gen-flavor` 1 lần để gen
+#     productFlavors (Android) + xcconfigs/schemes (iOS).
+#     Sau đó CUSTOMIZE lib/app.dart, Info.plist, build.gradle.kts cho dự án.
+#
+#   - Firebase configs: đặt THẲNG vào vị trí native (KHÔNG dùng flavorizr
+#     google:firebase processor — quá phức tạp, dễ gây lỗi):
+#       android/app/src/dev/google-services.json
+#       android/app/src/stg/google-services.json
+#       android/app/src/prod/google-services.json
+#       ios/Runner/dev/GoogleService-Info.plist
+#       ios/Runner/stg/GoogleService-Info.plist
+#       ios/Runner/prod/GoogleService-Info.plist
+#     (iOS plist đã được add vào Xcode project + build phase chọn theo
+#      scheme tự động.)
+#
+# 📌 Sau setup ban đầu, bạn KHÔNG cần chạy `make gen-flavor` nữa.
+# ════════════════════════════════════════════════════════════════
+
+# Chỉ sinh native — bỏ các bước flutter:* (ghi đè lib/main.dart, sinh lib/flavors.dart).
+instructions:
+  - assets:download
+  - assets:extract
+  - android:androidManifest
+  - android:flavorizrGradle
+  - android:buildGradle
+  - android:dummyAssets
+  - android:icons
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:dummyAssets
+  - ios:icons
+  - ios:plist
+  - assets:clean
+
+app:
+  android:
+    flavorDimensions: "flavor-type"
+
+flavors:
+  dev:
+    app:
+      name: "Lingua Dev"
+    android:
+      applicationId: "com.loipham.lingua.dev"
+      icon: "assets/images/dev.png"
+    ios:
+      bundleId: "com.loipham.lingua.dev"
+      icon: "assets/images/dev.png"
+
+  stg:
+    app:
+      name: "Lingua Stg"
+    android:
+      applicationId: "com.loipham.lingua.stg"
+      icon: "assets/images/stg.png"
+    ios:
+      bundleId: "com.loipham.lingua.stg"
+      icon: "assets/images/stg.png"
+
+  prod:
+    app:
+      name: "Lingua"
+    android:
+      applicationId: "com.loipham.lingua"
+      icon: "assets/images/prod.png"
+    ios:
+      bundleId: "com.loipham.lingua"
+      icon: "assets/images/prod.png"

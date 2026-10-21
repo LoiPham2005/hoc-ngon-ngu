@@ -1,0 +1,15 @@
+# include_if_null: false → field null bị BỎ khỏi JSON (backend không nhận null cho field tuỳ chọn).
+# Ngoại lệ duy nhất: UpdateUserRequest.avatarFileId = null (gỡ avatar) → gửi bằng Map qua Dio.
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          include_if_null: false
+global_options:
+  freezed:
+    runs_before:
+      - json_serializable
+  json_serializable:
+    runs_before:
+      - retrofit_generator

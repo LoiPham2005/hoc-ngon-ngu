@@ -1,0 +1,116 @@
+name: lingua
+description: "Lingua — ứng dụng học ngoại ngữ (bắt đầu với tiếng Nhật: Kana + Kanji N5–N2)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.41.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State + DI (Riverpod lo luôn DI, không dùng get_it)
+  flutter_riverpod: ^3.3.1
+  riverpod_annotation: ^4.0.2
+  hooks_riverpod: ^3.3.1
+  flutter_hooks: ^0.21.0
+
+  # Network
+  dio: ^5.8.0+1
+  retrofit: ^4.9.2
+  dio_smart_retry: ^7.0.1
+  internet_connection_checker_plus: ^3.1.1
+  api_client:
+    path: packages/api_client
+
+  # Model
+  json_annotation: ^4.9.0
+  freezed_annotation: ^3.1.0
+
+  # Routing
+  auto_route: ">=11.1.0 <11.2.0"  # 11.2 cần Flutter mới hơn 3.41.9 (bỏ ghim khi nâng Flutter)
+
+  # Storage
+  shared_preferences: ^2.5.3
+  flutter_secure_storage: ^11.2.0
+
+  # Firebase
+  firebase_core: ^4.2.0
+  firebase_analytics: ^12.0.3
+  firebase_crashlytics: ^5.0.3
+  firebase_remote_config: ^6.1.0
+  firebase_messaging: ^16.0.3
+
+  # Log / error tracking
+  sentry_flutter: ^9.25.0
+  talker_flutter: ^5.0.0
+  talker_dio_logger: ^5.0.0
+  talker_riverpod_logger: ^5.0.0
+
+  # UI
+  cupertino_icons: ^1.0.8
+  flutter_smart_dialog: ^5.1.0
+  toastification: ^3.2.0
+  theme_tailor_annotation: ^3.0.1
+  intl: ^0.20.2
+
+  # Platform
+  package_info_plus: ^10.2.2
+  url_launcher: ^6.3.2
+  flutter_local_notifications: ^22.0.1
+  quick_actions: ^1.0.7
+
+  # Ads & IAP
+  google_mobile_ads: ^9.1.0
+  app_tracking_transparency: ^2.0.6+1
+  purchases_flutter: ^10.0.1
+  local_auth: ^3.0.2
+  connectivity_plus: ^7.3.2
+  path_parsing: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  mocktail: ^1.0.4
+
+  # Codegen
+  build_runner: ^2.4.12
+  flutter_gen_runner: ^5.12.0
+  riverpod_generator: ^4.0.3
+  json_serializable: ^6.8.0
+  freezed: ^3.2.3
+  theme_tailor: ^3.0.1
+  retrofit_generator: ^10.2.5
+  auto_route_generator: ^10.4.0
+  # riverpod_lint: tắt tới khi freezed + theme_tailor hỗ trợ analyzer ^12
+
+  # Tooling
+  flutter_flavorizr: ^2.4.1
+  flutter_native_splash: ^2.4.7
+  rename: ^3.1.0
+  local_auth_platform_interface: ^1.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/japanese/
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/prod.png
+  android: true
+  ios: true
+  web: false
+  android_12:
+    image: assets/images/prod.png
+    color: "#FFFFFF"
+  color_dark: "#FFFFFF"
+  image_dark: assets/images/prod.png
