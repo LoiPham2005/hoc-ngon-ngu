@@ -5,10 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/core/services/app_version_service.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
-import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/gen/assets.gen.dart';
 import 'package:lingua/routes/app_router.dart';
-import 'package:lingua/shared/base/app_ui.dart';
 
 /// Khởi động: kiểm tra phiên bản → chưa chọn khoá học thì Onboarding, có rồi thì vào app.
 @RoutePage()
@@ -41,13 +40,12 @@ class SplashPage extends HookConsumerWidget {
       return null;
     }, const <Object?>[]);
 
-    final colors = context.colors;
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            GlyphBadge('あ', color: colors.primary, size: 96),
+            Assets.images.logo.image(width: 112, height: 112),
             const SizedBox(height: 20),
             Text(
               context.l10n.appName,

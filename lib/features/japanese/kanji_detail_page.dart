@@ -45,6 +45,7 @@ class KanjiDetailPage extends ConsumerWidget {
       char: char,
       color: module.color,
       chars: [for (final k in inLevel) k.char],
+      speech: kanji.speech,
       onOpen: (c) =>
           context.router.replace(KanjiDetailRoute(level: level, char: c)),
       info: _KanjiInfo(kanji, language: language),

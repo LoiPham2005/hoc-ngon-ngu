@@ -130,7 +130,7 @@ gen-icons:
 	fvm dart run flutter_flavorizr -f -p android:icons,ios:icons
 
 gen-splash:
-	fvm dart run flutter_native_splash:create --all-flavors
+	fvm dart run flutter_native_splash:create
 
 # ─── QUALITY ──────────────────────────────────────────────────────
 analyze:

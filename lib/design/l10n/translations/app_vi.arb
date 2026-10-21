@@ -209,7 +209,7 @@
   "section_about": "Giới thiệu",
   "about_version": "Phiên bản",
   "about_data": "Nguồn dữ liệu",
-  "about_data_desc": "Nét chữ: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · Cấp JLPT: tanos.co.uk",
+  "about_data_desc": "Nét chữ: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · Cấp JLPT: tanos.co.uk · Giọng đọc Kana: VOICEVOX:No.7",
   "update_forceTitle": "Cập nhật bắt buộc",
   "update_optionalTitle": "Đã có phiên bản mới",
   "update_forceMessage": "Phiên bản hiện tại đã quá cũ, vui lòng cập nhật.",
@@ -217,5 +217,10 @@
   "update_later": "Để sau",
   "update_now": "Cập nhật ngay",
   "error_unexpected": "Một sự cố không mong muốn đã xảy ra.\nVui lòng thử lại.",
-  "error_backHome": "Quay về trang chủ"
+  "error_backHome": "Quay về trang chủ",
+  "tts_listen": "Nghe phát âm",
+  "tts_missingTitle": "Chưa có giọng đọc tiếng Nhật",
+  "tts_missingAndroid": "Máy chưa có giọng đọc tiếng Nhật để đọc Kanji (Kana vẫn nghe được). Bấm \"Mở cài đặt\" → chọn \"Dịch vụ lời nói của Google\" → ⚙ → Cài đặt dữ liệu giọng nói → Tiếng Nhật. Điện thoại vẫn giữ tiếng Việt.",
+  "tts_missingIos": "Máy chưa có giọng đọc tiếng Nhật để đọc Kanji (Kana vẫn nghe được). Vào Cài đặt › Trợ năng › Nội dung được đọc › Giọng nói › Tiếng Nhật để tải. Điện thoại vẫn giữ tiếng Việt.",
+  "tts_openSettings": "Mở cài đặt"
 }

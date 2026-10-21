@@ -37,11 +37,15 @@ class QuizItem {
     required this.char,
     required this.answer,
     required this.group,
+    required this.speech,
   });
 
   final String char;
   final String answer;
   final String group;
+
+  /// Nội dung đọc phát âm (Kana: chữ; Kanji: các âm On/Kun).
+  final String speech;
 
   @override
   bool operator ==(Object other) => other is QuizItem && other.char == char;
@@ -146,8 +150,12 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
   }
 
   List<QuizItem> _items() {
-    QuizItem kana(Kana k) =>
-        QuizItem(char: k.char, answer: k.romaji, group: k.script.name);
+    QuizItem kana(Kana k) => QuizItem(
+      char: k.char,
+      answer: k.romaji,
+      group: k.script.name,
+      speech: k.char,
+    );
     final module = topic.module;
     if (module == null || !module.isKanji) {
       final scripts = switch (module) {
@@ -170,6 +178,7 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
                 ? k.hanViet
                 : k.meaningFor(language),
             group: module.name,
+            speech: k.speech,
           ),
     ];
   }

@@ -212,7 +212,7 @@
   "section_about": "About",
   "about_version": "Version",
   "about_data": "Data sources",
-  "about_data_desc": "Strokes: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · JLPT levels: tanos.co.uk",
+  "about_data_desc": "Strokes: KanjiVG (CC BY-SA 3.0) · Kanji: KANJIDIC (EDRDG, CC BY-SA 4.0) · JLPT levels: tanos.co.uk · Kana voice: VOICEVOX:No.7",
   "update_forceTitle": "Update required",
   "update_optionalTitle": "A new version is available",
   "update_forceMessage": "This version is too old, please update.",
@@ -220,5 +220,10 @@
   "update_later": "Later",
   "update_now": "Update now",
   "error_unexpected": "Something unexpected happened.\nPlease try again.",
-  "error_backHome": "Back to home"
+  "error_backHome": "Back to home",
+  "tts_listen": "Listen",
+  "tts_missingTitle": "No Japanese voice",
+  "tts_missingAndroid": "This device has no Japanese voice for reading kanji (kana still work). Tap \"Open settings\" → \"Speech Services by Google\" → ⚙ → Install voice data → Japanese. Your phone language stays the same.",
+  "tts_missingIos": "This device has no Japanese voice for reading kanji (kana still work). Go to Settings › Accessibility › Spoken Content › Voices › Japanese to download one. Your phone language stays the same.",
+  "tts_openSettings": "Open settings"
 }

@@ -5,6 +5,7 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/japanese/widgets/writing_box.dart';
 import 'package:lingua/shared/base/app_ui.dart';
+import 'package:lingua/shared/base/speak_button.dart';
 
 /// Bố cục chung màn chi tiết Kana / Kanji:
 /// thẻ chữ lớn + thông tin → nút "Đã thuộc" → thứ tự nét / tập viết → chữ trước / sau.
@@ -16,6 +17,7 @@ class DetailLayout extends ConsumerWidget {
     required this.info,
     required this.chars,
     required this.onOpen,
+    required this.speech,
     super.key,
   });
 
@@ -29,6 +31,9 @@ class DetailLayout extends ConsumerWidget {
   /// Các chữ cùng học phần (để chuyển trước / sau).
   final List<String> chars;
   final void Function(String char) onOpen;
+
+  /// Nội dung đọc khi bấm 🔊 (Kana: chính chữ; Kanji: các âm On/Kun).
+  final String speech;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,6 +59,7 @@ class DetailLayout extends ConsumerWidget {
                       GlyphBadge(char, color: color, size: 92),
                       const SizedBox(width: 16),
                       Expanded(child: info),
+                      SpeakButton(speech),
                     ],
                   ),
                 ),

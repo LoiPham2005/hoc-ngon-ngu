@@ -52,6 +52,12 @@ class Kanji {
   final List<String> onyomi;
   final List<String> kunyomi;
 
+  /// Để đọc phát âm: các âm On + Kun, bỏ ký hiệu (`ひと(つ)` → `ひとつ`, `-び` → `び`).
+  String get speech => [
+    ...onyomi,
+    ...kunyomi,
+  ].map((r) => r.replaceAll(RegExp('[-()]'), '')).toSet().join('、');
+
   @override
   bool operator ==(Object other) => other is Kanji && other.char == char;
 

@@ -29,6 +29,7 @@ class KanaDetailPage extends ConsumerWidget {
       char: char,
       color: module.color,
       chars: [for (final k in all) k.char],
+      speech: char,
       onOpen: (c) =>
           context.router.replace(KanaDetailRoute(script: script, char: c)),
       info: Column(

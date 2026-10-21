@@ -10,6 +10,7 @@ import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/widgets/quiz_result_view.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
+import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -321,6 +322,8 @@ class _Feedback extends StatelessWidget {
                 onPressed: () => openQuizItem(context, session.current.item),
                 child: Text(l10n.quiz_viewDetail),
               ),
+              // Chỉ cho nghe SAU khi trả lời — nghe trước là lộ đáp án.
+              SpeakButton(session.current.item.speech),
             ],
           ),
           if (!ok)

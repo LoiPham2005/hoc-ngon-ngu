@@ -69,6 +69,9 @@ dependencies:
   purchases_flutter: ^10.0.1
   connectivity_plus: ^7.3.2
   path_parsing: ^1.1.0
+  flutter_tts: ^4.2.5
+  audioplayers: ^6.7.1
+  android_intent_plus: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -98,15 +101,20 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/japanese/
+    - assets/japanese/audio/
 
 flutter_native_splash:
+  # Logo trên nền trắng (sáng) / nền tối của app (tối). Màu khớp AppPalette.
   color: "#FFFFFF"
-  image: assets/images/prod.png
+  color_dark: "#0E1016"
+  image: assets/images/logo.png
+  image_dark: assets/images/logo.png
+  android_12:
+    # Android 12+: hệ thống đặt icon trong vòng tròn màu → chỉ dùng phần bong bóng.
+    image: assets/images/splash_android12.png
+    icon_background_color: "#5B5BD6"
+    color: "#FFFFFF"
+    color_dark: "#0E1016"
   android: true
   ios: true
   web: false
-  android_12:
-    image: assets/images/prod.png
-    color: "#FFFFFF"
-  color_dark: "#FFFFFF"
-  image_dark: assets/images/prod.png
