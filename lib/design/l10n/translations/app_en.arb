@@ -235,5 +235,120 @@
         "type": "int"
       }
     }
+  },
+  "learn_pronunciation": "Pronunciation",
+  "learn_vocabulary": "Vocabulary & phrases",
+  "learn_grammar": "Grammar",
+  "module_enPronunciation": "IPA pronunciation",
+  "module_enPronunciation_desc": "{count} English sounds",
+  "module_enVocabulary": "Vocabulary by topic",
+  "module_enVocabulary_desc": "{count} common words",
+  "module_enPhrases": "Everyday phrases",
+  "module_enPhrases_desc": "{count} phrases by situation",
+  "module_enGrammar": "Grammar & sentence building",
+  "module_enGrammar_desc": "{count} lessons, A1 to B1",
+  "ipa_vowels": "Short & long vowels",
+  "ipa_diphthongs": "Diphthongs",
+  "ipa_consonants": "Consonants",
+  "ipa_hint": "tap to hear the example",
+  "topics_words": "{count} words",
+  "topics_phrases": "{count} phrases",
+  "word_example": "EXAMPLE",
+  "pos_n": "noun",
+  "pos_v": "verb",
+  "pos_adj": "adjective",
+  "pos_adv": "adverb",
+  "pos_num": "number",
+  "pos_prep": "preposition",
+  "pos_pron": "pronoun",
+  "practice_vocabMeaning": "Vocabulary · Meaning",
+  "practice_vocabMeaning_desc": "See a word, pick its meaning",
+  "practice_vocabListening": "Vocabulary · Listening",
+  "practice_vocabListening_desc": "Listen, pick the word",
+  "practice_phrases": "Everyday phrases",
+  "practice_phrases_desc": "Understand common phrases",
+  "practice_grammar": "Grammar & sentence building",
+  "practice_grammar_desc": "Fill the gap, put words in order",
+  "practice_pickTopic": "Choose a topic",
+  "practice_allTopics": "All topics",
+  "quiz_askListening": "Which word do you hear?",
+  "quiz_askPhrase": "What does this mean?",
+  "quiz_tapToListen": "Tap to listen again",
+  "grammar_formulas": "Patterns",
+  "grammar_points": "Remember",
+  "grammar_examples": "Examples",
+  "grammar_start": "Practise ({count} questions)",
+  "grammar_choiceAsk": "Choose the right answer",
+  "grammar_orderAsk": "Put the words in order",
+  "grammar_orderHint": "Tap words to build the sentence, tap again to remove",
+  "grammar_check": "Check",
+  "grammar_correctAnswer": "Correct: {answer}",
+  "grammar_passed": "Lesson learned ✓",
+  "grammar_passHint": "Get {pass}/{total} right to mark this lesson as learned",
+  "@module_enPronunciation_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enVocabulary_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enPhrases_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enGrammar_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@topics_words": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@topics_phrases": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_start": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_passHint": {
+    "placeholders": {
+      "pass": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_correctAnswer": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
   }
 }

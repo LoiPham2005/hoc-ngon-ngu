@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/services/speech_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
+import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
-import 'package:lingua/features/japanese/models/kanji_model.dart';
-import 'package:lingua/features/japanese/providers/kanji_provider.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/widgets/quiz_result_view.dart';
 import 'package:lingua/routes/app_router.dart';
@@ -23,14 +24,14 @@ class QuizPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Bài Kanji cần dữ liệu Kanji → chờ tải xong mới tạo bài.
-    final data = ref.watch(kanjiListProvider);
+    // Chờ dữ liệu bài (Kanji / từ vựng / câu) tải xong mới tạo bài.
+    final data = ref.watch(quizPoolProvider(topic));
     if (!data.hasValue) {
       return Scaffold(
         appBar: AppBar(),
-        body: AsyncView<List<Kanji>>(
+        body: AsyncView<List<QuizItem>>(
           state: data,
-          onRetry: () => ref.invalidate(kanjiListProvider),
+          onRetry: () => ref.invalidate(quizPoolProvider(topic)),
           builder: (_, _) => const SizedBox.shrink(),
         ),
       );
@@ -94,17 +95,23 @@ class QuizPage extends ConsumerWidget {
 }
 
 /// Mở màn chi tiết của chữ trong bài (từ câu vừa làm / danh sách câu sai).
-void openQuizItem(BuildContext context, QuizItem item) {
-  final script = KanaScript.values.asNameMap()[item.group];
-  if (script != null) {
-    context.router.push(KanaDetailRoute(script: script, char: item.char));
-    return;
-  }
-  final level = JlptLevel.values.firstWhere(
-    (l) => item.group.toLowerCase().endsWith(l.name),
-  );
-  context.router.push(KanjiDetailRoute(level: level, char: item.char));
-}
+void openQuizItem(BuildContext context, QuizItem item) =>
+    context.router.push(switch (item.module) {
+      Module.hiragana => KanaDetailRoute(
+        script: KanaScript.hiragana,
+        char: item.char,
+      ),
+      Module.katakana => KanaDetailRoute(
+        script: KanaScript.katakana,
+        char: item.char,
+      ),
+      Module.enPronunciation || Module.enVocabulary => WordDetailRoute(
+        topicId: item.group,
+        word: item.char,
+      ),
+      Module.enPhrases => PhraseListRoute(topicId: item.group),
+      final m => KanjiDetailRoute(level: m.kanjiLevel!, char: item.char),
+    });
 
 class _QuestionView extends StatelessWidget {
   const _QuestionView({
@@ -126,63 +133,99 @@ class _QuestionView extends StatelessWidget {
     final ask = switch (topic.mode) {
       QuizMode.reading => l10n.quiz_askReading,
       QuizMode.hanViet => l10n.quiz_askHanViet,
+      QuizMode.meaning when topic.module == Module.enPhrases =>
+        l10n.quiz_askPhrase,
       QuizMode.meaning => l10n.quiz_askMeaning,
+      QuizMode.listening => l10n.quiz_askListening,
     };
+    // Đáp án dài (nghĩa tiếng Anh, câu giao tiếp) trên máy nhỏ → phần câu hỏi cuộn,
+    // khung kết quả + nút Tiếp tục luôn ghim ở dưới.
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
-          child: Text(
-            l10n.quiz_progress(session.index + 1, session.questions.length),
-            style: theme.textTheme.labelLarge?.copyWith(
-              color: colors.textMuted,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
-          child: Text(ask, style: theme.textTheme.titleLarge),
-        ),
         Expanded(
-          child: Center(
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-              decoration: BoxDecoration(
-                color: colors.surface,
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(color: colors.border),
-              ),
-              child: FittedBox(
-                child: Text(
-                  question.item.char,
-                  style: const TextStyle(fontSize: 110, height: 1.15),
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+                      child: Text(
+                        l10n.quiz_progress(
+                          session.index + 1,
+                          session.questions.length,
+                        ),
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: colors.textMuted,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+                      child: Text(ask, style: theme.textTheme.titleLarge),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: topic.mode == QuizMode.listening
+                            ? _ListenPrompt(question.item)
+                            : Container(
+                                margin: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 28,
+                                  vertical: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: colors.surface,
+                                  borderRadius: BorderRadius.circular(28),
+                                  border: Border.all(color: colors.border),
+                                ),
+                                // Chữ / từ ngắn → to hết cỡ; câu dài → xuống dòng.
+                                child: question.item.char.length <= 8
+                                    ? FittedBox(
+                                        child: Text(
+                                          question.item.char,
+                                          style: const TextStyle(
+                                            fontSize: 110,
+                                            height: 1.15,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(
+                                        question.item.char,
+                                        textAlign: TextAlign.center,
+                                        style: theme.textTheme.headlineSmall,
+                                      ),
+                              ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          for (final (i, option) in question.options.indexed)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: _OptionButton(
+                                letter: 'ABCD'[i],
+                                label: option.answer,
+                                state: !session.isAnswered
+                                    ? _OptionState.idle
+                                    : option == question.item
+                                    ? _OptionState.correct
+                                    : option == session.picked
+                                    ? _OptionState.wrong
+                                    : _OptionState.dimmed,
+                                onTap: () => notifier.answer(option),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              for (final (i, option) in question.options.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: _OptionButton(
-                    letter: 'ABCD'[i],
-                    label: option.answer,
-                    state: !session.isAnswered
-                        ? _OptionState.idle
-                        : option == question.item
-                        ? _OptionState.correct
-                        : option == session.picked
-                        ? _OptionState.wrong
-                        : _OptionState.dimmed,
-                    onTap: () => notifier.answer(option),
-                  ),
-                ),
             ],
           ),
         ),
@@ -323,7 +366,10 @@ class _Feedback extends StatelessWidget {
                 child: Text(l10n.quiz_viewDetail),
               ),
               // Chỉ cho nghe SAU khi trả lời — nghe trước là lộ đáp án.
-              SpeakButton(session.current.item.speech),
+              SpeakButton(
+                session.current.item.speech,
+                language: session.current.item.module.speechLanguage,
+              ),
             ],
           ),
           if (!ok)
@@ -346,6 +392,51 @@ class _Feedback extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Câu "Nghe": tự đọc khi sang câu mới, bấm để nghe lại (không hiện chữ).
+class _ListenPrompt extends HookConsumerWidget {
+  const _ListenPrompt(this.item);
+
+  final QuizItem item;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    void play() => ref
+        .read(speechProvider)
+        .speak(item.speech, language: item.module.speechLanguage);
+    useEffect(() {
+      play();
+      return null;
+    }, [item]);
+    final colors = context.colors;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Material(
+          color: colors.primarySoft,
+          shape: const CircleBorder(),
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: play,
+            child: Padding(
+              padding: const EdgeInsets.all(36),
+              child: Icon(
+                Icons.volume_up_rounded,
+                size: 64,
+                color: colors.primary,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          context.l10n.quiz_tapToListen,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }

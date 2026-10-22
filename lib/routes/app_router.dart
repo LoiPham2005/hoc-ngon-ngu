@@ -1,5 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lingua/features/course/models/course_model.dart';
+import 'package:lingua/features/english/english_topics_page.dart';
+import 'package:lingua/features/english/grammar_lesson_page.dart';
+import 'package:lingua/features/english/grammar_list_page.dart';
+import 'package:lingua/features/english/grammar_practice_page.dart';
+import 'package:lingua/features/english/phrase_list_page.dart';
+import 'package:lingua/features/english/pronunciation_page.dart';
+import 'package:lingua/features/english/vocab_list_page.dart';
+import 'package:lingua/features/english/word_detail_page.dart';
 import 'package:lingua/features/home/home_page.dart';
 import 'package:lingua/features/japanese/kana_detail_page.dart';
 import 'package:lingua/features/japanese/kana_table_page.dart';
@@ -42,6 +51,14 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: KanaDetailRoute.page, path: '/kana/detail'),
     AutoRoute(page: KanjiListRoute.page, path: '/kanji'),
     AutoRoute(page: KanjiDetailRoute.page, path: '/kanji/detail'),
+    AutoRoute(page: PronunciationRoute.page, path: '/en/pronunciation'),
+    AutoRoute(page: EnglishTopicsRoute.page, path: '/en/topics'),
+    AutoRoute(page: VocabListRoute.page, path: '/en/vocab'),
+    AutoRoute(page: WordDetailRoute.page, path: '/en/word'),
+    AutoRoute(page: PhraseListRoute.page, path: '/en/phrases'),
+    AutoRoute(page: GrammarListRoute.page, path: '/en/grammar'),
+    AutoRoute(page: GrammarLessonRoute.page, path: '/en/grammar/lesson'),
+    AutoRoute(page: GrammarPracticeRoute.page, path: '/en/grammar/practice'),
     AutoRoute(page: QuizRoute.page, path: '/quiz'),
   ];
 }

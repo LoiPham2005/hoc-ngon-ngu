@@ -3,48 +3,81 @@ import 'dart:math';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/english/providers/english_provider.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_session_notifier.g.dart';
 
-/// Hỏi gì về chữ.
-enum QuizMode { reading, hanViet, meaning }
+/// Hỏi gì về chữ / từ / câu.
+enum QuizMode {
+  /// Kana: chữ → cách đọc.
+  reading,
 
-/// Chủ đề bài luyện: 1 học phần, hoặc Kana tổng hợp ([module] = null).
+  /// Kanji: chữ → âm Hán Việt.
+  hanViet,
+
+  /// Chữ / từ / câu → nghĩa.
+  meaning,
+
+  /// Nghe đọc → chọn từ đúng (không hiện chữ).
+  listening,
+}
+
+/// Chủ đề bài luyện: 1 học phần (hoặc Kana tổng hợp khi [module] = null).
 class QuizTopic {
-  const QuizTopic(this.module, this.mode, {this.kanaSet = KanaSet.all});
+  const QuizTopic(
+    this.module,
+    this.mode, {
+    this.kanaSet = KanaSet.all,
+    this.group,
+  });
 
   /// Hiragana + Katakana.
   const QuizTopic.kanaMix({this.kanaSet = KanaSet.all})
     : module = null,
-      mode = QuizMode.reading;
+      mode = QuizMode.reading,
+      group = null;
 
   final Module? module;
   final QuizMode mode;
 
-  /// Bài Kana: luyện âm cơ bản / âm đục / cả hai (bài Kanji bỏ qua).
+  /// Bài Kana: luyện âm cơ bản / âm đục / cả hai.
   final KanaSet kanaSet;
+
+  /// Bài Tiếng Anh: chỉ 1 chủ đề / tình huống (`null` = tất cả).
+  final String? group;
+
+  /// Bài "Ôn nhanh 10 câu" của học phần (Trang chủ, phím tắt icon app).
+  static QuizTopic quickReview(Module module) => switch (module) {
+    Module.hiragana || Module.katakana => QuizTopic(module, QuizMode.reading),
+    Module.enPronunciation ||
+    Module.enVocabulary ||
+    Module.enGrammar => const QuizTopic(Module.enVocabulary, QuizMode.meaning),
+    _ => QuizTopic(module, QuizMode.meaning),
+  };
 
   @override
   bool operator ==(Object other) =>
       other is QuizTopic &&
       other.module == module &&
       other.mode == mode &&
-      other.kanaSet == kanaSet;
+      other.kanaSet == kanaSet &&
+      other.group == group;
 
   @override
-  int get hashCode => Object.hash(module, mode, kanaSet);
+  int get hashCode => Object.hash(module, mode, kanaSet, group);
 }
 
-/// 1 chữ trong bài: [char] hỏi, [answer] đáp án đúng.
-/// [group] = nhóm đáp án nhiễu (Hiragana chỉ lẫn với Hiragana…).
+/// 1 mục trong bài: [char] = chữ / từ / câu hỏi, [answer] = đáp án đúng.
+/// [group] = nhóm đáp án nhiễu (cùng bảng chữ / cùng chủ đề) — đáp án sai luôn cùng nhóm.
 class QuizItem {
   const QuizItem({
     required this.char,
     required this.answer,
     required this.group,
+    required this.module,
     required this.speech,
   });
 
@@ -52,14 +85,18 @@ class QuizItem {
   final String answer;
   final String group;
 
-  /// Nội dung đọc phát âm (Kana: chữ; Kanji: các âm On/Kun).
+  /// Học phần chứa mục này (để mở màn chi tiết, chọn giọng đọc).
+  final Module module;
+
+  /// Nội dung đọc phát âm (Kana: chữ; Kanji: âm On/Kun; Tiếng Anh: từ / câu).
   final String speech;
 
   @override
-  bool operator ==(Object other) => other is QuizItem && other.char == char;
+  bool operator ==(Object other) =>
+      other is QuizItem && other.char == char && other.module == module;
 
   @override
-  int get hashCode => char.hashCode;
+  int get hashCode => Object.hash(char, module);
 }
 
 class QuizQuestion {
@@ -103,7 +140,73 @@ class QuizSession {
   ];
 }
 
-/// 1 bài luyện [length] câu. Chỉ tạo sau khi dữ liệu Kanji đã tải (trang chờ `kanjiListProvider`).
+/// Mọi mục có thể hỏi của [topic] (tải dữ liệu cần thiết: Kanji / từ vựng / câu).
+@riverpod
+Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
+  final module = topic.module;
+  QuizItem kana(Kana k) => QuizItem(
+    char: k.char,
+    answer: k.romaji,
+    group: k.script.name,
+    module: k.script == KanaScript.hiragana ? Module.hiragana : Module.katakana,
+    speech: k.char,
+  );
+  switch (module) {
+    case null || Module.hiragana || Module.katakana:
+      final scripts = switch (module) {
+        Module.hiragana => [KanaScript.hiragana],
+        Module.katakana => [KanaScript.katakana],
+        _ => KanaScript.values,
+      };
+      return [
+        for (final s in scripts)
+          for (final k in KanaTable.of(s, topic.kanaSet)) kana(k),
+      ];
+    case Module.enPronunciation || Module.enVocabulary:
+      return [
+        for (final t in await ref.watch(vocabTopicsProvider.future))
+          if (topic.group == null || topic.group == t.id)
+            for (final w in t.items)
+              QuizItem(
+                char: w.word,
+                answer: topic.mode == QuizMode.listening ? w.word : w.meaning,
+                group: t.id,
+                module: Module.enVocabulary,
+                speech: w.word,
+              ),
+      ];
+    case Module.enPhrases:
+      return [
+        for (final t in await ref.watch(phraseTopicsProvider.future))
+          if (topic.group == null || topic.group == t.id)
+            for (final p in t.items)
+              QuizItem(
+                char: p.text,
+                answer: p.meaning,
+                group: t.id,
+                module: Module.enPhrases,
+                speech: p.text,
+              ),
+      ];
+    case final Module m:
+      final language = ref.watch(localeProvider).languageCode;
+      return [
+        for (final k in await ref.watch(kanjiListProvider.future))
+          if (k.level == m.kanjiLevel)
+            QuizItem(
+              char: k.char,
+              answer: topic.mode == QuizMode.hanViet
+                  ? k.hanViet
+                  : k.meaningFor(language),
+              group: m.name,
+              module: m,
+              speech: k.speech,
+            ),
+      ];
+  }
+}
+
+/// 1 bài luyện [length] câu. Chỉ tạo sau khi [quizPoolProvider] đã tải xong (trang chờ bằng AsyncView).
 @riverpod
 class QuizSessionNotifier extends _$QuizSessionNotifier {
   static const length = 10;
@@ -137,7 +240,7 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
   void restart() => state = _newSession();
 
   QuizSession _newSession() {
-    final pool = _items();
+    final pool = ref.read(quizPoolProvider(topic)).requireValue;
     final chosen = (pool.toList()..shuffle(_random)).take(length).toList();
     return QuizSession(
       questions: [
@@ -155,39 +258,5 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
         if (seen.add(o.answer)) o,
     ].take(3);
     return [item, ...others]..shuffle(_random);
-  }
-
-  List<QuizItem> _items() {
-    QuizItem kana(Kana k) => QuizItem(
-      char: k.char,
-      answer: k.romaji,
-      group: k.script.name,
-      speech: k.char,
-    );
-    final module = topic.module;
-    if (module == null || !module.isKanji) {
-      final scripts = switch (module) {
-        Module.hiragana => [KanaScript.hiragana],
-        Module.katakana => [KanaScript.katakana],
-        _ => KanaScript.values,
-      };
-      return [
-        for (final s in scripts)
-          for (final k in KanaTable.of(s, topic.kanaSet)) kana(k),
-      ];
-    }
-    final language = ref.read(localeProvider).languageCode;
-    return [
-      for (final k in ref.read(kanjiListProvider).requireValue)
-        if (k.level == module.kanjiLevel)
-          QuizItem(
-            char: k.char,
-            answer: topic.mode == QuizMode.hanViet
-                ? k.hanViet
-                : k.meaningFor(language),
-            group: module.name,
-            speech: k.speech,
-          ),
-    ];
   }
 }

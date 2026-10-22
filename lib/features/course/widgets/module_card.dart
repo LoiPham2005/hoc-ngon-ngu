@@ -22,6 +22,10 @@ void openModule(BuildContext context, WidgetRef ref, Module module) {
   context.router.push(switch (module) {
     Module.hiragana => KanaTableRoute(script: KanaScript.hiragana),
     Module.katakana => KanaTableRoute(script: KanaScript.katakana),
+    Module.enPronunciation => const PronunciationRoute(),
+    Module.enVocabulary => EnglishTopicsRoute(module: Module.enVocabulary),
+    Module.enPhrases => EnglishTopicsRoute(module: Module.enPhrases),
+    Module.enGrammar => const GrammarListRoute(),
     _ => KanjiListRoute(level: module.kanjiLevel!),
   });
 }

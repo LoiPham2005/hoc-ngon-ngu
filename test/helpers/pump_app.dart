@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/di/global_providers.dart';
@@ -23,6 +26,8 @@ Future<void> pumpApp(
   Map<String, Object> prefs = const {},
   bool settle = true,
 }) async {
+  // rootBundle giữ Future đọc asset của test trước (vùng giờ giả đã chết) → xoá để đọc lại.
+  rootBundle.clear();
   SharedPreferences.setMockInitialValues({
     'app_locale': locale.languageCode,
     ...prefs,
@@ -63,6 +68,18 @@ Future<void> loadAsset(
   final container = ProviderScope.containerOf(
     tester.element(find.byType(MaterialApp)),
   );
-  await tester.runAsync(() => read(container));
-  await tester.pump();
+  // Future do màn tạo trong vùng giờ giả → phải xen kẽ chờ I/O thật (runAsync) và pump
+  // để chạy tiếp callback của nó; chỉ `runAsync(read)` thì treo mãi.
+  var done = false;
+  unawaited(
+    read(
+      container,
+    ).then<void>((_) => done = true, onError: (Object _) => done = true),
+  );
+  for (var i = 0; i < 200 && !done; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump();
+  }
 }

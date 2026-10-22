@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/english/models/english_model.dart';
+import 'package:lingua/features/english/providers/english_provider.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
@@ -20,6 +22,8 @@ final _kanji = [
 ];
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('dữ liệu', () {
     test(
       'Kana: 71 chữ mỗi bảng (46 + 25 âm đục), Katakana = Hiragana + 0x60',
@@ -64,6 +68,71 @@ void main() {
     });
   });
 
+  group('dữ liệu tiếng Anh', () {
+    late ProviderContainer c;
+
+    setUp(() {
+      c = ProviderContainer();
+      addTearDown(c.dispose);
+    });
+
+    test(
+      'từ vựng: 20 chủ đề, 499 từ không trùng, đủ IPA / nghĩa / ví dụ',
+      () async {
+        final topics = await c.read(vocabTopicsProvider.future);
+        final words = [for (final t in topics) ...t.items];
+        expect(topics, hasLength(20));
+        expect(words, hasLength(499));
+        expect(words.map((w) => w.key).toSet(), hasLength(499));
+        for (final w in words) {
+          expect(
+            [w.ipa, w.meaning, w.example, w.exampleVi],
+            everyElement(isNotEmpty),
+            reason: w.word,
+          );
+          expect(w.ipa, isNot(contains('/')), reason: w.word);
+        }
+      },
+    );
+
+    test('câu giao tiếp: 15 tình huống × 12 câu', () async {
+      final topics = await c.read(phraseTopicsProvider.future);
+      expect(topics, hasLength(15));
+      expect(topics.every((t) => t.items.length == 12), isTrue);
+    });
+
+    test(
+      'ngữ pháp: 24 bài, mỗi bài 6 trắc nghiệm + 4 ghép câu hợp lệ',
+      () async {
+        final lessons = await c.read(grammarLessonsProvider.future);
+        expect(lessons, hasLength(24));
+        expect(lessons.map((g) => g.id).toSet(), hasLength(24));
+        for (final g in lessons) {
+          expect(g.formulas, isNotEmpty, reason: g.id);
+          expect(g.examples, isNotEmpty, reason: g.id);
+          expect(g.exercises.whereType<ChoiceExercise>(), hasLength(6));
+          expect(g.exercises.whereType<OrderExercise>(), hasLength(4));
+          for (final e in g.exercises) {
+            switch (e) {
+              case ChoiceExercise():
+                expect(
+                  '___'.allMatches(e.prompt),
+                  hasLength(1),
+                  reason: e.prompt,
+                );
+                expect(e.options.toSet(), hasLength(4), reason: e.prompt);
+                expect(e.answer, inInclusiveRange(0, 3));
+              case OrderExercise():
+                expect(e.ending, isNotEmpty, reason: e.answer);
+                expect('${e.words.join(' ')}${e.ending}', e.answer);
+                expect(e.words.length, greaterThan(2), reason: e.answer);
+            }
+          }
+        }
+      },
+    );
+  });
+
   group('bài luyện', () {
     late ProviderContainer c;
 
@@ -85,16 +154,22 @@ void main() {
         if (m.isKanji)
           for (final mode in [QuizMode.hanViet, QuizMode.meaning])
             QuizTopic(m, mode)
-        else
+        else if (m.isKana)
           for (final set in KanaSet.values)
             QuizTopic(m, QuizMode.reading, kanaSet: set),
       for (final set in KanaSet.values) QuizTopic.kanaMix(kanaSet: set),
+      const QuizTopic(Module.enVocabulary, QuizMode.meaning),
+      const QuizTopic(Module.enVocabulary, QuizMode.listening),
+      const QuizTopic(Module.enVocabulary, QuizMode.meaning, group: 'food'),
+      const QuizTopic(Module.enPhrases, QuizMode.meaning),
+      const QuizTopic(Module.enPhrases, QuizMode.meaning, group: 'hotel'),
     ];
 
     for (final topic in topics) {
       test(
-        '${topic.module?.name ?? 'kanaMix'}/${topic.mode.name}: 10 câu không trùng, 4 đáp án hợp lệ',
-        () {
+        '${topic.module?.name ?? 'kanaMix'}/${topic.mode.name}/${topic.group ?? '*'}: 10 câu không trùng, 4 đáp án hợp lệ',
+        () async {
+          await c.read(quizPoolProvider(topic).future);
           final provider = quizSessionProvider(topic);
           c.listen(provider, (_, _) {});
           for (var round = 0; round < 20; round++) {
@@ -106,6 +181,7 @@ void main() {
               expect(q.options, contains(q.item));
               expect(q.options.map((o) => o.answer).toSet(), hasLength(4));
               expect(q.options.every((o) => o.group == q.item.group), isTrue);
+              if (topic.group != null) expect(q.item.group, topic.group);
             }
             c.read(provider.notifier).restart();
           }
@@ -113,14 +189,18 @@ void main() {
       );
     }
 
-    test('chọn phần Kana: câu hỏi + đáp án chỉ lấy trong phần đó', () {
+    test('chọn phần Kana: câu hỏi + đáp án chỉ lấy trong phần đó', () async {
       for (final set in KanaSet.values) {
         final allowed = {
           for (final k in KanaTable.of(KanaScript.hiragana, set)) k.char,
         };
-        final provider = quizSessionProvider(
-          QuizTopic(Module.hiragana, QuizMode.reading, kanaSet: set),
+        final topic = QuizTopic(
+          Module.hiragana,
+          QuizMode.reading,
+          kanaSet: set,
         );
+        await c.read(quizPoolProvider(topic).future);
+        final provider = quizSessionProvider(topic);
         c.listen(provider, (_, _) {});
         for (var round = 0; round < 10; round++) {
           for (final q in c.read(provider).questions) {
@@ -140,8 +220,9 @@ void main() {
 
     test(
       'làm hết bài: chấm điểm, câu sai, cộng thống kê người học, xem kết quả',
-      () {
+      () async {
         const topic = QuizTopic(Module.hiragana, QuizMode.reading);
+        await c.read(quizPoolProvider(topic).future);
         final provider = quizSessionProvider(topic);
         c.listen(provider, (_, _) {});
         final n = c.read(provider.notifier);

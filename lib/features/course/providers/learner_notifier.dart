@@ -137,6 +137,11 @@ class LearnerNotifier extends _$LearnerNotifier {
     return _save(added ? _withActivity(next) : next);
   }
 
+  /// Đánh dấu đã thuộc (không bỏ đánh dấu nếu đã có) — dùng khi làm bài đạt.
+  Future<void> markLearned(String key) async {
+    if (!state.learned.contains(key)) await toggleLearned(key);
+  }
+
   Future<void> recordAnswer({required bool correct}) => _save(
     _withActivity(
       state.copyWith(

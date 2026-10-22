@@ -12,18 +12,21 @@ part 'speech_service.g.dart';
 /// Đọc phát âm:
 /// - Kana: phát file ghi sẵn `assets/japanese/audio/<mã Hiragana>.m4a` (VOICEVOX:No.7) —
 ///   nghe được trên MỌI máy, không cần cài gì. Katakana dùng chung file với Hiragana.
-/// - Còn lại (âm On/Kun của Kanji…): giọng có sẵn trên máy (Text-to-Speech).
+/// - Còn lại (âm On/Kun của Kanji, từ/câu tiếng Anh…): giọng có sẵn trên máy (Text-to-Speech).
 class SpeechService {
   final _tts = FlutterTts();
   AudioPlayer? _player;
-  Future<bool>? _ttsReady;
+  bool _audioReady = false;
+
+  /// Giọng đang đặt (đổi khi chuyển qua lại Nhật ↔ Anh).
+  String? _language;
 
   /// `false` = máy chưa có giọng đọc [language] (chỉ xảy ra với nội dung không phải Kana).
   Future<bool> speak(String text, {String language = 'ja-JP'}) async {
     final clip = kanaClip(text);
     if (clip != null && await _play(clip)) return true;
     try {
-      if (!await (_ttsReady ??= _initTts(language))) return false;
+      if (!await _useLanguage(language)) return false;
       await _tts.stop();
       await _tts.speak(text);
       return true;
@@ -69,18 +72,21 @@ class SpeechService {
     }
   }
 
-  Future<bool> _initTts(String language) async {
-    if (await _tts.isLanguageAvailable(language) != true) {
-      _ttsReady =
-          null; // cài giọng xong bấm lại là dùng được, không cần mở lại app
-      return false;
+  /// Đặt giọng [language]; `false` = máy chưa có giọng này. Không nhớ kết quả "chưa có"
+  /// → cài giọng xong bấm lại là dùng được, không cần mở lại app.
+  Future<bool> _useLanguage(String language) async {
+    if (_language == language) return true;
+    if (await _tts.isLanguageAvailable(language) != true) return false;
+    if (!_audioReady) {
+      await _tts.setSpeechRate(0.4); // chậm hơn mặc định cho người học
+      // iOS: vẫn kêu khi gạt công tắc im lặng.
+      await _tts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback, [
+        IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+      ]);
+      _audioReady = true;
     }
     await _tts.setLanguage(language);
-    await _tts.setSpeechRate(0.4); // chậm hơn mặc định cho người học
-    // iOS: vẫn kêu khi gạt công tắc im lặng.
-    await _tts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback, [
-      IosTextToSpeechAudioCategoryOptions.mixWithOthers,
-    ]);
+    _language = language;
     return true;
   }
 }

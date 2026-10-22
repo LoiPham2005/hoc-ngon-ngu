@@ -59,4 +59,8 @@ abstract final class AppPalette {
   static const kanjiN4 = Color(0xFF7950F2);
   static const kanjiN3 = Color(0xFFEF6C1A);
   static const kanjiN2 = Color(0xFFC92A2A);
+  static const enPronunciation = Color(0xFF0C8599);
+  static const enVocabulary = Color(0xFF1C7ED6);
+  static const enPhrases = Color(0xFFE8590C);
+  static const enGrammar = Color(0xFF7048E8);
 }

@@ -34,17 +34,16 @@ class LearnPage extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
         children: [
-          SectionTitle(l10n.learn_alphabet),
-          for (final m in modules.where((m) => !m.isKanji)) ...[
-            ModuleCard(m),
-            const SizedBox(height: 10),
-          ],
-          const SizedBox(height: 12),
-          SectionTitle(l10n.learn_kanji),
-          for (final m in modules.where((m) => m.isKanji)) ...[
-            ModuleCard(m),
-            const SizedBox(height: 10),
-          ],
+          for (final section in ModuleSection.values)
+            if (modules.where((m) => m.section == section).toList()
+                case final group when group.isNotEmpty) ...[
+              SectionTitle(section.title(context)),
+              for (final m in group) ...[
+                ModuleCard(m),
+                const SizedBox(height: 10),
+              ],
+              const SizedBox(height: 12),
+            ],
         ],
       ),
     );

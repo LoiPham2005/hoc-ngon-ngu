@@ -51,8 +51,8 @@ void main() {
         methods,
         containsAllInOrder([
           'isLanguageAvailable',
-          'setLanguage',
           'setSpeechRate',
+          'setLanguage',
           'speak',
         ]),
       );
@@ -63,6 +63,20 @@ void main() {
       expect(calls.lastWhere((c) => c.method == 'speak').arguments, 'ニチ、ひ');
     },
   );
+
+  test('đổi ngôn ngữ đọc: chỉ đặt lại giọng khi khác lần trước', () async {
+    final speech = SpeechService();
+    await speech.speak('hello', language: 'en-US');
+    await speech.speak('world', language: 'en-US');
+    await speech.speak('ニチ');
+    expect(
+      [
+        for (final c in calls)
+          if (c.method == 'setLanguage') c.arguments,
+      ],
+      ['en-US', 'ja-JP'],
+    );
+  });
 
   test(
     'máy chưa có giọng → false, không đọc; cài xong bấm lại là đọc được',

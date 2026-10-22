@@ -18,8 +18,11 @@ abstract class AppQuickActions {
       if (type != _review) return;
       final learner = globalContainer.read(learnerProvider);
       if (learner.course == null) return; // chưa qua onboarding
-      final module = learner.lastModule ?? learner.course!.modules.first;
-      appRouter.push(QuizRoute(topic: QuizTopic(module, QuizMode.reading)));
+      final course = learner.course!;
+      final module = learner.lastModule?.course == course
+          ? learner.lastModule!
+          : course.modules.first;
+      appRouter.push(QuizRoute(topic: QuizTopic.quickReview(module)));
     });
     await update();
   }

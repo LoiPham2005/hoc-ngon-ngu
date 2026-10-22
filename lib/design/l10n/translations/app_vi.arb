@@ -232,5 +232,120 @@
         "type": "int"
       }
     }
+  },
+  "learn_pronunciation": "Phát âm",
+  "learn_vocabulary": "Từ vựng & giao tiếp",
+  "learn_grammar": "Ngữ pháp",
+  "module_enPronunciation": "Phát âm IPA",
+  "module_enPronunciation_desc": "{count} âm của tiếng Anh",
+  "module_enVocabulary": "Từ vựng theo chủ đề",
+  "module_enVocabulary_desc": "{count} từ thông dụng",
+  "module_enPhrases": "Câu giao tiếp",
+  "module_enPhrases_desc": "{count} câu theo tình huống",
+  "module_enGrammar": "Ngữ pháp & ghép câu",
+  "module_enGrammar_desc": "{count} bài từ A1 đến B1",
+  "ipa_vowels": "Nguyên âm đơn",
+  "ipa_diphthongs": "Nguyên âm đôi",
+  "ipa_consonants": "Phụ âm",
+  "ipa_hint": "bấm để nghe từ ví dụ",
+  "topics_words": "{count} từ",
+  "topics_phrases": "{count} câu",
+  "word_example": "VÍ DỤ",
+  "pos_n": "danh từ",
+  "pos_v": "động từ",
+  "pos_adj": "tính từ",
+  "pos_adv": "trạng từ",
+  "pos_num": "số từ",
+  "pos_prep": "giới từ",
+  "pos_pron": "đại từ",
+  "practice_vocabMeaning": "Từ vựng · Nghĩa",
+  "practice_vocabMeaning_desc": "Xem từ, chọn nghĩa đúng",
+  "practice_vocabListening": "Từ vựng · Nghe",
+  "practice_vocabListening_desc": "Nghe đọc, chọn từ đúng",
+  "practice_phrases": "Câu giao tiếp",
+  "practice_phrases_desc": "Hiểu nghĩa câu thông dụng",
+  "practice_grammar": "Ngữ pháp & ghép câu",
+  "practice_grammar_desc": "Chọn đáp án, sắp xếp từ thành câu",
+  "practice_pickTopic": "Chọn chủ đề",
+  "practice_allTopics": "Tất cả chủ đề",
+  "quiz_askListening": "Bạn nghe thấy từ nào?",
+  "quiz_askPhrase": "Câu này nghĩa là gì?",
+  "quiz_tapToListen": "Bấm để nghe lại",
+  "grammar_formulas": "Công thức",
+  "grammar_points": "Ghi nhớ",
+  "grammar_examples": "Ví dụ",
+  "grammar_start": "Làm bài tập ({count} câu)",
+  "grammar_choiceAsk": "Chọn đáp án đúng",
+  "grammar_orderAsk": "Sắp xếp thành câu đúng",
+  "grammar_orderHint": "Bấm từ để thêm vào câu, bấm lại để bỏ",
+  "grammar_check": "Kiểm tra",
+  "grammar_correctAnswer": "Câu đúng: {answer}",
+  "grammar_passed": "Đã thuộc bài này ✓",
+  "grammar_passHint": "Đúng từ {pass}/{total} câu để đánh dấu đã thuộc bài",
+  "@module_enPronunciation_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enVocabulary_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enPhrases_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@module_enGrammar_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@topics_words": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@topics_phrases": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_start": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_passHint": {
+    "placeholders": {
+      "pass": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@grammar_correctAnswer": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
   }
 }

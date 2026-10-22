@@ -20,7 +20,9 @@ class HomePage extends ConsumerWidget {
     final learner = ref.watch(learnerProvider);
     final notifier = ref.read(learnerProvider.notifier);
     final course = learner.course ?? Course.ja;
-    final module = learner.lastModule ?? course.modules.first;
+    final module = learner.lastModule?.course == course
+        ? learner.lastModule!
+        : course.modules.first;
     final l10n = context.l10n;
     final colors = context.colors;
     final hour = DateTime.now().hour;
@@ -60,7 +62,7 @@ class HomePage extends ConsumerWidget {
             const SizedBox(height: 12),
             FilledButton.icon(
               onPressed: () => context.router.push(
-                QuizRoute(topic: QuizTopic(module, QuizMode.reading)),
+                QuizRoute(topic: QuizTopic.quickReview(module)),
               ),
               icon: const Icon(Icons.bolt_rounded),
               label: Text(l10n.home_quickReview),

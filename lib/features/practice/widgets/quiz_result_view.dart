@@ -104,16 +104,25 @@ class QuizResultView extends StatelessWidget {
                           clipBehavior: Clip.antiAlias,
                           child: ListTile(
                             onTap: () => onOpen(item),
-                            leading: GlyphBadge(
-                              item.char,
-                              color: colors.error,
-                              size: 42,
-                            ),
+                            // Chữ ngắn (Kana/Kanji) → ô chữ; từ / câu dài → dòng chữ.
+                            leading: item.char.length <= 3
+                                ? GlyphBadge(
+                                    item.char,
+                                    color: colors.error,
+                                    size: 42,
+                                  )
+                                : Icon(
+                                    Icons.close_rounded,
+                                    color: colors.error,
+                                  ),
                             title: Text(
-                              item.answer,
+                              item.char.length <= 3 ? item.answer : item.char,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            subtitle: item.char.length <= 3
+                                ? null
+                                : Text(item.answer),
                             trailing: const Icon(Icons.chevron_right_rounded),
                           ),
                         ),
