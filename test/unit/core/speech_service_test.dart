@@ -207,4 +207,35 @@ void main() {
         calls.lastWhere((c) => c.method == 'setVoice').arguments as Map;
     expect(voice['name'], 'Tom'); // khác giới tính được ưu tiên
   });
+
+  test(
+    'Google voices: gender from voice code, flag from region, local preferred over network',
+    () async {
+      voices = [
+        {
+          'name': 'en-us-x-iom-network',
+          'locale': 'en-US',
+          'network_required': '1',
+        },
+        {'name': 'en-us-x-iom-local', 'locale': 'en-US'},
+        {'name': 'en-us-x-sfg-local', 'locale': 'en-US'},
+        {'name': 'en-gb-x-gbb-local', 'locale': 'en-GB'},
+        {'name': 'en-us-x-zzz-local', 'locale': 'en-US'},
+      ];
+      final list = await SpeechService().voices('en-US');
+      expect(list.map((v) => v.name), isNot(contains('en-us-x-iom-network')));
+      final byName = {for (final v in list) v.name: v};
+      expect(byName['en-us-x-iom-local']!.genderOrGuess, 'male');
+      expect(byName['en-us-x-sfg-local']!.genderOrGuess, 'female');
+      expect(byName['en-us-x-zzz-local']!.genderOrGuess, isNull);
+      expect(byName['en-gb-x-gbb-local']!.flag, '🇬🇧');
+      expect(byName['en-us-x-sfg-local']!.region, 'US');
+    },
+  );
+
+  test('engine label: known engines get a friendly name', () {
+    expect(engineLabel('com.google.android.tts'), 'Google');
+    expect(engineLabel('com.samsung.SMT'), 'Samsung');
+    expect(engineLabel('com.example.mytts'), 'example');
+  });
 }

@@ -319,5 +319,11 @@
   "permission_bluetooth_reason": "機器と接続するために Bluetooth を使います。",
   "permission_activity_title": "身体活動の許可が必要です",
   "permission_activity_reason": "歩数や活動を認識するために使います。",
-  "permission_later": "あとで"
+  "permission_later": "あとで",
+  "voice_engine": "音声エンジン",
+  "voice_gender_all": "すべて",
+  "voice_female_n": "女性の声 {n}",
+  "voice_male_n": "男性の声 {n}",
+  "voice_fewVoices": "このエンジンにはこの言語の声が {count} 個しかありません。男性・女性の声を増やすには、上で Google エンジンを選ぶか、「Google の音声サービス」をインストールして音声をダウンロードしてください。",
+  "voice_installGoogle": "Google の音声を入手"
 }

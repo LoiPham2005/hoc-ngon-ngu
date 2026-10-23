@@ -11,6 +11,10 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/shared/base/app_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+/// Bộ đọc Google (nhiều giọng nam/nữ, nhiều vùng).
+const _googleTts = 'com.google.android.tts';
 
 /// Câu nghe thử theo ngôn ngữ đọc.
 const _samples = {
@@ -40,8 +44,19 @@ class VoiceSettingsPage extends HookConsumerWidget {
     final prefs = ref.watch(
       voiceSettingsProvider.select((s) => s[language] ?? const VoicePrefs()),
     );
-    final voicesFuture = useMemoized(() => speech.voices(language), [language]);
+    // Bộ đọc (Android): đổi bộ đọc → danh sách giọng nạp lại.
+    final engine = ref.watch(ttsEngineProvider);
+    final engines = useFuture(useMemoized(speech.engines)).data ?? const [];
+    final currentEngine = useFuture(
+      useMemoized(speech.currentEngine, [engine]),
+    ).data;
+    final voicesFuture = useMemoized(() => speech.voices(language), [
+      language,
+      engine,
+    ]);
     final voices = useFuture(voicesFuture);
+    // Lọc giọng: null = tất cả, 'male' / 'female'.
+    final gender = useState<String?>(null);
     final sample = _samples[language] ?? '';
 
     void preview(TtsVoice? voice, {double? rate}) => speech.speakWith(
@@ -51,18 +66,38 @@ class VoiceSettingsPage extends HookConsumerWidget {
       rate: rate ?? prefs.rate,
     );
 
-    final list = voices.data ?? const <TtsVoice>[];
+    final all = voices.data ?? const <TtsVoice>[];
+    final hasGender = all.any((v) => v.genderOrGuess != null);
+    final list = [
+      for (final v in all)
+        if (gender.value == null || v.genderOrGuess == gender.value) v,
+    ];
     String label(TtsVoice v) {
-      // iOS có tên người (Samantha, Kyoko…); Android là mã khó đọc → đánh số.
-      final named = !v.name.contains('-') && !v.name.contains('#');
-      final base = named ? v.name : l10n.voice_numbered(list.indexOf(v) + 1);
-      return '$base · ${v.locale}';
+      // iOS có tên người (Samantha, Kyoko…); Android là mã → "Giọng nữ 2", đánh số theo giới tính.
+      final named =
+          v.googleCode == null &&
+          !v.name.contains('-') &&
+          !v.name.contains('#') &&
+          v.name.length > 3;
+      final same = [
+        for (final o in all)
+          if (o.genderOrGuess == v.genderOrGuess) o,
+      ];
+      final n = same.indexOf(v) + 1;
+      final base = named
+          ? v.name
+          : switch (v.genderOrGuess) {
+              'female' => l10n.voice_female_n(n),
+              'male' => l10n.voice_male_n(n),
+              _ => l10n.voice_numbered(n),
+            };
+      return [base, ?v.flag, ?v.region].join(' ');
     }
 
     String? subtitle(TtsVoice v) {
       final tags = [
-        if (v.gender == 'male') l10n.voice_male,
-        if (v.gender == 'female') l10n.voice_female,
+        if (v.genderOrGuess == 'male') l10n.voice_male,
+        if (v.genderOrGuess == 'female') l10n.voice_female,
         if (v.isHighQuality) l10n.voice_highQuality,
         if (v.network) l10n.voice_network,
       ];
@@ -128,6 +163,39 @@ class VoiceSettingsPage extends HookConsumerWidget {
               Text(l10n.voice_rate_fast, style: theme.textTheme.bodySmall),
             ],
           ),
+          if (engines.length > 1) ...[
+            SectionTitle(l10n.voice_engine),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final e in engines)
+                  ChoiceChip(
+                    label: Text(engineLabel(e)),
+                    selected: e == currentEngine,
+                    onSelected: (_) =>
+                        ref.read(ttsEngineProvider.notifier).set(e),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
+          if (hasGender)
+            Wrap(
+              spacing: 8,
+              children: [
+                for (final (value, text) in [
+                  (null, l10n.voice_gender_all),
+                  ('female', l10n.voice_female),
+                  ('male', l10n.voice_male),
+                ])
+                  ChoiceChip(
+                    label: Text(text),
+                    selected: gender.value == value,
+                    onSelected: (_) => gender.value = value,
+                  ),
+              ],
+            ),
           const SizedBox(height: 8),
           if (voices.connectionState != ConnectionState.done)
             const Center(child: CircularProgressIndicator())
@@ -165,6 +233,40 @@ class VoiceSettingsPage extends HookConsumerWidget {
                 selected: prefs.partner,
                 onSelect: (v) => settings.setPartner(language, v),
               ),
+          ],
+          if (Platform.isAndroid &&
+              voices.connectionState == ConnectionState.done &&
+              all.length <= 1) ...[
+            const SizedBox(height: 16),
+            Card(
+              color: context.colors.warning.withValues(alpha: 0.12),
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.voice_fewVoices(all.length),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    if (!engines.contains(_googleTts))
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton.icon(
+                          onPressed: () => launchUrl(
+                            Uri.parse(
+                              'https://play.google.com/store/apps/details?id=$_googleTts',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          ),
+                          icon: const Icon(Icons.download_rounded),
+                          label: Text(l10n.voice_installGoogle),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
           ],
           const SizedBox(height: 16),
           Card(

@@ -579,5 +579,11 @@
   "permission_bluetooth_reason": "Ứng dụng cần Bluetooth để kết nối thiết bị.",
   "permission_activity_title": "Cần quyền hoạt động thể chất",
   "permission_activity_reason": "Ứng dụng cần đếm bước / nhận biết hoạt động của bạn.",
-  "permission_later": "Để sau"
+  "permission_later": "Để sau",
+  "voice_engine": "Bộ đọc",
+  "voice_gender_all": "Tất cả",
+  "voice_female_n": "Giọng nữ {n}",
+  "voice_male_n": "Giọng nam {n}",
+  "voice_fewVoices": "Bộ đọc này mới có {count} giọng cho ngôn ngữ này. Muốn nhiều giọng nam/nữ: chọn bộ đọc Google ở trên (nếu có), hoặc cài “Dịch vụ giọng nói của Google” rồi tải giọng.",
+  "voice_installGoogle": "Cài giọng Google"
 }

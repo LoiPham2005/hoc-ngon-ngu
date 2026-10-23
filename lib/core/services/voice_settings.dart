@@ -54,6 +54,29 @@ class TtsVoice {
 
   String get id => identifier ?? '$locale/$name';
 
+  /// Mã giọng của Google TTS: `en-us-x-iom-local` → `iom` (khác bộ đọc → `null`).
+  String? get googleCode => RegExp(
+    r'^[a-z]{2,3}-[a-z]{2}-x-([a-z]{3})-(local|network)$',
+  ).firstMatch(name.toLowerCase())?.group(1);
+
+  /// male / female: iOS báo sẵn; Android tra theo mã giọng Google (quy ước, không chính thức).
+  String? get genderOrGuess => gender ?? _googleGenders[googleCode];
+
+  /// Mã nước của giọng (`US`, `GB`, `JP`…), không có → `null`.
+  String? get region {
+    final parts = locale.split(RegExp('[-_]'));
+    return parts.length > 1 && parts[1].length == 2
+        ? parts[1].toUpperCase()
+        : null;
+  }
+
+  /// Cờ nước của giọng (🇺🇸 🇬🇧 🇦🇺…).
+  String? get flag => region == null
+      ? null
+      : String.fromCharCodes([
+          for (final c in region!.codeUnits) 0x1F1E6 + c - 0x41,
+        ]);
+
   bool get isHighQuality =>
       const {'very high', 'high', 'enhanced', 'premium'}.contains(quality);
 
@@ -78,6 +101,22 @@ class TtsVoice {
   @override
   int get hashCode => id.hashCode;
 }
+
+/// Giới tính các giọng Google TTS theo mã (bảng cộng đồng tổng hợp, có thể thiếu giọng mới).
+const _googleGenders = {
+  // en-US
+  'iob': 'female', 'iog': 'female', 'sfg': 'female', 'tpc': 'female',
+  'tpf': 'female', 'iol': 'male', 'iom': 'male', 'tpd': 'male',
+  // en-GB
+  'gba': 'female', 'gbc': 'female', 'gbg': 'female', 'fis': 'female',
+  'gbb': 'male', 'gbd': 'male', 'rjs': 'male',
+  // en-AU
+  'aua': 'female', 'auc': 'female', 'aub': 'male', 'aud': 'male',
+  // en-IN
+  'ahp': 'female', 'cxx': 'female', 'ene': 'female', 'end': 'male',
+  // ja-JP
+  'htm': 'female', 'jab': 'female', 'jac': 'male', 'jad': 'male',
+};
 
 /// Cài đặt đọc của 1 ngôn ngữ: giọng chính, giọng người thứ 2 (hội thoại), tốc độ.
 /// Giọng `null` = mặc định của máy / tự chọn.
@@ -162,4 +201,35 @@ class VoiceSettingsNotifier extends _$VoiceSettingsNotifier {
           jsonEncode(state.map((k, v) => MapEntry(k, v.toJson()))),
         );
   }
+}
+
+/// Bộ đọc (engine) TTS người dùng chọn — chỉ Android (Google, Samsung, của hãng máy…).
+/// `null` = bộ đọc mặc định của máy.
+@Riverpod(keepAlive: true)
+class TtsEngineNotifier extends _$TtsEngineNotifier {
+  static const _key = 'tts_engine_v1';
+
+  @override
+  String? build() => ref.read(sharedPrefsProvider).getString(_key);
+
+  Future<void> set(String? engine) async {
+    state = engine;
+    final prefs = ref.read(sharedPrefsProvider);
+    await (engine == null ? prefs.remove(_key) : prefs.setString(_key, engine));
+  }
+}
+
+/// Tên dễ đọc của bộ đọc: `com.google.android.tts` → Google.
+String engineLabel(String engine) {
+  const known = {
+    'com.google.android.tts': 'Google',
+    'com.samsung.SMT': 'Samsung',
+    'com.xiaomi.mibrain.speech': 'Xiaomi',
+    'com.vivo.tts': 'Vivo',
+    'com.coloros.tts': 'Oppo',
+    'com.huawei.hiai': 'Huawei',
+  };
+  if (known[engine] case final name?) return name;
+  final parts = engine.split('.');
+  return parts.length > 1 ? parts[parts.length - 2] : engine;
 }

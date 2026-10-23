@@ -589,5 +589,32 @@
   "permission_bluetooth_reason": "The app needs Bluetooth to connect to devices.",
   "permission_activity_title": "Physical activity needed",
   "permission_activity_reason": "The app needs to count your steps / recognise your activity.",
-  "permission_later": "Later"
+  "permission_later": "Later",
+  "voice_engine": "Speech engine",
+  "voice_gender_all": "All",
+  "voice_female_n": "Female voice {n}",
+  "voice_male_n": "Male voice {n}",
+  "voice_fewVoices": "This engine has only {count} voice for this language. For more male/female voices: pick the Google engine above (if available), or install “Speech Services by Google” and download voices.",
+  "voice_installGoogle": "Get Google voices",
+  "@voice_female_n": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@voice_male_n": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@voice_fewVoices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

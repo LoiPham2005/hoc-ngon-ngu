@@ -16,8 +16,11 @@ part 'speech_service.g.dart';
 ///   nghe được trên MỌI máy, không cần cài gì. Katakana dùng chung file với Hiragana.
 /// - Còn lại (âm On/Kun của Kanji, từ/câu tiếng Anh…): giọng có sẵn trên máy (Text-to-Speech).
 class SpeechService {
-  SpeechService({VoicePrefs Function(String language)? prefs})
-    : _prefs = prefs ?? ((_) => const VoicePrefs());
+  SpeechService({
+    VoicePrefs Function(String language)? prefs,
+    String? Function()? engine,
+  }) : _prefs = prefs ?? ((_) => const VoicePrefs()),
+       _engineOf = engine ?? (() => null);
 
   final _tts = FlutterTts();
   AudioPlayer? _player;
@@ -25,6 +28,12 @@ class SpeechService {
 
   /// Giọng / tốc độ người dùng chọn cho từng ngôn ngữ đọc.
   final VoicePrefs Function(String language) _prefs;
+
+  /// Bộ đọc người dùng chọn (Android); `null` = mặc định của máy.
+  final String? Function() _engineOf;
+
+  /// Bộ đọc đang dùng (đã đặt cho plugin).
+  String? _engine;
 
   /// Giọng đang đặt: mã giọng hoặc ngôn ngữ (đổi khi chuyển Nhật ↔ Anh / đổi giọng).
   String? _language;
@@ -61,6 +70,7 @@ class SpeechService {
     double rate = VoicePrefs.defaultRate,
   }) async {
     try {
+      await _useEngine();
       if (!await _useLanguage(language, voice: voice)) return false;
       await _useRate(rate);
       await _tts.stop();
@@ -75,6 +85,7 @@ class SpeechService {
   /// Giọng đọc tiếng [language] có trên máy (cùng thứ tiếng, mọi vùng: en-US, en-GB…):
   /// đúng vùng trước, chất lượng cao trước. Bỏ giọng chưa tải (Android) và giọng hiệu ứng (iOS).
   Future<List<TtsVoice>> voices(String language) async {
+    await _useEngine();
     final cached = _voices[language];
     if (cached != null) return cached;
     final lang = language.split('-').first.toLowerCase();
@@ -90,6 +101,17 @@ class SpeechService {
               !(v.identifier ?? '').contains('eloquence'))
             v,
       ];
+      // Google liệt kê 1 giọng 2 lần (máy / cần mạng) → giữ bản chạy trên máy.
+      final local = {
+        for (final v in list)
+          if (v.googleCode != null && !v.network) '${v.locale}/${v.googleCode}',
+      };
+      list.removeWhere(
+        (v) =>
+            v.network &&
+            v.googleCode != null &&
+            local.contains('${v.locale}/${v.googleCode}'),
+      );
       list.sort((a, b) {
         int score(TtsVoice v) =>
             (v.locale.replaceAll('_', '-') == language ? 2 : 0) +
@@ -123,6 +145,7 @@ class SpeechService {
     }
 
     try {
+      await _useEngine();
       if (!await _useLanguage(language, voice: voice)) return false;
       await _useRate(prefs.rate);
       await _tts.stop();
@@ -153,9 +176,9 @@ class SpeechService {
     final others = list.where((v) => v != first).toList()
       ..sort((a, b) {
         int score(TtsVoice v) =>
-            (first?.gender != null &&
-                    v.gender != null &&
-                    v.gender != first!.gender
+            (first?.genderOrGuess != null &&
+                    v.genderOrGuess != null &&
+                    v.genderOrGuess != first!.genderOrGuess
                 ? 2
                 : 0) +
             (v.locale == first?.locale ? 1 : 0);
@@ -168,6 +191,37 @@ class SpeechService {
     if (_rate == rate) return;
     await _tts.setSpeechRate(rate);
     _rate = rate;
+  }
+
+  /// Các bộ đọc cài trên máy (chỉ Android; iOS chỉ có 1 → rỗng).
+  Future<List<String>> engines() async {
+    if (!Platform.isAndroid) return const [];
+    try {
+      return [
+        for (final e in (await _tts.getEngines as List? ?? const [])) '$e',
+      ];
+    } on Object catch (e, s) {
+      talker.error('[TTS] getEngines failed', e, s);
+      return const [];
+    }
+  }
+
+  /// Bộ đọc đang dùng (chọn trong app, hoặc mặc định của máy).
+  Future<String?> currentEngine() async {
+    if (!Platform.isAndroid) return null;
+    return _engineOf() ?? '${await _tts.getDefaultEngine}';
+  }
+
+  /// Đổi bộ đọc theo lựa chọn → nạp lại danh sách giọng, đặt lại giọng / tốc độ.
+  Future<void> _useEngine() async {
+    final wanted = _engineOf();
+    if (!Platform.isAndroid || wanted == _engine) return;
+    // Bỏ chọn → quay về bộ đọc mặc định của máy.
+    await _tts.setEngine(wanted ?? '${await _tts.getDefaultEngine}');
+    _engine = wanted;
+    _voices.clear();
+    _language = null;
+    _rate = null;
   }
 
   Future<void> stop() async {
@@ -240,5 +294,7 @@ class SpeechService {
 }
 
 @Riverpod(keepAlive: true)
-SpeechService speech(Ref ref) =>
-    SpeechService(prefs: ref.read(voiceSettingsProvider.notifier).of);
+SpeechService speech(Ref ref) => SpeechService(
+  prefs: ref.read(voiceSettingsProvider.notifier).of,
+  engine: () => ref.read(ttsEngineProvider),
+);
