@@ -14,9 +14,6 @@ import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
-/// Giọng người nói B cao hơn A để nghe ra 2 người.
-const _pitch = {'A': 1.0, 'B': 1.3};
-
 /// 1 đoạn hội thoại dạng tin nhắn: nghe cả bài (đọc nối từng lượt, tô sáng lượt đang đọc),
 /// bấm 1 lượt để nghe riêng, bật/tắt bản dịch, rồi làm câu hỏi hiểu bài.
 @RoutePage()
@@ -55,7 +52,8 @@ class DialoguePage extends HookConsumerWidget {
         final ok = await speech.speakAndWait(
           line.sentence.text,
           language: course.speechLanguage,
-          pitch: _pitch[line.speaker] ?? 1,
+          // Người nói B dùng giọng thứ 2 (cài ở Hồ sơ → Giọng đọc).
+          partner: line.speaker == 'B',
         );
         if (!ok || single) break;
       }

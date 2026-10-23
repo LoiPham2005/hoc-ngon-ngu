@@ -179,6 +179,14 @@ class ProfilePage extends HookConsumerWidget {
                 ],
               ),
               const Divider(height: 28),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.record_voice_over_rounded),
+                title: Text(l10n.voice_title),
+                subtitle: Text(l10n.voice_desc),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () => context.router.push(const VoiceSettingsRoute()),
+              ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 secondary: const Icon(Icons.notifications_active_rounded),

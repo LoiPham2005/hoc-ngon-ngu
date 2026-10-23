@@ -326,11 +326,15 @@ class _SpeakingView extends HookConsumerWidget {
     final unavailable = useState(false);
     final notHeard = useState(false);
     final graded = useRef(false);
+    // Lượt đọc hiện tại đã chấm chưa (chấm đúng 1 lần dù có kết quả cuối hay không).
+    final attemptDone = useRef(true);
     final mounted = useIsMounted();
 
     useEffect(() => voice.stop, const []);
 
     void evaluate(String words) {
+      if (attemptDone.value) return;
+      attemptDone.value = true;
       listening.value = false;
       if (words.trim().isEmpty) {
         notHeard.value = true;
@@ -356,6 +360,7 @@ class _SpeakingView extends HookConsumerWidget {
       heard.value = '';
       notHeard.value = false;
       matches.value = null;
+      attemptDone.value = false;
       listening.value = true;
       await voice.listen(
         localeId: phrase.course.speechLocaleId,
@@ -363,6 +368,10 @@ class _SpeakingView extends HookConsumerWidget {
           if (!mounted()) return;
           heard.value = words;
           if (isFinal) evaluate(words);
+        },
+        // Máy tự ngừng nghe (im lặng, hết giờ, lỗi) mà chưa có kết quả cuối → chấm phần đã nghe.
+        onDone: () {
+          if (mounted()) evaluate(heard.value);
         },
       );
     }
@@ -431,13 +440,26 @@ class _SpeakingView extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          listening.value
-              ? l10n.speaking_listening
-              : m != null
-              ? l10n.speaking_tryAgain
-              : l10n.speaking_tap,
+          listening.value ? l10n.speaking_listening : l10n.speaking_tap,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium,
+        ),
+        const SizedBox(height: 8),
+        // Nút chữ rõ ràng: đang nghe → "Đọc xong"; đã chấm / chưa nghe rõ → "Đọc lại".
+        Center(
+          child: listening.value
+              ? FilledButton.tonalIcon(
+                  onPressed: toggleMic,
+                  icon: const Icon(Icons.stop_rounded),
+                  label: Text(l10n.speaking_stop),
+                )
+              : m != null || notHeard.value
+              ? OutlinedButton.icon(
+                  onPressed: toggleMic,
+                  icon: const Icon(Icons.replay_rounded),
+                  label: Text(l10n.speaking_retry),
+                )
+              : const SizedBox.shrink(),
         ),
         if (heard.value.isNotEmpty) ...[
           const SizedBox(height: 12),

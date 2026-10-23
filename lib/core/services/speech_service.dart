@@ -5,6 +5,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:lingua/core/services/voice_settings.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,12 +16,21 @@ part 'speech_service.g.dart';
 ///   nghe được trên MỌI máy, không cần cài gì. Katakana dùng chung file với Hiragana.
 /// - Còn lại (âm On/Kun của Kanji, từ/câu tiếng Anh…): giọng có sẵn trên máy (Text-to-Speech).
 class SpeechService {
+  SpeechService({VoicePrefs Function(String language)? prefs})
+    : _prefs = prefs ?? ((_) => const VoicePrefs());
+
   final _tts = FlutterTts();
   AudioPlayer? _player;
   bool _audioReady = false;
 
-  /// Giọng đang đặt (đổi khi chuyển qua lại Nhật ↔ Anh).
+  /// Giọng / tốc độ người dùng chọn cho từng ngôn ngữ đọc.
+  final VoicePrefs Function(String language) _prefs;
+
+  /// Giọng đang đặt: mã giọng hoặc ngôn ngữ (đổi khi chuyển Nhật ↔ Anh / đổi giọng).
   String? _language;
+
+  /// Danh sách giọng của máy theo ngôn ngữ (đọc 1 lần).
+  final _voices = <String, List<TtsVoice>>{};
 
   /// Tốc độ đọc đang đặt.
   double? _rate;
@@ -34,9 +44,25 @@ class SpeechService {
   }) async {
     final clip = kanaClip(text);
     if (clip != null && await _play(clip)) return true;
+    final prefs = _prefs(language);
+    return speakWith(
+      text,
+      language: language,
+      voice: prefs.voice,
+      rate: slow ? prefs.rate * 0.6 : prefs.rate,
+    );
+  }
+
+  /// Đọc bằng đúng [voice] / [rate] (nghe thử ở màn cài giọng đọc).
+  Future<bool> speakWith(
+    String text, {
+    required String language,
+    TtsVoice? voice,
+    double rate = VoicePrefs.defaultRate,
+  }) async {
     try {
-      if (!await _useLanguage(language)) return false;
-      await _useRate(slow: slow);
+      if (!await _useLanguage(language, voice: voice)) return false;
+      await _useRate(rate);
       await _tts.stop();
       await _tts.speak(text);
       return true;
@@ -46,21 +72,59 @@ class SpeechService {
     }
   }
 
-  /// Đọc rồi chờ đọc xong (đọc nối cả đoạn hội thoại). [pitch] khác nhau để phân biệt 2 người nói.
-  /// `false` = không đọc được hoặc bị [stop] giữa chừng.
+  /// Giọng đọc tiếng [language] có trên máy (cùng thứ tiếng, mọi vùng: en-US, en-GB…):
+  /// đúng vùng trước, chất lượng cao trước. Bỏ giọng chưa tải (Android) và giọng hiệu ứng (iOS).
+  Future<List<TtsVoice>> voices(String language) async {
+    final cached = _voices[language];
+    if (cached != null) return cached;
+    final lang = language.split('-').first.toLowerCase();
+    try {
+      final all = [
+        for (final v in (await _tts.getVoices as List? ?? const []))
+          if (v is Map) TtsVoice.fromPlatform(v),
+      ];
+      final list = [
+        for (final v in all)
+          if (v.locale.toLowerCase().split(RegExp('[-_]')).first == lang &&
+              !(v.identifier ?? '').contains('speech.synthesis') &&
+              !(v.identifier ?? '').contains('eloquence'))
+            v,
+      ];
+      list.sort((a, b) {
+        int score(TtsVoice v) =>
+            (v.locale.replaceAll('_', '-') == language ? 2 : 0) +
+            (v.isHighQuality ? 1 : 0);
+        final byScore = score(b).compareTo(score(a));
+        return byScore != 0 ? byScore : a.name.compareTo(b.name);
+      });
+      return _voices[language] = list;
+    } on Object catch (e, s) {
+      talker.error('[TTS] getVoices failed', e, s);
+      return const [];
+    }
+  }
+
+  /// Đọc rồi chờ đọc xong (đọc nối cả đoạn hội thoại). [partner] = người nói thứ 2:
+  /// giọng người dùng chọn, không chọn thì tự lấy 1 giọng khác của máy (khác giới nếu biết),
+  /// máy chỉ có 1 giọng thì đổi cao độ nhẹ. `false` = không đọc được / bị [stop] giữa chừng.
   Future<bool> speakAndWait(
     String text, {
     String language = 'en-US',
-    double pitch = 1,
+    bool partner = false,
   }) async {
+    final prefs = _prefs(language);
+    final voice = partner
+        ? prefs.partner ?? await _otherVoice(language, prefs.voice)
+        : prefs.voice;
+    final pitch = partner && voice == null ? 1.15 : 1.0;
     final done = Completer<bool>();
     void finish(bool ok) {
       if (!done.isCompleted) done.complete(ok);
     }
 
     try {
-      if (!await _useLanguage(language)) return false;
-      await _useRate(slow: false);
+      if (!await _useLanguage(language, voice: voice)) return false;
+      await _useRate(prefs.rate);
       await _tts.stop();
       // Gắn sau stop() để không nhận nhầm sự kiện huỷ của câu trước.
       _tts
@@ -82,9 +146,25 @@ class SpeechService {
     }
   }
 
-  /// Chậm hơn mặc định cho người học; [slow] = chậm thêm nữa (nghe – chép).
-  Future<void> _useRate({required bool slow}) async {
-    final rate = slow ? 0.25 : 0.4;
+  /// Giọng thứ 2 cho hội thoại: khác [main], ưu tiên khác giới tính và chất lượng cao.
+  Future<TtsVoice?> _otherVoice(String language, TtsVoice? main) async {
+    final list = await voices(language);
+    final first = main ?? list.firstOrNull;
+    final others = list.where((v) => v != first).toList()
+      ..sort((a, b) {
+        int score(TtsVoice v) =>
+            (first?.gender != null &&
+                    v.gender != null &&
+                    v.gender != first!.gender
+                ? 2
+                : 0) +
+            (v.locale == first?.locale ? 1 : 0);
+        return score(b).compareTo(score(a));
+      });
+    return others.firstOrNull;
+  }
+
+  Future<void> _useRate(double rate) async {
     if (_rate == rate) return;
     await _tts.setSpeechRate(rate);
     _rate = rate;
@@ -131,11 +211,24 @@ class SpeechService {
     }
   }
 
-  /// Đặt giọng [language]; `false` = máy chưa có giọng này. Không nhớ kết quả "chưa có"
-  /// → cài giọng xong bấm lại là dùng được, không cần mở lại app.
-  Future<bool> _useLanguage(String language) async {
-    if (_language == language) return true;
+  /// Đặt giọng [language] (hoặc đúng [voice] nếu có); `false` = máy chưa có giọng này.
+  /// Không nhớ kết quả "chưa có" → cài giọng xong bấm lại là dùng được, không cần mở lại app.
+  Future<bool> _useLanguage(String language, {TtsVoice? voice}) async {
+    final key = voice?.id ?? language;
+    if (_language == key) return true;
+    await _prepareAudio();
+    // Giọng đã chọn không còn trên máy (gỡ / đổi máy) → quay về giọng mặc định của ngôn ngữ.
+    if (voice != null && await _tts.setVoice(voice.toPlatform()) == 1) {
+      _language = key;
+      return true;
+    }
     if (await _tts.isLanguageAvailable(language) != true) return false;
+    await _tts.setLanguage(language);
+    _language = language;
+    return true;
+  }
+
+  Future<void> _prepareAudio() async {
     if (!_audioReady) {
       // iOS: vẫn kêu khi gạt công tắc im lặng.
       await _tts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback, [
@@ -143,11 +236,9 @@ class SpeechService {
       ]);
       _audioReady = true;
     }
-    await _tts.setLanguage(language);
-    _language = language;
-    return true;
   }
 }
 
 @Riverpod(keepAlive: true)
-SpeechService speech(Ref ref) => SpeechService();
+SpeechService speech(Ref ref) =>
+    SpeechService(prefs: ref.read(voiceSettingsProvider.notifier).of);

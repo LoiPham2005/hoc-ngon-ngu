@@ -39,6 +39,7 @@ import 'package:lingua/features/practice/practice_page.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/quiz_page.dart';
 import 'package:lingua/features/profile/profile_page.dart';
+import 'package:lingua/features/profile/voice_settings_page.dart';
 import 'package:lingua/features/search/providers/search_provider.dart';
 import 'package:lingua/features/search/search_page.dart';
 import 'package:lingua/features/stats/stats_page.dart';
@@ -266,6 +267,7 @@ void main() {
           jaPhrases,
           null,
         ),
+        'giọng đọc': (const VoiceSettingsPage(), null, null),
         'tra cứu': (const SearchPage(), jaSearch, null),
         'thống kê': (const StatsPage(), null, null),
         'EN thống kê': (const StatsPage(), null, enPrefs),

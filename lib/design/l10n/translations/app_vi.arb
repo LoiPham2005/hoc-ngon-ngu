@@ -417,8 +417,7 @@
   },
   "speaking_ask": "Đọc to câu này",
   "speaking_tap": "Bấm micro rồi đọc",
-  "speaking_listening": "Đang nghe… đọc xong bấm dừng",
-  "speaking_tryAgain": "Bấm micro để đọc lại",
+  "speaking_listening": "Đang nghe… đọc xong bấm “Đọc xong”",
   "speaking_youSaid": "Máy nghe được: “{text}”",
   "@speaking_youSaid": {
     "placeholders": {
@@ -539,5 +538,26 @@
   "practice_irregular": "Động từ bất quy tắc",
   "practice_irregular_desc": "Chọn đúng V2 – V3",
   "practice_pairs": "Nghe phân biệt âm",
-  "practice_pairs_desc": "ship hay sheep? Luyện tai nghe chuẩn"
+  "practice_pairs_desc": "ship hay sheep? Luyện tai nghe chuẩn",
+  "speaking_stop": "Đọc xong",
+  "speaking_retry": "Đọc lại",
+  "voice_title": "Giọng đọc",
+  "voice_desc": "Chọn giọng, tốc độ đọc",
+  "voice_rate": "Tốc độ đọc",
+  "voice_rate_slow": "Chậm",
+  "voice_rate_fast": "Nhanh",
+  "voice_main": "Giọng chính",
+  "voice_partner": "Giọng người thứ 2 (hội thoại)",
+  "voice_default": "Mặc định của máy",
+  "voice_auto": "Tự chọn giọng khác",
+  "voice_highQuality": "Chất lượng cao",
+  "voice_network": "Cần mạng",
+  "voice_numbered": "Giọng {n}",
+  "voice_male": "Nam",
+  "voice_female": "Nữ",
+  "voice_none": "Máy chưa có giọng cho ngôn ngữ này.",
+  "voice_more": "Tải thêm giọng hay hơn",
+  "voice_more_android": "Mở cài đặt giọng nói của máy → Dịch vụ giọng nói của Google → ⚙ → Cài đặt dữ liệu giọng nói, tải giọng rồi quay lại đây.",
+  "voice_more_ios": "Cài đặt › Trợ năng › Nội dung được đọc › Giọng nói: tải giọng “Nâng cao” hoặc “Cao cấp” rồi quay lại đây.",
+  "voice_preview": "Nghe thử"
 }

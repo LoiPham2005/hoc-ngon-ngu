@@ -30,6 +30,7 @@ import 'package:lingua/features/practice/practice_page.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/quiz_page.dart';
 import 'package:lingua/features/profile/profile_page.dart';
+import 'package:lingua/features/profile/voice_settings_page.dart';
 import 'package:lingua/features/search/search_page.dart';
 import 'package:lingua/features/splash/splash_page.dart';
 import 'package:lingua/features/stats/stats_page.dart';
@@ -81,6 +82,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: MinimalPairSetRoute.page, path: '/en/minimal-pairs/set'),
     AutoRoute(page: MinimalPairQuizRoute.page, path: '/en/minimal-pairs/quiz'),
     AutoRoute(page: PhraseOrderRoute.page, path: '/phrases/order'),
+    AutoRoute(page: VoiceSettingsRoute.page, path: '/settings/voices'),
     AutoRoute(page: QuizRoute.page, path: '/quiz'),
     AutoRoute(page: SearchRoute.page, path: '/search'),
     AutoRoute(page: StatsRoute.page, path: '/stats'),

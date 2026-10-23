@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/services/speech_service.dart';
+import 'package:lingua/core/services/voice_settings.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 
@@ -11,14 +12,20 @@ void main() {
   const channel = MethodChannel('flutter_tts');
   late List<MethodCall> calls;
   late bool hasJapanese;
+  late List<Map<String, String>> voices;
 
   setUp(() {
     calls = [];
     hasJapanese = true;
+    voices = [];
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
           calls.add(call);
-          return call.method == 'isLanguageAvailable' ? hasJapanese : 1;
+          return switch (call.method) {
+            'isLanguageAvailable' => hasJapanese,
+            'getVoices' => voices,
+            _ => 1,
+          };
         });
   });
 
@@ -102,5 +109,102 @@ void main() {
       kunyomi: ['ひと-', 'ひと(つ)'],
     );
     expect(kanji.speech, 'イチ、イツ、ひと、ひとつ');
+  });
+
+  test(
+    'chosen voice and speed are used; missing voice falls back to language',
+    () async {
+      const sam = TtsVoice(
+        name: 'Samantha',
+        locale: 'en-US',
+        identifier: 'sam',
+      );
+      final speech = SpeechService(
+        prefs: (_) => const VoicePrefs(voice: sam, rate: 0.6),
+      );
+      await speech.speak('hello', language: 'en-US');
+      expect(calls.firstWhere((c) => c.method == 'setVoice').arguments, {
+        'name': 'Samantha',
+        'locale': 'en-US',
+        'identifier': 'sam',
+      });
+      expect(
+        calls.firstWhere((c) => c.method == 'setSpeechRate').arguments,
+        0.6,
+      );
+      expect(calls.where((c) => c.method == 'setLanguage'), isEmpty);
+    },
+  );
+
+  test(
+    'voices: same language only, exact region + high quality first, no novelty voices',
+    () async {
+      voices = [
+        {
+          'name': 'Daniel',
+          'locale': 'en-GB',
+          'quality': 'default',
+          'identifier': 'com.apple.voice.compact.en-GB.Daniel',
+        },
+        {
+          'name': 'Ava',
+          'locale': 'en-US',
+          'quality': 'premium',
+          'identifier': 'com.apple.voice.premium.en-US.Ava',
+        },
+        {
+          'name': 'Fred',
+          'locale': 'en-US',
+          'quality': 'default',
+          'identifier': 'com.apple.speech.synthesis.voice.Fred',
+        },
+        {
+          'name': 'Kyoko',
+          'locale': 'ja-JP',
+          'quality': 'default',
+          'identifier': 'com.apple.voice.compact.ja-JP.Kyoko',
+        },
+        {
+          'name': 'Tom',
+          'locale': 'en-US',
+          'quality': 'default',
+          'identifier': 'com.apple.voice.compact.en-US.Tom',
+        },
+      ];
+      final list = await SpeechService().voices('en-US');
+      expect(list.map((v) => v.name), ['Ava', 'Tom', 'Daniel']);
+    },
+  );
+
+  test('dialogue partner gets a different voice than the main one', () async {
+    voices = [
+      {
+        'name': 'Ava',
+        'locale': 'en-US',
+        'gender': 'female',
+        'identifier': 'ava',
+      },
+      {
+        'name': 'Allison',
+        'locale': 'en-US',
+        'gender': 'female',
+        'identifier': 'allison',
+      },
+      {'name': 'Tom', 'locale': 'en-US', 'gender': 'male', 'identifier': 'tom'},
+    ];
+    final speech = SpeechService(
+      prefs: (_) => const VoicePrefs(
+        voice: TtsVoice(
+          name: 'Ava',
+          locale: 'en-US',
+          identifier: 'ava',
+          gender: 'female',
+        ),
+      ),
+    );
+    await speech.speakAndWait('Hi!', partner: true);
+    final voice =
+        calls.lastWhere((c) => c.method == 'setVoice').arguments as Map;
+    expect(voice['name'], 'Tom'); // khác giới tính được ưu tiên
   });
 }

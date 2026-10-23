@@ -378,8 +378,7 @@
   "sentence_score": "{percent}% of words right",
   "speaking_ask": "Read this sentence aloud",
   "speaking_tap": "Tap the mic and read",
-  "speaking_listening": "Listening… tap stop when done",
-  "speaking_tryAgain": "Tap the mic to try again",
+  "speaking_listening": "Listening… tap “Done” when finished",
   "speaking_youSaid": "Heard: “{text}”",
   "speaking_notHeard": "Didn't catch that, try again",
   "speaking_unavailable": "Microphone unavailable: allow microphone access for Lingua (Android needs Google speech services).",
@@ -539,6 +538,34 @@
   "@pairs_practice": {
     "placeholders": {
       "count": {
+        "type": "int"
+      }
+    }
+  },
+  "speaking_stop": "Done",
+  "speaking_retry": "Read again",
+  "voice_title": "Voices",
+  "voice_desc": "Choose voice and speed",
+  "voice_rate": "Speech speed",
+  "voice_rate_slow": "Slow",
+  "voice_rate_fast": "Fast",
+  "voice_main": "Main voice",
+  "voice_partner": "Second voice (dialogues)",
+  "voice_default": "Device default",
+  "voice_auto": "Pick a different voice automatically",
+  "voice_highQuality": "High quality",
+  "voice_network": "Needs internet",
+  "voice_numbered": "Voice {n}",
+  "voice_male": "Male",
+  "voice_female": "Female",
+  "voice_none": "No voice for this language on this device.",
+  "voice_more": "Get better voices",
+  "voice_more_android": "Open the device voice settings → Speech Services by Google → ⚙ → Install voice data, download a voice and come back.",
+  "voice_more_ios": "Settings › Accessibility › Spoken Content › Voices: download an “Enhanced” or “Premium” voice, then come back.",
+  "voice_preview": "Preview",
+  "@voice_numbered": {
+    "placeholders": {
+      "n": {
         "type": "int"
       }
     }
