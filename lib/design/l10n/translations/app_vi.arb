@@ -563,7 +563,7 @@
   "permission_notification_reason": "Lingua cần quyền gửi thông báo để nhắc bạn học mỗi ngày.",
   "permission_microphone_title": "Cần quyền micro",
   "permission_microphone_reason": "Lingua cần micro để nghe bạn đọc và chấm phát âm.",
-  "permission_blocked": "Quyền này đang bị tắt. Mở Cài đặt của máy → Quyền và bật lên rồi quay lại.",
+  "permission_blocked": "Bấm “Mở cài đặt” rồi bật quyền này, sau đó quay lại app.",
   "permission_openSettings": "Mở cài đặt",
   "permission_camera_title": "Cần quyền camera",
   "permission_camera_reason": "Ứng dụng cần camera để chụp ảnh / quét mã.",
@@ -578,5 +578,6 @@
   "permission_bluetooth_title": "Cần quyền Bluetooth",
   "permission_bluetooth_reason": "Ứng dụng cần Bluetooth để kết nối thiết bị.",
   "permission_activity_title": "Cần quyền hoạt động thể chất",
-  "permission_activity_reason": "Ứng dụng cần đếm bước / nhận biết hoạt động của bạn."
+  "permission_activity_reason": "Ứng dụng cần đếm bước / nhận biết hoạt động của bạn.",
+  "permission_later": "Để sau"
 }

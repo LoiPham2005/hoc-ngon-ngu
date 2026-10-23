@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/core/services/permission_service.dart';
-import 'package:lingua/core/utils/toast.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
 
-/// Xin [permission] kèm giải thích cho người dùng: có → `true`;
-/// từ chối → toast; bị chặn hẳn → hộp thoại mời mở Cài đặt của máy.
+/// Xin [permission] kèm giải thích: có → `true`; chưa có → hộp thoại lý do + nút "Mở cài đặt"
+/// (thông báo trên Android mở thẳng trang Thông báo của app).
 Future<bool> ensurePermission(
   BuildContext context,
   WidgetRef ref,
@@ -15,23 +14,19 @@ Future<bool> ensurePermission(
   final service = ref.read(permissionServiceProvider);
   final l10n = context.l10n;
   final (title, reason) = permissionText(context, permission);
-  switch (await service.request(permission)) {
-    case PermissionResult.granted:
-      return true;
-    case PermissionResult.denied:
-      toast.warning(reason, title: title);
-      return false;
-    case PermissionResult.blocked:
-      if (!context.mounted) return false;
-      final open = await AppConfirmationDialog.show(
-        context,
-        title: title,
-        message: '$reason\n\n${l10n.permission_blocked}',
-        confirmText: l10n.permission_openSettings,
-      );
-      if (open) await service.openSettings();
-      return false;
-  }
+  final result = await service.request(permission);
+  if (result == PermissionResult.granted) return true;
+  if (!context.mounted) return false;
+  // Từ chối / bị chặn: hệ thống thường không hỏi lại nữa → mời bật trong Cài đặt.
+  final open = await AppConfirmationDialog.show(
+    context,
+    title: title,
+    message: '$reason\n\n${l10n.permission_blocked}',
+    confirmText: l10n.permission_openSettings,
+    cancelText: l10n.permission_later,
+  );
+  if (open) await service.openSettings(permission);
+  return false;
 }
 
 /// Tiêu đề + lý do xin từng quyền (hiện cho người dùng) — sửa câu chữ trong file ARB.

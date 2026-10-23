@@ -1,6 +1,10 @@
 import 'dart:io';
 
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
+
 import 'package:lingua/core/utils/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -123,8 +127,24 @@ class PermissionService {
     }
   }
 
-  /// Mở trang cài đặt của app trong máy (bật quyền đã bị chặn).
-  Future<bool> openSettings() => openAppSettings();
+  /// Mở Cài đặt để người dùng tự bật [permission]. Thông báo trên Android → mở thẳng
+  /// trang "Thông báo" của app (1 chạm là bật); còn lại → trang cài đặt của app.
+  Future<bool> openSettings([AppPermission? permission]) async {
+    if (Platform.isAndroid && permission == AppPermission.notification) {
+      try {
+        final info = await PackageInfo.fromPlatform();
+        await AndroidIntent(
+          action: 'android.settings.APP_NOTIFICATION_SETTINGS',
+          arguments: {'android.provider.extra.APP_PACKAGE': info.packageName},
+          flags: [Flag.FLAG_ACTIVITY_NEW_TASK],
+        ).launch();
+        return true;
+      } on Object catch (e, s) {
+        talker.error('[PERMISSION] open notification settings failed', e, s);
+      }
+    }
+    return openAppSettings();
+  }
 
   static bool _isGranted(PermissionStatus s) =>
       s.isGranted || s.isLimited || s.isProvisional;

@@ -573,7 +573,7 @@
   "permission_notification_reason": "Lingua needs notification access to remind you to study every day.",
   "permission_microphone_title": "Microphone needed",
   "permission_microphone_reason": "Lingua needs the microphone to hear you read and check your pronunciation.",
-  "permission_blocked": "This permission is turned off. Open the device Settings → Permissions, turn it on and come back.",
+  "permission_blocked": "Tap “Open settings”, turn this permission on, then come back.",
   "permission_openSettings": "Open settings",
   "permission_camera_title": "Camera needed",
   "permission_camera_reason": "The app needs the camera to take photos or scan codes.",
@@ -588,5 +588,6 @@
   "permission_bluetooth_title": "Bluetooth needed",
   "permission_bluetooth_reason": "The app needs Bluetooth to connect to devices.",
   "permission_activity_title": "Physical activity needed",
-  "permission_activity_reason": "The app needs to count your steps / recognise your activity."
+  "permission_activity_reason": "The app needs to count your steps / recognise your activity.",
+  "permission_later": "Later"
 }

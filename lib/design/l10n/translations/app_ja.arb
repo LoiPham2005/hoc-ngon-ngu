@@ -303,7 +303,7 @@
   "permission_notification_reason": "毎日の学習リマインダーを送るために通知の許可が必要です。",
   "permission_microphone_title": "マイクの許可が必要です",
   "permission_microphone_reason": "音読を聞き取って発音をチェックするためにマイクが必要です。",
-  "permission_blocked": "この権限はオフになっています。端末の設定 → 権限 でオンにしてから戻ってください。",
+  "permission_blocked": "「設定を開く」をタップしてこの権限をオンにし、アプリに戻ってください。",
   "permission_openSettings": "設定を開く",
   "permission_camera_title": "カメラの許可が必要です",
   "permission_camera_reason": "写真の撮影やコードの読み取りにカメラを使います。",
@@ -318,5 +318,6 @@
   "permission_bluetooth_title": "Bluetooth の許可が必要です",
   "permission_bluetooth_reason": "機器と接続するために Bluetooth を使います。",
   "permission_activity_title": "身体活動の許可が必要です",
-  "permission_activity_reason": "歩数や活動を認識するために使います。"
+  "permission_activity_reason": "歩数や活動を認識するために使います。",
+  "permission_later": "あとで"
 }

@@ -573,41 +573,46 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets(
-    'daily reminder: notifications blocked → offers to open Settings',
-    (tester) async {
-      const channel = MethodChannel('flutter.baseflow.com/permissions/methods');
-      final calls = <String>[];
-      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
-        call,
-      ) async {
-        calls.add(call.method);
-        return switch (call.method) {
-          'checkPermissionStatus' => 0,
-          'requestPermissions' => {
-            for (final p in call.arguments as List) p as int: 4,
-          },
-          _ => true,
-        };
-      });
-      addTearDown(
-        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+  for (final (name, refused) in [('denied', 0), ('blocked', 4)]) {
+    testWidgets(
+      'daily reminder: notifications $name → offers to open Settings',
+      (tester) async {
+        const channel = MethodChannel(
+          'flutter.baseflow.com/permissions/methods',
+        );
+        final calls = <String>[];
+        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
           channel,
-          null,
-        ),
-      );
-      tester.view.physicalSize = const Size(393, 1600);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.reset);
-      await pumpApp(tester, const ProfilePage(), prefs: enPrefs);
-      await tester.tap(find.byType(Switch));
-      await tester.pumpAndSettle();
-      expect(find.text('Mở cài đặt'), findsOneWidget);
-      await tester.tap(find.text('Mở cài đặt'));
-      await tester.pumpAndSettle();
-      expect(calls, contains('openAppSettings'));
-      // Chưa có quyền → nhắc học vẫn tắt.
-      expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
-    },
-  );
+          (call) async {
+            calls.add(call.method);
+            return switch (call.method) {
+              'checkPermissionStatus' => 0,
+              'requestPermissions' => {
+                for (final p in call.arguments as List) p as int: refused,
+              },
+              _ => true,
+            };
+          },
+        );
+        addTearDown(
+          () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+            channel,
+            null,
+          ),
+        );
+        tester.view.physicalSize = const Size(393, 1600);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await pumpApp(tester, const ProfilePage(), prefs: enPrefs);
+        await tester.tap(find.byType(Switch));
+        await tester.pumpAndSettle();
+        expect(find.text('Mở cài đặt'), findsOneWidget);
+        await tester.tap(find.text('Mở cài đặt'));
+        await tester.pumpAndSettle();
+        expect(calls, contains('openAppSettings'));
+        // Chưa có quyền → nhắc học vẫn tắt.
+        expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+      },
+    );
+  }
 }
