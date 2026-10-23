@@ -1,12 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <!-- Permission cần thiết cho AdMob & RevenueCat. -->
+  <!-- Chỉ khai quyền app dùng mà plugin KHÔNG tự khai (plugin tự gộp: ACCESS_NETWORK_STATE,
+       BILLING, WAKE_LOCK, VIBRATE…). Khai thừa quyền nhạy cảm (ảnh, camera, vị trí…) → Google Play từ chối.
+       Thêm quyền xin lúc chạy: bảng trong lib/core/services/permission_service.dart. -->
   <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="com.android.vending.BILLING"/>
-  <!-- MediaService: lưu ảnh/video về thư viện máy -->
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29"/>
-  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
   <!-- Luyện nói: nhận giọng nói (speech_to_text). -->
   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
   <!-- Nhắc học hằng ngày: thông báo + đặt lại lịch sau khi khởi động lại máy. -->

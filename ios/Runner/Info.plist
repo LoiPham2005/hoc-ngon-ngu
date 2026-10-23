@@ -71,8 +71,6 @@
 	     Khi release: thay bằng App ID thật từ https://apps.admob.com
 	     KHÔNG được dùng test ID trên prod → vi phạm policy → BAN account.
 	     ═══════════════════════════════════════════════════════════════ -->
-		<key>NSFaceIDUsageDescription</key>
-		<string>Dùng Face ID để mở ứng dụng nhanh, không cần nhập mật khẩu.</string>
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3940256099942544~1458002511</string>
 		<key>GADNativeAdValidatorEnabled</key>
@@ -81,20 +79,12 @@
 	     Sửa message cho phù hợp app của bạn. -->
 		<key>NSUserTrackingUsageDescription</key>
 		<string>Quyền truy cập IDFA giúp chúng tôi hiển thị quảng cáo phù hợp và đo lường hiệu quả.</string>
-		<!-- ImagePicker — sửa message cho phù hợp use case của app. -->
-		<key>NSCameraUsageDescription</key>
-		<string>Ứng dụng cần truy cập camera để chụp ảnh.</string>
-		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Ứng dụng cần truy cập thư viện ảnh để chọn ảnh.</string>
-		<key>NSPhotoLibraryAddUsageDescription</key>
-		<string>Ứng dụng cần quyền lưu ảnh vào thư viện.</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Lingua cần micro để bạn luyện nói và chấm phát âm.</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>Lingua nhận giọng nói để so câu bạn đọc với câu mẫu.</string>
-		<!-- SKAdNetwork IDs — danh sách ad networks AdMob hỗ trợ.
-	     Lấy từ: https://developers.google.com/admob/ios/ios14
-	     Để minimal — chỉ thêm cstr6suwn9 (Google) — thêm các network khác khi cần. -->
+		<!-- SKAdNetwork IDs của Google + các mạng quảng cáo đối tác AdMob khuyên dùng.
+	     Danh sách đầy đủ, cập nhật: https://developers.google.com/admob/ios/3p-skadnetworks -->
 		<key>SKAdNetworkItems</key>
 		<array>
 			<dict>
@@ -158,7 +148,5 @@
 				<string>3qcr597p9d.skadnetwork</string>
 			</dict>
 		</array>
-		<key>UIStatusBarHidden</key>
-		<false/>
 	</dict>
 </plist>

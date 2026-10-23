@@ -1,4 +1,4 @@
-# iOS 14+ bắt buộc cho google_mobile_ads 7.x và App Tracking Transparency.
+# iOS 15+: Firebase + google_mobile_ads hiện tại yêu cầu.
 platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.

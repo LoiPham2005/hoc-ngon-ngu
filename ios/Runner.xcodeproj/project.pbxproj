@@ -26,13 +26,10 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		A8E8C8F3EE09C7114D233988 /* prodLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48C96360408C55F22D94D243 /* prodLaunchScreen.storyboard */; };
 		B206E0172D447431FA7573DE /* stgDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C94D74940ECC470A8C472D8C /* stgDebug.xcconfig */; };
-		BD3EADC31562D3856D0A4D97 /* stgLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5C23CED18D6746FFFF63F7 /* stgLaunchScreen.storyboard */; };
 		CC4AC05EF2B93DD6253A0BA2 /* stgRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0CD9B15365722A80F3A57895 /* stgRelease.xcconfig */; };
 		D6C3E151CCF8D939990A87F9 /* NativeAdMediumView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF8C1F2460E9E6FAF4AC0D6A /* NativeAdMediumView.xib */; };
 		EDF1553C75903AA454A5E495 /* NativeAdSmallView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95D207ECC90AD9612FB8EF51 /* NativeAdSmallView.xib */; };
-		F0E981EA41A2B596B6A44895 /* devLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF5FE38DB33C2DA43F269F2 /* devLaunchScreen.storyboard */; };
 		F69A2AD49C9E04D610030957 /* prodRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C11E64D5D861D6F2BEC3C58 /* prodRelease.xcconfig */; };
 		FA11FA11FA11FA11FA110001 /* NativeAdFullView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA11FA11FA11FA11FA110002 /* NativeAdFullView.xib */; };
 		FCBA37E434BBD74C7C2E63E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3334E6543BA0444920F25B81 /* GoogleService-Info.plist */; };
@@ -72,14 +69,12 @@
 		20DEF361DD69F748FB672EC5 /* NativeAdFactorySmall.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdFactorySmall.swift; sourceTree = "<group>"; };
 		27F15308CA46FE0D100822AE /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		287D2825D0E30F6A0F511499 /* prodDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = prodDebug.xcconfig; path = Flutter/prodDebug.xcconfig; sourceTree = "<group>"; };
-		2FF5FE38DB33C2DA43F269F2 /* devLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = devLaunchScreen.storyboard; path = Runner/devLaunchScreen.storyboard; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3334E6543BA0444920F25B81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3957CCF8BBD6334227AB6EC7 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		47E8B55D61078C5DDADC2FBB /* NativeAdFactoryMedium.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeAdFactoryMedium.swift; sourceTree = "<group>"; };
-		48C96360408C55F22D94D243 /* prodLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = prodLaunchScreen.storyboard; path = Runner/prodLaunchScreen.storyboard; sourceTree = "<group>"; };
 		53DC9CBF3D8F213B32979E21 /* Pods-Runner.debug-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dev.xcconfig"; sourceTree = "<group>"; };
 		589595B95E572AB3EF960707 /* stgProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = stgProfile.xcconfig; path = Flutter/stgProfile.xcconfig; sourceTree = "<group>"; };
 		6F4AB6AE39EF9644961DF594 /* devProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = devProfile.xcconfig; path = Flutter/devProfile.xcconfig; sourceTree = "<group>"; };
@@ -108,7 +103,6 @@
 		C94D74940ECC470A8C472D8C /* stgDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = stgDebug.xcconfig; path = Flutter/stgDebug.xcconfig; sourceTree = "<group>"; };
 		D02772600420FD0B38DF3B64 /* prodProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = prodProfile.xcconfig; path = Flutter/prodProfile.xcconfig; sourceTree = "<group>"; };
 		D4E4E2E40D414F655A6CC06F /* devRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = devRelease.xcconfig; path = Flutter/devRelease.xcconfig; sourceTree = "<group>"; };
-		DA5C23CED18D6746FFFF63F7 /* stgLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = stgLaunchScreen.storyboard; path = Runner/stgLaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF8C1F2460E9E6FAF4AC0D6A /* NativeAdMediumView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = NativeAdMediumView.xib; sourceTree = "<group>"; };
 		F1771393C0AE0EE8CC4AA397 /* Pods-Runner.release-stg.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-stg.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-stg.xcconfig"; sourceTree = "<group>"; };
 		F6CE5EE5ED7312553131DB7C /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,9 +197,6 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
-				2FF5FE38DB33C2DA43F269F2 /* devLaunchScreen.storyboard */,
-				DA5C23CED18D6746FFFF63F7 /* stgLaunchScreen.storyboard */,
-				48C96360408C55F22D94D243 /* prodLaunchScreen.storyboard */,
 				3334E6543BA0444920F25B81 /* GoogleService-Info.plist */,
 				8A217F220238A03B88B72AC5 /* Pods */,
 				1CE5B58450644B7905996424 /* Frameworks */,
@@ -353,9 +344,6 @@
 				2F3CE96BC75E4EF21E90B760 /* prodDebug.xcconfig in Resources */,
 				6E217C8F60AFA71A60DEEDD5 /* prodProfile.xcconfig in Resources */,
 				F69A2AD49C9E04D610030957 /* prodRelease.xcconfig in Resources */,
-				F0E981EA41A2B596B6A44895 /* devLaunchScreen.storyboard in Resources */,
-				BD3EADC31562D3856D0A4D97 /* stgLaunchScreen.storyboard in Resources */,
-				A8E8C8F3EE09C7114D233988 /* prodLaunchScreen.storyboard in Resources */,
 				FCBA37E434BBD74C7C2E63E4 /* GoogleService-Info.plist in Resources */,
 				FA11FA11FA11FA11FA110001 /* NativeAdFullView.xib in Resources */,
 				D6C3E151CCF8D939990A87F9 /* NativeAdMediumView.xib in Resources */,
@@ -383,7 +371,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"$CONFIGURATION\" == \"Debug-dev\" ] || [ \"$CONFIGURATION\" == \"Release-dev\" ]; then\n  cp Runner/dev/GoogleService-Info.plist Runner/GoogleService-Info.plist\nelif [ \"$CONFIGURATION\" == \"Debug-stg\" ] || [ \"$CONFIGURATION\" == \"Release-stg\" ]; then\n  cp Runner/stg/GoogleService-Info.plist Runner/GoogleService-Info.plist\nelif [ \"$CONFIGURATION\" == \"Debug-prod\" ] || [ \"$CONFIGURATION\" == \"Release-prod\" ]; then\n  cp Runner/prod/GoogleService-Info.plist Runner/GoogleService-Info.plist\nfi\n\n";
+			shellScript = "# Debug/Profile/Release-<flavor> → chép GoogleService-Info.plist của flavor.\nFLAVOR=\"${CONFIGURATION##*-}\"\ncp \"Runner/$FLAVOR/GoogleService-Info.plist\" Runner/GoogleService-Info.plist\n";
 		};
 		344FA36C9E4E0594B535BDB3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

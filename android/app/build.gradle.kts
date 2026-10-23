@@ -49,8 +49,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        // Firebase + nhiều native plugins → enable multiDex cho an toàn.
-        multiDexEnabled = true
+        // Không cần multiDex: minSdk ≥ 21 đã hỗ trợ sẵn nhiều file dex.
     }
 
     // ─── Signing configs ────────────────────────────────────────────
@@ -97,12 +96,6 @@ android {
         }
     }
 
-    // ─── Bundle config (AAB split — Play Store) ─────────────────────
-    bundle {
-        language { enableSplit = true }
-        abi { enableSplit = true }
-        density { enableSplit = true }
-    }
 }
 
 flutter {
@@ -110,13 +103,7 @@ flutter {
 }
 
 dependencies {
-    // 🔥 Firebase BoM — version cho mọi Firebase product, không cần khai version từng cái.
-    // https://firebase.google.com/docs/android/learn-more#bom
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-
-    // MultiDex support — Firebase + nhiều plugins dễ vượt 64K method limit.
-    implementation("androidx.multidex:multidex:2.0.1")
-
+    // Firebase / multidex: KHÔNG khai ở đây — plugin FlutterFire tự mang BoM đúng phiên bản.
     // 🔧 Core library desugaring — cho phép java.time và Java 8+ APIs chạy
     // trên Android API < 26. Bắt buộc cho flutter_local_notifications.
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
