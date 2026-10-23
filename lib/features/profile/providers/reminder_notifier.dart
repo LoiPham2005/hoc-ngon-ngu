@@ -46,17 +46,9 @@ class ReminderNotifier extends _$ReminderNotifier {
     }
   }
 
-  /// Bật cần quyền thông báo — bị từ chối → `false`, vẫn tắt.
-  Future<bool> setEnabled({required bool enabled}) async {
-    if (enabled &&
-        !await ref.read(notificationServiceProvider).requestPermission()) {
-      return false;
-    }
-    await _save(
-      Reminder(enabled: enabled, hour: state.hour, minute: state.minute),
-    );
-    return true;
-  }
+  /// Bật/tắt nhắc học. Quyền thông báo do giao diện xin trước (`ensurePermission`).
+  Future<void> setEnabled({required bool enabled}) =>
+      _save(Reminder(enabled: enabled, hour: state.hour, minute: state.minute));
 
   Future<void> setTime(int hour, int minute) =>
       _save(Reminder(enabled: state.enabled, hour: hour, minute: minute));

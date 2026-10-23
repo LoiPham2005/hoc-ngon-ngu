@@ -381,13 +381,12 @@
   "speaking_listening": "Listening… tap “Done” when finished",
   "speaking_youSaid": "Heard: “{text}”",
   "speaking_notHeard": "Didn't catch that, try again",
-  "speaking_unavailable": "Microphone unavailable: allow microphone access for Lingua (Android needs Google speech services).",
+  "speaking_unavailable": "Speech recognition isn't available on this device (Android needs the Google app). You can skip this sentence.",
   "common_skip": "Skip",
   "reminder": "Daily reminder",
   "reminder_on": "At {time}",
   "reminder_off": "Off",
   "reminder_time": "Reminder time",
-  "reminder_denied": "Notifications are blocked — turn them on in system Settings.",
   "reminder_notificationTitle": "Time to study 📚",
   "reminder_notificationBody": "A few minutes of review a day helps you remember. Keep your 🔥 streak!",
   "@module_enDialogues_desc": {
@@ -569,5 +568,25 @@
         "type": "int"
       }
     }
-  }
+  },
+  "permission_notification_title": "Notifications needed",
+  "permission_notification_reason": "Lingua needs notification access to remind you to study every day.",
+  "permission_microphone_title": "Microphone needed",
+  "permission_microphone_reason": "Lingua needs the microphone to hear you read and check your pronunciation.",
+  "permission_blocked": "This permission is turned off. Open the device Settings → Permissions, turn it on and come back.",
+  "permission_openSettings": "Open settings",
+  "permission_camera_title": "Camera needed",
+  "permission_camera_reason": "The app needs the camera to take photos or scan codes.",
+  "permission_photos_title": "Photo access needed",
+  "permission_photos_reason": "The app needs access to your photos so you can pick one.",
+  "permission_location_title": "Location needed",
+  "permission_location_reason": "The app needs your location to show what's near you.",
+  "permission_contacts_title": "Contacts needed",
+  "permission_contacts_reason": "The app needs your contacts so you can pick someone.",
+  "permission_calendar_title": "Calendar needed",
+  "permission_calendar_reason": "The app needs your calendar to add events for you.",
+  "permission_bluetooth_title": "Bluetooth needed",
+  "permission_bluetooth_reason": "The app needs Bluetooth to connect to devices.",
+  "permission_activity_title": "Physical activity needed",
+  "permission_activity_reason": "The app needs to count your steps / recognise your activity."
 }

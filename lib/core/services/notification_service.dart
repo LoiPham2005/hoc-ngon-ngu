@@ -120,24 +120,6 @@ class NotificationService {
     );
   }
 
-  /// Xin quyền hiện thông báo (Android 13+, iOS). `false` = người dùng từ chối.
-  Future<bool> requestPermission() async {
-    if (Platform.isAndroid) {
-      return await _notificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >()
-              ?.requestNotificationsPermission() ??
-          false;
-    }
-    return await _notificationsPlugin
-            .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin
-            >()
-            ?.requestPermissions(alert: true, badge: true, sound: true) ??
-        false;
-  }
-
   /// ⏰ Thông báo lặp lại mỗi ngày lúc [hour]:[minute] (giờ máy). Gọi lại với cùng [id] để đổi giờ / nội dung.
   /// Không cần quyền báo thức chính xác: Android có thể lệch vài phút để tiết kiệm pin.
   Future<void> scheduleDaily({

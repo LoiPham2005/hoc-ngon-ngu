@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/services/permission_service.dart';
 import 'package:lingua/core/utils/toast.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
@@ -15,6 +16,7 @@ import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
+import 'package:lingua/shared/dialogs/permission_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// Hồ sơ người học + cài đặt: giao diện, ngôn ngữ app, mục tiêu, dữ liệu, giới thiệu.
@@ -205,10 +207,17 @@ class ProfilePage extends HookConsumerWidget {
                 ),
                 value: reminder.enabled,
                 onChanged: (on) async {
-                  final ok = await ref
+                  if (on &&
+                      !await ensurePermission(
+                        context,
+                        ref,
+                        AppPermission.notification,
+                      )) {
+                    return;
+                  }
+                  await ref
                       .read(reminderProvider.notifier)
                       .setEnabled(enabled: on);
-                  if (!ok) toast.warning(l10n.reminder_denied);
                 },
               ),
               if (reminder.enabled)

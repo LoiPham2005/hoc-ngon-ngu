@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/services/permission_service.dart';
 import 'package:lingua/core/services/speech_service.dart';
 import 'package:lingua/core/services/voice_input_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
@@ -14,6 +15,7 @@ import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/shared/base/speak_button.dart';
+import 'package:lingua/shared/dialogs/permission_dialog.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
 /// Nghe – chép (gõ lại câu nghe được) hoặc luyện nói (đọc to, máy so với câu mẫu).
@@ -351,6 +353,13 @@ class _SpeakingView extends HookConsumerWidget {
     Future<void> toggleMic() async {
       if (listening.value) {
         await voice.stop();
+        return;
+      }
+      if (!await ensurePermission(
+        context,
+        ref,
+        AppPermission.speechRecognition,
+      )) {
         return;
       }
       if (!await voice.ensureReady()) {
