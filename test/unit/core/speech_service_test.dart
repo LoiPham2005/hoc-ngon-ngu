@@ -51,8 +51,8 @@ void main() {
         methods,
         containsAllInOrder([
           'isLanguageAvailable',
-          'setSpeechRate',
           'setLanguage',
+          'setSpeechRate',
           'speak',
         ]),
       );

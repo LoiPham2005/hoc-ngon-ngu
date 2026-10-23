@@ -6,6 +6,7 @@ import 'package:lingua/core/services/speech_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
+import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/widgets/quiz_result_view.dart';
@@ -40,10 +41,22 @@ class QuizPage extends ConsumerWidget {
     final session = ref.watch(provider);
     final notifier = ref.read(provider.notifier);
 
+    // Ôn tập: số mục còn tới hạn (sau mỗi câu trả lời lịch ôn đã cập nhật).
+    final review = topic.review;
+    if (review != null) ref.watch(learnerProvider);
+    final remaining = review == null
+        ? 0
+        : ref.read(learnerProvider.notifier).dueKeys(review).length;
+
+    if (session.questions.isEmpty) return const _NothingToReview();
+
     if (session.isFinished) {
       return QuizResultView(
         session: session,
-        onRetry: notifier.restart,
+        onRetry: review == null || remaining > 0 ? notifier.restart : null,
+        retryLabel: review == null
+            ? null
+            : context.l10n.review_continue(remaining),
         onDone: () => context.router.maybePop(),
         onOpen: (item) => openQuizItem(context, item),
       );
@@ -94,6 +107,47 @@ class QuizPage extends ConsumerWidget {
   );
 }
 
+/// Bài ôn tập không còn mục nào tới hạn.
+class _NothingToReview extends StatelessWidget {
+  const _NothingToReview();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('🎉', style: TextStyle(fontSize: 64)),
+              const SizedBox(height: 12),
+              Text(
+                l10n.review_allDone,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                l10n.review_allDone_desc,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: () => context.router.maybePop(),
+                child: Text(l10n.result_done),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Mở màn chi tiết của chữ trong bài (từ câu vừa làm / danh sách câu sai).
 void openQuizItem(BuildContext context, QuizItem item) =>
     context.router.push(switch (item.module) {
@@ -130,7 +184,15 @@ class _QuestionView extends StatelessWidget {
     final colors = context.colors;
     final theme = Theme.of(context);
     final question = session.current;
+    final vietnamese = Localizations.localeOf(context).languageCode == 'vi';
+    // Bài ôn tập trộn nhiều loại mục → câu hỏi theo từng mục.
     final ask = switch (topic.mode) {
+      _ when topic.review != null => switch (question.item.module) {
+        Module.hiragana || Module.katakana => l10n.quiz_askReading,
+        Module.enPhrases => l10n.quiz_askPhrase,
+        final m when m.isKanji && vietnamese => l10n.quiz_askHanViet,
+        _ => l10n.quiz_askMeaning,
+      },
       QuizMode.reading => l10n.quiz_askReading,
       QuizMode.hanViet => l10n.quiz_askHanViet,
       QuizMode.meaning when topic.module == Module.enPhrases =>

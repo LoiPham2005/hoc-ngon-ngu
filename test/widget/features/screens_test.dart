@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/english/dialogue_list_page.dart';
+import 'package:lingua/features/english/dialogue_page.dart';
 import 'package:lingua/features/english/english_topics_page.dart';
 import 'package:lingua/features/english/grammar_lesson_page.dart';
 import 'package:lingua/features/english/grammar_list_page.dart';
@@ -14,7 +16,9 @@ import 'package:lingua/features/english/models/english_model.dart';
 import 'package:lingua/features/english/phrase_list_page.dart';
 import 'package:lingua/features/english/pronunciation_page.dart';
 import 'package:lingua/features/english/providers/english_provider.dart';
+import 'package:lingua/features/english/sentence_practice_page.dart';
 import 'package:lingua/features/english/vocab_list_page.dart';
+import 'package:lingua/features/english/widgets/english_widgets.dart';
 import 'package:lingua/features/english/word_detail_page.dart';
 import 'package:lingua/features/home/home_page.dart';
 import 'package:lingua/features/japanese/kana_detail_page.dart';
@@ -53,7 +57,8 @@ void main() {
   const enPrefs = {
     'learner_v1':
         '{"course":"en","dailyGoal":10,"learned":["en:w:rice","en:g:to-be"],"answered":3,"correct":2,'
-        '"streak":1,"lastActiveDay":"2099-01-01","todayCount":3,"lastModule":"enVocabulary"}',
+        '"streak":1,"lastActiveDay":"2099-01-01","todayCount":3,"lastModule":"enVocabulary",'
+        '"reviews":{"en:w:rice":[0,"2000-01-01"],"en:p:hotel.0":[2,"2000-01-01"]}}',
   };
   const sizes = {'iPhone': Size(393, 852), 'nhỏ': Size(360, 640)};
   const variants = [
@@ -68,6 +73,7 @@ void main() {
   final vocab = english((c) => c.read(vocabTopicsProvider.future));
   final phrases = english((c) => c.read(phraseTopicsProvider.future));
   final grammar = english((c) => c.read(grammarLessonsProvider.future));
+  final dialogues = english((c) => c.read(dialoguesProvider.future));
 
   final screens =
       <
@@ -104,6 +110,26 @@ void main() {
           enPrefs,
         ),
         'EN ngữ pháp': (const GrammarListPage(), grammar, enPrefs),
+        'EN hội thoại': (const DialogueListPage(), dialogues, enPrefs),
+        'EN 1 hội thoại': (
+          const DialoguePage(dialogueId: 'complaining-in-a-restaurant'),
+          dialogues,
+          enPrefs,
+        ),
+        'EN nghe – chép': (
+          const SentencePracticePage(mode: SentenceMode.dictation),
+          phrases,
+          enPrefs,
+        ),
+        'EN luyện nói': (
+          const SentencePracticePage(
+            mode: SentenceMode.speaking,
+            topicId: 'restaurant',
+          ),
+          phrases,
+          enPrefs,
+        ),
+        'EN hồ sơ': (const ProfilePage(), null, enPrefs),
         'EN bài ngữ pháp': (
           const GrammarLessonPage(lessonId: 'present-perfect'),
           grammar,
@@ -250,4 +276,66 @@ void main() {
       expect(tester.takeException(), isNull);
     },
   );
+
+  testWidgets('dialogue quiz: all correct → marked as understood', (
+    tester,
+  ) async {
+    final dialogue = Dialogue.fromJson(
+      (jsonDecode(File('assets/english/dialogues.json').readAsStringSync())
+              as List)
+          .cast<Map<String, dynamic>>()
+          .first,
+    );
+    await pumpApp(
+      tester,
+      DialogueQuizPage(dialogueId: dialogue.id),
+      prefs: enPrefs,
+      settle: false,
+    );
+    await loadAsset(tester, (c) => c.read(dialoguesProvider.future));
+    await tester.pumpAndSettle();
+    for (final q in dialogue.questions) {
+      await tester.tap(find.text(q.options[q.answer]));
+      await tester.pumpAndSettle();
+      expect(find.text('Chính xác!'), findsOneWidget);
+      await tester.tap(find.byType(FilledButton).last);
+      await tester.pumpAndSettle();
+    }
+    expect(find.text('Đã thuộc bài này ✓'), findsOneWidget);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(DialogueQuizPage)),
+    );
+    expect(container.read(learnerProvider).learned, contains(dialogue.key));
+  });
+
+  testWidgets('dictation: wrong sentence shows word-by-word check', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      const SentencePracticePage(
+        mode: SentenceMode.dictation,
+        topicId: 'greetings',
+      ),
+      prefs: enPrefs,
+      settle: false,
+    );
+    await loadAsset(tester, (c) => c.read(phraseTopicsProvider.future));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'banana');
+    await tester.pump();
+    await tester.tap(find.text('Kiểm tra'));
+    await tester.pumpAndSettle();
+    expect(find.text('Chưa đúng rồi'), findsOneWidget);
+    expect(find.byType(WordMatchText), findsOneWidget);
+    expect(find.text('Tiếp tục'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('home: review card opens today\'s due items', (tester) async {
+    await pumpApp(tester, const HomePage(), prefs: enPrefs, settle: false);
+    await tester.pump();
+    expect(find.text('2 mục cần ôn — ôn ngay để nhớ lâu'), findsOneWidget);
+    expect(find.text('Ôn ngay'), findsOneWidget);
+  });
 }

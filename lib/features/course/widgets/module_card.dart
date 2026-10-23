@@ -26,6 +26,7 @@ void openModule(BuildContext context, WidgetRef ref, Module module) {
     Module.enVocabulary => EnglishTopicsRoute(module: Module.enVocabulary),
     Module.enPhrases => EnglishTopicsRoute(module: Module.enPhrases),
     Module.enGrammar => const GrammarListRoute(),
+    Module.enDialogues => const DialogueListRoute(),
     _ => KanjiListRoute(level: module.kanjiLevel!),
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 // Dữ liệu khoá Tiếng Anh: chủ đề từ vựng / tình huống giao tiếp, từ, câu, âm IPA.
 // Nội dung: `assets/english/{vocabulary,phrases,grammar}.json` (soạn riêng cho app).
 
@@ -157,9 +159,13 @@ class ChoiceExercise extends Exercise {
     required this.options,
     required this.answer,
     required this.explain,
+    this.hint,
   });
 
   final String prompt;
+
+  /// Dòng phụ dưới câu hỏi (vd bản dịch câu hỏi hội thoại).
+  final String? hint;
   final List<String> options;
   final int answer;
   final String explain;
@@ -178,6 +184,99 @@ class OrderExercise extends Exercise {
   /// Các từ của câu, bỏ dấu câu cuối.
   List<String> get words =>
       answer.substring(0, answer.length - ending.length).split(' ');
+}
+
+/// So câu người học (gõ / nói) với câu mẫu: mỗi từ của [expected] kèm đã khớp chưa.
+/// Khớp theo thứ tự (dãy con chung dài nhất), bỏ qua hoa/thường và dấu câu.
+List<({String word, bool hit})> matchWords(String expected, String actual) {
+  String norm(String w) => w
+      .toLowerCase()
+      .replaceAll('’', "'")
+      .replaceAll(RegExp(r"[^a-z0-9']"), '');
+  List<String> split(String s) =>
+      s.split(RegExp(r'\s+')).where((w) => norm(w).isNotEmpty).toList();
+  final want = split(expected);
+  final got = [for (final w in split(actual)) norm(w)];
+  final n = want.length, m = got.length;
+  // lcs[i][j] = độ dài dãy con chung dài nhất của want[i..] và got[j..].
+  final lcs = List.generate(n + 1, (_) => List.filled(m + 1, 0));
+  for (var i = n - 1; i >= 0; i--) {
+    for (var j = m - 1; j >= 0; j--) {
+      lcs[i][j] = norm(want[i]) == got[j]
+          ? lcs[i + 1][j + 1] + 1
+          : max(lcs[i + 1][j], lcs[i][j + 1]);
+    }
+  }
+  final hits = List.filled(n, false);
+  for (var i = 0, j = 0; i < n && j < m;) {
+    if (norm(want[i]) == got[j]) {
+      hits[i++] = true;
+      j++;
+    } else if (lcs[i + 1][j] >= lcs[i][j + 1]) {
+      i++;
+    } else {
+      j++;
+    }
+  }
+  return [for (var i = 0; i < n; i++) (word: want[i], hit: hits[i])];
+}
+
+/// 1 đoạn hội thoại 2 người (A/B) + 4 câu hỏi hiểu bài.
+class Dialogue {
+  const Dialogue({
+    required this.id,
+    required this.emoji,
+    required this.nameVi,
+    required this.nameEn,
+    required this.level,
+    required this.speakers,
+    required this.lines,
+    required this.questions,
+  });
+
+  factory Dialogue.fromJson(Map<String, dynamic> json) => Dialogue(
+    id: json['id'] as String,
+    emoji: json['emoji'] as String,
+    nameVi: json['name_vi'] as String,
+    nameEn: json['name_en'] as String,
+    level: json['level'] as String,
+    speakers: (json['speakers'] as Map<String, dynamic>).cast(),
+    lines: [
+      for (final l in (json['lines'] as List).cast<Map<String, dynamic>>())
+        (
+          speaker: l['s'] as String,
+          en: l['en'] as String,
+          vi: l['vi'] as String,
+        ),
+    ],
+    questions: [
+      for (final q in (json['questions'] as List).cast<Map<String, dynamic>>())
+        ChoiceExercise(
+          prompt: q['q'] as String,
+          hint: q['q_vi'] as String,
+          options: (q['options'] as List).cast<String>(),
+          answer: q['answer'] as int,
+          explain: q['explain'] as String,
+        ),
+    ],
+  );
+
+  final String id;
+  final String emoji;
+  final String nameVi;
+  final String nameEn;
+
+  /// Cấp CEFR: A1, A2, B1.
+  final String level;
+
+  /// Tên người nói theo vai: `{"A": "Tom", "B": "Mai"}`.
+  final Map<String, String> speakers;
+  final List<({String speaker, String en, String vi})> lines;
+  final List<ChoiceExercise> questions;
+
+  String get key => 'en:d:$id';
+
+  String name(String languageCode) => languageCode == 'vi' ? nameVi : nameEn;
 }
 
 enum PhonemeKind { vowel, diphthong, consonant }

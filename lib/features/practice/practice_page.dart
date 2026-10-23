@@ -10,6 +10,7 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/english/models/english_model.dart';
 import 'package:lingua/features/english/providers/english_provider.dart';
+import 'package:lingua/features/english/sentence_practice_page.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
@@ -143,6 +144,21 @@ class _EnglishPractice extends ConsumerWidget {
     final phrases = ref.watch(phraseTopicsProvider).value ?? const [];
     final lessons = ref.watch(grammarLessonsProvider).value ?? const [];
 
+    Future<void> startSentences(SentenceMode mode, String title) async {
+      final picked = await showTopicSheet(
+        context,
+        title: title,
+        topics: [
+          for (final t in phrases) (t.id, '${t.emoji}  ${t.name(lang)}'),
+        ],
+      );
+      if (picked != null && context.mounted) {
+        await context.router.push(
+          SentencePracticeRoute(mode: mode, topicId: picked.id),
+        );
+      }
+    }
+
     Future<void> startGrammar() async {
       final picked = await showTopicSheet(
         context,
@@ -189,6 +205,20 @@ class _EnglishPractice extends ConsumerWidget {
           phrases,
           (g) => QuizTopic(Module.enPhrases, QuizMode.meaning, group: g),
         ),
+      ),
+      (
+        Module.enPronunciation,
+        '✏️',
+        l10n.practice_dictation,
+        l10n.practice_dictation_desc,
+        () => startSentences(SentenceMode.dictation, l10n.practice_dictation),
+      ),
+      (
+        Module.enDialogues,
+        '🎤',
+        l10n.practice_speaking,
+        l10n.practice_speaking_desc,
+        () => startSentences(SentenceMode.speaking, l10n.practice_speaking),
       ),
       (
         Module.enGrammar,

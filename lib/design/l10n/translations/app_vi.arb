@@ -347,5 +347,100 @@
         "type": "String"
       }
     }
+  },
+  "module_enDialogues": "Hội thoại",
+  "module_enDialogues_desc": "{count} đoạn hội thoại có câu hỏi",
+  "dialogue_translation": "Bản dịch",
+  "dialogue_playAll": "Nghe cả bài",
+  "dialogue_stop": "Dừng",
+  "dialogue_quiz": "Trả lời câu hỏi ({count} câu)",
+  "review_title": "Ôn tập hôm nay",
+  "review_due": "{count} mục cần ôn — ôn ngay để nhớ lâu",
+  "review_none": "Đã ôn xong hôm nay · {count} mục trong lịch ôn",
+  "review_empty": "Đánh dấu ✓ đã thuộc hoặc làm bài luyện — app sẽ nhắc ôn đúng lúc bạn sắp quên.",
+  "review_start": "Ôn ngay",
+  "review_continue": "Ôn tiếp ({count})",
+  "review_allDone": "Đã ôn hết!",
+  "review_allDone_desc": "Không còn mục nào tới hạn. Hẹn bạn ngày mai nhé.",
+  "practice_dictation": "Nghe – chép",
+  "practice_dictation_desc": "Nghe câu, gõ lại cho đúng",
+  "practice_speaking": "Luyện nói",
+  "practice_speaking_desc": "Đọc to, máy chấm từng từ",
+  "sentence_dictationAsk": "Nghe và gõ lại câu",
+  "sentence_listenAgain": "Nghe lại",
+  "sentence_slow": "Chậm",
+  "sentence_showMeaning": "Xem nghĩa (gợi ý)",
+  "sentence_typeHint": "Gõ câu bạn nghe được…",
+  "sentence_score": "Đúng {percent}% số từ",
+  "speaking_ask": "Đọc to câu này",
+  "speaking_tap": "Bấm micro rồi đọc",
+  "speaking_listening": "Đang nghe… đọc xong bấm dừng",
+  "speaking_tryAgain": "Bấm micro để đọc lại",
+  "speaking_youSaid": "Máy nghe được: “{text}”",
+  "speaking_notHeard": "Chưa nghe rõ, thử lại nhé",
+  "speaking_unavailable": "Chưa dùng được micro: hãy cấp quyền micro cho Lingua (Android cần cài Google / giọng tiếng Anh).",
+  "common_skip": "Bỏ qua",
+  "reminder": "Nhắc học hằng ngày",
+  "reminder_on": "Nhắc lúc {time}",
+  "reminder_off": "Đang tắt",
+  "reminder_time": "Giờ nhắc",
+  "reminder_denied": "Bạn chưa cho phép thông báo — bật trong Cài đặt của máy.",
+  "reminder_notificationTitle": "Đến giờ học rồi 📚",
+  "reminder_notificationBody": "Vài phút ôn tập mỗi ngày giúp bạn nhớ lâu hơn. Giữ chuỗi 🔥 nhé!",
+  "@module_enDialogues_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@dialogue_quiz": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@review_due": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@review_none": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@review_continue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@sentence_score": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@speaking_youSaid": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@reminder_on": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   }
 }

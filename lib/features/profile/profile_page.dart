@@ -10,6 +10,7 @@ import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
@@ -25,6 +26,7 @@ class ProfilePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final learner = ref.watch(learnerProvider);
+    final reminder = ref.watch(reminderProvider);
     final notifier = ref.read(learnerProvider.notifier);
     final theme = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
@@ -174,6 +176,57 @@ class ProfilePage extends HookConsumerWidget {
                     ),
                 ],
               ),
+              const Divider(height: 28),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                secondary: const Icon(Icons.notifications_active_rounded),
+                title: Text(l10n.reminder),
+                subtitle: Text(
+                  reminder.enabled
+                      ? l10n.reminder_on(
+                          MaterialLocalizations.of(context).formatTimeOfDay(
+                            TimeOfDay(
+                              hour: reminder.hour,
+                              minute: reminder.minute,
+                            ),
+                          ),
+                        )
+                      : l10n.reminder_off,
+                ),
+                value: reminder.enabled,
+                onChanged: (on) async {
+                  final ok = await ref
+                      .read(reminderProvider.notifier)
+                      .setEnabled(enabled: on);
+                  if (!ok) toast.warning(l10n.reminder_denied);
+                },
+              ),
+              if (reminder.enabled)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.schedule_rounded),
+                  title: Text(l10n.reminder_time),
+                  trailing: Text(
+                    MaterialLocalizations.of(context).formatTimeOfDay(
+                      TimeOfDay(hour: reminder.hour, minute: reminder.minute),
+                    ),
+                    style: text.titleMedium,
+                  ),
+                  onTap: () async {
+                    final picked = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                        hour: reminder.hour,
+                        minute: reminder.minute,
+                      ),
+                    );
+                    if (picked != null) {
+                      await ref
+                          .read(reminderProvider.notifier)
+                          .setTime(picked.hour, picked.minute);
+                    }
+                  },
+                ),
               const Divider(height: 28),
               ListTile(
                 contentPadding: EdgeInsets.zero,

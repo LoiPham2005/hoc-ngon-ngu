@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'module_chars_provider.g.dart';
 
 /// Khoá "đã thuộc" của mọi mục trong 1 học phần, đúng thứ tự học (tính tiến độ, chữ trước/sau).
-/// Kana/Kanji = chính chữ; Tiếng Anh = `en:w:<từ>` / `en:p:<id câu>` / `en:ph:<âm>` / `en:g:<id bài>`.
+/// Kana/Kanji = chính chữ; Tiếng Anh = `en:w:<từ>` / `en:p:<id câu>` / `en:ph:<âm>` / `en:g:<id bài>` / `en:d:<id hội thoại>`.
 @Riverpod(keepAlive: true)
 Future<List<String>> moduleChars(Ref ref, Module module) async =>
     switch (module) {
@@ -22,6 +22,9 @@ Future<List<String>> moduleChars(Ref ref, Module module) async =>
       Module.enPhrases => [
         for (final t in await ref.watch(phraseTopicsProvider.future))
           for (final p in t.items) p.key,
+      ],
+      Module.enDialogues => [
+        for (final d in await ref.watch(dialoguesProvider.future)) d.key,
       ],
       Module.enGrammar => [
         for (final g in await ref.watch(grammarLessonsProvider.future)) g.key,

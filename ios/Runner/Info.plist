@@ -89,7 +89,9 @@
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>Ứng dụng cần quyền lưu ảnh vào thư viện.</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>Ứng dụng cần truy cập microphone khi quay video.</string>
+		<string>Lingua cần micro để bạn luyện nói và chấm phát âm.</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>Lingua nhận giọng nói để so câu bạn đọc với câu mẫu.</string>
 		<!-- SKAdNetwork IDs — danh sách ad networks AdMob hỗ trợ.
 	     Lấy từ: https://developers.google.com/admob/ios/ios14
 	     Để minimal — chỉ thêm cstr6suwn9 (Google) — thêm các network khác khi cần. -->

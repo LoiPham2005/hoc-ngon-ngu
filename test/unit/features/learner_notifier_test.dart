@@ -87,4 +87,77 @@ void main() {
     expect(l.learned, isEmpty);
     expect(l.answered, 0);
   });
+
+  group('spaced repetition', () {
+    test('learning an item schedules its first review for tomorrow', () async {
+      final c = newContainer();
+      final n = c.read(learnerProvider.notifier);
+      var day = DateTime(2026, 10, 1, 9);
+      n.now = () => day;
+
+      await n.toggleLearned('en:w:rice');
+      await n.toggleLearned('en:ph:æ'); // IPA sounds are not reviewed
+      expect(c.read(learnerProvider).reviews.keys, ['en:w:rice']);
+      expect(n.dueKeys(Course.en), isEmpty);
+
+      day = DateTime(2026, 10, 2, 9);
+      expect(n.dueKeys(Course.en), ['en:w:rice']);
+      expect(n.dueKeys(Course.ja), isEmpty);
+
+      await n.toggleLearned('en:w:rice'); // unlearn → no more reviews
+      expect(c.read(learnerProvider).reviews, isEmpty);
+    });
+
+    test(
+      'correct answer when due moves the card up and spaces it out',
+      () async {
+        final c = newContainer();
+        final n = c.read(learnerProvider.notifier);
+        var day = DateTime(2026, 10, 1);
+        n.now = () => day;
+        await n.toggleLearned('日');
+
+        // Correct before it is due → schedule unchanged.
+        await n.recordAnswer(correct: true, key: '日');
+        expect(c.read(learnerProvider).reviews['日']!.due, '2026-10-02');
+
+        day = DateTime(2026, 10, 2);
+        await n.recordAnswer(correct: true, key: '日');
+        var card = c.read(learnerProvider).reviews['日']!;
+        expect((card.box, card.due), (1, '2026-10-05'));
+
+        day = DateTime(2026, 10, 5);
+        await n.recordAnswer(correct: true, key: '日');
+        card = c.read(learnerProvider).reviews['日']!;
+        expect((card.box, card.due), (2, '2026-10-12'));
+
+        // Wrong → back to the start, due tomorrow.
+        await n.recordAnswer(correct: false, key: '日');
+        card = c.read(learnerProvider).reviews['日']!;
+        expect((card.box, card.due), (0, '2026-10-06'));
+      },
+    );
+
+    test('a wrong answer adds a not-yet-learned item to the reviews', () async {
+      final c = newContainer();
+      final n = c.read(learnerProvider.notifier);
+      n.now = () => DateTime(2026, 10, 1);
+      await n.recordAnswer(correct: false, key: 'en:p:hotel.3');
+      expect(
+        c.read(learnerProvider).reviews['en:p:hotel.3']!.due,
+        '2026-10-02',
+      );
+      expect(c.read(learnerProvider).learned, isEmpty);
+    });
+
+    test('old saved data: learned items become due right away', () async {
+      SharedPreferences.setMockInitialValues({
+        'learner_v1': '{"course":"ja","learned":["あ","en:g:to-be"]}',
+      });
+      prefs = await SharedPreferences.getInstance();
+      final c = newContainer();
+      expect(c.read(learnerProvider.notifier).dueKeys(Course.ja), ['あ']);
+      expect(c.read(learnerProvider).reviews.keys, ['あ']);
+    });
+  });
 }

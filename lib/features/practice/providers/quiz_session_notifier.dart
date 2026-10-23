@@ -32,12 +32,20 @@ class QuizTopic {
     this.mode, {
     this.kanaSet = KanaSet.all,
     this.group,
-  });
+  }) : review = null;
 
   /// Hiragana + Katakana.
   const QuizTopic.kanaMix({this.kanaSet = KanaSet.all})
     : module = null,
       mode = QuizMode.reading,
+      group = null,
+      review = null;
+
+  /// Ôn tập: các mục tới hạn ôn của [review] (lặp lại ngắt quãng).
+  const QuizTopic.review(Course this.review)
+    : module = null,
+      mode = QuizMode.meaning,
+      kanaSet = KanaSet.all,
       group = null;
 
   final Module? module;
@@ -49,12 +57,19 @@ class QuizTopic {
   /// Bài Tiếng Anh: chỉ 1 chủ đề / tình huống (`null` = tất cả).
   final String? group;
 
+  /// Khác `null` = bài ôn tập của khoá học này.
+  final Course? review;
+
   /// Bài "Ôn nhanh 10 câu" của học phần (Trang chủ, phím tắt icon app).
   static QuizTopic quickReview(Module module) => switch (module) {
     Module.hiragana || Module.katakana => QuizTopic(module, QuizMode.reading),
     Module.enPronunciation ||
     Module.enVocabulary ||
-    Module.enGrammar => const QuizTopic(Module.enVocabulary, QuizMode.meaning),
+    Module.enGrammar ||
+    Module.enDialogues => const QuizTopic(
+      Module.enVocabulary,
+      QuizMode.meaning,
+    ),
     _ => QuizTopic(module, QuizMode.meaning),
   };
 
@@ -64,10 +79,11 @@ class QuizTopic {
       other.module == module &&
       other.mode == mode &&
       other.kanaSet == kanaSet &&
-      other.group == group;
+      other.group == group &&
+      other.review == review;
 
   @override
-  int get hashCode => Object.hash(module, mode, kanaSet, group);
+  int get hashCode => Object.hash(module, mode, kanaSet, group, review);
 }
 
 /// 1 mục trong bài: [char] = chữ / từ / câu hỏi, [answer] = đáp án đúng.
@@ -75,6 +91,7 @@ class QuizTopic {
 class QuizItem {
   const QuizItem({
     required this.char,
+    required this.key,
     required this.answer,
     required this.group,
     required this.module,
@@ -82,6 +99,9 @@ class QuizItem {
   });
 
   final String char;
+
+  /// Khoá tiến độ / lịch ôn (giống khoá "đã thuộc").
+  final String key;
   final String answer;
   final String group;
 
@@ -141,69 +161,91 @@ class QuizSession {
 }
 
 /// Mọi mục có thể hỏi của [topic] (tải dữ liệu cần thiết: Kanji / từ vựng / câu).
+/// Bài ôn tập: mọi mục của khoá học — phiên bài chỉ lấy câu hỏi từ các mục tới hạn ôn.
 @riverpod
 Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
-  final module = topic.module;
-  QuizItem kana(Kana k) => QuizItem(
-    char: k.char,
-    answer: k.romaji,
-    group: k.script.name,
-    module: k.script == KanaScript.hiragana ? Module.hiragana : Module.katakana,
-    speech: k.char,
-  );
-  switch (module) {
-    case null || Module.hiragana || Module.katakana:
-      final scripts = switch (module) {
-        Module.hiragana => [KanaScript.hiragana],
-        Module.katakana => [KanaScript.katakana],
-        _ => KanaScript.values,
-      };
-      return [
-        for (final s in scripts)
-          for (final k in KanaTable.of(s, topic.kanaSet)) kana(k),
-      ];
-    case Module.enPronunciation || Module.enVocabulary:
-      return [
-        for (final t in await ref.watch(vocabTopicsProvider.future))
-          if (topic.group == null || topic.group == t.id)
-            for (final w in t.items)
-              QuizItem(
-                char: w.word,
-                answer: topic.mode == QuizMode.listening ? w.word : w.meaning,
-                group: t.id,
-                module: Module.enVocabulary,
-                speech: w.word,
-              ),
-      ];
-    case Module.enPhrases:
-      return [
-        for (final t in await ref.watch(phraseTopicsProvider.future))
-          if (topic.group == null || topic.group == t.id)
-            for (final p in t.items)
-              QuizItem(
-                char: p.text,
-                answer: p.meaning,
-                group: t.id,
-                module: Module.enPhrases,
-                speech: p.text,
-              ),
-      ];
-    case final Module m:
-      final language = ref.watch(localeProvider).languageCode;
-      return [
-        for (final k in await ref.watch(kanjiListProvider.future))
-          if (k.level == m.kanjiLevel)
-            QuizItem(
-              char: k.char,
-              answer: topic.mode == QuizMode.hanViet
-                  ? k.hanViet
-                  : k.meaningFor(language),
-              group: m.name,
-              module: m,
-              speech: k.speech,
-            ),
-      ];
+  final language = ref.watch(localeProvider).languageCode;
+
+  List<QuizItem> kana(List<KanaScript> scripts, KanaSet set) => [
+    for (final s in scripts)
+      for (final k in KanaTable.of(s, set))
+        QuizItem(
+          char: k.char,
+          key: k.char,
+          answer: k.romaji,
+          group: k.script.name,
+          module: s == KanaScript.hiragana ? Module.hiragana : Module.katakana,
+          speech: k.char,
+        ),
+  ];
+
+  Future<List<QuizItem>> kanji(Module m, QuizMode mode) async => [
+    for (final k in await ref.watch(kanjiListProvider.future))
+      if (k.level == m.kanjiLevel)
+        QuizItem(
+          char: k.char,
+          key: k.char,
+          answer: mode == QuizMode.hanViet ? k.hanViet : k.meaningFor(language),
+          group: m.name,
+          module: m,
+          speech: k.speech,
+        ),
+  ];
+
+  Future<List<QuizItem>> words(QuizMode mode, String? group) async => [
+    for (final t in await ref.watch(vocabTopicsProvider.future))
+      if (group == null || group == t.id)
+        for (final w in t.items)
+          QuizItem(
+            char: w.word,
+            key: w.key,
+            answer: mode == QuizMode.listening ? w.word : w.meaning,
+            group: t.id,
+            module: Module.enVocabulary,
+            speech: w.word,
+          ),
+  ];
+
+  Future<List<QuizItem>> phrases(String? group) async => [
+    for (final t in await ref.watch(phraseTopicsProvider.future))
+      if (group == null || group == t.id)
+        for (final p in t.items)
+          QuizItem(
+            char: p.text,
+            key: p.key,
+            answer: p.meaning,
+            group: t.id,
+            module: Module.enPhrases,
+            speech: p.text,
+          ),
+  ];
+
+  if (topic.review case final course?) {
+    return switch (course) {
+      Course.en => [
+        ...await words(QuizMode.meaning, null),
+        ...await phrases(null),
+      ],
+      _ => [
+        ...kana(KanaScript.values, KanaSet.all),
+        for (final m in course.modules.where((m) => m.isKanji))
+          ...await kanji(
+            m,
+            language == 'vi' ? QuizMode.hanViet : QuizMode.meaning,
+          ),
+      ],
+    };
   }
+
+  return switch (topic.module) {
+    null => kana(KanaScript.values, topic.kanaSet),
+    Module.hiragana => kana([KanaScript.hiragana], topic.kanaSet),
+    Module.katakana => kana([KanaScript.katakana], topic.kanaSet),
+    Module.enPronunciation ||
+    Module.enVocabulary => await words(topic.mode, topic.group),
+    Module.enPhrases => await phrases(topic.group),
+    final Module m => await kanji(m, topic.mode),
+  };
 }
 
 /// 1 bài luyện [length] câu. Chỉ tạo sau khi [quizPoolProvider] đã tải xong (trang chờ bằng AsyncView).
@@ -223,7 +265,9 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
       index: state.index,
       picks: [...state.picks, option],
     );
-    ref.read(learnerProvider.notifier).recordAnswer(correct: ok);
+    ref
+        .read(learnerProvider.notifier)
+        .recordAnswer(correct: ok, key: state.current.item.key);
   }
 
   /// Câu tiếp theo; ở câu cuối → kết thúc bài (màn kết quả).
@@ -241,7 +285,15 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
 
   QuizSession _newSession() {
     final pool = ref.read(quizPoolProvider(topic)).requireValue;
-    final chosen = (pool.toList()..shuffle(_random)).take(length).toList();
+    // Ôn tập: chỉ hỏi mục tới hạn (có thể ít hơn [length], hoặc 0 khi đã ôn hết).
+    final candidates = switch (topic.review) {
+      final course? => () {
+        final due = ref.read(learnerProvider.notifier).dueKeys(course).toSet();
+        return pool.where((i) => due.contains(i.key)).toList();
+      }(),
+      null => pool.toList(),
+    };
+    final chosen = (candidates..shuffle(_random)).take(length).toList();
     return QuizSession(
       questions: [
         for (final item in chosen) QuizQuestion(item, _options(item, pool)),
@@ -253,7 +305,9 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
     final seen = {item.answer};
     final others = [
       for (final o
-          in pool.where((o) => o.group == item.group).toList()
+          in pool
+              .where((o) => o.group == item.group && o.module == item.module)
+              .toList()
             ..shuffle(_random))
         if (seen.add(o.answer)) o,
     ].take(3);

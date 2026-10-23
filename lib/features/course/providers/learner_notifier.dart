@@ -1,10 +1,41 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'learner_notifier.g.dart';
+
+/// Lịch ôn 1 mục (lặp lại ngắt quãng): [box] = số lần ôn đúng liên tiếp, [due] = ngày cần ôn (yyyy-MM-dd).
+class Review {
+  const Review(this.box, this.due);
+
+  /// Khoảng cách ôn (ngày) theo [box]: đúng càng nhiều lần → càng lâu mới phải ôn lại.
+  static const intervals = [1, 3, 7, 14, 30, 60, 120];
+
+  final int box;
+  final String due;
+
+  /// Đã ôn đúng đủ nhiều lần → coi như nhớ lâu.
+  bool get isMastered => box >= 4;
+
+  List<Object> toJson() => [box, due];
+
+  static Review fromJson(Object? json) {
+    final [box, due] = json! as List;
+    return Review(box as int, due as String);
+  }
+}
+
+/// Mục có lịch ôn: chữ Kana/Kanji, từ, câu. Âm IPA, bài ngữ pháp, hội thoại không ôn bằng câu hỏi nên bỏ.
+bool isReviewable(String key) =>
+    !key.startsWith('en:ph:') &&
+    !key.startsWith('en:g:') &&
+    !key.startsWith('en:d:');
+
+/// Khoá học của 1 mục: Tiếng Anh có tiền tố `en:`, còn lại là Tiếng Nhật.
+Course courseOfKey(String key) => key.startsWith('en:') ? Course.en : Course.ja;
 
 /// Hồ sơ người học — lưu trên máy (không cần tài khoản).
 class Learner {
@@ -18,12 +49,34 @@ class Learner {
     this.lastActiveDay,
     this.todayCount = 0,
     this.lastModule,
+    this.reviews = const {},
   });
 
-  factory Learner.fromJson(Map<String, dynamic> json) => Learner(
+  factory Learner.fromJson(Map<String, dynamic> json) {
+    final learned = {...(json['learned'] as List? ?? const []).cast<String>()};
+    final reviews = json['reviews'] as Map<String, dynamic>?;
+    return Learner._fromJson(
+      json,
+      learned,
+      reviews == null
+          // Bản cũ chưa có lịch ôn → mục đã thuộc cần ôn ngay ('' < mọi ngày).
+          ? {
+              for (final k in learned)
+                if (isReviewable(k)) k: const Review(0, ''),
+            }
+          : reviews.map((k, v) => MapEntry(k, Review.fromJson(v))),
+    );
+  }
+
+  factory Learner._fromJson(
+    Map<String, dynamic> json,
+    Set<String> learned,
+    Map<String, Review> reviews,
+  ) => Learner(
     course: Course.values.asNameMap()[json['course']],
     dailyGoal: json['dailyGoal'] as int? ?? 10,
-    learned: {...(json['learned'] as List? ?? const []).cast<String>()},
+    learned: learned,
+    reviews: reviews,
     answered: json['answered'] as int? ?? 0,
     correct: json['correct'] as int? ?? 0,
     streak: json['streak'] as int? ?? 0,
@@ -51,6 +104,9 @@ class Learner {
   final int todayCount;
   final Module? lastModule;
 
+  /// Lịch ôn theo khoá mục (cùng khoá với [learned]). Mục trả lời sai cũng được thêm vào.
+  final Map<String, Review> reviews;
+
   double get accuracy => answered == 0 ? 0 : correct / answered;
 
   Map<String, dynamic> toJson() => {
@@ -63,6 +119,7 @@ class Learner {
     'lastActiveDay': lastActiveDay,
     'todayCount': todayCount,
     'lastModule': lastModule?.name,
+    'reviews': reviews.map((k, v) => MapEntry(k, v.toJson())),
   };
 
   Learner copyWith({
@@ -75,6 +132,7 @@ class Learner {
     String? lastActiveDay,
     int? todayCount,
     Module? lastModule,
+    Map<String, Review>? reviews,
   }) => Learner(
     course: course ?? this.course,
     dailyGoal: dailyGoal ?? this.dailyGoal,
@@ -85,6 +143,7 @@ class Learner {
     lastActiveDay: lastActiveDay ?? this.lastActiveDay,
     todayCount: todayCount ?? this.todayCount,
     lastModule: lastModule ?? this.lastModule,
+    reviews: reviews ?? this.reviews,
   );
 }
 
@@ -118,6 +177,17 @@ class LearnerNotifier extends _$LearnerNotifier {
     return last == _today || last == yesterday ? state.streak : 0;
   }
 
+  String _inDays(int days) {
+    final d = now();
+    return _day(DateTime(d.year, d.month, d.day + days));
+  }
+
+  /// Mục cần ôn hôm nay của [course] (đã tới hạn hoặc quá hạn).
+  List<String> dueKeys(Course course) => [
+    for (final MapEntry(:key, :value) in state.reviews.entries)
+      if (value.due.compareTo(_today) <= 0 && courseOfKey(key) == course) key,
+  ];
+
   /// Lượt học hôm nay (sang ngày mới → 0).
   int get todayCount => state.lastActiveDay == _today ? state.todayCount : 0;
 
@@ -129,11 +199,23 @@ class LearnerNotifier extends _$LearnerNotifier {
   Future<void> openModule(Module module) =>
       _save(state.copyWith(lastModule: module));
 
+  /// Bật/tắt "đã thuộc". Thuộc → lên lịch ôn từ ngày mai; bỏ thuộc → bỏ lịch ôn.
   Future<void> toggleLearned(String char) {
     final learned = {...state.learned};
+    final reviews = {...state.reviews};
     final added = learned.add(char);
-    if (!added) learned.remove(char);
-    final next = state.copyWith(learned: learned);
+    if (added) {
+      if (isReviewable(char)) {
+        reviews.putIfAbsent(
+          char,
+          () => Review(0, _inDays(Review.intervals[0])),
+        );
+      }
+    } else {
+      learned.remove(char);
+      reviews.remove(char);
+    }
+    final next = state.copyWith(learned: learned, reviews: reviews);
     return _save(added ? _withActivity(next) : next);
   }
 
@@ -142,14 +224,33 @@ class LearnerNotifier extends _$LearnerNotifier {
     if (!state.learned.contains(key)) await toggleLearned(key);
   }
 
-  Future<void> recordAnswer({required bool correct}) => _save(
-    _withActivity(
-      state.copyWith(
-        answered: state.answered + 1,
-        correct: state.correct + (correct ? 1 : 0),
+  /// Ghi 1 câu trả lời. Có [key] → cập nhật lịch ôn:
+  /// sai → ôn lại từ ngày mai (kể cả mục chưa học); đúng lúc tới hạn → lên hộp, giãn lịch.
+  /// Đúng khi chưa tới hạn thì giữ lịch (tránh "học dồn" làm lịch giãn quá sớm).
+  Future<void> recordAnswer({required bool correct, String? key}) {
+    final reviews = {...state.reviews};
+    final card = reviews[key];
+    if (key != null && isReviewable(key)) {
+      if (!correct) {
+        reviews[key] = Review(0, _inDays(Review.intervals[0]));
+      } else if (card != null && card.due.compareTo(_today) <= 0) {
+        final box = card.box + 1;
+        reviews[key] = Review(
+          box,
+          _inDays(Review.intervals[min(box, Review.intervals.length - 1)]),
+        );
+      }
+    }
+    return _save(
+      _withActivity(
+        state.copyWith(
+          answered: state.answered + 1,
+          correct: state.correct + (correct ? 1 : 0),
+          reviews: reviews,
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   /// Xoá tiến độ, giữ khoá học + mục tiêu đã chọn.
   Future<void> resetProgress() =>

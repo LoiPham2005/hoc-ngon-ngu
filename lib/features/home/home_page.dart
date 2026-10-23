@@ -56,6 +56,16 @@ class HomePage extends ConsumerWidget {
               today: notifier.todayCount,
               goal: learner.dailyGoal,
             ),
+            const SizedBox(height: 12),
+            _ReviewCard(
+              due: notifier.dueKeys(course).length,
+              scheduled: learner.reviews.keys
+                  .where((k) => courseOfKey(k) == course)
+                  .length,
+              onStart: () => context.router.push(
+                QuizRoute(topic: QuizTopic.review(course)),
+              ),
+            ),
             const SizedBox(height: 24),
             SectionTitle(l10n.home_continue),
             ModuleCard(module),
@@ -99,6 +109,60 @@ class HomePage extends ConsumerWidget {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Ôn tập hôm nay (lặp lại ngắt quãng): số mục tới hạn + nút ôn.
+class _ReviewCard extends StatelessWidget {
+  const _ReviewCard({
+    required this.due,
+    required this.scheduled,
+    required this.onStart,
+  });
+
+  final int due;
+  final int scheduled;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final colors = context.colors;
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+        child: Row(
+          children: [
+            Text(due > 0 ? '🧠' : '✅', style: const TextStyle(fontSize: 30)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.review_title, style: theme.textTheme.titleMedium),
+                  const SizedBox(height: 2),
+                  Text(
+                    due > 0
+                        ? l10n.review_due(due)
+                        : scheduled > 0
+                        ? l10n.review_none(scheduled)
+                        : l10n.review_empty,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colors.textMuted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (due > 0) ...[
+              const SizedBox(width: 8),
+              FilledButton(onPressed: onStart, child: Text(l10n.review_start)),
+            ],
           ],
         ),
       ),

@@ -63,4 +63,5 @@ abstract final class AppPalette {
   static const enVocabulary = Color(0xFF1C7ED6);
   static const enPhrases = Color(0xFFE8590C);
   static const enGrammar = Color(0xFF7048E8);
+  static const enDialogues = Color(0xFF2F9E44);
 }

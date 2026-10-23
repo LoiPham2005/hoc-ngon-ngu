@@ -77,13 +77,14 @@ void main() {
     });
 
     test(
-      'từ vựng: 20 chủ đề, 499 từ không trùng, đủ IPA / nghĩa / ví dụ',
+      'từ vựng: 44 chủ đề, 1349 từ không trùng, đủ IPA / nghĩa / ví dụ',
       () async {
         final topics = await c.read(vocabTopicsProvider.future);
         final words = [for (final t in topics) ...t.items];
-        expect(topics, hasLength(20));
-        expect(words, hasLength(499));
-        expect(words.map((w) => w.key).toSet(), hasLength(499));
+        expect(topics, hasLength(44));
+        expect(words, hasLength(1349));
+        expect(words.map((w) => w.key).toSet(), hasLength(1349));
+        expect(topics.every((t) => t.items.length >= 10), isTrue);
         for (final w in words) {
           expect(
             [w.ipa, w.meaning, w.example, w.exampleVi],
@@ -131,6 +132,54 @@ void main() {
         }
       },
     );
+  });
+
+  group('english dialogues & sentence check', () {
+    test('dialogues: 24, A/B turns, 4 answerable questions each', () async {
+      final c = ProviderContainer();
+      addTearDown(c.dispose);
+      final dialogues = await c.read(dialoguesProvider.future);
+      expect(dialogues, hasLength(24));
+      expect(dialogues.map((d) => d.id).toSet(), hasLength(24));
+      for (final d in dialogues) {
+        expect(d.lines.length, inInclusiveRange(8, 12), reason: d.id);
+        for (final (i, l) in d.lines.indexed) {
+          expect(l.speaker, i.isEven ? 'A' : 'B', reason: d.id);
+          expect(d.speakers[l.speaker], isNotEmpty, reason: d.id);
+        }
+        expect(d.questions, hasLength(4), reason: d.id);
+        for (final q in d.questions) {
+          expect(q.options.toSet(), hasLength(4), reason: q.prompt);
+          expect(q.answer, inInclusiveRange(0, 3));
+          expect(q.hint, isNotEmpty);
+        }
+      }
+    });
+
+    test('matchWords: ignores case/punctuation, marks missing words', () {
+      List<bool> hits(String a, String b) => [
+        for (final w in matchWords(a, b)) w.hit,
+      ];
+      expect(hits('Hi! How are you?', 'hi how are you'), [
+        true,
+        true,
+        true,
+        true,
+      ]);
+      expect(hits("I'm fine, thanks.", 'Im fine thanks'), [false, true, true]);
+      expect(hits('I’m fine.', "i'm fine"), [true, true]);
+      expect(hits('Can I have the bill, please?', 'can I have bill please'), [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+      ]);
+      expect(hits('Where is it?', ''), [false, false, false]);
+      // Extra words do not count against the expected ones.
+      expect(hits('See you.', 'see see you you later'), [true, true]);
+    });
   });
 
   group('bài luyện', () {
@@ -243,6 +292,44 @@ void main() {
         final learner = c.read(learnerProvider);
         expect(learner.answered, 10);
         expect(learner.correct, 5);
+      },
+    );
+
+    test(
+      'review quiz only asks due items, empty when nothing is due',
+      () async {
+        final n = c.read(learnerProvider.notifier);
+        var day = DateTime(2026, 10, 1);
+        n.now = () => day;
+        for (final k in ['あ', 'カ', '日', '会']) {
+          await n.toggleLearned(k);
+        }
+        const topic = QuizTopic.review(Course.ja);
+        await c.read(quizPoolProvider(topic).future);
+        final provider = quizSessionProvider(topic);
+        c.listen(provider, (_, _) {});
+        expect(c.read(provider).questions, isEmpty); // due tomorrow
+
+        day = DateTime(2026, 10, 2);
+        c.read(provider.notifier).restart();
+        final s = c.read(provider);
+        expect(s.questions.map((q) => q.item.key).toSet(), {
+          'あ',
+          'カ',
+          '日',
+          '会',
+        });
+        for (final q in s.questions) {
+          expect(q.options, hasLength(4));
+          expect(q.options.every((o) => o.module == q.item.module), isTrue);
+        }
+        // Answering everything right clears today's reviews.
+        for (var i = 0; i < 4; i++) {
+          c.read(provider.notifier)
+            ..answer(c.read(provider).current.item)
+            ..next();
+        }
+        expect(n.dueKeys(Course.ja), isEmpty);
       },
     );
   });

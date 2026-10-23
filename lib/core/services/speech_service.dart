@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:android_intent_plus/android_intent.dart';
@@ -21,12 +22,21 @@ class SpeechService {
   /// Giọng đang đặt (đổi khi chuyển qua lại Nhật ↔ Anh).
   String? _language;
 
+  /// Tốc độ đọc đang đặt.
+  double? _rate;
+
   /// `false` = máy chưa có giọng đọc [language] (chỉ xảy ra với nội dung không phải Kana).
-  Future<bool> speak(String text, {String language = 'ja-JP'}) async {
+  /// [slow] = đọc chậm hẳn (nghe – chép).
+  Future<bool> speak(
+    String text, {
+    String language = 'ja-JP',
+    bool slow = false,
+  }) async {
     final clip = kanaClip(text);
     if (clip != null && await _play(clip)) return true;
     try {
       if (!await _useLanguage(language)) return false;
+      await _useRate(slow: slow);
       await _tts.stop();
       await _tts.speak(text);
       return true;
@@ -34,6 +44,55 @@ class SpeechService {
       talker.error('[TTS] speak failed', e, s);
       return false;
     }
+  }
+
+  /// Đọc rồi chờ đọc xong (đọc nối cả đoạn hội thoại). [pitch] khác nhau để phân biệt 2 người nói.
+  /// `false` = không đọc được hoặc bị [stop] giữa chừng.
+  Future<bool> speakAndWait(
+    String text, {
+    String language = 'en-US',
+    double pitch = 1,
+  }) async {
+    final done = Completer<bool>();
+    void finish(bool ok) {
+      if (!done.isCompleted) done.complete(ok);
+    }
+
+    try {
+      if (!await _useLanguage(language)) return false;
+      await _useRate(slow: false);
+      await _tts.stop();
+      // Gắn sau stop() để không nhận nhầm sự kiện huỷ của câu trước.
+      _tts
+        ..setCompletionHandler(() => finish(true))
+        ..setCancelHandler(() => finish(false))
+        ..setErrorHandler((_) => finish(false));
+      await _tts.setPitch(pitch);
+      await _tts.speak(text);
+      // Phòng máy không báo "đọc xong": tối đa ~0,5 giây / ký tự.
+      return await done.future.timeout(
+        Duration(milliseconds: 2000 + text.length * 500),
+        onTimeout: () => true,
+      );
+    } on Object catch (e, s) {
+      talker.error('[TTS] speakAndWait failed', e, s);
+      return false;
+    } finally {
+      await _tts.setPitch(1);
+    }
+  }
+
+  /// Chậm hơn mặc định cho người học; [slow] = chậm thêm nữa (nghe – chép).
+  Future<void> _useRate({required bool slow}) async {
+    final rate = slow ? 0.25 : 0.4;
+    if (_rate == rate) return;
+    await _tts.setSpeechRate(rate);
+    _rate = rate;
+  }
+
+  Future<void> stop() async {
+    await _tts.stop();
+    await _player?.stop();
   }
 
   /// Mở cài đặt giọng nói của máy (Android). iOS không mở thẳng được → `false`.
@@ -78,7 +137,6 @@ class SpeechService {
     if (_language == language) return true;
     if (await _tts.isLanguageAvailable(language) != true) return false;
     if (!_audioReady) {
-      await _tts.setSpeechRate(0.4); // chậm hơn mặc định cho người học
       // iOS: vẫn kêu khi gạt công tắc im lặng.
       await _tts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback, [
         IosTextToSpeechAudioCategoryOptions.mixWithOthers,

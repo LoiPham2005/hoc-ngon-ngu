@@ -98,6 +98,12 @@ enum Module {
     AppPalette.enVocabulary,
   ),
   enPhrases(Course.en, ModuleSection.vocabulary, '💬', AppPalette.enPhrases),
+  enDialogues(
+    Course.en,
+    ModuleSection.vocabulary,
+    '🗣️',
+    AppPalette.enDialogues,
+  ),
   enGrammar(Course.en, ModuleSection.grammar, '✍️', AppPalette.enGrammar);
 
   const Module(
@@ -131,6 +137,7 @@ enum Module {
       Module.enPronunciation => l10n.module_enPronunciation,
       Module.enVocabulary => l10n.module_enVocabulary,
       Module.enPhrases => l10n.module_enPhrases,
+      Module.enDialogues => l10n.module_enDialogues,
       Module.enGrammar => l10n.module_enGrammar,
       _ => l10n.module_kanji(kanjiLevel!.label),
     };
@@ -144,6 +151,7 @@ enum Module {
       Module.enPronunciation => l10n.module_enPronunciation_desc(total),
       Module.enVocabulary => l10n.module_enVocabulary_desc(total),
       Module.enPhrases => l10n.module_enPhrases_desc(total),
+      Module.enDialogues => l10n.module_enDialogues_desc(total),
       Module.enGrammar => l10n.module_enGrammar_desc(total),
       _ => l10n.module_kanji_desc(total),
     };

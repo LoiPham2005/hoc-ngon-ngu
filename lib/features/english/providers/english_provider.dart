@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'english_provider.g.dart';
 
-/// 20 chủ đề × 25 từ thông dụng (A1–A2).
+/// 44 chủ đề, ~1.350 từ thông dụng (A1–B1).
 @Riverpod(keepAlive: true)
 Future<List<Topic<Word>>> vocabTopics(Ref ref) async => [
   for (final t in await _load('assets/english/vocabulary.json'))
@@ -44,6 +44,13 @@ Future<List<Topic<Phrase>>> phraseTopics(Ref ref) async => [
 Future<List<GrammarLesson>> grammarLessons(Ref ref) async => [
   for (final g in await _load('assets/english/grammar.json'))
     GrammarLesson.fromJson(g),
+];
+
+/// 24 đoạn hội thoại A1–B1, mỗi đoạn 4 câu hỏi hiểu bài.
+@Riverpod(keepAlive: true)
+Future<List<Dialogue>> dialogues(Ref ref) async => [
+  for (final d in await _load('assets/english/dialogues.json'))
+    Dialogue.fromJson(d),
 ];
 
 Future<List<Map<String, dynamic>>> _load(String asset) async =>

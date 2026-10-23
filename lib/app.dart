@@ -12,6 +12,7 @@ import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
+import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/app_error_screen.dart';
@@ -46,8 +47,11 @@ class _AppView extends HookConsumerWidget {
       return lifecycle.dispose;
     }, const <Object?>[]);
 
-    // Đổi ngôn ngữ app → tên shortcut đổi theo.
-    ref.listen(localeProvider, (_, _) => AppQuickActions.update());
+    // Đổi ngôn ngữ app → tên shortcut + nội dung nhắc học đổi theo.
+    ref.listen(localeProvider, (_, _) {
+      AppQuickActions.update();
+      ref.read(reminderProvider.notifier).sync();
+    });
     final theme = ref.watch(themeProvider);
 
     return ToastificationWrapper(

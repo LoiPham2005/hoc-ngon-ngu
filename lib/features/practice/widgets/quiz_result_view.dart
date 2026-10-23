@@ -11,11 +11,17 @@ class QuizResultView extends StatelessWidget {
     required this.onRetry,
     required this.onDone,
     required this.onOpen,
+    this.retryLabel,
     super.key,
   });
 
   final QuizSession session;
-  final VoidCallback onRetry;
+
+  /// `null` = ẩn nút làm lại (vd ôn tập đã hết mục tới hạn).
+  final VoidCallback? onRetry;
+
+  /// Chữ trên nút làm lại (mặc định "Làm lại").
+  final String? retryLabel;
   final VoidCallback onDone;
   final void Function(QuizItem item) onOpen;
 
@@ -135,13 +141,15 @@ class QuizResultView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
               child: Row(
                 children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: onRetry,
-                      child: Text(l10n.result_retry),
+                  if (onRetry != null) ...[
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: onRetry,
+                        child: Text(retryLabel ?? l10n.result_retry),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
+                    const SizedBox(width: 12),
+                  ],
                   Expanded(
                     child: FilledButton(
                       onPressed: onDone,

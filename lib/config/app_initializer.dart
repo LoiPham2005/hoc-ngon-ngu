@@ -9,6 +9,7 @@ import 'package:lingua/core/services/fcm_service.dart';
 import 'package:lingua/core/services/notification_service.dart';
 import 'package:lingua/core/services/remote_config_service.dart';
 import 'package:lingua/core/utils/logger.dart';
+import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/modules/ads/ad_manager.dart';
 import 'package:lingua/modules/iap/iap_service.dart';
 
@@ -28,6 +29,11 @@ abstract class AppInitializer {
     await _step(
       'Local notification',
       () => globalContainer.read(notificationServiceProvider).initialize(),
+    );
+    // Nhắc học: đặt lại lịch mỗi lần mở app (múi giờ / ngôn ngữ có thể đã đổi).
+    await _step(
+      'Reminder',
+      () => globalContainer.read(reminderProvider.notifier).sync(),
     );
     await _step('FCM', () => globalContainer.read(fcmServiceProvider).init());
     await SystemUIManager.setup();

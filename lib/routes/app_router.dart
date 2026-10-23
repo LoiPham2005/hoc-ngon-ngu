@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lingua/features/course/models/course_model.dart';
+import 'package:lingua/features/english/dialogue_list_page.dart';
+import 'package:lingua/features/english/dialogue_page.dart';
 import 'package:lingua/features/english/english_topics_page.dart';
 import 'package:lingua/features/english/grammar_lesson_page.dart';
 import 'package:lingua/features/english/grammar_list_page.dart';
 import 'package:lingua/features/english/grammar_practice_page.dart';
 import 'package:lingua/features/english/phrase_list_page.dart';
 import 'package:lingua/features/english/pronunciation_page.dart';
+import 'package:lingua/features/english/sentence_practice_page.dart';
 import 'package:lingua/features/english/vocab_list_page.dart';
 import 'package:lingua/features/english/word_detail_page.dart';
 import 'package:lingua/features/home/home_page.dart';
@@ -59,6 +62,10 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: GrammarListRoute.page, path: '/en/grammar'),
     AutoRoute(page: GrammarLessonRoute.page, path: '/en/grammar/lesson'),
     AutoRoute(page: GrammarPracticeRoute.page, path: '/en/grammar/practice'),
+    AutoRoute(page: DialogueListRoute.page, path: '/en/dialogues'),
+    AutoRoute(page: DialogueRoute.page, path: '/en/dialogue'),
+    AutoRoute(page: DialogueQuizRoute.page, path: '/en/dialogue/quiz'),
+    AutoRoute(page: SentencePracticeRoute.page, path: '/en/sentences'),
     AutoRoute(page: QuizRoute.page, path: '/quiz'),
   ];
 }

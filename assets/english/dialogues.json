@@ -1,0 +1,2864 @@
+[
+ {
+  "id": "meeting-new-friend",
+  "emoji": "👋",
+  "name_vi": "Làm quen bạn mới",
+  "name_en": "Meeting a new friend",
+  "level": "A1",
+  "speakers": {
+   "A": "Tom",
+   "B": "Mai"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi! I'm Tom. Are you new here?",
+    "vi": "Chào! Mình là Tom. Bạn mới đến à?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, I am. My name is Mai. Nice to meet you.",
+    "vi": "Ừ, đúng rồi. Mình tên Mai. Rất vui được gặp bạn."
+   },
+   {
+    "s": "A",
+    "en": "Nice to meet you too, Mai. Where are you from?",
+    "vi": "Mình cũng rất vui được gặp bạn, Mai. Bạn đến từ đâu?"
+   },
+   {
+    "s": "B",
+    "en": "I'm from Vietnam. I'm from Da Nang.",
+    "vi": "Mình đến từ Việt Nam. Mình ở Đà Nẵng."
+   },
+   {
+    "s": "A",
+    "en": "Cool! I'm from Canada. What do you do?",
+    "vi": "Hay quá! Mình đến từ Canada. Bạn làm nghề gì?"
+   },
+   {
+    "s": "B",
+    "en": "I'm a nurse. And you?",
+    "vi": "Mình là y tá. Còn bạn?"
+   },
+   {
+    "s": "A",
+    "en": "I'm an English teacher at a school near here.",
+    "vi": "Mình là giáo viên tiếng Anh ở một trường gần đây."
+   },
+   {
+    "s": "B",
+    "en": "How long have you lived here?",
+    "vi": "Bạn sống ở đây bao lâu rồi?"
+   },
+   {
+    "s": "A",
+    "en": "About two years. Do you like music?",
+    "vi": "Khoảng hai năm. Bạn có thích âm nhạc không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes! I play the guitar.",
+    "vi": "Có chứ! Mình chơi đàn ghi-ta."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Which city is Mai from?",
+    "q_vi": "Mai đến từ thành phố nào?",
+    "options": [
+     "Hanoi",
+     "Da Nang",
+     "Hue",
+     "Toronto"
+    ],
+    "answer": 1,
+    "explain": "Mai nói: \"I'm from Da Nang.\""
+   },
+   {
+    "q": "What is Mai's job?",
+    "q_vi": "Mai làm nghề gì?",
+    "options": [
+     "She is a teacher",
+     "She is a doctor",
+     "She is a student",
+     "She is a nurse"
+    ],
+    "answer": 3,
+    "explain": "Mai nói: \"I'm a nurse.\" (Tom mới là giáo viên.)"
+   },
+   {
+    "q": "How long has Tom lived here?",
+    "q_vi": "Tom đã sống ở đây bao lâu?",
+    "options": [
+     "About two months",
+     "About one year",
+     "About five years",
+     "About two years"
+    ],
+    "answer": 3,
+    "explain": "Tom trả lời: \"About two years.\""
+   },
+   {
+    "q": "What does Mai play?",
+    "q_vi": "Mai chơi nhạc cụ gì?",
+    "options": [
+     "The guitar",
+     "The piano",
+     "The violin",
+     "The drums"
+    ],
+    "answer": 0,
+    "explain": "Mai nói: \"I play the guitar.\""
+   }
+  ]
+ },
+ {
+  "id": "ordering-coffee",
+  "emoji": "☕",
+  "name_vi": "Gọi cà phê",
+  "name_en": "Ordering coffee",
+  "level": "A1",
+  "speakers": {
+   "A": "Barista",
+   "B": "Linh"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi! What can I get for you?",
+    "vi": "Chào bạn! Bạn muốn dùng gì?"
+   },
+   {
+    "s": "B",
+    "en": "Can I have a latte, please?",
+    "vi": "Cho mình một ly latte nhé."
+   },
+   {
+    "s": "A",
+    "en": "Sure. What size? Small, medium, or large?",
+    "vi": "Vâng. Cỡ nào ạ? Nhỏ, vừa hay lớn?"
+   },
+   {
+    "s": "B",
+    "en": "Medium, please. With oat milk.",
+    "vi": "Cỡ vừa nhé. Dùng sữa yến mạch."
+   },
+   {
+    "s": "A",
+    "en": "No problem. For here or to go?",
+    "vi": "Không vấn đề gì. Uống tại đây hay mang đi ạ?"
+   },
+   {
+    "s": "B",
+    "en": "To go, please. How much is it?",
+    "vi": "Mang đi nhé. Bao nhiêu tiền vậy?"
+   },
+   {
+    "s": "A",
+    "en": "That's four dollars and fifty cents.",
+    "vi": "Của bạn là bốn đô năm mươi xu."
+   },
+   {
+    "s": "B",
+    "en": "Here's five dollars. Keep the change.",
+    "vi": "Gửi bạn năm đô. Không cần thối lại đâu."
+   },
+   {
+    "s": "A",
+    "en": "Thank you! What's your name for the cup?",
+    "vi": "Cảm ơn bạn! Bạn tên gì để mình ghi lên ly?"
+   },
+   {
+    "s": "B",
+    "en": "It's Linh. L-I-N-H.",
+    "vi": "Mình tên Linh. L-I-N-H."
+   },
+   {
+    "s": "A",
+    "en": "Great. Your latte will be ready in two minutes.",
+    "vi": "Tuyệt. Ly latte của bạn sẽ xong trong hai phút."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What does Linh order?",
+    "q_vi": "Linh gọi gì?",
+    "options": [
+     "A tea",
+     "A latte",
+     "A cappuccino",
+     "An orange juice"
+    ],
+    "answer": 1,
+    "explain": "Linh nói: \"Can I have a latte, please?\""
+   },
+   {
+    "q": "What kind of milk does Linh want?",
+    "q_vi": "Linh muốn loại sữa nào?",
+    "options": [
+     "Soy milk",
+     "Oat milk",
+     "Almond milk",
+     "No milk"
+    ],
+    "answer": 1,
+    "explain": "Linh nói: \"Medium, please. With oat milk.\""
+   },
+   {
+    "q": "How much is the coffee?",
+    "q_vi": "Ly cà phê giá bao nhiêu?",
+    "options": [
+     "$4.50",
+     "$5.00",
+     "$4.15",
+     "$5.50"
+    ],
+    "answer": 0,
+    "explain": "Nhân viên nói: \"That's four dollars and fifty cents.\" (= 4,50 đô)"
+   },
+   {
+    "q": "When will the latte be ready?",
+    "q_vi": "Khi nào ly latte xong?",
+    "options": [
+     "In five minutes",
+     "In ten minutes",
+     "Right now",
+     "In two minutes"
+    ],
+    "answer": 3,
+    "explain": "Nhân viên nói: \"Your latte will be ready in two minutes.\""
+   }
+  ]
+ },
+ {
+  "id": "asking-directions",
+  "emoji": "🗺️",
+  "name_vi": "Hỏi đường",
+  "name_en": "Asking for directions",
+  "level": "A1",
+  "speakers": {
+   "A": "Lan",
+   "B": "Mark"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Excuse me. Is there a bank near here?",
+    "vi": "Xin lỗi. Gần đây có ngân hàng không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes. There's one on King Street.",
+    "vi": "Có. Có một cái ở phố King."
+   },
+   {
+    "s": "A",
+    "en": "How do I get there?",
+    "vi": "Tôi đi đến đó thế nào ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Go straight for two blocks, then turn left.",
+    "vi": "Đi thẳng hai dãy nhà, rồi rẽ trái."
+   },
+   {
+    "s": "A",
+    "en": "Turn left at the traffic lights?",
+    "vi": "Rẽ trái ở chỗ đèn giao thông ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes. The bank is next to a big supermarket.",
+    "vi": "Đúng rồi. Ngân hàng nằm cạnh một siêu thị lớn."
+   },
+   {
+    "s": "A",
+    "en": "Is it far? Can I walk?",
+    "vi": "Có xa không ạ? Tôi đi bộ được không?"
+   },
+   {
+    "s": "B",
+    "en": "Sure. It's about ten minutes on foot.",
+    "vi": "Được chứ. Đi bộ khoảng mười phút."
+   },
+   {
+    "s": "A",
+    "en": "Great. Thank you so much!",
+    "vi": "Tuyệt quá. Cảm ơn anh nhiều!"
+   },
+   {
+    "s": "B",
+    "en": "You're welcome. Have a nice day!",
+    "vi": "Không có gì. Chúc chị một ngày tốt lành!"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is Lan looking for?",
+    "q_vi": "Lan đang tìm gì?",
+    "options": [
+     "A supermarket",
+     "A bank",
+     "A hotel",
+     "A bus stop"
+    ],
+    "answer": 1,
+    "explain": "Lan hỏi: \"Is there a bank near here?\""
+   },
+   {
+    "q": "Which street is the bank on?",
+    "q_vi": "Ngân hàng ở phố nào?",
+    "options": [
+     "Queen Street",
+     "King Street",
+     "Park Street",
+     "Main Street"
+    ],
+    "answer": 1,
+    "explain": "Mark nói: \"There's one on King Street.\""
+   },
+   {
+    "q": "What is next to the bank?",
+    "q_vi": "Cạnh ngân hàng có gì?",
+    "options": [
+     "A small café",
+     "A school",
+     "A big supermarket",
+     "A hospital"
+    ],
+    "answer": 2,
+    "explain": "Mark nói: \"The bank is next to a big supermarket.\""
+   },
+   {
+    "q": "How long does it take to walk there?",
+    "q_vi": "Đi bộ đến đó mất bao lâu?",
+    "options": [
+     "About two minutes",
+     "About ten minutes",
+     "About twenty minutes",
+     "About an hour"
+    ],
+    "answer": 1,
+    "explain": "Mark nói: \"It's about ten minutes on foot.\""
+   }
+  ]
+ },
+ {
+  "id": "at-the-supermarket",
+  "emoji": "🛒",
+  "name_vi": "Ở siêu thị",
+  "name_en": "At the supermarket",
+  "level": "A1",
+  "speakers": {
+   "A": "Assistant",
+   "B": "Minh"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hello. Can I help you?",
+    "vi": "Xin chào. Tôi giúp gì được cho anh?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, please. Where can I find the eggs?",
+    "vi": "Vâng. Trứng để ở đâu vậy chị?"
+   },
+   {
+    "s": "A",
+    "en": "They're in aisle five, next to the milk.",
+    "vi": "Ở dãy số năm, cạnh chỗ để sữa."
+   },
+   {
+    "s": "B",
+    "en": "Thanks. And do you sell fresh bread?",
+    "vi": "Cảm ơn chị. Còn ở đây có bán bánh mì tươi không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes. The bakery is at the back of the store.",
+    "vi": "Có. Quầy bánh ở cuối cửa hàng."
+   },
+   {
+    "s": "B",
+    "en": "How much are the apples today?",
+    "vi": "Hôm nay táo giá bao nhiêu?"
+   },
+   {
+    "s": "A",
+    "en": "They're on sale. Three dollars for a kilo.",
+    "vi": "Đang giảm giá. Ba đô một ký."
+   },
+   {
+    "s": "B",
+    "en": "Great. I'll take two kilos.",
+    "vi": "Tuyệt. Tôi lấy hai ký."
+   },
+   {
+    "s": "A",
+    "en": "Do you need a bag? It's ten cents.",
+    "vi": "Anh có cần túi không? Mười xu một cái."
+   },
+   {
+    "s": "B",
+    "en": "No, thanks. I have my own bag.",
+    "vi": "Không, cảm ơn. Tôi có túi riêng rồi."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where are the eggs?",
+    "q_vi": "Trứng ở đâu?",
+    "options": [
+     "In aisle three",
+     "At the back of the store",
+     "In aisle five",
+     "Next to the bread"
+    ],
+    "answer": 2,
+    "explain": "Nhân viên nói: \"They're in aisle five, next to the milk.\""
+   },
+   {
+    "q": "How much is one kilo of apples?",
+    "q_vi": "Một ký táo giá bao nhiêu?",
+    "options": [
+     "Two dollars",
+     "Five dollars",
+     "Three dollars",
+     "Ten dollars"
+    ],
+    "answer": 2,
+    "explain": "Nhân viên nói: \"Three dollars for a kilo.\""
+   },
+   {
+    "q": "How many kilos of apples does Minh buy?",
+    "q_vi": "Minh mua mấy ký táo?",
+    "options": [
+     "One kilo",
+     "Three kilos",
+     "Two kilos",
+     "Five kilos"
+    ],
+    "answer": 2,
+    "explain": "Minh nói: \"I'll take two kilos.\""
+   },
+   {
+    "q": "Why doesn't Minh need a bag?",
+    "q_vi": "Vì sao Minh không cần túi?",
+    "options": [
+     "He has his own bag",
+     "Bags are too expensive",
+     "He only buys eggs",
+     "The store has no bags"
+    ],
+    "answer": 0,
+    "explain": "Minh nói: \"I have my own bag.\""
+   }
+  ]
+ },
+ {
+  "id": "booking-a-table",
+  "emoji": "🍽️",
+  "name_vi": "Đặt bàn nhà hàng",
+  "name_en": "Booking a table",
+  "level": "A2",
+  "speakers": {
+   "A": "Waiter",
+   "B": "Emma"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good evening, Luna Restaurant. How can I help you?",
+    "vi": "Chào buổi tối, nhà hàng Luna xin nghe. Tôi có thể giúp gì ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Hi. I'd like to book a table for Saturday, please.",
+    "vi": "Chào anh. Tôi muốn đặt bàn cho thứ Bảy."
+   },
+   {
+    "s": "A",
+    "en": "Of course. For how many people?",
+    "vi": "Vâng ạ. Cho mấy người ạ?"
+   },
+   {
+    "s": "B",
+    "en": "For four people, at seven o'clock.",
+    "vi": "Cho bốn người, lúc bảy giờ."
+   },
+   {
+    "s": "A",
+    "en": "Sorry, seven is full. Is seven thirty OK?",
+    "vi": "Xin lỗi, bảy giờ kín chỗ rồi. Bảy giờ rưỡi được không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, that's fine. Can we sit by the window?",
+    "vi": "Được, không sao. Chúng tôi ngồi cạnh cửa sổ được không?"
+   },
+   {
+    "s": "A",
+    "en": "Sure. Can I have your name and phone number?",
+    "vi": "Được ạ. Cho tôi xin tên và số điện thoại ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Emma Brown. My number is 0912 345 678.",
+    "vi": "Emma Brown. Số của tôi là 0912 345 678."
+   },
+   {
+    "s": "A",
+    "en": "Thank you, Ms Brown. Is it a special occasion?",
+    "vi": "Cảm ơn chị Brown. Có dịp gì đặc biệt không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, it's my mum's birthday.",
+    "vi": "Có, là sinh nhật mẹ tôi."
+   },
+   {
+    "s": "A",
+    "en": "Lovely! We'll prepare a small cake for her.",
+    "vi": "Tuyệt quá! Chúng tôi sẽ chuẩn bị một chiếc bánh nhỏ cho bác."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What day is the table for?",
+    "q_vi": "Bàn được đặt cho ngày nào?",
+    "options": [
+     "Sunday",
+     "Friday",
+     "Tonight",
+     "Saturday"
+    ],
+    "answer": 3,
+    "explain": "Emma nói: \"I'd like to book a table for Saturday, please.\""
+   },
+   {
+    "q": "What time is the table for?",
+    "q_vi": "Bàn được đặt lúc mấy giờ?",
+    "options": [
+     "At seven thirty",
+     "At seven o'clock",
+     "At eight o'clock",
+     "At six thirty"
+    ],
+    "answer": 0,
+    "explain": "Bảy giờ đã kín chỗ, nhân viên hỏi: \"Is seven thirty OK?\" và Emma đồng ý: \"Yes, that's fine.\""
+   },
+   {
+    "q": "Where does Emma want to sit?",
+    "q_vi": "Emma muốn ngồi ở đâu?",
+    "options": [
+     "By the window",
+     "Near the door",
+     "Outside",
+     "In a private room"
+    ],
+    "answer": 0,
+    "explain": "Emma hỏi: \"Can we sit by the window?\""
+   },
+   {
+    "q": "Why is the dinner special?",
+    "q_vi": "Vì sao bữa tối này đặc biệt?",
+    "options": [
+     "It's Emma's birthday",
+     "It's a wedding anniversary",
+     "It's Emma's mum's birthday",
+     "It's a business dinner"
+    ],
+    "answer": 2,
+    "explain": "Emma nói: \"Yes, it's my mum's birthday.\""
+   }
+  ]
+ },
+ {
+  "id": "at-the-doctor",
+  "emoji": "🩺",
+  "name_vi": "Đi khám bệnh",
+  "name_en": "At the doctor's",
+  "level": "A2",
+  "speakers": {
+   "A": "Doctor",
+   "B": "Nam"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good morning. What's the problem?",
+    "vi": "Chào buổi sáng. Anh bị sao vậy?"
+   },
+   {
+    "s": "B",
+    "en": "I have a bad headache and a sore throat.",
+    "vi": "Tôi bị đau đầu nặng và đau họng."
+   },
+   {
+    "s": "A",
+    "en": "How long have you felt like this?",
+    "vi": "Anh bị thế này bao lâu rồi?"
+   },
+   {
+    "s": "B",
+    "en": "Since Monday. So about three days.",
+    "vi": "Từ thứ Hai. Tức là khoảng ba ngày."
+   },
+   {
+    "s": "A",
+    "en": "Do you have a fever?",
+    "vi": "Anh có sốt không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, a little. It was 38 degrees last night.",
+    "vi": "Có, hơi sốt. Tối qua 38 độ."
+   },
+   {
+    "s": "A",
+    "en": "Let me check. Open your mouth, please. It's a throat infection.",
+    "vi": "Để tôi khám. Anh há miệng ra nào. Anh bị viêm họng."
+   },
+   {
+    "s": "B",
+    "en": "Is it serious?",
+    "vi": "Có nghiêm trọng không ạ?"
+   },
+   {
+    "s": "A",
+    "en": "No. Take this medicine three times a day, after meals.",
+    "vi": "Không. Uống thuốc này ngày ba lần, sau bữa ăn."
+   },
+   {
+    "s": "B",
+    "en": "For how long?",
+    "vi": "Uống trong bao lâu ạ?"
+   },
+   {
+    "s": "A",
+    "en": "For five days. And drink lots of warm water.",
+    "vi": "Trong năm ngày. Và uống nhiều nước ấm."
+   },
+   {
+    "s": "B",
+    "en": "OK. Thank you, doctor.",
+    "vi": "Vâng. Cảm ơn bác sĩ."
+   }
+  ],
+  "questions": [
+   {
+    "q": "When did Nam start feeling ill?",
+    "q_vi": "Nam bắt đầu bị ốm từ khi nào?",
+    "options": [
+     "On Sunday",
+     "Last night",
+     "On Monday",
+     "Five days ago"
+    ],
+    "answer": 2,
+    "explain": "Nam nói: \"Since Monday. So about three days.\""
+   },
+   {
+    "q": "What was Nam's temperature last night?",
+    "q_vi": "Tối qua Nam sốt bao nhiêu độ?",
+    "options": [
+     "38 degrees",
+     "37 degrees",
+     "39 degrees",
+     "40 degrees"
+    ],
+    "answer": 0,
+    "explain": "Nam nói: \"It was 38 degrees last night.\""
+   },
+   {
+    "q": "How often should Nam take the medicine?",
+    "q_vi": "Nam phải uống thuốc mấy lần?",
+    "options": [
+     "Once a day",
+     "Three times a day",
+     "Twice a day",
+     "Every hour"
+    ],
+    "answer": 1,
+    "explain": "Bác sĩ nói: \"Take this medicine three times a day, after meals.\""
+   },
+   {
+    "q": "What else should Nam do?",
+    "q_vi": "Nam nên làm gì thêm?",
+    "options": [
+     "Stay in bed for a week",
+     "Eat lots of ice cream",
+     "Drink lots of warm water",
+     "Come back tomorrow"
+    ],
+    "answer": 2,
+    "explain": "Bác sĩ dặn: \"And drink lots of warm water.\""
+   }
+  ]
+ },
+ {
+  "id": "buying-a-train-ticket",
+  "emoji": "🚆",
+  "name_vi": "Mua vé tàu",
+  "name_en": "Buying a train ticket",
+  "level": "A2",
+  "speakers": {
+   "A": "Clerk",
+   "B": "Sarah"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hello. Where are you going today?",
+    "vi": "Xin chào. Hôm nay chị đi đâu ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Hi. One ticket to Oxford, please.",
+    "vi": "Chào anh. Cho tôi một vé đi Oxford."
+   },
+   {
+    "s": "A",
+    "en": "Single or return?",
+    "vi": "Một chiều hay khứ hồi ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Return, please. I'm coming back tomorrow.",
+    "vi": "Khứ hồi nhé. Mai tôi về."
+   },
+   {
+    "s": "A",
+    "en": "OK. That's twenty-four pounds.",
+    "vi": "Vâng. Hết hai mươi bốn bảng ạ."
+   },
+   {
+    "s": "B",
+    "en": "When is the next train?",
+    "vi": "Chuyến tàu tiếp theo lúc mấy giờ?"
+   },
+   {
+    "s": "A",
+    "en": "At 10:15. It leaves from platform three.",
+    "vi": "Lúc 10 giờ 15. Tàu chạy từ sân ga số ba."
+   },
+   {
+    "s": "B",
+    "en": "How long does the journey take?",
+    "vi": "Đi mất bao lâu ạ?"
+   },
+   {
+    "s": "A",
+    "en": "About one hour.",
+    "vi": "Khoảng một tiếng."
+   },
+   {
+    "s": "B",
+    "en": "Can I pay by card?",
+    "vi": "Tôi trả bằng thẻ được không?"
+   },
+   {
+    "s": "A",
+    "en": "Of course. Here's your ticket. Have a good trip!",
+    "vi": "Được chứ. Vé của chị đây. Chúc chị đi vui vẻ!"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What ticket does Sarah buy?",
+    "q_vi": "Sarah mua vé gì?",
+    "options": [
+     "A single ticket to Oxford",
+     "A return ticket to London",
+     "A single ticket to London",
+     "A return ticket to Oxford"
+    ],
+    "answer": 3,
+    "explain": "Sarah nói: \"One ticket to Oxford, please.\" rồi chọn \"Return, please.\""
+   },
+   {
+    "q": "How much is the ticket?",
+    "q_vi": "Vé giá bao nhiêu?",
+    "options": [
+     "Fourteen pounds",
+     "Twenty-four pounds",
+     "Twenty pounds",
+     "Forty-two pounds"
+    ],
+    "answer": 1,
+    "explain": "Nhân viên nói: \"That's twenty-four pounds.\""
+   },
+   {
+    "q": "What time is the next train?",
+    "q_vi": "Chuyến tàu tiếp theo lúc mấy giờ?",
+    "options": [
+     "At 10:50",
+     "At 10:15",
+     "At 11:15",
+     "At 3:10"
+    ],
+    "answer": 1,
+    "explain": "Nhân viên trả lời: \"At 10:15.\""
+   },
+   {
+    "q": "Which platform does the train leave from?",
+    "q_vi": "Tàu chạy từ sân ga số mấy?",
+    "options": [
+     "Platform one",
+     "Platform three",
+     "Platform two",
+     "Platform ten"
+    ],
+    "answer": 1,
+    "explain": "Nhân viên nói: \"It leaves from platform three.\""
+   }
+  ]
+ },
+ {
+  "id": "hotel-check-in",
+  "emoji": "🏨",
+  "name_vi": "Nhận phòng khách sạn",
+  "name_en": "Hotel check-in",
+  "level": "A2",
+  "speakers": {
+   "A": "Receptionist",
+   "B": "Tuan"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good afternoon. Welcome to the Sunrise Hotel.",
+    "vi": "Chào buổi chiều. Chào mừng anh đến khách sạn Sunrise."
+   },
+   {
+    "s": "B",
+    "en": "Hi. I have a reservation. My name is Tuan Nguyen.",
+    "vi": "Chào chị. Tôi có đặt phòng trước. Tôi tên Nguyễn Tuấn."
+   },
+   {
+    "s": "A",
+    "en": "Let me see. Yes, a double room for three nights.",
+    "vi": "Để tôi xem. Vâng, một phòng đôi trong ba đêm."
+   },
+   {
+    "s": "B",
+    "en": "That's right.",
+    "vi": "Đúng rồi."
+   },
+   {
+    "s": "A",
+    "en": "Can I see your passport, please?",
+    "vi": "Cho tôi xem hộ chiếu của anh được không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Here you are. What time is breakfast?",
+    "vi": "Đây ạ. Bữa sáng lúc mấy giờ?"
+   },
+   {
+    "s": "A",
+    "en": "From 6:30 to 10:00, in the restaurant on the ground floor.",
+    "vi": "Từ 6 giờ 30 đến 10 giờ, ở nhà hàng tầng trệt."
+   },
+   {
+    "s": "B",
+    "en": "Great. Is there Wi-Fi in the room?",
+    "vi": "Tuyệt. Trong phòng có Wi-Fi không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes, it's free. The password is on your key card.",
+    "vi": "Có, miễn phí. Mật khẩu ghi trên thẻ phòng của anh."
+   },
+   {
+    "s": "B",
+    "en": "Thank you. Which floor is my room on?",
+    "vi": "Cảm ơn. Phòng tôi ở tầng mấy?"
+   },
+   {
+    "s": "A",
+    "en": "Room 512, on the fifth floor. The lift is on your right.",
+    "vi": "Phòng 512, tầng năm. Thang máy ở bên phải anh."
+   }
+  ],
+  "questions": [
+   {
+    "q": "How many nights will Tuan stay?",
+    "q_vi": "Tuấn sẽ ở mấy đêm?",
+    "options": [
+     "Two nights",
+     "Four nights",
+     "Five nights",
+     "Three nights"
+    ],
+    "answer": 3,
+    "explain": "Lễ tân nói: \"Yes, a double room for three nights.\""
+   },
+   {
+    "q": "When does breakfast finish?",
+    "q_vi": "Bữa sáng kết thúc lúc mấy giờ?",
+    "options": [
+     "At 6:30",
+     "At 9:30",
+     "At 10:00",
+     "At 11:00"
+    ],
+    "answer": 2,
+    "explain": "Lễ tân nói: \"From 6:30 to 10:00, in the restaurant on the ground floor.\""
+   },
+   {
+    "q": "Where is the Wi-Fi password?",
+    "q_vi": "Mật khẩu Wi-Fi ở đâu?",
+    "options": [
+     "On the room door",
+     "At the reception desk",
+     "In the restaurant",
+     "On the key card"
+    ],
+    "answer": 3,
+    "explain": "Lễ tân nói: \"The password is on your key card.\""
+   },
+   {
+    "q": "What is Tuan's room number?",
+    "q_vi": "Phòng của Tuấn số mấy?",
+    "options": [
+     "512",
+     "215",
+     "502",
+     "521"
+    ],
+    "answer": 0,
+    "explain": "Lễ tân nói: \"Room 512, on the fifth floor.\""
+   }
+  ]
+ },
+ {
+  "id": "talking-about-weekend",
+  "emoji": "🌤️",
+  "name_vi": "Kể chuyện cuối tuần",
+  "name_en": "Talking about the weekend",
+  "level": "A2",
+  "speakers": {
+   "A": "Jack",
+   "B": "Vy"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi Vy! How was your weekend?",
+    "vi": "Chào Vy! Cuối tuần của bạn thế nào?"
+   },
+   {
+    "s": "B",
+    "en": "It was great, thanks! I went to Ha Long Bay.",
+    "vi": "Tuyệt lắm, cảm ơn! Mình đi vịnh Hạ Long."
+   },
+   {
+    "s": "A",
+    "en": "Wow! Who did you go with?",
+    "vi": "Ồ! Bạn đi với ai?"
+   },
+   {
+    "s": "B",
+    "en": "With my sister. We took a boat trip on Saturday.",
+    "vi": "Với chị gái mình. Thứ Bảy bọn mình đi thuyền."
+   },
+   {
+    "s": "A",
+    "en": "Sounds fun. Was the weather good?",
+    "vi": "Nghe vui đấy. Thời tiết có đẹp không?"
+   },
+   {
+    "s": "B",
+    "en": "Sunny on Saturday, but it rained on Sunday.",
+    "vi": "Thứ Bảy nắng, nhưng Chủ nhật thì mưa."
+   },
+   {
+    "s": "A",
+    "en": "Oh no. What did you do on Sunday?",
+    "vi": "Ôi tiếc thế. Vậy Chủ nhật bạn làm gì?"
+   },
+   {
+    "s": "B",
+    "en": "We stayed in the hotel and ate lots of seafood.",
+    "vi": "Bọn mình ở trong khách sạn và ăn thật nhiều hải sản."
+   },
+   {
+    "s": "A",
+    "en": "Lucky you! I just stayed home and watched films.",
+    "vi": "Sướng thế! Mình chỉ ở nhà xem phim thôi."
+   },
+   {
+    "s": "B",
+    "en": "That sounds relaxing too. What did you watch?",
+    "vi": "Nghe cũng thư giãn mà. Bạn xem phim gì?"
+   },
+   {
+    "s": "A",
+    "en": "Two old Harry Potter films.",
+    "vi": "Hai phim Harry Potter cũ."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where did Vy go?",
+    "q_vi": "Vy đã đi đâu?",
+    "options": [
+     "Da Lat",
+     "Hoi An",
+     "Nha Trang",
+     "Ha Long Bay"
+    ],
+    "answer": 3,
+    "explain": "Vy nói: \"I went to Ha Long Bay.\""
+   },
+   {
+    "q": "Who did Vy go with?",
+    "q_vi": "Vy đi cùng ai?",
+    "options": [
+     "Her sister",
+     "Her brother",
+     "Jack",
+     "Her parents"
+    ],
+    "answer": 0,
+    "explain": "Vy nói: \"With my sister.\""
+   },
+   {
+    "q": "What was the weather like on Sunday?",
+    "q_vi": "Chủ nhật thời tiết thế nào?",
+    "options": [
+     "It was sunny",
+     "It was snowy",
+     "It was windy",
+     "It was rainy"
+    ],
+    "answer": 3,
+    "explain": "Vy nói: \"Sunny on Saturday, but it rained on Sunday.\""
+   },
+   {
+    "q": "What did Jack do at the weekend?",
+    "q_vi": "Jack đã làm gì vào cuối tuần?",
+    "options": [
+     "He watched films at home",
+     "He took a boat trip",
+     "He ate lots of seafood",
+     "He went to the cinema"
+    ],
+    "answer": 0,
+    "explain": "Jack nói: \"I just stayed home and watched films.\""
+   }
+  ]
+ },
+ {
+  "id": "phone-call-friend",
+  "emoji": "📞",
+  "name_vi": "Gọi điện cho bạn",
+  "name_en": "Calling a friend",
+  "level": "A1",
+  "speakers": {
+   "A": "Lily",
+   "B": "Khoa"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hello?",
+    "vi": "A lô?"
+   },
+   {
+    "s": "B",
+    "en": "Hi Lily, it's Khoa. Are you busy?",
+    "vi": "Chào Lily, Khoa đây. Bạn có bận không?"
+   },
+   {
+    "s": "A",
+    "en": "Hi Khoa! No, I'm just cooking dinner. What's up?",
+    "vi": "Chào Khoa! Không, mình đang nấu bữa tối thôi. Có chuyện gì thế?"
+   },
+   {
+    "s": "B",
+    "en": "Can I borrow your English book? I lost mine.",
+    "vi": "Mình mượn sách tiếng Anh của bạn được không? Mình làm mất cuốn của mình rồi."
+   },
+   {
+    "s": "A",
+    "en": "Sure. When do you need it?",
+    "vi": "Được chứ. Khi nào bạn cần?"
+   },
+   {
+    "s": "B",
+    "en": "Tomorrow morning. We have a test at nine.",
+    "vi": "Sáng mai. Bọn mình có bài kiểm tra lúc chín giờ."
+   },
+   {
+    "s": "A",
+    "en": "OK. Come to my house at seven tonight.",
+    "vi": "Ừ. Tối nay bảy giờ qua nhà mình nhé."
+   },
+   {
+    "s": "B",
+    "en": "Great. What's your address again?",
+    "vi": "Tuyệt. Địa chỉ nhà bạn là gì ấy nhỉ?"
+   },
+   {
+    "s": "A",
+    "en": "25 Green Road. It's the blue house.",
+    "vi": "Số 25 đường Green. Căn nhà màu xanh dương."
+   },
+   {
+    "s": "B",
+    "en": "Got it. Thanks a lot, Lily!",
+    "vi": "Rõ rồi. Cảm ơn nhiều nhé, Lily!"
+   },
+   {
+    "s": "A",
+    "en": "No problem. See you later!",
+    "vi": "Không có gì. Lát gặp nhé!"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is Lily doing when Khoa calls?",
+    "q_vi": "Lily đang làm gì khi Khoa gọi?",
+    "options": [
+     "Cooking dinner",
+     "Watching TV",
+     "Doing homework",
+     "Sleeping"
+    ],
+    "answer": 0,
+    "explain": "Lily nói: \"No, I'm just cooking dinner.\""
+   },
+   {
+    "q": "What does Khoa want to borrow?",
+    "q_vi": "Khoa muốn mượn gì?",
+    "options": [
+     "A pen",
+     "A laptop",
+     "An English book",
+     "Some money"
+    ],
+    "answer": 2,
+    "explain": "Khoa hỏi: \"Can I borrow your English book?\""
+   },
+   {
+    "q": "What time is the test tomorrow?",
+    "q_vi": "Bài kiểm tra ngày mai lúc mấy giờ?",
+    "options": [
+     "At seven",
+     "At eight",
+     "At ten",
+     "At nine"
+    ],
+    "answer": 3,
+    "explain": "Khoa nói: \"We have a test at nine.\" (Bảy giờ là giờ hẹn đến nhà Lily.)"
+   },
+   {
+    "q": "What colour is Lily's house?",
+    "q_vi": "Nhà Lily màu gì?",
+    "options": [
+     "Green",
+     "White",
+     "Red",
+     "Blue"
+    ],
+    "answer": 3,
+    "explain": "Lily nói: \"It's the blue house.\" (Green là tên đường.)"
+   }
+  ]
+ },
+ {
+  "id": "at-the-clothes-shop",
+  "emoji": "👕",
+  "name_vi": "Ở cửa hàng quần áo",
+  "name_en": "At the clothes shop",
+  "level": "A1",
+  "speakers": {
+   "A": "Assistant",
+   "B": "Ngoc"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi there. Are you looking for anything?",
+    "vi": "Chào bạn. Bạn đang tìm gì không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes. I'm looking for a T-shirt for my brother.",
+    "vi": "Vâng. Mình đang tìm một chiếc áo phông cho em trai."
+   },
+   {
+    "s": "A",
+    "en": "What size does he wear?",
+    "vi": "Cậu ấy mặc cỡ nào?"
+   },
+   {
+    "s": "B",
+    "en": "Medium, I think. Do you have this one in black?",
+    "vi": "Cỡ M, mình nghĩ vậy. Mẫu này có màu đen không?"
+   },
+   {
+    "s": "A",
+    "en": "Sorry, only in white and grey.",
+    "vi": "Xin lỗi, chỉ có màu trắng và xám thôi."
+   },
+   {
+    "s": "B",
+    "en": "OK, grey is fine. How much is it?",
+    "vi": "Ừ, màu xám cũng được. Giá bao nhiêu vậy?"
+   },
+   {
+    "s": "A",
+    "en": "It's fifteen dollars. But if you buy two, it's twenty-five.",
+    "vi": "Mười lăm đô. Nhưng nếu mua hai cái thì chỉ hai mươi lăm đô."
+   },
+   {
+    "s": "B",
+    "en": "That's a good deal. I'll take two, one white and one grey.",
+    "vi": "Rẻ đấy. Mình lấy hai cái, một trắng một xám."
+   },
+   {
+    "s": "A",
+    "en": "Great choice. Would you like anything else?",
+    "vi": "Lựa chọn hay đấy. Bạn có cần gì thêm không?"
+   },
+   {
+    "s": "B",
+    "en": "No, thanks. Can I return them if they don't fit?",
+    "vi": "Không, cảm ơn. Nếu không vừa thì mình trả lại được không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes, within thirty days. Just keep your receipt.",
+    "vi": "Được, trong vòng ba mươi ngày. Bạn chỉ cần giữ hoá đơn."
+   },
+   {
+    "s": "B",
+    "en": "Perfect. Thank you!",
+    "vi": "Tuyệt. Cảm ơn bạn!"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Who is the T-shirt for?",
+    "q_vi": "Chiếc áo phông dành cho ai?",
+    "options": [
+     "Ngoc",
+     "Ngoc's father",
+     "Ngoc's brother",
+     "Ngoc's friend"
+    ],
+    "answer": 2,
+    "explain": "Ngọc nói: \"I'm looking for a T-shirt for my brother.\""
+   },
+   {
+    "q": "Which colour does Ngoc ask for first?",
+    "q_vi": "Lúc đầu Ngọc hỏi màu nào?",
+    "options": [
+     "White",
+     "Grey",
+     "Black",
+     "Blue"
+    ],
+    "answer": 2,
+    "explain": "Ngọc hỏi: \"Do you have this one in black?\""
+   },
+   {
+    "q": "How much does Ngoc pay for two T-shirts?",
+    "q_vi": "Ngọc trả bao nhiêu cho hai áo?",
+    "options": [
+     "Fifteen dollars",
+     "Thirty dollars",
+     "Twenty-five dollars",
+     "Twenty dollars"
+    ],
+    "answer": 2,
+    "explain": "Nhân viên nói: \"But if you buy two, it's twenty-five.\""
+   },
+   {
+    "q": "How long can Ngoc return the T-shirts?",
+    "q_vi": "Ngọc được trả lại áo trong bao lâu?",
+    "options": [
+     "Within three days",
+     "Within thirty days",
+     "Within a week",
+     "She can't return them"
+    ],
+    "answer": 1,
+    "explain": "Nhân viên nói: \"Yes, within thirty days.\""
+   }
+  ]
+ },
+ {
+  "id": "making-plans",
+  "emoji": "📅",
+  "name_vi": "Hẹn đi chơi",
+  "name_en": "Making plans",
+  "level": "A2",
+  "speakers": {
+   "A": "Mike",
+   "B": "Trang"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hey Trang, are you free on Friday evening?",
+    "vi": "Này Trang, tối thứ Sáu bạn rảnh không?"
+   },
+   {
+    "s": "B",
+    "en": "Sorry, I have a yoga class on Friday. What about Saturday?",
+    "vi": "Xin lỗi, thứ Sáu mình có lớp yoga. Thứ Bảy thì sao?"
+   },
+   {
+    "s": "A",
+    "en": "Saturday is good. Let's see a film at the cinema.",
+    "vi": "Thứ Bảy được đấy. Mình đi xem phim ở rạp nhé."
+   },
+   {
+    "s": "B",
+    "en": "Great idea! What time does it start?",
+    "vi": "Ý hay đấy! Phim chiếu lúc mấy giờ?"
+   },
+   {
+    "s": "A",
+    "en": "There's one at 6:45 and one at 9:00.",
+    "vi": "Có một suất 6 giờ 45 và một suất 9 giờ."
+   },
+   {
+    "s": "B",
+    "en": "Let's go to the earlier one. 9:00 is too late for me.",
+    "vi": "Đi suất sớm hơn nhé. 9 giờ muộn quá với mình."
+   },
+   {
+    "s": "A",
+    "en": "OK. Shall we have dinner first?",
+    "vi": "Ừ. Mình ăn tối trước nhé?"
+   },
+   {
+    "s": "B",
+    "en": "Sure. How about the pizza place next to the cinema?",
+    "vi": "Được. Quán pizza cạnh rạp thì sao?"
+   },
+   {
+    "s": "A",
+    "en": "Perfect. Let's meet there at five thirty.",
+    "vi": "Tuyệt. Hẹn gặp ở đó lúc năm giờ rưỡi."
+   },
+   {
+    "s": "B",
+    "en": "OK. I'll book the tickets online.",
+    "vi": "Ừ. Mình sẽ đặt vé trên mạng."
+   },
+   {
+    "s": "A",
+    "en": "Thanks! See you on Saturday.",
+    "vi": "Cảm ơn! Hẹn gặp thứ Bảy nhé."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why can't Trang go out on Friday?",
+    "q_vi": "Vì sao thứ Sáu Trang không đi được?",
+    "options": [
+     "She has to work",
+     "She has a yoga class",
+     "She is sick",
+     "She is visiting her family"
+    ],
+    "answer": 1,
+    "explain": "Trang nói: \"Sorry, I have a yoga class on Friday.\""
+   },
+   {
+    "q": "Which film time do they choose?",
+    "q_vi": "Họ chọn suất chiếu mấy giờ?",
+    "options": [
+     "6:45",
+     "9:00",
+     "5:30",
+     "7:45"
+    ],
+    "answer": 0,
+    "explain": "Mike nói: \"There's one at 6:45 and one at 9:00.\" Trang chọn: \"Let's go to the earlier one.\""
+   },
+   {
+    "q": "Where will they have dinner?",
+    "q_vi": "Họ sẽ ăn tối ở đâu?",
+    "options": [
+     "At a pizza place",
+     "At Mike's house",
+     "At a sushi bar",
+     "At a noodle shop"
+    ],
+    "answer": 0,
+    "explain": "Trang gợi ý: \"How about the pizza place next to the cinema?\" và Mike đồng ý."
+   },
+   {
+    "q": "Who will book the tickets?",
+    "q_vi": "Ai sẽ đặt vé?",
+    "options": [
+     "Mike",
+     "Mike's sister",
+     "The cinema staff",
+     "Trang"
+    ],
+    "answer": 3,
+    "explain": "Trang nói: \"I'll book the tickets online.\""
+   }
+  ]
+ },
+ {
+  "id": "job-interview",
+  "emoji": "💼",
+  "name_vi": "Phỏng vấn xin việc",
+  "name_en": "Job interview",
+  "level": "B1",
+  "speakers": {
+   "A": "Ms. Carter",
+   "B": "Linh"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good morning, Linh. Please have a seat.",
+    "vi": "Chào buổi sáng, Linh. Mời em ngồi."
+   },
+   {
+    "s": "B",
+    "en": "Thank you. It's nice to meet you, Ms. Carter.",
+    "vi": "Cảm ơn chị. Rất vui được gặp chị, chị Carter."
+   },
+   {
+    "s": "A",
+    "en": "So, tell me a little about yourself.",
+    "vi": "Vậy em giới thiệu đôi chút về bản thân nhé."
+   },
+   {
+    "s": "B",
+    "en": "I studied marketing in Da Nang and graduated two years ago.",
+    "vi": "Em học ngành marketing ở Đà Nẵng và tốt nghiệp hai năm trước."
+   },
+   {
+    "s": "A",
+    "en": "What do you do at the moment?",
+    "vi": "Hiện giờ em đang làm gì?"
+   },
+   {
+    "s": "B",
+    "en": "I work at a travel company. I write posts for social media.",
+    "vi": "Em làm ở một công ty du lịch. Em viết bài cho mạng xã hội."
+   },
+   {
+    "s": "A",
+    "en": "Why do you want to leave that job?",
+    "vi": "Sao em muốn nghỉ công việc đó?"
+   },
+   {
+    "s": "B",
+    "en": "I want to work in a bigger team and learn more.",
+    "vi": "Em muốn làm việc trong một nhóm lớn hơn và học hỏi thêm."
+   },
+   {
+    "s": "A",
+    "en": "This job needs good English. How often do you use it?",
+    "vi": "Công việc này cần tiếng Anh tốt. Em dùng tiếng Anh thường xuyên không?"
+   },
+   {
+    "s": "B",
+    "en": "Every day. I email foreign customers almost every morning.",
+    "vi": "Hằng ngày ạ. Gần như sáng nào em cũng gửi email cho khách nước ngoài."
+   },
+   {
+    "s": "A",
+    "en": "Great. Can you start on the first of next month?",
+    "vi": "Tốt lắm. Em có thể bắt đầu từ mùng một tháng sau không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, I can. I just need to give two weeks' notice.",
+    "vi": "Dạ được. Em chỉ cần báo trước cho công ty cũ hai tuần."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where did Linh study?",
+    "q_vi": "Linh đã học ở đâu?",
+    "options": [
+     "In Hanoi",
+     "In Da Nang",
+     "In Hue",
+     "In Ho Chi Minh City"
+    ],
+    "answer": 1,
+    "explain": "Linh nói: \"I studied marketing in Da Nang and graduated two years ago.\""
+   },
+   {
+    "q": "What does Linh do in her current job?",
+    "q_vi": "Linh làm gì ở công việc hiện tại?",
+    "options": [
+     "She answers phone calls",
+     "She drives tourists",
+     "She teaches English",
+     "She writes social media posts"
+    ],
+    "answer": 3,
+    "explain": "Linh nói: \"I write posts for social media.\""
+   },
+   {
+    "q": "Why does Linh want a new job?",
+    "q_vi": "Vì sao Linh muốn tìm việc mới?",
+    "options": [
+     "To work in a bigger team and learn more",
+     "To earn more money",
+     "To live closer to home",
+     "To work fewer hours"
+    ],
+    "answer": 0,
+    "explain": "Linh nói: \"I want to work in a bigger team and learn more.\""
+   },
+   {
+    "q": "How much notice does Linh need to give?",
+    "q_vi": "Linh cần báo trước bao lâu?",
+    "options": [
+     "One week",
+     "One month",
+     "Two weeks",
+     "Two months"
+    ],
+    "answer": 2,
+    "explain": "Linh nói: \"I just need to give two weeks' notice.\""
+   }
+  ]
+ },
+ {
+  "id": "first-day-at-work",
+  "emoji": "🧑‍💼",
+  "name_vi": "Ngày đầu đi làm",
+  "name_en": "First day at work",
+  "level": "A2",
+  "speakers": {
+   "A": "Tom",
+   "B": "Hoa"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi, you must be Hoa. I'm Tom from the IT team.",
+    "vi": "Chào, chắc bạn là Hoa. Mình là Tom ở nhóm IT."
+   },
+   {
+    "s": "B",
+    "en": "Hi, Tom. Yes, today is my first day.",
+    "vi": "Chào Tom. Đúng rồi, hôm nay là ngày đầu tiên của mình."
+   },
+   {
+    "s": "A",
+    "en": "Welcome! Your desk is next to the window, over there.",
+    "vi": "Chào mừng bạn! Bàn của bạn ở cạnh cửa sổ, đằng kia kìa."
+   },
+   {
+    "s": "B",
+    "en": "Thanks. What time do people usually have lunch here?",
+    "vi": "Cảm ơn. Mọi người ở đây thường ăn trưa lúc mấy giờ?"
+   },
+   {
+    "s": "A",
+    "en": "Most of us eat at twelve thirty, in the kitchen on the third floor.",
+    "vi": "Đa số ăn lúc mười hai rưỡi, trong bếp ở tầng ba."
+   },
+   {
+    "s": "B",
+    "en": "Great. Where can I get my laptop?",
+    "vi": "Tuyệt. Mình nhận laptop ở đâu nhỉ?"
+   },
+   {
+    "s": "A",
+    "en": "I'll bring it to you at ten. It needs a password first.",
+    "vi": "Mười giờ mình sẽ mang qua cho bạn. Phải cài mật khẩu trước đã."
+   },
+   {
+    "s": "B",
+    "en": "OK. And who should I ask if I have questions?",
+    "vi": "Được. Còn nếu có thắc mắc thì mình nên hỏi ai?"
+   },
+   {
+    "s": "A",
+    "en": "Ask Sarah, your manager. She's in a meeting until eleven.",
+    "vi": "Hỏi Sarah, quản lý của bạn. Chị ấy họp đến mười một giờ."
+   },
+   {
+    "s": "B",
+    "en": "Thank you so much, Tom. Everyone is very friendly.",
+    "vi": "Cảm ơn Tom nhiều nhé. Mọi người thân thiện quá."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where is Hoa's desk?",
+    "q_vi": "Bàn của Hoa ở đâu?",
+    "options": [
+     "Next to the door",
+     "Next to the printer",
+     "Next to the window",
+     "In the meeting room"
+    ],
+    "answer": 2,
+    "explain": "Tom nói: \"Your desk is next to the window, over there.\""
+   },
+   {
+    "q": "What time do most people have lunch?",
+    "q_vi": "Đa số mọi người ăn trưa lúc mấy giờ?",
+    "options": [
+     "At 12:30",
+     "At 12:00",
+     "At 1:00",
+     "At 11:30"
+    ],
+    "answer": 0,
+    "explain": "Tom nói: \"Most of us eat at twelve thirty, in the kitchen on the third floor.\""
+   },
+   {
+    "q": "When will Tom bring the laptop?",
+    "q_vi": "Khi nào Tom mang laptop đến?",
+    "options": [
+     "At eleven",
+     "At twelve thirty",
+     "After lunch",
+     "At ten"
+    ],
+    "answer": 3,
+    "explain": "Tom nói: \"I'll bring it to you at ten.\""
+   },
+   {
+    "q": "Who is Sarah?",
+    "q_vi": "Sarah là ai?",
+    "options": [
+     "Tom's sister",
+     "Hoa's manager",
+     "A new worker",
+     "The IT team leader"
+    ],
+    "answer": 1,
+    "explain": "Tom nói: \"Ask Sarah, your manager.\""
+   }
+  ]
+ },
+ {
+  "id": "complaining-in-a-restaurant",
+  "emoji": "🍲",
+  "name_vi": "Phàn nàn ở nhà hàng",
+  "name_en": "Complaining in a restaurant",
+  "level": "B1",
+  "speakers": {
+   "A": "Waiter",
+   "B": "Mark"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Is everything OK with your meal, sir?",
+    "vi": "Món ăn của anh có ổn không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Not really. I ordered the chicken soup, but this is beef.",
+    "vi": "Không ổn lắm. Tôi gọi súp gà, nhưng đây là bò."
+   },
+   {
+    "s": "A",
+    "en": "Oh, I'm so sorry. I'll change it right away.",
+    "vi": "Ôi, tôi rất xin lỗi. Tôi sẽ đổi ngay ạ."
+   },
+   {
+    "s": "B",
+    "en": "Thank you. Also, we've waited forty minutes for our drinks.",
+    "vi": "Cảm ơn. Với lại, chúng tôi đã chờ đồ uống bốn mươi phút rồi."
+   },
+   {
+    "s": "A",
+    "en": "I apologize. We're very busy tonight because of a big party.",
+    "vi": "Tôi xin lỗi. Tối nay quán rất đông vì có một bữa tiệc lớn."
+   },
+   {
+    "s": "B",
+    "en": "I understand, but my daughter is really thirsty.",
+    "vi": "Tôi hiểu, nhưng con gái tôi khát lắm rồi."
+   },
+   {
+    "s": "A",
+    "en": "I'll bring two orange juices now. They're free.",
+    "vi": "Tôi sẽ mang ngay hai ly nước cam. Không tính tiền ạ."
+   },
+   {
+    "s": "B",
+    "en": "That's kind of you. How long will the soup take?",
+    "vi": "Anh tốt quá. Món súp thì mất bao lâu?"
+   },
+   {
+    "s": "A",
+    "en": "About ten minutes. Would you like some bread while you wait?",
+    "vi": "Khoảng mười phút. Anh có muốn ăn chút bánh mì trong lúc chờ không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, please. That would be great.",
+    "vi": "Có, cảm ơn anh. Vậy thì tốt quá."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What did Mark order?",
+    "q_vi": "Mark đã gọi món gì?",
+    "options": [
+     "Chicken soup",
+     "Beef soup",
+     "Fish soup",
+     "Chicken salad"
+    ],
+    "answer": 0,
+    "explain": "Mark nói: \"I ordered the chicken soup, but this is beef.\""
+   },
+   {
+    "q": "How long did they wait for their drinks?",
+    "q_vi": "Họ đã chờ đồ uống bao lâu?",
+    "options": [
+     "Ten minutes",
+     "Twenty minutes",
+     "Forty minutes",
+     "One hour"
+    ],
+    "answer": 2,
+    "explain": "Mark nói: \"we've waited forty minutes for our drinks.\""
+   },
+   {
+    "q": "Why is the restaurant busy tonight?",
+    "q_vi": "Vì sao tối nay nhà hàng đông?",
+    "options": [
+     "It is a holiday",
+     "There is a big party",
+     "A waiter is sick",
+     "The kitchen is small"
+    ],
+    "answer": 1,
+    "explain": "Người phục vụ nói: \"We're very busy tonight because of a big party.\""
+   },
+   {
+    "q": "What will the waiter give them for free?",
+    "q_vi": "Người phục vụ sẽ tặng miễn phí gì?",
+    "options": [
+     "Two coffees",
+     "A dessert",
+     "The soup",
+     "Two orange juices"
+    ],
+    "answer": 3,
+    "explain": "Người phục vụ nói: \"I'll bring two orange juices now. They're free.\""
+   }
+  ]
+ },
+ {
+  "id": "at-the-airport",
+  "emoji": "✈️",
+  "name_vi": "Ở sân bay",
+  "name_en": "At the airport",
+  "level": "A2",
+  "speakers": {
+   "A": "Agent",
+   "B": "Nam"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good afternoon. Where are you flying today?",
+    "vi": "Chào buổi chiều. Hôm nay anh bay đi đâu ạ?"
+   },
+   {
+    "s": "B",
+    "en": "To Singapore. Here's my passport.",
+    "vi": "Đi Singapore. Hộ chiếu của tôi đây."
+   },
+   {
+    "s": "A",
+    "en": "Thank you. Do you have any bags to check in?",
+    "vi": "Cảm ơn anh. Anh có hành lý ký gửi không?"
+   },
+   {
+    "s": "B",
+    "en": "Just one suitcase. This small backpack is my hand luggage.",
+    "vi": "Chỉ một vali thôi. Cái ba lô nhỏ này là hành lý xách tay."
+   },
+   {
+    "s": "A",
+    "en": "OK. Your suitcase is 21 kilos. The limit is 23, so it's fine.",
+    "vi": "Vâng. Vali của anh nặng 21 ký. Giới hạn là 23, nên không sao ạ."
+   },
+   {
+    "s": "B",
+    "en": "Great. Can I have a window seat, please?",
+    "vi": "Tốt quá. Cho tôi ghế cạnh cửa sổ được không?"
+   },
+   {
+    "s": "A",
+    "en": "Sure. You're in seat 14A, by the window.",
+    "vi": "Được ạ. Anh ngồi ghế 14A, cạnh cửa sổ."
+   },
+   {
+    "s": "B",
+    "en": "Thanks. What time does boarding start?",
+    "vi": "Cảm ơn. Mấy giờ thì bắt đầu lên máy bay?"
+   },
+   {
+    "s": "A",
+    "en": "Boarding starts at 3:15 at gate 7.",
+    "vi": "Bắt đầu lên máy bay lúc 3 giờ 15 ở cửa số 7."
+   },
+   {
+    "s": "B",
+    "en": "Is the flight on time?",
+    "vi": "Chuyến bay có đúng giờ không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes, it leaves at 3:45. Have a nice trip!",
+    "vi": "Có ạ, máy bay cất cánh lúc 3 giờ 45. Chúc anh chuyến đi vui vẻ!"
+   },
+   {
+    "s": "B",
+    "en": "Thank you very much.",
+    "vi": "Cảm ơn chị nhiều."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where is Nam flying to?",
+    "q_vi": "Nam bay đi đâu?",
+    "options": [
+     "Bangkok",
+     "Tokyo",
+     "Seoul",
+     "Singapore"
+    ],
+    "answer": 3,
+    "explain": "Nam nói: \"To Singapore. Here's my passport.\""
+   },
+   {
+    "q": "How heavy is Nam's suitcase?",
+    "q_vi": "Vali của Nam nặng bao nhiêu?",
+    "options": [
+     "23 kilos",
+     "21 kilos",
+     "14 kilos",
+     "7 kilos"
+    ],
+    "answer": 1,
+    "explain": "Nhân viên nói: \"Your suitcase is 21 kilos.\" (23 là mức giới hạn)."
+   },
+   {
+    "q": "What is Nam's seat number?",
+    "q_vi": "Số ghế của Nam là bao nhiêu?",
+    "options": [
+     "7A",
+     "21A",
+     "14A",
+     "15A"
+    ],
+    "answer": 2,
+    "explain": "Nhân viên nói: \"You're in seat 14A, by the window.\""
+   },
+   {
+    "q": "Which gate does Nam need to go to?",
+    "q_vi": "Nam cần đến cửa ra máy bay số mấy?",
+    "options": [
+     "Gate 7",
+     "Gate 14",
+     "Gate 3",
+     "Gate 15"
+    ],
+    "answer": 0,
+    "explain": "Nhân viên nói: \"Boarding starts at 3:15 at gate 7.\""
+   }
+  ]
+ },
+ {
+  "id": "renting-an-apartment",
+  "emoji": "🏠",
+  "name_vi": "Thuê căn hộ",
+  "name_en": "Renting an apartment",
+  "level": "B1",
+  "speakers": {
+   "A": "Mrs. Brown",
+   "B": "Quang"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi, you called about the apartment? Come in.",
+    "vi": "Chào cậu, cậu gọi hỏi về căn hộ phải không? Vào đi."
+   },
+   {
+    "s": "B",
+    "en": "Yes, thanks. It looks bright. How many bedrooms are there?",
+    "vi": "Vâng, cảm ơn cô. Nhà sáng sủa quá. Có mấy phòng ngủ ạ?"
+   },
+   {
+    "s": "A",
+    "en": "Two bedrooms and one bathroom. The kitchen is new.",
+    "vi": "Hai phòng ngủ và một phòng tắm. Bếp mới làm."
+   },
+   {
+    "s": "B",
+    "en": "Nice. How much is the rent each month?",
+    "vi": "Tốt quá. Tiền thuê mỗi tháng bao nhiêu ạ?"
+   },
+   {
+    "s": "A",
+    "en": "It's seven hundred dollars, and that includes water.",
+    "vi": "Bảy trăm đô, đã gồm tiền nước."
+   },
+   {
+    "s": "B",
+    "en": "What about electricity and internet?",
+    "vi": "Còn tiền điện và internet thì sao ạ?"
+   },
+   {
+    "s": "A",
+    "en": "You pay for those yourself. Usually about fifty dollars a month.",
+    "vi": "Cậu tự trả. Thường khoảng năm mươi đô một tháng."
+   },
+   {
+    "s": "B",
+    "en": "OK. Are pets allowed? I have a small cat.",
+    "vi": "Vâng. Có được nuôi thú cưng không ạ? Cháu có một con mèo nhỏ."
+   },
+   {
+    "s": "A",
+    "en": "Cats are fine, but no dogs, sorry.",
+    "vi": "Mèo thì được, nhưng chó thì không, xin lỗi nhé."
+   },
+   {
+    "s": "B",
+    "en": "Great. When can I move in?",
+    "vi": "Tuyệt. Khi nào cháu dọn vào được ạ?"
+   },
+   {
+    "s": "A",
+    "en": "It's free from the first of June. I need one month's deposit.",
+    "vi": "Nhà trống từ mùng một tháng Sáu. Cô cần cọc một tháng tiền nhà."
+   },
+   {
+    "s": "B",
+    "en": "Perfect. I'd like to take it.",
+    "vi": "Hoàn hảo. Cháu muốn thuê căn này ạ."
+   }
+  ],
+  "questions": [
+   {
+    "q": "How many bedrooms does the apartment have?",
+    "q_vi": "Căn hộ có mấy phòng ngủ?",
+    "options": [
+     "One",
+     "Three",
+     "Two",
+     "Four"
+    ],
+    "answer": 2,
+    "explain": "Bà Brown nói: \"Two bedrooms and one bathroom.\""
+   },
+   {
+    "q": "What does the rent include?",
+    "q_vi": "Tiền thuê đã bao gồm gì?",
+    "options": [
+     "Electricity",
+     "Internet",
+     "Parking",
+     "Water"
+    ],
+    "answer": 3,
+    "explain": "Bà Brown nói: \"It's seven hundred dollars, and that includes water.\""
+   },
+   {
+    "q": "What pet does Quang have?",
+    "q_vi": "Quang nuôi con vật gì?",
+    "options": [
+     "A cat",
+     "A dog",
+     "A bird",
+     "A fish"
+    ],
+    "answer": 0,
+    "explain": "Quang nói: \"I have a small cat.\""
+   },
+   {
+    "q": "When can Quang move in?",
+    "q_vi": "Khi nào Quang có thể dọn vào?",
+    "options": [
+     "From May 1st",
+     "From June 1st",
+     "From July 1st",
+     "Next week"
+    ],
+    "answer": 1,
+    "explain": "Bà Brown nói: \"It's free from the first of June.\""
+   }
+  ]
+ },
+ {
+  "id": "at-the-bank",
+  "emoji": "🏦",
+  "name_vi": "Ở ngân hàng",
+  "name_en": "At the bank",
+  "level": "A2",
+  "speakers": {
+   "A": "Clerk",
+   "B": "Minh"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Good morning. How can I help you?",
+    "vi": "Chào buổi sáng. Tôi có thể giúp gì cho anh?"
+   },
+   {
+    "s": "B",
+    "en": "Hi. I'd like to open an account, please.",
+    "vi": "Chào chị. Tôi muốn mở một tài khoản."
+   },
+   {
+    "s": "A",
+    "en": "Of course. Do you have your passport or ID card?",
+    "vi": "Dạ được. Anh có mang hộ chiếu hoặc căn cước không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, here's my ID card.",
+    "vi": "Có, căn cước của tôi đây."
+   },
+   {
+    "s": "A",
+    "en": "Thank you. Is it a savings account or a normal account?",
+    "vi": "Cảm ơn anh. Anh mở tài khoản tiết kiệm hay tài khoản thường ạ?"
+   },
+   {
+    "s": "B",
+    "en": "A normal account. I need it for my salary.",
+    "vi": "Tài khoản thường. Tôi cần để nhận lương."
+   },
+   {
+    "s": "A",
+    "en": "OK. You need to put in at least 500,000 dong.",
+    "vi": "Vâng. Anh cần nộp vào ít nhất 500.000 đồng."
+   },
+   {
+    "s": "B",
+    "en": "No problem. When will I get my card?",
+    "vi": "Không sao. Khi nào tôi nhận được thẻ?"
+   },
+   {
+    "s": "A",
+    "en": "Your bank card will be ready in three days.",
+    "vi": "Thẻ ngân hàng của anh sẽ có sau ba ngày."
+   },
+   {
+    "s": "B",
+    "en": "Can I use the app before that?",
+    "vi": "Trước đó tôi dùng ứng dụng được không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes. Download it today and log in with your phone number.",
+    "vi": "Được ạ. Anh tải ứng dụng hôm nay và đăng nhập bằng số điện thoại."
+   },
+   {
+    "s": "B",
+    "en": "Great, thank you.",
+    "vi": "Tốt quá, cảm ơn chị."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What does Minh want to do?",
+    "q_vi": "Minh muốn làm gì?",
+    "options": [
+     "Borrow money",
+     "Open an account",
+     "Change dollars",
+     "Pay a bill"
+    ],
+    "answer": 1,
+    "explain": "Minh nói: \"I'd like to open an account, please.\""
+   },
+   {
+    "q": "Why does Minh need the account?",
+    "q_vi": "Vì sao Minh cần tài khoản này?",
+    "options": [
+     "To get his salary",
+     "To save money",
+     "For his business",
+     "To send money abroad"
+    ],
+    "answer": 0,
+    "explain": "Minh nói: \"A normal account. I need it for my salary.\""
+   },
+   {
+    "q": "How much must Minh put in at least?",
+    "q_vi": "Minh phải nộp vào ít nhất bao nhiêu?",
+    "options": [
+     "50,000 dong",
+     "5,000,000 dong",
+     "300,000 dong",
+     "500,000 dong"
+    ],
+    "answer": 3,
+    "explain": "Nhân viên nói: \"You need to put in at least 500,000 dong.\""
+   },
+   {
+    "q": "When will the bank card be ready?",
+    "q_vi": "Khi nào thẻ ngân hàng sẵn sàng?",
+    "options": [
+     "Today",
+     "In one week",
+     "In three days",
+     "Tomorrow"
+    ],
+    "answer": 2,
+    "explain": "Nhân viên nói: \"Your bank card will be ready in three days.\""
+   }
+  ]
+ },
+ {
+  "id": "talking-about-hobbies",
+  "emoji": "🎸",
+  "name_vi": "Nói về sở thích",
+  "name_en": "Talking about hobbies",
+  "level": "A2",
+  "speakers": {
+   "A": "Emma",
+   "B": "Tuan"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "What do you usually do at the weekend, Tuan?",
+    "vi": "Cuối tuần cậu thường làm gì, Tuấn?"
+   },
+   {
+    "s": "B",
+    "en": "I play the guitar. I've played it for five years.",
+    "vi": "Mình chơi guitar. Mình chơi được năm năm rồi."
+   },
+   {
+    "s": "A",
+    "en": "Wow! Do you play in a band?",
+    "vi": "Ồ! Cậu có chơi trong ban nhạc không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, with three friends. We practice every Saturday evening.",
+    "vi": "Có, với ba người bạn. Bọn mình tập vào mỗi tối thứ Bảy."
+   },
+   {
+    "s": "A",
+    "en": "That's cool. Where do you play?",
+    "vi": "Hay thế. Các cậu chơi ở đâu?"
+   },
+   {
+    "s": "B",
+    "en": "Sometimes at a small coffee shop near my house.",
+    "vi": "Thỉnh thoảng ở một quán cà phê nhỏ gần nhà mình."
+   },
+   {
+    "s": "A",
+    "en": "I'd love to come and listen one day.",
+    "vi": "Hôm nào mình rất muốn đến nghe."
+   },
+   {
+    "s": "B",
+    "en": "Sure! What about you? What do you like doing?",
+    "vi": "Được chứ! Còn cậu? Cậu thích làm gì?"
+   },
+   {
+    "s": "A",
+    "en": "I love swimming. I go to the pool every Sunday morning.",
+    "vi": "Mình mê bơi. Sáng Chủ nhật nào mình cũng đi bể bơi."
+   },
+   {
+    "s": "B",
+    "en": "Swimming is great exercise. I can't swim very well.",
+    "vi": "Bơi là môn thể dục rất tốt. Mình bơi không giỏi lắm."
+   },
+   {
+    "s": "A",
+    "en": "I can teach you, if you want!",
+    "vi": "Mình dạy cậu được, nếu cậu muốn!"
+   },
+   {
+    "s": "B",
+    "en": "Really? Thanks, that sounds fun.",
+    "vi": "Thật à? Cảm ơn nhé, nghe vui đấy."
+   }
+  ],
+  "questions": [
+   {
+    "q": "How long has Tuan played the guitar?",
+    "q_vi": "Tuấn chơi guitar được bao lâu rồi?",
+    "options": [
+     "Three years",
+     "One year",
+     "Ten years",
+     "Five years"
+    ],
+    "answer": 3,
+    "explain": "Tuấn nói: \"I've played it for five years.\""
+   },
+   {
+    "q": "When does Tuan's band practice?",
+    "q_vi": "Ban nhạc của Tuấn tập khi nào?",
+    "options": [
+     "Every Sunday morning",
+     "Every Friday night",
+     "Every Saturday evening",
+     "Every weekday"
+    ],
+    "answer": 2,
+    "explain": "Tuấn nói: \"We practice every Saturday evening.\""
+   },
+   {
+    "q": "Where does the band sometimes play?",
+    "q_vi": "Ban nhạc thỉnh thoảng chơi ở đâu?",
+    "options": [
+     "At a school",
+     "At a coffee shop near his house",
+     "At a big theater",
+     "In a park"
+    ],
+    "answer": 1,
+    "explain": "Tuấn nói: \"Sometimes at a small coffee shop near my house.\""
+   },
+   {
+    "q": "What is Emma's hobby?",
+    "q_vi": "Sở thích của Emma là gì?",
+    "options": [
+     "Swimming",
+     "Playing the guitar",
+     "Singing",
+     "Running"
+    ],
+    "answer": 0,
+    "explain": "Emma nói: \"I love swimming.\""
+   }
+  ]
+ },
+ {
+  "id": "planning-a-trip",
+  "emoji": "🗺️",
+  "name_vi": "Lên kế hoạch du lịch",
+  "name_en": "Planning a trip",
+  "level": "B1",
+  "speakers": {
+   "A": "Lan",
+   "B": "Jake"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Jake, are you free next weekend? Let's go to Da Lat.",
+    "vi": "Jake, cuối tuần sau cậu rảnh không? Đi Đà Lạt đi."
+   },
+   {
+    "s": "B",
+    "en": "Good idea! How do we get there?",
+    "vi": "Ý hay đấy! Mình đi bằng gì?"
+   },
+   {
+    "s": "A",
+    "en": "The bus takes seven hours. Flying takes only one hour.",
+    "vi": "Xe khách mất bảy tiếng. Đi máy bay chỉ mất một tiếng."
+   },
+   {
+    "s": "B",
+    "en": "Let's fly. The bus is too long for me.",
+    "vi": "Đi máy bay đi. Xe khách lâu quá với mình."
+   },
+   {
+    "s": "A",
+    "en": "OK. Tickets are about one million dong each way.",
+    "vi": "Được. Vé khoảng một triệu đồng mỗi chiều."
+   },
+   {
+    "s": "B",
+    "en": "That's fine. Where should we stay?",
+    "vi": "Vậy cũng được. Mình nên ở đâu?"
+   },
+   {
+    "s": "A",
+    "en": "I found a small hotel near the lake. It's 400,000 dong a night.",
+    "vi": "Mình tìm được một khách sạn nhỏ gần hồ. 400.000 đồng một đêm."
+   },
+   {
+    "s": "B",
+    "en": "Sounds good. How many nights?",
+    "vi": "Nghe ổn đấy. Ở mấy đêm?"
+   },
+   {
+    "s": "A",
+    "en": "Two nights. We can leave Friday evening and come back Sunday.",
+    "vi": "Hai đêm. Mình có thể đi tối thứ Sáu và về Chủ nhật."
+   },
+   {
+    "s": "B",
+    "en": "What should we pack? Is it cold there?",
+    "vi": "Nên mang theo gì? Ở đó có lạnh không?"
+   },
+   {
+    "s": "A",
+    "en": "Yes, it's cold at night, so bring a warm jacket.",
+    "vi": "Có, buổi tối lạnh, nên mang áo khoác ấm nhé."
+   },
+   {
+    "s": "B",
+    "en": "Great. I'll book the flights tonight.",
+    "vi": "Tuyệt. Tối nay mình sẽ đặt vé máy bay."
+   }
+  ],
+  "questions": [
+   {
+    "q": "How long does the bus take?",
+    "q_vi": "Đi xe khách mất bao lâu?",
+    "options": [
+     "Seven hours",
+     "One hour",
+     "Four hours",
+     "Two hours"
+    ],
+    "answer": 0,
+    "explain": "Lan nói: \"The bus takes seven hours.\""
+   },
+   {
+    "q": "Where is the hotel?",
+    "q_vi": "Khách sạn ở đâu?",
+    "options": [
+     "Near the airport",
+     "In the city center",
+     "Near the market",
+     "Near the lake"
+    ],
+    "answer": 3,
+    "explain": "Lan nói: \"I found a small hotel near the lake.\""
+   },
+   {
+    "q": "How many nights will they stay?",
+    "q_vi": "Họ sẽ ở mấy đêm?",
+    "options": [
+     "One",
+     "Three",
+     "Two",
+     "Four"
+    ],
+    "answer": 2,
+    "explain": "Lan nói: \"Two nights. We can leave Friday evening and come back Sunday.\""
+   },
+   {
+    "q": "What will Jake do tonight?",
+    "q_vi": "Tối nay Jake sẽ làm gì?",
+    "options": [
+     "Book the hotel",
+     "Book the flights",
+     "Buy a jacket",
+     "Pack his bag"
+    ],
+    "answer": 1,
+    "explain": "Jake nói: \"I'll book the flights tonight.\""
+   }
+  ]
+ },
+ {
+  "id": "at-the-pharmacy",
+  "emoji": "💊",
+  "name_vi": "Ở hiệu thuốc",
+  "name_en": "At the pharmacy",
+  "level": "A2",
+  "speakers": {
+   "A": "Pharmacist",
+   "B": "Thu"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hello. What can I do for you?",
+    "vi": "Chào chị. Tôi giúp gì được cho chị?"
+   },
+   {
+    "s": "B",
+    "en": "Hi. I have a sore throat and a headache.",
+    "vi": "Chào anh. Tôi bị đau họng và đau đầu."
+   },
+   {
+    "s": "A",
+    "en": "How long have you felt like this?",
+    "vi": "Chị bị như vậy bao lâu rồi?"
+   },
+   {
+    "s": "B",
+    "en": "Since yesterday morning.",
+    "vi": "Từ sáng hôm qua."
+   },
+   {
+    "s": "A",
+    "en": "Do you have a fever?",
+    "vi": "Chị có bị sốt không?"
+   },
+   {
+    "s": "B",
+    "en": "A little. It was 37.8 degrees last night.",
+    "vi": "Hơi sốt. Tối qua 37,8 độ."
+   },
+   {
+    "s": "A",
+    "en": "OK. Take these tablets three times a day, after meals.",
+    "vi": "Vâng. Chị uống thuốc này ngày ba lần, sau bữa ăn."
+   },
+   {
+    "s": "B",
+    "en": "Can I take them on an empty stomach?",
+    "vi": "Tôi uống lúc đói được không?"
+   },
+   {
+    "s": "A",
+    "en": "No, please eat first. And drink lots of warm water.",
+    "vi": "Không, chị nhớ ăn trước. Và uống nhiều nước ấm nhé."
+   },
+   {
+    "s": "B",
+    "en": "How much are they?",
+    "vi": "Thuốc này bao nhiêu tiền?"
+   },
+   {
+    "s": "A",
+    "en": "45,000 dong. If you don't feel better in three days, see a doctor.",
+    "vi": "45.000 đồng. Nếu sau ba ngày chưa đỡ thì chị đi khám bác sĩ nhé."
+   },
+   {
+    "s": "B",
+    "en": "OK, thank you.",
+    "vi": "Vâng, cảm ơn anh."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is Thu's problem?",
+    "q_vi": "Thu bị làm sao?",
+    "options": [
+     "A stomachache",
+     "A toothache",
+     "A sore throat and a headache",
+     "A cough and a backache"
+    ],
+    "answer": 2,
+    "explain": "Thu nói: \"I have a sore throat and a headache.\""
+   },
+   {
+    "q": "Since when has Thu felt ill?",
+    "q_vi": "Thu bị ốm từ khi nào?",
+    "options": [
+     "Since last week",
+     "Since yesterday morning",
+     "Since this morning",
+     "Since last night"
+    ],
+    "answer": 1,
+    "explain": "Thu nói: \"Since yesterday morning.\""
+   },
+   {
+    "q": "How often should Thu take the tablets?",
+    "q_vi": "Thu nên uống thuốc bao nhiêu lần?",
+    "options": [
+     "Three times a day",
+     "Once a day",
+     "Twice a day",
+     "Every hour"
+    ],
+    "answer": 0,
+    "explain": "Dược sĩ nói: \"Take these tablets three times a day, after meals.\""
+   },
+   {
+    "q": "What should Thu do if she isn't better in three days?",
+    "q_vi": "Nếu sau ba ngày chưa đỡ, Thu nên làm gì?",
+    "options": [
+     "Take more tablets",
+     "Come back to the pharmacy",
+     "Stop eating",
+     "See a doctor"
+    ],
+    "answer": 3,
+    "explain": "Dược sĩ nói: \"If you don't feel better in three days, see a doctor.\""
+   }
+  ]
+ },
+ {
+  "id": "returning-an-item",
+  "emoji": "🛍️",
+  "name_vi": "Đổi trả hàng",
+  "name_en": "Returning an item",
+  "level": "B1",
+  "speakers": {
+   "A": "Assistant",
+   "B": "Anna"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Hi there. Can I help you?",
+    "vi": "Chào chị. Tôi giúp gì được cho chị?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, I'd like to return this jacket. I bought it on Monday.",
+    "vi": "Vâng, tôi muốn trả lại chiếc áo khoác này. Tôi mua hôm thứ Hai."
+   },
+   {
+    "s": "A",
+    "en": "Sure. What's wrong with it?",
+    "vi": "Dạ được. Áo bị làm sao ạ?"
+   },
+   {
+    "s": "B",
+    "en": "The zip is broken. It stopped working after one day.",
+    "vi": "Khoá kéo bị hỏng. Mới một ngày đã không kéo được."
+   },
+   {
+    "s": "A",
+    "en": "I'm sorry about that. Do you have the receipt?",
+    "vi": "Tôi rất tiếc. Chị có hoá đơn không ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, here it is. I paid by credit card.",
+    "vi": "Có, đây. Tôi đã trả bằng thẻ tín dụng."
+   },
+   {
+    "s": "A",
+    "en": "Thanks. Would you like a refund or a new jacket?",
+    "vi": "Cảm ơn chị. Chị muốn hoàn tiền hay đổi áo mới ạ?"
+   },
+   {
+    "s": "B",
+    "en": "Do you have the same one in blue?",
+    "vi": "Bên bạn có mẫu y vậy màu xanh dương không?"
+   },
+   {
+    "s": "A",
+    "en": "Let me check... Sorry, we only have black and grey now.",
+    "vi": "Để tôi kiểm tra... Xin lỗi, giờ chỉ còn màu đen và xám."
+   },
+   {
+    "s": "B",
+    "en": "Then I'll take the refund, please.",
+    "vi": "Vậy cho tôi hoàn tiền nhé."
+   },
+   {
+    "s": "A",
+    "en": "No problem. The money will be back on your card in five days.",
+    "vi": "Không vấn đề gì. Tiền sẽ về lại thẻ của chị trong năm ngày."
+   },
+   {
+    "s": "B",
+    "en": "Thank you for your help.",
+    "vi": "Cảm ơn bạn đã giúp."
+   }
+  ],
+  "questions": [
+   {
+    "q": "When did Anna buy the jacket?",
+    "q_vi": "Anna mua áo khoác khi nào?",
+    "options": [
+     "On Sunday",
+     "On Monday",
+     "Last month",
+     "Yesterday"
+    ],
+    "answer": 1,
+    "explain": "Anna nói: \"I bought it on Monday.\""
+   },
+   {
+    "q": "What is wrong with the jacket?",
+    "q_vi": "Áo khoác bị làm sao?",
+    "options": [
+     "It is too small",
+     "It has a hole",
+     "The zip is broken",
+     "The color is wrong"
+    ],
+    "answer": 2,
+    "explain": "Anna nói: \"The zip is broken.\""
+   },
+   {
+    "q": "What colors does the shop have now?",
+    "q_vi": "Cửa hàng hiện còn những màu nào?",
+    "options": [
+     "Blue and black",
+     "Blue and grey",
+     "Only blue",
+     "Black and grey"
+    ],
+    "answer": 3,
+    "explain": "Nhân viên nói: \"Sorry, we only have black and grey now.\""
+   },
+   {
+    "q": "When will Anna get her money back?",
+    "q_vi": "Khi nào Anna nhận lại tiền?",
+    "options": [
+     "In five days",
+     "Today",
+     "In one day",
+     "In two weeks"
+    ],
+    "answer": 0,
+    "explain": "Nhân viên nói: \"The money will be back on your card in five days.\""
+   }
+  ]
+ },
+ {
+  "id": "team-meeting",
+  "emoji": "📊",
+  "name_vi": "Họp nhóm",
+  "name_en": "Team meeting",
+  "level": "B1",
+  "speakers": {
+   "A": "Manager",
+   "B": "Duc"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "OK, everyone, let's start. Duc, how's the new website going?",
+    "vi": "Được rồi, mọi người, bắt đầu nhé. Đức, website mới thế nào rồi?"
+   },
+   {
+    "s": "B",
+    "en": "It's almost finished. We're about eighty percent done.",
+    "vi": "Gần xong rồi ạ. Bọn em làm được khoảng tám mươi phần trăm."
+   },
+   {
+    "s": "A",
+    "en": "Good. Will it be ready by Friday?",
+    "vi": "Tốt. Thứ Sáu xong được không?"
+   },
+   {
+    "s": "B",
+    "en": "Probably not. We need two more days for testing.",
+    "vi": "Chắc là không ạ. Bọn em cần thêm hai ngày để kiểm thử."
+   },
+   {
+    "s": "A",
+    "en": "Hmm. What's the main problem?",
+    "vi": "Hừm. Vướng chính ở đâu?"
+   },
+   {
+    "s": "B",
+    "en": "The payment page is slow on mobile phones.",
+    "vi": "Trang thanh toán chạy chậm trên điện thoại."
+   },
+   {
+    "s": "A",
+    "en": "Can Mai help you with that?",
+    "vi": "Mai giúp em phần đó được không?"
+   },
+   {
+    "s": "B",
+    "en": "Yes, that would help a lot. She knows that system well.",
+    "vi": "Được ạ, vậy thì đỡ nhiều. Chị ấy rành hệ thống đó."
+   },
+   {
+    "s": "A",
+    "en": "OK. Then let's move the deadline to next Tuesday.",
+    "vi": "Được. Vậy dời hạn chót sang thứ Ba tuần sau."
+   },
+   {
+    "s": "B",
+    "en": "Thanks. I'll send you an update every afternoon.",
+    "vi": "Cảm ơn anh. Chiều nào em cũng sẽ gửi anh báo cáo tiến độ."
+   },
+   {
+    "s": "A",
+    "en": "Perfect. We'll meet again on Monday at nine.",
+    "vi": "Tốt lắm. Thứ Hai lúc chín giờ mình họp lại."
+   }
+  ],
+  "questions": [
+   {
+    "q": "How much of the website is done?",
+    "q_vi": "Website đã làm xong bao nhiêu phần?",
+    "options": [
+     "About 50%",
+     "About 90%",
+     "About 20%",
+     "About 80%"
+    ],
+    "answer": 3,
+    "explain": "Đức nói: \"We're about eighty percent done.\""
+   },
+   {
+    "q": "What is the main problem?",
+    "q_vi": "Vấn đề chính là gì?",
+    "options": [
+     "The payment page is slow on phones",
+     "The website has no pictures",
+     "The team is too small",
+     "The server is broken"
+    ],
+    "answer": 0,
+    "explain": "Đức nói: \"The payment page is slow on mobile phones.\""
+   },
+   {
+    "q": "Who will help Duc?",
+    "q_vi": "Ai sẽ giúp Đức?",
+    "options": [
+     "The manager",
+     "Mai",
+     "A new worker",
+     "Nobody"
+    ],
+    "answer": 1,
+    "explain": "Quản lý hỏi: \"Can Mai help you with that?\" và Đức đồng ý."
+   },
+   {
+    "q": "What is the new deadline?",
+    "q_vi": "Hạn chót mới là khi nào?",
+    "options": [
+     "This Friday",
+     "Next Monday",
+     "Next Tuesday",
+     "In two weeks"
+    ],
+    "answer": 2,
+    "explain": "Quản lý nói: \"Then let's move the deadline to next Tuesday.\""
+   }
+  ]
+ },
+ {
+  "id": "saying-goodbye",
+  "emoji": "👋",
+  "name_vi": "Chia tay",
+  "name_en": "Saying goodbye",
+  "level": "A2",
+  "speakers": {
+   "A": "Sophie",
+   "B": "Khoa"
+  },
+  "lines": [
+   {
+    "s": "A",
+    "en": "Khoa, I can't believe this is my last day in Vietnam.",
+    "vi": "Khoa ơi, mình không tin nổi hôm nay là ngày cuối ở Việt Nam."
+   },
+   {
+    "s": "B",
+    "en": "Me neither. Time went so fast. When is your flight?",
+    "vi": "Mình cũng vậy. Thời gian trôi nhanh quá. Mấy giờ cậu bay?"
+   },
+   {
+    "s": "A",
+    "en": "Tomorrow at six in the morning. I'm going back to London.",
+    "vi": "Sáu giờ sáng mai. Mình về lại London."
+   },
+   {
+    "s": "B",
+    "en": "That's early! Do you need a ride to the airport?",
+    "vi": "Sớm thế! Cậu có cần mình chở ra sân bay không?"
+   },
+   {
+    "s": "A",
+    "en": "That's so kind, but I've booked a taxi.",
+    "vi": "Cậu tốt quá, nhưng mình đặt taxi rồi."
+   },
+   {
+    "s": "B",
+    "en": "OK. I bought you a small gift. It's Vietnamese coffee.",
+    "vi": "Ừ. Mình mua cho cậu một món quà nhỏ. Cà phê Việt Nam đấy."
+   },
+   {
+    "s": "A",
+    "en": "Oh, thank you! I'll think of you every morning.",
+    "vi": "Ôi, cảm ơn cậu! Sáng nào mình cũng sẽ nhớ đến cậu."
+   },
+   {
+    "s": "B",
+    "en": "Will you come back one day?",
+    "vi": "Một ngày nào đó cậu sẽ quay lại chứ?"
+   },
+   {
+    "s": "A",
+    "en": "Definitely. Maybe next summer, for your wedding!",
+    "vi": "Chắc chắn rồi. Có lẽ hè năm sau, dự đám cưới cậu!"
+   },
+   {
+    "s": "B",
+    "en": "Ha, I hope so. Let's keep in touch online.",
+    "vi": "Ha, mong là vậy. Mình giữ liên lạc qua mạng nhé."
+   },
+   {
+    "s": "A",
+    "en": "Of course. I'll message you when I land.",
+    "vi": "Tất nhiên. Hạ cánh rồi mình nhắn cho cậu."
+   },
+   {
+    "s": "B",
+    "en": "Have a safe trip, Sophie.",
+    "vi": "Thượng lộ bình an nhé, Sophie."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where is Sophie going?",
+    "q_vi": "Sophie đi đâu?",
+    "options": [
+     "London",
+     "Paris",
+     "New York",
+     "Sydney"
+    ],
+    "answer": 0,
+    "explain": "Sophie nói: \"I'm going back to London.\""
+   },
+   {
+    "q": "What time is Sophie's flight?",
+    "q_vi": "Chuyến bay của Sophie lúc mấy giờ?",
+    "options": [
+     "6 p.m.",
+     "6 a.m.",
+     "9 a.m.",
+     "Midnight"
+    ],
+    "answer": 1,
+    "explain": "Sophie nói: \"Tomorrow at six in the morning.\""
+   },
+   {
+    "q": "How will Sophie get to the airport?",
+    "q_vi": "Sophie ra sân bay bằng cách nào?",
+    "options": [
+     "Khoa will drive her",
+     "By bus",
+     "By train",
+     "By taxi"
+    ],
+    "answer": 3,
+    "explain": "Sophie nói: \"That's so kind, but I've booked a taxi.\""
+   },
+   {
+    "q": "What gift does Khoa give Sophie?",
+    "q_vi": "Khoa tặng Sophie quà gì?",
+    "options": [
+     "A book",
+     "Green tea",
+     "Vietnamese coffee",
+     "A photo"
+    ],
+    "answer": 2,
+    "explain": "Khoa nói: \"I bought you a small gift. It's Vietnamese coffee.\""
+   }
+  ]
+ }
+]
