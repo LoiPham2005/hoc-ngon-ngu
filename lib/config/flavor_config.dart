@@ -42,7 +42,7 @@ class FlavorConfig {
           apiBaseUrl: 'https://next-base.deploybox.io.vn/api/v1',
           enableLogging: true,
           enableCrashlytics: true,
-          useRemoteConfig: true,
+          useRemoteConfig: false,
           sentryDsn: '', // điền DSN Sentry
         ),
         AppFlavor.prod => const FlavorConfig._(
@@ -50,7 +50,7 @@ class FlavorConfig {
           apiBaseUrl: 'https://api.example.com',
           enableLogging: false,
           enableCrashlytics: true,
-          useRemoteConfig: true,
+          useRemoteConfig: false,
           sentryDsn: '', // điền DSN Sentry
         ),
       };

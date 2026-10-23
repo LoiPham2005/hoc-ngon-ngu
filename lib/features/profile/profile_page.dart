@@ -157,6 +157,7 @@ class ProfilePage extends HookConsumerWidget {
                 segments: [
                   ButtonSegment(value: 'vi', label: Text(l10n.language_vi)),
                   ButtonSegment(value: 'en', label: Text(l10n.language_en)),
+                  ButtonSegment(value: 'ja', label: Text(l10n.language_ja)),
                 ],
                 selected: {locale.languageCode},
                 showSelectedIcon: false,

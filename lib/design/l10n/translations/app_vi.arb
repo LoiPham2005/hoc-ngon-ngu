@@ -200,6 +200,7 @@
   "appLanguage": "Ngôn ngữ ứng dụng",
   "language_vi": "Tiếng Việt",
   "language_en": "English",
+  "language_ja": "日本語",
   "changeCourse": "Đổi ngôn ngữ học",
   "section_data": "Dữ liệu",
   "resetProgress": "Đặt lại tiến độ",
@@ -238,18 +239,60 @@
   "learn_grammar": "Ngữ pháp",
   "module_enPronunciation": "Phát âm IPA",
   "module_enPronunciation_desc": "{count} âm của tiếng Anh",
+  "@module_enPronunciation_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "module_enVocabulary": "Từ vựng theo chủ đề",
   "module_enVocabulary_desc": "{count} từ thông dụng",
+  "@module_enVocabulary_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "module_enPhrases": "Câu giao tiếp",
   "module_enPhrases_desc": "{count} câu theo tình huống",
+  "@module_enPhrases_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "module_enGrammar": "Ngữ pháp & ghép câu",
   "module_enGrammar_desc": "{count} bài từ A1 đến B1",
+  "@module_enGrammar_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "ipa_vowels": "Nguyên âm đơn",
   "ipa_diphthongs": "Nguyên âm đôi",
   "ipa_consonants": "Phụ âm",
   "ipa_hint": "bấm để nghe từ ví dụ",
   "topics_words": "{count} từ",
+  "@topics_words": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "topics_phrases": "{count} câu",
+  "@topics_phrases": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "word_example": "VÍ DỤ",
   "pos_n": "danh từ",
   "pos_v": "động từ",
@@ -275,55 +318,6 @@
   "grammar_points": "Ghi nhớ",
   "grammar_examples": "Ví dụ",
   "grammar_start": "Làm bài tập ({count} câu)",
-  "grammar_choiceAsk": "Chọn đáp án đúng",
-  "grammar_orderAsk": "Sắp xếp thành câu đúng",
-  "grammar_orderHint": "Bấm từ để thêm vào câu, bấm lại để bỏ",
-  "grammar_check": "Kiểm tra",
-  "grammar_correctAnswer": "Câu đúng: {answer}",
-  "grammar_passed": "Đã thuộc bài này ✓",
-  "grammar_passHint": "Đúng từ {pass}/{total} câu để đánh dấu đã thuộc bài",
-  "@module_enPronunciation_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@module_enVocabulary_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@module_enPhrases_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@module_enGrammar_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@topics_words": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@topics_phrases": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "@grammar_start": {
     "placeholders": {
       "count": {
@@ -331,6 +325,20 @@
       }
     }
   },
+  "grammar_choiceAsk": "Chọn đáp án đúng",
+  "grammar_orderAsk": "Sắp xếp thành câu đúng",
+  "grammar_orderHint": "Bấm từ để thêm vào câu, bấm lại để bỏ",
+  "grammar_check": "Kiểm tra",
+  "grammar_correctAnswer": "Câu đúng: {answer}",
+  "@grammar_correctAnswer": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "grammar_passed": "Đã thuộc bài này ✓",
+  "grammar_passHint": "Đúng từ {pass}/{total} câu để đánh dấu đã thuộc bài",
   "@grammar_passHint": {
     "placeholders": {
       "pass": {
@@ -341,25 +349,53 @@
       }
     }
   },
-  "@grammar_correctAnswer": {
+  "module_enDialogues": "Hội thoại",
+  "module_enDialogues_desc": "{count} đoạn hội thoại có câu hỏi",
+  "@module_enDialogues_desc": {
     "placeholders": {
-      "answer": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "module_enDialogues": "Hội thoại",
-  "module_enDialogues_desc": "{count} đoạn hội thoại có câu hỏi",
   "dialogue_translation": "Bản dịch",
   "dialogue_playAll": "Nghe cả bài",
   "dialogue_stop": "Dừng",
   "dialogue_quiz": "Trả lời câu hỏi ({count} câu)",
+  "@dialogue_quiz": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "review_title": "Ôn tập hôm nay",
   "review_due": "{count} mục cần ôn — ôn ngay để nhớ lâu",
+  "@review_due": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "review_none": "Đã ôn xong hôm nay · {count} mục trong lịch ôn",
+  "@review_none": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "review_empty": "Đánh dấu ✓ đã thuộc hoặc làm bài luyện — app sẽ nhắc ôn đúng lúc bạn sắp quên.",
   "review_start": "Ôn ngay",
   "review_continue": "Ôn tiếp ({count})",
+  "@review_continue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "review_allDone": "Đã ôn hết!",
   "review_allDone_desc": "Không còn mục nào tới hạn. Hẹn bạn ngày mai nhé.",
   "practice_dictation": "Nghe – chép",
@@ -372,56 +408,6 @@
   "sentence_showMeaning": "Xem nghĩa (gợi ý)",
   "sentence_typeHint": "Gõ câu bạn nghe được…",
   "sentence_score": "Đúng {percent}% số từ",
-  "speaking_ask": "Đọc to câu này",
-  "speaking_tap": "Bấm micro rồi đọc",
-  "speaking_listening": "Đang nghe… đọc xong bấm dừng",
-  "speaking_tryAgain": "Bấm micro để đọc lại",
-  "speaking_youSaid": "Máy nghe được: “{text}”",
-  "speaking_notHeard": "Chưa nghe rõ, thử lại nhé",
-  "speaking_unavailable": "Chưa dùng được micro: hãy cấp quyền micro cho Lingua (Android cần cài Google / giọng tiếng Anh).",
-  "common_skip": "Bỏ qua",
-  "reminder": "Nhắc học hằng ngày",
-  "reminder_on": "Nhắc lúc {time}",
-  "reminder_off": "Đang tắt",
-  "reminder_time": "Giờ nhắc",
-  "reminder_denied": "Bạn chưa cho phép thông báo — bật trong Cài đặt của máy.",
-  "reminder_notificationTitle": "Đến giờ học rồi 📚",
-  "reminder_notificationBody": "Vài phút ôn tập mỗi ngày giúp bạn nhớ lâu hơn. Giữ chuỗi 🔥 nhé!",
-  "@module_enDialogues_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@dialogue_quiz": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@review_due": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@review_none": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@review_continue": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "@sentence_score": {
     "placeholders": {
       "percent": {
@@ -429,6 +415,11 @@
       }
     }
   },
+  "speaking_ask": "Đọc to câu này",
+  "speaking_tap": "Bấm micro rồi đọc",
+  "speaking_listening": "Đang nghe… đọc xong bấm dừng",
+  "speaking_tryAgain": "Bấm micro để đọc lại",
+  "speaking_youSaid": "Máy nghe được: “{text}”",
   "@speaking_youSaid": {
     "placeholders": {
       "text": {
@@ -436,6 +427,11 @@
       }
     }
   },
+  "speaking_notHeard": "Chưa nghe rõ, thử lại nhé",
+  "speaking_unavailable": "Chưa dùng được micro: hãy cấp quyền micro cho Lingua (Android cần cài Google / giọng tiếng Anh).",
+  "common_skip": "Bỏ qua",
+  "reminder": "Nhắc học hằng ngày",
+  "reminder_on": "Nhắc lúc {time}",
   "@reminder_on": {
     "placeholders": {
       "time": {
@@ -443,9 +439,12 @@
       }
     }
   },
+  "reminder_off": "Đang tắt",
+  "reminder_time": "Giờ nhắc",
+  "reminder_denied": "Bạn chưa cho phép thông báo — bật trong Cài đặt của máy.",
+  "reminder_notificationTitle": "Đến giờ học rồi 📚",
+  "reminder_notificationBody": "Vài phút ôn tập mỗi ngày giúp bạn nhớ lâu hơn. Giữ chuỗi 🔥 nhé!",
   "module_jaGrammar_desc": "{count} bài N5–N4",
-  "pos_na": "tính từ -na",
-  "pos_exp": "cụm từ",
   "@module_jaGrammar_desc": {
     "placeholders": {
       "count": {
@@ -453,6 +452,8 @@
       }
     }
   },
+  "pos_na": "tính từ -na",
+  "pos_exp": "cụm từ",
   "backup_export": "Sao lưu tiến độ",
   "backup_export_desc": "Lưu ra file để chuyển sang máy khác",
   "backup_exported": "Đã lưu file sao lưu",
@@ -464,19 +465,6 @@
   "search_title": "Tra cứu",
   "search_hint": "Tìm từ, câu, Kanji, nghĩa…",
   "search_empty": "Gõ tiếng Việt (có dấu hay không đều được) hoặc chữ của khoá {course} để tra.",
-  "search_noResult": "Không tìm thấy kết quả",
-  "search_words": "Từ vựng",
-  "search_phrases": "Câu giao tiếp",
-  "stats_title": "Thống kê",
-  "stats_more": "Xem chi tiết",
-  "stats_days": "{count} ngày",
-  "stats_activeDays": "Ngày có học",
-  "stats_activity": "Lượt học mỗi ngày",
-  "stats_newLearned": "{count} mục mới thuộc trong khoảng này",
-  "stats_due": "Cần ôn hôm nay",
-  "stats_scheduled": "Trong lịch ôn",
-  "stats_mastered": "Nhớ lâu",
-  "stats_modules": "Tiến độ học phần",
   "@search_empty": {
     "placeholders": {
       "course": {
@@ -484,6 +472,12 @@
       }
     }
   },
+  "search_noResult": "Không tìm thấy kết quả",
+  "search_words": "Từ vựng",
+  "search_phrases": "Câu giao tiếp",
+  "stats_title": "Thống kê",
+  "stats_more": "Xem chi tiết",
+  "stats_days": "{count} ngày",
   "@stats_days": {
     "placeholders": {
       "count": {
@@ -491,6 +485,9 @@
       }
     }
   },
+  "stats_activeDays": "Ngày có học",
+  "stats_activity": "Lượt học mỗi ngày",
+  "stats_newLearned": "{count} mục mới thuộc trong khoảng này",
   "@stats_newLearned": {
     "placeholders": {
       "count": {
@@ -498,12 +495,23 @@
       }
     }
   },
+  "stats_due": "Cần ôn hôm nay",
+  "stats_scheduled": "Trong lịch ôn",
+  "stats_mastered": "Nhớ lâu",
+  "stats_modules": "Tiến độ học phần",
   "search_didYouMean": "Có phải bạn muốn tìm:",
   "search_recent": "Tra gần đây",
   "search_clearRecent": "Xoá",
   "backup_failed": "Không mở được trình chọn file của máy. Hãy thử lại.",
   "module_enIrregularVerbs": "Động từ bất quy tắc",
   "module_enIrregularVerbs_desc": "{count} động từ V1 – V2 – V3",
+  "@module_enIrregularVerbs_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "irregular_all": "Tất cả",
   "irregular_quiz": "Trắc nghiệm",
   "irregular_typing": "Tự gõ V2, V3",
@@ -518,25 +526,18 @@
   "pairs_title": "Cặp âm dễ nhầm",
   "pairs_desc": "Nghe 1 từ, chọn đúng từ vừa nghe — luyện tai các âm người Việt hay nhầm",
   "pairs_practice": "Luyện nghe ({count} câu)",
-  "pairs_replay": "Nghe lại",
-  "practice_phraseOrder": "Ghép câu giao tiếp",
-  "practice_phraseOrder_desc": "Xếp các từ thành câu hoàn chỉnh",
-  "practice_irregular": "Động từ bất quy tắc",
-  "practice_irregular_desc": "Chọn đúng V2 – V3",
-  "practice_pairs": "Nghe phân biệt âm",
-  "practice_pairs_desc": "ship hay sheep? Luyện tai nghe chuẩn",
-  "@module_enIrregularVerbs_desc": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "@pairs_practice": {
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
-  }
+  },
+  "pairs_replay": "Nghe lại",
+  "practice_phraseOrder": "Ghép câu giao tiếp",
+  "practice_phraseOrder_desc": "Xếp các từ thành câu hoàn chỉnh",
+  "practice_irregular": "Động từ bất quy tắc",
+  "practice_irregular_desc": "Chọn đúng V2 – V3",
+  "practice_pairs": "Nghe phân biệt âm",
+  "practice_pairs_desc": "ship hay sheep? Luyện tai nghe chuẩn"
 }

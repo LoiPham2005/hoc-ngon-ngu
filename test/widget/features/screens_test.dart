@@ -71,6 +71,7 @@ void main() {
   const variants = [
     (ThemeMode.light, Locale('vi')),
     (ThemeMode.dark, Locale('en')),
+    (ThemeMode.light, Locale('ja')),
   ];
 
   Future<void> Function(WidgetTester) english(

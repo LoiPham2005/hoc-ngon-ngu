@@ -203,6 +203,7 @@
   "appLanguage": "App language",
   "language_vi": "Tiếng Việt",
   "language_en": "English",
+  "language_ja": "日本語",
   "changeCourse": "Change language to learn",
   "section_data": "Data",
   "resetProgress": "Reset progress",
