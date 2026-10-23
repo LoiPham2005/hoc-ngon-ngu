@@ -8,6 +8,7 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/search/providers/recent_searches_notifier.dart';
 import 'package:lingua/features/search/providers/search_provider.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -42,6 +43,15 @@ class SearchPage extends HookConsumerWidget {
       };
     }, [controller]);
     final state = ref.watch(searchIndexProvider(course));
+    final recent = ref.watch(recentSearchesProvider);
+
+    void searchFor(String text) {
+      controller.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
+      query.value = text;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -66,15 +76,29 @@ class SearchPage extends HookConsumerWidget {
             ),
         ],
       ),
-      body: AsyncView<List<SearchEntry>>(
+      body: AsyncView<SearchIndex>(
         state: state,
         onRetry: () => ref.invalidate(searchIndexProvider(course)),
         builder: (context, index) {
           if (query.value.trim().isEmpty) {
-            return _Hint(l10n.search_empty(course.title(context)));
+            if (recent.isEmpty) {
+              return _Hint(l10n.search_empty(course.title(context)));
+            }
+            return _Recent(recent, onTap: searchFor);
           }
-          final results = search(index, query.value);
-          if (results.isEmpty) return _Hint(l10n.search_noResult);
+          final results = index.find(query.value);
+          final suggestion = index.suggest(query.value);
+          final suggestionTile = suggestion == null
+              ? null
+              : _Suggestion(suggestion, onTap: () => searchFor(suggestion));
+          if (results.isEmpty) {
+            return suggestionTile == null
+                ? _Hint(l10n.search_noResult)
+                : ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [suggestionTile],
+                  );
+          }
           return ListView.builder(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
             itemCount: results.length,
@@ -84,6 +108,7 @@ class SearchPage extends HookConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  if (i == 0 && suggestionTile != null) suggestionTile,
                   if (header) ...[
                     if (i > 0) const SizedBox(height: 8),
                     SectionTitle(_kindTitle(context, e.kind)),
@@ -92,7 +117,12 @@ class SearchPage extends HookConsumerWidget {
                     margin: const EdgeInsets.only(bottom: 8),
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
-                      onTap: () => context.router.push(e.route),
+                      onTap: () {
+                        ref
+                            .read(recentSearchesProvider.notifier)
+                            .add(query.value);
+                        context.router.push(e.route);
+                      },
                       title: Text.rich(
                         TextSpan(
                           children: [
@@ -129,6 +159,85 @@ class SearchPage extends HookConsumerWidget {
       SearchKind.word => l10n.search_words,
       SearchKind.phrase => l10n.search_phrases,
     };
+  }
+}
+
+/// "Có phải bạn muốn tìm: …?" — bấm để tìm lại bằng từ gợi ý.
+class _Suggestion extends StatelessWidget {
+  const _Suggestion(this.text, {required this.onTap});
+
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: colors.primarySoft,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: '${context.l10n.search_didYouMean} '),
+                  TextSpan(
+                    text: text,
+                    style: TextStyle(
+                      color: colors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const TextSpan(text: ' ?'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Từ đã tra gần đây — bấm để tra lại, có nút xoá lịch sử.
+class _Recent extends ConsumerWidget {
+  const _Recent(this.items, {required this.onTap});
+
+  final List<String> items;
+  final ValueChanged<String> onTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      children: [
+        SectionTitle(
+          l10n.search_recent,
+          trailing: TextButton(
+            onPressed: ref.read(recentSearchesProvider.notifier).clear,
+            child: Text(l10n.search_clearRecent),
+          ),
+        ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final q in items)
+              ActionChip(
+                avatar: const Icon(Icons.history_rounded, size: 18),
+                label: Text(q),
+                onPressed: () => onTap(q),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 }
 

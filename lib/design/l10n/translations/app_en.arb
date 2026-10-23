@@ -500,5 +500,8 @@
         "type": "int"
       }
     }
-  }
+  },
+  "search_didYouMean": "Did you mean:",
+  "search_recent": "Recent searches",
+  "search_clearRecent": "Clear"
 }

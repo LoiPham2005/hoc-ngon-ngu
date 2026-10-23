@@ -21,6 +21,9 @@ void main() {
     (Course.ja, 'たべる', '食べる'), // gõ cách đọc
     (Course.ja, 'nhat', '日'), // Hán Việt "Nhật"
     (Course.ja, 'ka', 'か'), // romaji của Kana
+    (Course.en, 'rcie', 'rice'), // gõ đảo chữ
+    (Course.en, 'gaoo', 'rice'), // gõ thừa chữ, không dấu
+    (Course.ja, 'たべり', '食べる'), // sai 1 chữ kana
   ]) {
     test('${course.name}: "$query" finds $expected near the top', () async {
       SharedPreferences.setMockInitialValues({'app_locale': 'vi'});
@@ -33,12 +36,12 @@ void main() {
       );
       addTearDown(c.dispose);
       final index = await c.read(searchIndexProvider(course).future);
-      final titles = search(index, query).map((e) => e.title).toList();
+      final titles = index.find(query).map((e) => e.title).toList();
       expect(titles.take(15), contains(expected), reason: '$titles');
     });
   }
 
   test('empty query → no results', () {
-    expect(search(const [], '  '), isEmpty);
+    expect(SearchIndex(const []).find('  '), isEmpty);
   });
 }

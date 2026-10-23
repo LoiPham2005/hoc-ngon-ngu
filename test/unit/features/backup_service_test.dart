@@ -40,7 +40,9 @@ void main() {
     expect(restored.course, Course.ja);
     expect(restored.learned, {'あ'});
     expect(restored.answered, 1);
-    expect(restored.reviews.keys, ['あ']); // trả lời đúng không tự thêm vào lịch ôn
+    expect(restored.reviews.keys, [
+      'あ',
+    ]); // trả lời đúng không tự thêm vào lịch ôn
   });
 
   test(
