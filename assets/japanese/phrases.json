@@ -1,0 +1,1089 @@
+[
+ {
+  "id": "greetings",
+  "emoji": "🙋",
+  "name_vi": "Chào hỏi",
+  "name_en": "Greetings",
+  "phrases": [
+   {
+    "ja": "おはようございます。",
+    "r": "おはよう ございます。",
+    "vi": "Chào buổi sáng.",
+    "note": "Dùng đến khoảng 10–11 giờ sáng. Với bạn bè nói gọn おはよう."
+   },
+   {
+    "ja": "こんにちは。",
+    "r": "こんにちは。",
+    "vi": "Xin chào (ban ngày).",
+    "note": "Chữ は cuối đọc là \"wa\"."
+   },
+   {
+    "ja": "こんばんは。",
+    "r": "こんばんは。",
+    "vi": "Chào buổi tối."
+   },
+   {
+    "ja": "おやすみなさい。",
+    "r": "おやすみなさい。",
+    "vi": "Chúc ngủ ngon."
+   },
+   {
+    "ja": "さようなら。",
+    "r": "さようなら。",
+    "vi": "Tạm biệt.",
+    "note": "Mang sắc thái chia tay lâu; bạn bè, đồng nghiệp ít dùng."
+   },
+   {
+    "ja": "また明日。",
+    "r": "また あした。",
+    "vi": "Mai gặp lại nhé.",
+    "note": "Thân mật, dùng với bạn bè, đồng nghiệp."
+   },
+   {
+    "ja": "お元気ですか。",
+    "r": "おげんき ですか。",
+    "vi": "Bạn có khỏe không?",
+    "note": "Chỉ hỏi khi lâu ngày không gặp, không dùng như câu chào hằng ngày."
+   },
+   {
+    "ja": "はい、元気です。",
+    "r": "はい、げんき です。",
+    "vi": "Vâng, tôi khỏe."
+   },
+   {
+    "ja": "おひさしぶりです。",
+    "r": "おひさしぶり です。",
+    "vi": "Lâu rồi không gặp."
+   },
+   {
+    "ja": "いってきます。",
+    "r": "いって きます。",
+    "vi": "Tôi đi đây.",
+    "note": "Nói khi ra khỏi nhà; người ở nhà đáp いってらっしゃい."
+   },
+   {
+    "ja": "ただいま。",
+    "r": "ただいま。",
+    "vi": "Tôi về rồi đây.",
+    "note": "Người ở nhà đáp おかえりなさい."
+   },
+   {
+    "ja": "では、また。",
+    "r": "では、また。",
+    "vi": "Hẹn gặp lại."
+   }
+  ]
+ },
+ {
+  "id": "introductions",
+  "emoji": "🤝",
+  "name_vi": "Giới thiệu bản thân",
+  "name_en": "Introductions",
+  "phrases": [
+   {
+    "ja": "はじめまして。",
+    "r": "はじめまして。",
+    "vi": "Rất vui được gặp bạn.",
+    "note": "Chỉ dùng ở lần gặp đầu tiên."
+   },
+   {
+    "ja": "私はリンです。",
+    "r": "わたしは リン です。",
+    "vi": "Tôi là Linh.",
+    "note": "Khi đã rõ đang nói về mình, thường bỏ 私は cho tự nhiên."
+   },
+   {
+    "ja": "ベトナムから来ました。",
+    "r": "ベトナム から きました。",
+    "vi": "Tôi đến từ Việt Nam."
+   },
+   {
+    "ja": "どうぞよろしくおねがいします。",
+    "r": "どうぞ よろしく おねがい します。",
+    "vi": "Rất mong được giúp đỡ.",
+    "note": "Câu chốt khi giới thiệu, nói kèm cúi chào."
+   },
+   {
+    "ja": "お名前は何ですか。",
+    "r": "おなまえは なん ですか。",
+    "vi": "Bạn tên là gì?",
+    "note": "Tránh gọi người đối diện là あなた; gọi tên + さん."
+   },
+   {
+    "ja": "お国はどちらですか。",
+    "r": "おくには どちら ですか。",
+    "vi": "Bạn đến từ nước nào?"
+   },
+   {
+    "ja": "学生です。",
+    "r": "がくせい です。",
+    "vi": "Tôi là sinh viên."
+   },
+   {
+    "ja": "会社員です。",
+    "r": "かいしゃいん です。",
+    "vi": "Tôi là nhân viên công ty."
+   },
+   {
+    "ja": "日本語を勉強しています。",
+    "r": "にほんごを べんきょう して います。",
+    "vi": "Tôi đang học tiếng Nhật."
+   },
+   {
+    "ja": "日本に来て一年です。",
+    "r": "にほんに きて いちねん です。",
+    "vi": "Tôi đến Nhật được một năm rồi."
+   },
+   {
+    "ja": "しゅみは音楽です。",
+    "r": "しゅみは おんがく です。",
+    "vi": "Sở thích của tôi là âm nhạc."
+   },
+   {
+    "ja": "二十五さいです。",
+    "r": "にじゅうご さい です。",
+    "vi": "Tôi 25 tuổi.",
+    "note": "Người Nhật ít hỏi tuổi khi mới quen, nhất là với phụ nữ."
+   }
+  ]
+ },
+ {
+  "id": "politeness",
+  "emoji": "🙏",
+  "name_vi": "Lịch sự & cảm ơn",
+  "name_en": "Politeness",
+  "phrases": [
+   {
+    "ja": "ありがとうございます。",
+    "r": "ありがとう ございます。",
+    "vi": "Cảm ơn rất nhiều.",
+    "note": "Việc đã xong rồi thì nói ありがとうございました."
+   },
+   {
+    "ja": "どういたしまして。",
+    "r": "どう いたしまして。",
+    "vi": "Không có gì.",
+    "note": "Thực tế người Nhật hay đáp いいえ hơn."
+   },
+   {
+    "ja": "すみません。",
+    "r": "すみません。",
+    "vi": "Xin lỗi / Cho tôi hỏi.",
+    "note": "Vừa để xin lỗi, gọi người, vừa để cảm ơn khi làm phiền ai."
+   },
+   {
+    "ja": "ごめんなさい。",
+    "r": "ごめんなさい。",
+    "vi": "Tôi xin lỗi.",
+    "note": "Dùng với người thân quen; với cấp trên, khách hàng dùng もうしわけありません."
+   },
+   {
+    "ja": "ほんとうにすみませんでした。",
+    "r": "ほんとうに すみません でした。",
+    "vi": "Tôi thật sự xin lỗi."
+   },
+   {
+    "ja": "だいじょうぶです。",
+    "r": "だいじょうぶ です。",
+    "vi": "Không sao đâu.",
+    "note": "Cũng dùng để từ chối khéo (\"không cần đâu\"), tùy ngữ cảnh."
+   },
+   {
+    "ja": "おねがいします。",
+    "r": "おねがい します。",
+    "vi": "Nhờ bạn / Làm ơn.",
+    "note": "Ghép sau danh từ để nhờ: コーヒー、おねがいします."
+   },
+   {
+    "ja": "どうぞ。",
+    "r": "どうぞ。",
+    "vi": "Xin mời."
+   },
+   {
+    "ja": "ちょっと待ってください。",
+    "r": "ちょっと まって ください。",
+    "vi": "Xin đợi một chút."
+   },
+   {
+    "ja": "おかげさまで。",
+    "r": "おかげさまで。",
+    "vi": "Nhờ trời / nhờ anh chị (mọi việc đều ổn).",
+    "note": "Đáp khi được hỏi thăm sức khỏe, công việc."
+   },
+   {
+    "ja": "おじゃまします。",
+    "r": "おじゃま します。",
+    "vi": "Xin phép làm phiền ạ.",
+    "note": "Nói khi bước vào nhà người khác; lúc về nói おじゃましました."
+   },
+   {
+    "ja": "気をつけてください。",
+    "r": "きを つけて ください。",
+    "vi": "Bạn đi cẩn thận nhé."
+   }
+  ]
+ },
+ {
+  "id": "restaurant",
+  "emoji": "🍜",
+  "name_vi": "Ở nhà hàng",
+  "name_en": "At a restaurant",
+  "phrases": [
+   {
+    "ja": "すみません、メニューをください。",
+    "r": "すみません、メニューを ください。",
+    "vi": "Xin lỗi, cho tôi xem thực đơn.",
+    "note": "すみません dùng để gọi nhân viên."
+   },
+   {
+    "ja": "二人です。",
+    "r": "ふたり です。",
+    "vi": "Hai người.",
+    "note": "Đáp khi nhân viên hỏi 何名様ですか (mấy người)."
+   },
+   {
+    "ja": "これをください。",
+    "r": "これを ください。",
+    "vi": "Cho tôi món này.",
+    "note": "Vừa nói vừa chỉ vào ảnh trong thực đơn là đủ."
+   },
+   {
+    "ja": "おすすめは何ですか。",
+    "r": "おすすめは なん ですか。",
+    "vi": "Món nào nên thử ạ?"
+   },
+   {
+    "ja": "水をください。",
+    "r": "みずを ください。",
+    "vi": "Cho tôi nước.",
+    "note": "Nước lọc, trà thường được phục vụ miễn phí."
+   },
+   {
+    "ja": "肉が食べられません。",
+    "r": "にくが たべられません。",
+    "vi": "Tôi không ăn được thịt."
+   },
+   {
+    "ja": "いただきます。",
+    "r": "いただきます。",
+    "vi": "Tôi xin phép ăn ạ.",
+    "note": "Nói trước khi ăn, thường chắp tay."
+   },
+   {
+    "ja": "おいしいです。",
+    "r": "おいしい です。",
+    "vi": "Ngon quá."
+   },
+   {
+    "ja": "ごちそうさまでした。",
+    "r": "ごちそうさま でした。",
+    "vi": "Cảm ơn vì bữa ăn.",
+    "note": "Nói khi ăn xong, kể cả lúc rời quán."
+   },
+   {
+    "ja": "お会計をおねがいします。",
+    "r": "おかいけいを おねがい します。",
+    "vi": "Cho tôi thanh toán.",
+    "note": "Thường trả ở quầy gần cửa; Nhật không có văn hóa tiền tip."
+   },
+   {
+    "ja": "カードではらえますか。",
+    "r": "カードで はらえますか。",
+    "vi": "Trả bằng thẻ được không?"
+   },
+   {
+    "ja": "別々におねがいします。",
+    "r": "べつべつに おねがい します。",
+    "vi": "Cho chúng tôi trả riêng."
+   }
+  ]
+ },
+ {
+  "id": "shopping",
+  "emoji": "🛍️",
+  "name_vi": "Mua sắm",
+  "name_en": "Shopping",
+  "phrases": [
+   {
+    "ja": "これはいくらですか。",
+    "r": "これは いくら ですか。",
+    "vi": "Cái này bao nhiêu tiền?"
+   },
+   {
+    "ja": "見ているだけです。",
+    "r": "みて いる だけ です。",
+    "vi": "Tôi chỉ xem thôi.",
+    "note": "Dùng khi nhân viên lại hỏi cần gì."
+   },
+   {
+    "ja": "ほかの色はありますか。",
+    "r": "ほかの いろは ありますか。",
+    "vi": "Có màu khác không?"
+   },
+   {
+    "ja": "もう少し大きいのはありますか。",
+    "r": "もう すこし おおきいのは ありますか。",
+    "vi": "Có cái lớn hơn chút không?"
+   },
+   {
+    "ja": "着てみてもいいですか。",
+    "r": "きて みても いい ですか。",
+    "vi": "Tôi mặc thử được không?",
+    "note": "Với giày, quần thì dùng はいてみても."
+   },
+   {
+    "ja": "試着室はどこですか。",
+    "r": "しちゃくしつは どこ ですか。",
+    "vi": "Phòng thử đồ ở đâu?"
+   },
+   {
+    "ja": "これにします。",
+    "r": "これに します。",
+    "vi": "Tôi lấy cái này."
+   },
+   {
+    "ja": "少し高いですね。",
+    "r": "すこし たかい ですね。",
+    "vi": "Hơi đắt nhỉ.",
+    "note": "Cửa hàng ở Nhật hầu như không mặc cả."
+   },
+   {
+    "ja": "安くなりませんか。",
+    "r": "やすく なりませんか。",
+    "vi": "Có bớt được không?",
+    "note": "Chỉ thử ở chợ đồ cũ hoặc cửa hàng điện máy lớn."
+   },
+   {
+    "ja": "カードは使えますか。",
+    "r": "カードは つかえますか。",
+    "vi": "Có dùng thẻ được không?"
+   },
+   {
+    "ja": "めんぜいできますか。",
+    "r": "めんぜい できますか。",
+    "vi": "Có miễn thuế được không?",
+    "note": "Dành cho khách du lịch, cần mang hộ chiếu."
+   },
+   {
+    "ja": "レシートをください。",
+    "r": "レシートを ください。",
+    "vi": "Cho tôi hóa đơn."
+   }
+  ]
+ },
+ {
+  "id": "directions",
+  "emoji": "🧭",
+  "name_vi": "Hỏi đường",
+  "name_en": "Asking for directions",
+  "phrases": [
+   {
+    "ja": "すみません、駅はどこですか。",
+    "r": "すみません、えきは どこ ですか。",
+    "vi": "Xin lỗi, nhà ga ở đâu ạ?"
+   },
+   {
+    "ja": "トイレはどこですか。",
+    "r": "トイレは どこ ですか。",
+    "vi": "Nhà vệ sinh ở đâu?",
+    "note": "Cách nói lịch sự hơn: おてあらい."
+   },
+   {
+    "ja": "ここから近いですか。",
+    "r": "ここから ちかい ですか。",
+    "vi": "Từ đây có gần không?"
+   },
+   {
+    "ja": "歩いて何分ですか。",
+    "r": "あるいて なんぷん ですか。",
+    "vi": "Đi bộ mất mấy phút?"
+   },
+   {
+    "ja": "まっすぐ行ってください。",
+    "r": "まっすぐ いって ください。",
+    "vi": "Hãy đi thẳng."
+   },
+   {
+    "ja": "あのかどを右にまがってください。",
+    "r": "あの かどを みぎに まがって ください。",
+    "vi": "Rẽ phải ở góc đường kia."
+   },
+   {
+    "ja": "左にあります。",
+    "r": "ひだりに あります。",
+    "vi": "Nó ở bên trái."
+   },
+   {
+    "ja": "地図で教えてください。",
+    "r": "ちずで おしえて ください。",
+    "vi": "Chỉ giúp tôi trên bản đồ.",
+    "note": "Đưa bản đồ trên điện thoại để người ta chỉ cho nhanh."
+   },
+   {
+    "ja": "この近くにコンビニはありますか。",
+    "r": "この ちかくに コンビニは ありますか。",
+    "vi": "Gần đây có cửa hàng tiện lợi không?"
+   },
+   {
+    "ja": "道にまよいました。",
+    "r": "みちに まよいました。",
+    "vi": "Tôi bị lạc đường.",
+    "note": "Có thể vào こうばん (bốt cảnh sát) để hỏi đường."
+   },
+   {
+    "ja": "ここはどこですか。",
+    "r": "ここは どこ ですか。",
+    "vi": "Đây là đâu?"
+   },
+   {
+    "ja": "銀行の前です。",
+    "r": "ぎんこうの まえ です。",
+    "vi": "Ở trước ngân hàng."
+   }
+  ]
+ },
+ {
+  "id": "transport",
+  "emoji": "🚆",
+  "name_vi": "Đi lại",
+  "name_en": "Transport",
+  "phrases": [
+   {
+    "ja": "東京駅までいくらですか。",
+    "r": "とうきょうえき まで いくら ですか。",
+    "vi": "Đến ga Tokyo bao nhiêu tiền?"
+   },
+   {
+    "ja": "この電車は上野に行きますか。",
+    "r": "この でんしゃは うえのに いきますか。",
+    "vi": "Tàu này có đi Ueno không?"
+   },
+   {
+    "ja": "つぎの駅でおります。",
+    "r": "つぎの えきで おります。",
+    "vi": "Tôi xuống ở ga tới."
+   },
+   {
+    "ja": "どのホームですか。",
+    "r": "どの ホーム ですか。",
+    "vi": "Sân ga nào ạ?"
+   },
+   {
+    "ja": "きっぷはどこで買えますか。",
+    "r": "きっぷは どこで かえますか。",
+    "vi": "Mua vé ở đâu?",
+    "note": "Dùng thẻ IC (Suica, PASMO) thì khỏi mua vé lẻ."
+   },
+   {
+    "ja": "のりかえはどこですか。",
+    "r": "のりかえは どこ ですか。",
+    "vi": "Đổi tàu ở đâu?"
+   },
+   {
+    "ja": "つぎのバスは何時ですか。",
+    "r": "つぎの バスは なんじ ですか。",
+    "vi": "Chuyến xe buýt tiếp theo mấy giờ?"
+   },
+   {
+    "ja": "くうこうまでどのぐらいかかりますか。",
+    "r": "くうこう まで どのぐらい かかりますか。",
+    "vi": "Đến sân bay mất bao lâu?"
+   },
+   {
+    "ja": "このせき、空いていますか。",
+    "r": "この せき、あいて いますか。",
+    "vi": "Ghế này có ai ngồi chưa?",
+    "note": "Trên tàu nên để điện thoại im lặng và không gọi điện."
+   },
+   {
+    "ja": "タクシーをよんでください。",
+    "r": "タクシーを よんで ください。",
+    "vi": "Gọi giúp tôi taxi."
+   },
+   {
+    "ja": "ここまでおねがいします。",
+    "r": "ここまで おねがい します。",
+    "vi": "Cho tôi đến chỗ này.",
+    "note": "Chỉ địa chỉ trên điện thoại; cửa taxi tự mở/đóng, đừng tự đóng."
+   },
+   {
+    "ja": "ここで止めてください。",
+    "r": "ここで とめて ください。",
+    "vi": "Dừng ở đây giúp tôi."
+   }
+  ]
+ },
+ {
+  "id": "hotel",
+  "emoji": "🏨",
+  "name_vi": "Khách sạn",
+  "name_en": "At a hotel",
+  "phrases": [
+   {
+    "ja": "よやくしているグエンです。",
+    "r": "よやく して いる グエン です。",
+    "vi": "Tôi là Nguyễn, đã đặt phòng."
+   },
+   {
+    "ja": "チェックインをおねがいします。",
+    "r": "チェックインを おねがい します。",
+    "vi": "Cho tôi nhận phòng."
+   },
+   {
+    "ja": "チェックアウトは何時ですか。",
+    "r": "チェックアウトは なんじ ですか。",
+    "vi": "Mấy giờ phải trả phòng?"
+   },
+   {
+    "ja": "朝ご飯は何時からですか。",
+    "r": "あさごはんは なんじ から ですか。",
+    "vi": "Bữa sáng bắt đầu từ mấy giờ?"
+   },
+   {
+    "ja": "にもつをあずかってもらえますか。",
+    "r": "にもつを あずかって もらえますか。",
+    "vi": "Gửi hành lý ở đây được không?",
+    "note": "Nhiều khách sạn giữ hành lý miễn phí trước giờ nhận phòng."
+   },
+   {
+    "ja": "Wi-Fiのパスワードは何ですか。",
+    "r": "ワイファイの パスワードは なん ですか。",
+    "vi": "Mật khẩu Wi-Fi là gì?"
+   },
+   {
+    "ja": "へやのかぎをなくしました。",
+    "r": "へやの かぎを なくしました。",
+    "vi": "Tôi làm mất chìa khóa phòng."
+   },
+   {
+    "ja": "エアコンがつきません。",
+    "r": "エアコンが つきません。",
+    "vi": "Điều hòa không bật được."
+   },
+   {
+    "ja": "おゆが出ません。",
+    "r": "おゆが でません。",
+    "vi": "Không có nước nóng."
+   },
+   {
+    "ja": "タオルをもう一つください。",
+    "r": "タオルを もう ひとつ ください。",
+    "vi": "Cho tôi thêm một cái khăn."
+   },
+   {
+    "ja": "へやをかえてもらえますか。",
+    "r": "へやを かえて もらえますか。",
+    "vi": "Đổi phòng giúp tôi được không?"
+   },
+   {
+    "ja": "近くにおいしい店はありますか。",
+    "r": "ちかくに おいしい みせは ありますか。",
+    "vi": "Gần đây có quán nào ngon không?"
+   }
+  ]
+ },
+ {
+  "id": "convenience-store",
+  "emoji": "🏪",
+  "name_vi": "Cửa hàng tiện lợi",
+  "name_en": "At a convenience store",
+  "phrases": [
+   {
+    "ja": "ふくろはいりません。",
+    "r": "ふくろは いりません。",
+    "vi": "Tôi không cần túi.",
+    "note": "Túi nilon mất phí vài yên nên nhân viên sẽ hỏi có lấy túi không."
+   },
+   {
+    "ja": "ふくろをください。",
+    "r": "ふくろを ください。",
+    "vi": "Cho tôi một cái túi."
+   },
+   {
+    "ja": "あたためてください。",
+    "r": "あたためて ください。",
+    "vi": "Hâm nóng giúp tôi.",
+    "note": "Mua cơm hộp, nhân viên hay hỏi có cần hâm nóng không."
+   },
+   {
+    "ja": "はい、おねがいします。",
+    "r": "はい、おねがい します。",
+    "vi": "Vâng, nhờ bạn.",
+    "note": "Câu đáp \"có\" dùng cho hầu hết câu hỏi của nhân viên."
+   },
+   {
+    "ja": "いいえ、けっこうです。",
+    "r": "いいえ、けっこう です。",
+    "vi": "Không, không cần đâu.",
+    "note": "Cách từ chối lịch sự."
+   },
+   {
+    "ja": "おはしをください。",
+    "r": "おはしを ください。",
+    "vi": "Cho tôi đũa."
+   },
+   {
+    "ja": "スプーンを一つください。",
+    "r": "スプーンを ひとつ ください。",
+    "vi": "Cho tôi một cái thìa."
+   },
+   {
+    "ja": "ポイントカードはありません。",
+    "r": "ポイントカードは ありません。",
+    "vi": "Tôi không có thẻ tích điểm.",
+    "note": "Nhân viên gần như luôn hỏi câu này khi tính tiền."
+   },
+   {
+    "ja": "スイカでおねがいします。",
+    "r": "スイカで おねがい します。",
+    "vi": "Tôi trả bằng Suica."
+   },
+   {
+    "ja": "ATMはありますか。",
+    "r": "エーティーエムは ありますか。",
+    "vi": "Ở đây có ATM không?",
+    "note": "ATM ở cửa hàng tiện lợi thường nhận thẻ nước ngoài."
+   },
+   {
+    "ja": "トイレを借りてもいいですか。",
+    "r": "トイレを かりても いい ですか。",
+    "vi": "Cho tôi dùng nhờ nhà vệ sinh được không?",
+    "note": "Lịch sự thì nên mua món gì đó sau khi dùng nhờ."
+   },
+   {
+    "ja": "レシートはいりません。",
+    "r": "レシートは いりません。",
+    "vi": "Tôi không cần hóa đơn."
+   }
+  ]
+ },
+ {
+  "id": "phone",
+  "emoji": "📞",
+  "name_vi": "Gọi điện thoại",
+  "name_en": "On the phone",
+  "phrases": [
+   {
+    "ja": "もしもし。",
+    "r": "もしもし。",
+    "vi": "A lô.",
+    "note": "Nghe máy ở công ty thì không nói もしもし mà xưng tên công ty."
+   },
+   {
+    "ja": "グエンともうします。",
+    "r": "グエンと もうします。",
+    "vi": "Tôi tên là Nguyễn ạ.",
+    "note": "もうします khiêm nhường hơn です."
+   },
+   {
+    "ja": "田中さんはいらっしゃいますか。",
+    "r": "たなかさんは いらっしゃいますか。",
+    "vi": "Anh/chị Tanaka có ở đó không ạ?"
+   },
+   {
+    "ja": "今、だいじょうぶですか。",
+    "r": "いま、だいじょうぶ ですか。",
+    "vi": "Bây giờ nói chuyện được không?"
+   },
+   {
+    "ja": "少々お待ちください。",
+    "r": "しょうしょう おまち ください。",
+    "vi": "Xin vui lòng đợi một chút."
+   },
+   {
+    "ja": "もう一度おねがいします。",
+    "r": "もう いちど おねがい します。",
+    "vi": "Xin nói lại lần nữa."
+   },
+   {
+    "ja": "もう少しゆっくりおねがいします。",
+    "r": "もう すこし ゆっくり おねがい します。",
+    "vi": "Xin nói chậm hơn một chút."
+   },
+   {
+    "ja": "聞こえますか。",
+    "r": "きこえますか。",
+    "vi": "Có nghe rõ không?"
+   },
+   {
+    "ja": "でんわばんごうを教えてください。",
+    "r": "でんわばんごうを おしえて ください。",
+    "vi": "Cho tôi xin số điện thoại."
+   },
+   {
+    "ja": "また後で電話します。",
+    "r": "また あとで でんわ します。",
+    "vi": "Tôi sẽ gọi lại sau."
+   },
+   {
+    "ja": "すみません、まちがえました。",
+    "r": "すみません、まちがえました。",
+    "vi": "Xin lỗi, tôi gọi nhầm số."
+   },
+   {
+    "ja": "しつれいします。",
+    "r": "しつれい します。",
+    "vi": "Xin phép (cúp máy).",
+    "note": "Đợi bên kia cúp máy trước rồi mới cúp."
+   }
+  ]
+ },
+ {
+  "id": "work",
+  "emoji": "💼",
+  "name_vi": "Nơi làm việc",
+  "name_en": "At work",
+  "phrases": [
+   {
+    "ja": "おつかれさまです。",
+    "r": "おつかれさま です。",
+    "vi": "Anh/chị vất vả rồi.",
+    "note": "Câu chào đa năng ở công ty: gặp nhau, kết thúc họp, mở đầu tin nhắn."
+   },
+   {
+    "ja": "お先にしつれいします。",
+    "r": "おさきに しつれい します。",
+    "vi": "Tôi xin phép về trước.",
+    "note": "Nói khi về trước đồng nghiệp."
+   },
+   {
+    "ja": "いつもお世話になっております。",
+    "r": "いつも おせわに なって おります。",
+    "vi": "Cảm ơn anh/chị luôn giúp đỡ.",
+    "note": "Câu mở đầu chuẩn khi gọi điện, viết mail cho đối tác."
+   },
+   {
+    "ja": "わかりました。",
+    "r": "わかりました。",
+    "vi": "Tôi hiểu rồi.",
+    "note": "Với cấp trên, khách hàng lịch sự hơn: かしこまりました."
+   },
+   {
+    "ja": "ちょっと質問してもいいですか。",
+    "r": "ちょっと しつもん しても いい ですか。",
+    "vi": "Tôi hỏi một chút được không?"
+   },
+   {
+    "ja": "これ、チェックしていただけますか。",
+    "r": "これ、チェック して いただけますか。",
+    "vi": "Anh/chị kiểm tra giúp cái này được không?"
+   },
+   {
+    "ja": "すみません、おくれます。",
+    "r": "すみません、おくれます。",
+    "vi": "Xin lỗi, tôi sẽ đến muộn.",
+    "note": "Trễ dù 1–2 phút cũng nên báo trước."
+   },
+   {
+    "ja": "今日は休ませてください。",
+    "r": "きょうは やすませて ください。",
+    "vi": "Cho tôi xin nghỉ hôm nay."
+   },
+   {
+    "ja": "かいぎは何時からですか。",
+    "r": "かいぎは なんじ から ですか。",
+    "vi": "Cuộc họp bắt đầu lúc mấy giờ?"
+   },
+   {
+    "ja": "てつだいましょうか。",
+    "r": "てつだいましょうか。",
+    "vi": "Để tôi giúp nhé?"
+   },
+   {
+    "ja": "明日までに送ります。",
+    "r": "あしたまでに おくります。",
+    "vi": "Tôi sẽ gửi trước ngày mai."
+   },
+   {
+    "ja": "少し考えさせてください。",
+    "r": "すこし かんがえさせて ください。",
+    "vi": "Cho tôi suy nghĩ thêm một chút.",
+    "note": "Người Nhật hay dùng câu này để từ chối khéo."
+   }
+  ]
+ },
+ {
+  "id": "school",
+  "emoji": "🏫",
+  "name_vi": "Ở trường",
+  "name_en": "At school",
+  "phrases": [
+   {
+    "ja": "先生、質問があります。",
+    "r": "せんせい、しつもんが あります。",
+    "vi": "Thưa thầy/cô, em có câu hỏi."
+   },
+   {
+    "ja": "もう一度言ってください。",
+    "r": "もう いちど いって ください。",
+    "vi": "Xin nói lại lần nữa."
+   },
+   {
+    "ja": "わかりません。",
+    "r": "わかりません。",
+    "vi": "Em không hiểu."
+   },
+   {
+    "ja": "どういう意味ですか。",
+    "r": "どういう いみ ですか。",
+    "vi": "Nghĩa là gì vậy?"
+   },
+   {
+    "ja": "これは日本語で何と言いますか。",
+    "r": "これは にほんごで なんと いいますか。",
+    "vi": "Cái này tiếng Nhật gọi là gì?"
+   },
+   {
+    "ja": "この漢字は何と読みますか。",
+    "r": "この かんじは なんと よみますか。",
+    "vi": "Chữ Hán này đọc là gì?"
+   },
+   {
+    "ja": "しゅくだいをわすれました。",
+    "r": "しゅくだいを わすれました。",
+    "vi": "Em quên làm bài tập."
+   },
+   {
+    "ja": "ペンを借りてもいいですか。",
+    "r": "ペンを かりても いい ですか。",
+    "vi": "Cho mình mượn bút được không?"
+   },
+   {
+    "ja": "トイレに行ってもいいですか。",
+    "r": "トイレに いっても いい ですか。",
+    "vi": "Em đi vệ sinh được không ạ?"
+   },
+   {
+    "ja": "試験はいつですか。",
+    "r": "しけんは いつ ですか。",
+    "vi": "Khi nào thi?"
+   },
+   {
+    "ja": "図書館は何時までですか。",
+    "r": "としょかんは なんじ まで ですか。",
+    "vi": "Thư viện mở đến mấy giờ?"
+   },
+   {
+    "ja": "いっしょに勉強しませんか。",
+    "r": "いっしょに べんきょう しませんか。",
+    "vi": "Học cùng nhau không?"
+   }
+  ]
+ },
+ {
+  "id": "emergency",
+  "emoji": "🚨",
+  "name_vi": "Khẩn cấp",
+  "name_en": "Emergencies",
+  "phrases": [
+   {
+    "ja": "たすけて！",
+    "r": "たすけて！",
+    "vi": "Cứu tôi với!",
+    "note": "Thể ngắn, dùng khi khẩn cấp."
+   },
+   {
+    "ja": "きゅうきゅうしゃをよんでください。",
+    "r": "きゅうきゅうしゃを よんで ください。",
+    "vi": "Hãy gọi xe cấp cứu.",
+    "note": "Cấp cứu và cứu hỏa: 119; cảnh sát: 110."
+   },
+   {
+    "ja": "けいさつをよんでください。",
+    "r": "けいさつを よんで ください。",
+    "vi": "Hãy gọi cảnh sát."
+   },
+   {
+    "ja": "火事です！",
+    "r": "かじ です！",
+    "vi": "Cháy!"
+   },
+   {
+    "ja": "じしんです！",
+    "r": "じしん です！",
+    "vi": "Động đất!",
+    "note": "Chui xuống gầm bàn, tránh xa cửa kính, đừng vội chạy ra ngoài."
+   },
+   {
+    "ja": "あぶない！",
+    "r": "あぶない！",
+    "vi": "Nguy hiểm! Coi chừng!"
+   },
+   {
+    "ja": "病院はどこですか。",
+    "r": "びょういんは どこ ですか。",
+    "vi": "Bệnh viện ở đâu?"
+   },
+   {
+    "ja": "ここがいたいです。",
+    "r": "ここが いたい です。",
+    "vi": "Tôi đau chỗ này.",
+    "note": "Vừa nói vừa chỉ vào chỗ đau."
+   },
+   {
+    "ja": "気分が悪いです。",
+    "r": "きぶんが わるい です。",
+    "vi": "Tôi thấy không khỏe.",
+    "note": "Dùng khi buồn nôn, chóng mặt, khó chịu trong người."
+   },
+   {
+    "ja": "ねつがあります。",
+    "r": "ねつが あります。",
+    "vi": "Tôi bị sốt."
+   },
+   {
+    "ja": "さいふをなくしました。",
+    "r": "さいふを なくしました。",
+    "vi": "Tôi làm mất ví.",
+    "note": "Đến こうばん khai báo; đồ rơi ở Nhật thường được trả lại."
+   },
+   {
+    "ja": "日本語があまり話せません。",
+    "r": "にほんごが あまり はなせません。",
+    "vi": "Tôi không nói giỏi tiếng Nhật."
+   }
+  ]
+ },
+ {
+  "id": "invitations",
+  "emoji": "🎉",
+  "name_vi": "Rủ rê & hẹn gặp",
+  "name_en": "Invitations",
+  "phrases": [
+   {
+    "ja": "いっしょに昼ご飯を食べませんか。",
+    "r": "いっしょに ひるごはんを たべませんか。",
+    "vi": "Cùng đi ăn trưa không?",
+    "note": "Mẫu ～ませんか là cách rủ lịch sự."
+   },
+   {
+    "ja": "今週の土曜日、ひまですか。",
+    "r": "こんしゅうの どようび、ひま ですか。",
+    "vi": "Thứ bảy tuần này bạn rảnh không?"
+   },
+   {
+    "ja": "映画を見に行きませんか。",
+    "r": "えいがを みに いきませんか。",
+    "vi": "Đi xem phim không?"
+   },
+   {
+    "ja": "いいですね。",
+    "r": "いい ですね。",
+    "vi": "Hay đấy!"
+   },
+   {
+    "ja": "ぜひ行きたいです。",
+    "r": "ぜひ いきたい です。",
+    "vi": "Tôi rất muốn đi."
+   },
+   {
+    "ja": "土曜日はちょっと…。",
+    "r": "どようびは ちょっと…。",
+    "vi": "Thứ bảy thì hơi…",
+    "note": "Người Nhật từ chối bằng cách bỏ lửng câu, không nói thẳng \"không\"."
+   },
+   {
+    "ja": "また今度さそってください。",
+    "r": "また こんど さそって ください。",
+    "vi": "Lần sau rủ tôi nhé."
+   },
+   {
+    "ja": "何時に会いましょうか。",
+    "r": "なんじに あいましょうか。",
+    "vi": "Mấy giờ gặp nhau nhỉ?"
+   },
+   {
+    "ja": "どこに行きましょうか。",
+    "r": "どこに いきましょうか。",
+    "vi": "Mình đi đâu đây?"
+   },
+   {
+    "ja": "駅の前で会いましょう。",
+    "r": "えきの まえで あいましょう。",
+    "vi": "Gặp nhau trước nhà ga nhé."
+   },
+   {
+    "ja": "うん、行こう！",
+    "r": "うん、いこう！",
+    "vi": "Ừ, đi thôi!",
+    "note": "Thân mật, chỉ nói với bạn bè."
+   },
+   {
+    "ja": "今日はありがとうございました。",
+    "r": "きょうは ありがとう ございました。",
+    "vi": "Cảm ơn bạn vì hôm nay.",
+    "note": "Lần gặp sau người Nhật thường cảm ơn lại một lần nữa."
+   }
+  ]
+ },
+ {
+  "id": "feelings",
+  "emoji": "😊",
+  "name_vi": "Cảm xúc",
+  "name_en": "Feelings",
+  "phrases": [
+   {
+    "ja": "うれしいです。",
+    "r": "うれしい です。",
+    "vi": "Tôi vui quá."
+   },
+   {
+    "ja": "楽しかったです。",
+    "r": "たのしかった です。",
+    "vi": "Vui lắm."
+   },
+   {
+    "ja": "だいすきです。",
+    "r": "だいすき です。",
+    "vi": "Tôi rất thích."
+   },
+   {
+    "ja": "つかれました。",
+    "r": "つかれました。",
+    "vi": "Tôi mệt rồi."
+   },
+   {
+    "ja": "おなかがすきました。",
+    "r": "おなかが すきました。",
+    "vi": "Tôi đói rồi."
+   },
+   {
+    "ja": "さびしいです。",
+    "r": "さびしい です。",
+    "vi": "Tôi thấy cô đơn."
+   },
+   {
+    "ja": "しんぱいです。",
+    "r": "しんぱい です。",
+    "vi": "Tôi lo lắm."
+   },
+   {
+    "ja": "びっくりしました。",
+    "r": "びっくり しました。",
+    "vi": "Tôi giật cả mình."
+   },
+   {
+    "ja": "ざんねんです。",
+    "r": "ざんねん です。",
+    "vi": "Tiếc quá."
+   },
+   {
+    "ja": "はずかしいです。",
+    "r": "はずかしい です。",
+    "vi": "Tôi xấu hổ quá."
+   },
+   {
+    "ja": "気持ちがいいです。",
+    "r": "きもちが いい です。",
+    "vi": "Dễ chịu quá.",
+    "note": "Hay dùng khi tắm onsen, gặp gió mát."
+   },
+   {
+    "ja": "よかったですね。",
+    "r": "よかった ですね。",
+    "vi": "Tốt quá nhỉ!",
+    "note": "Dùng để chia vui khi người khác kể chuyện tốt."
+   }
+  ]
+ }
+]

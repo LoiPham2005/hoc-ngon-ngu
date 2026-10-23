@@ -8,10 +8,10 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/sentence_practice_page.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/sentence_practice_page.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
@@ -48,7 +48,19 @@ class PracticePage extends HookConsumerWidget {
       if (set != null) start(topic(set));
     }
 
-    if (course == Course.en) return const _EnglishPractice();
+    if (course != Course.ja) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.practice_title)),
+        body: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          children: [
+            _Subtitle(l10n.practice_subtitle),
+            const SizedBox(height: 16),
+            _LessonTiles(course),
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.practice_title)),
@@ -58,7 +70,7 @@ class PracticePage extends HookConsumerWidget {
           _Subtitle(l10n.practice_subtitle),
           const SizedBox(height: 16),
           SectionTitle(l10n.learn_alphabet),
-          for (final m in modules.where((m) => !m.isKanji))
+          for (final m in modules.where((m) => m.isKana))
             _PracticeTile(
               glyph: m.glyph,
               color: m.color,
@@ -110,15 +122,21 @@ class PracticePage extends HookConsumerWidget {
               title: m.title(context),
               onTap: () => start(QuizTopic(m, mode)),
             ),
+          const SizedBox(height: 12),
+          SectionTitle(l10n.learn_vocabulary),
+          _LessonTiles(course),
         ],
       ),
     );
   }
 }
 
-/// Luyện tiếng Anh: từ vựng (nghĩa / nghe), câu giao tiếp, ngữ pháp — mỗi bài chọn chủ đề / bài trước.
-class _EnglishPractice extends ConsumerWidget {
-  const _EnglishPractice();
+/// Bài luyện dùng chung mọi khoá: từ vựng (nghĩa / nghe), câu giao tiếp, nghe – chép,
+/// luyện nói, ngữ pháp — mỗi bài chọn chủ đề / bài trước.
+class _LessonTiles extends ConsumerWidget {
+  const _LessonTiles(this.course);
+
+  final Course course;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -140,9 +158,11 @@ class _EnglishPractice extends ConsumerWidget {
       }
     }
 
-    final words = ref.watch(vocabTopicsProvider).value ?? const [];
-    final phrases = ref.watch(phraseTopicsProvider).value ?? const [];
-    final lessons = ref.watch(grammarLessonsProvider).value ?? const [];
+    final words = ref.watch(vocabTopicsProvider(course)).value ?? const [];
+    final phrases = ref.watch(phraseTopicsProvider(course)).value ?? const [];
+    final lessons = ref.watch(grammarLessonsProvider(course)).value ?? const [];
+    final vocabulary = Module.lesson(course, LessonKind.vocabulary)!;
+    final phraseModule = Module.lesson(course, LessonKind.phrases)!;
 
     Future<void> startSentences(SentenceMode mode, String title) async {
       final picked = await showTopicSheet(
@@ -154,7 +174,7 @@ class _EnglishPractice extends ConsumerWidget {
       );
       if (picked != null && context.mounted) {
         await context.router.push(
-          SentencePracticeRoute(mode: mode, topicId: picked.id),
+          SentencePracticeRoute(course: course, mode: mode, topicId: picked.id),
         );
       }
     }
@@ -168,60 +188,62 @@ class _EnglishPractice extends ConsumerWidget {
         ],
       );
       if (picked != null && context.mounted) {
-        await context.router.push(GrammarPracticeRoute(lessonId: picked.id));
+        await context.router.push(
+          GrammarPracticeRoute(course: course, lessonId: picked.id),
+        );
       }
     }
 
     final tiles = [
       (
-        Module.enVocabulary,
-        'Aa',
+        vocabulary,
+        vocabulary.glyph,
         l10n.practice_vocabMeaning,
         l10n.practice_vocabMeaning_desc,
         () => start(
           l10n.practice_vocabMeaning,
           words,
-          (g) => QuizTopic(Module.enVocabulary, QuizMode.meaning, group: g),
+          (g) => QuizTopic(vocabulary, QuizMode.meaning, group: g),
         ),
       ),
       (
-        Module.enPronunciation,
+        vocabulary,
         '🎧',
         l10n.practice_vocabListening,
         l10n.practice_vocabListening_desc,
         () => start(
           l10n.practice_vocabListening,
           words,
-          (g) => QuizTopic(Module.enVocabulary, QuizMode.listening, group: g),
+          (g) => QuizTopic(vocabulary, QuizMode.listening, group: g),
         ),
       ),
       (
-        Module.enPhrases,
+        phraseModule,
         '💬',
         l10n.practice_phrases,
         l10n.practice_phrases_desc,
         () => start(
           l10n.practice_phrases,
           phrases,
-          (g) => QuizTopic(Module.enPhrases, QuizMode.meaning, group: g),
+          (g) => QuizTopic(phraseModule, QuizMode.meaning, group: g),
         ),
       ),
       (
-        Module.enPronunciation,
+        phraseModule,
         '✏️',
         l10n.practice_dictation,
         l10n.practice_dictation_desc,
         () => startSentences(SentenceMode.dictation, l10n.practice_dictation),
       ),
       (
-        Module.enDialogues,
+        Module.lesson(course, LessonKind.dialogues)!,
         '🎤',
         l10n.practice_speaking,
         l10n.practice_speaking_desc,
         () => startSentences(SentenceMode.speaking, l10n.practice_speaking),
       ),
       (
-        Module.enGrammar,
+        Module.lesson(course, LessonKind.grammar)!,
         '✍️',
         l10n.practice_grammar,
         l10n.practice_grammar_desc,
@@ -229,23 +251,17 @@ class _EnglishPractice extends ConsumerWidget {
       ),
     ];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.practice_title)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-        children: [
-          _Subtitle(l10n.practice_subtitle),
-          const SizedBox(height: 16),
-          for (final (module, glyph, title, subtitle, onTap) in tiles)
-            _PracticeTile(
-              glyph: glyph,
-              color: module.color,
-              title: title,
-              subtitle: subtitle,
-              onTap: onTap,
-            ),
-        ],
-      ),
+    return Column(
+      children: [
+        for (final (module, glyph, title, subtitle, onTap) in tiles)
+          _PracticeTile(
+            glyph: glyph,
+            color: module.color,
+            title: title,
+            subtitle: subtitle,
+            onTap: onTap,
+          ),
+      ],
     );
   }
 }

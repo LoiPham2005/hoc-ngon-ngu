@@ -7,10 +7,10 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
-import 'package:lingua/features/english/widgets/exercise_quiz.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/exercise_quiz.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -21,14 +21,20 @@ const _pitch = {'A': 1.0, 'B': 1.3};
 /// bấm 1 lượt để nghe riêng, bật/tắt bản dịch, rồi làm câu hỏi hiểu bài.
 @RoutePage()
 class DialoguePage extends HookConsumerWidget {
-  const DialoguePage({required this.dialogueId, super.key});
+  const DialoguePage({
+    required this.course,
+    required this.dialogueId,
+    super.key,
+  });
+
+  final Course course;
 
   final String dialogueId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
-    final state = ref.watch(dialoguesProvider);
+    final state = ref.watch(dialoguesProvider(course));
     final dialogue = state.value?.where((d) => d.id == dialogueId).firstOrNull;
     final l10n = context.l10n;
     final speech = ref.read(speechProvider);
@@ -47,7 +53,8 @@ class DialoguePage extends HookConsumerWidget {
         playing.value = i;
         final line = d.lines[i];
         final ok = await speech.speakAndWait(
-          line.en,
+          line.sentence.text,
+          language: course.speechLanguage,
           pitch: _pitch[line.speaker] ?? 1,
         );
         if (!ok || single) break;
@@ -68,7 +75,7 @@ class DialoguePage extends HookConsumerWidget {
       ),
       body: AsyncView<List<Dialogue>>(
         state: state,
-        onRetry: () => ref.invalidate(dialoguesProvider),
+        onRetry: () => ref.invalidate(dialoguesProvider(course)),
         builder: (context, _) {
           final d = dialogue!;
           return ListView(
@@ -104,8 +111,10 @@ class DialoguePage extends HookConsumerWidget {
               for (final (i, line) in d.lines.indexed)
                 _Bubble(
                   name: d.speakers[line.speaker] ?? line.speaker,
-                  en: line.en,
-                  vi: showTranslation.value ? line.vi : null,
+                  text: line.sentence.text,
+                  // Bật "Bản dịch" → hiện cả cách đọc kana (Tiếng Nhật) + nghĩa.
+                  reading: showTranslation.value ? line.sentence.reading : null,
+                  vi: showTranslation.value ? line.sentence.vi : null,
                   right: line.speaker == 'B',
                   active: playing.value == i,
                   onTap: () => play(d, from: i, single: true),
@@ -123,7 +132,10 @@ class DialoguePage extends HookConsumerWidget {
                   onPressed: () {
                     stop();
                     context.router.push(
-                      DialogueQuizRoute(dialogueId: dialogue.id),
+                      DialogueQuizRoute(
+                        course: course,
+                        dialogueId: dialogue.id,
+                      ),
                     );
                   },
                   icon: const Icon(Icons.quiz_rounded),
@@ -138,7 +150,8 @@ class DialoguePage extends HookConsumerWidget {
 class _Bubble extends StatelessWidget {
   const _Bubble({
     required this.name,
-    required this.en,
+    required this.text,
+    required this.reading,
     required this.vi,
     required this.right,
     required this.active,
@@ -146,7 +159,8 @@ class _Bubble extends StatelessWidget {
   });
 
   final String name;
-  final String en;
+  final String text;
+  final String? reading;
   final String? vi;
 
   /// Người nói B → bóng bên phải.
@@ -196,20 +210,11 @@ class _Bubble extends StatelessWidget {
                   borderRadius: radius,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(en, style: theme.textTheme.bodyLarge),
-                        if (vi != null) ...[
-                          const SizedBox(height: 2),
-                          Text(
-                            vi!,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: colors.textMuted,
-                            ),
-                          ),
-                        ],
-                      ],
+                    child: SentenceText(
+                      text,
+                      reading: reading,
+                      meaning: vi,
+                      style: theme.textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -225,14 +230,20 @@ class _Bubble extends StatelessWidget {
 /// Câu hỏi hiểu bài của 1 hội thoại; đúng từ 70% → đánh dấu đã hiểu bài.
 @RoutePage()
 class DialogueQuizPage extends HookConsumerWidget {
-  const DialogueQuizPage({required this.dialogueId, super.key});
+  const DialogueQuizPage({
+    required this.course,
+    required this.dialogueId,
+    super.key,
+  });
+
+  final Course course;
 
   final String dialogueId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
-    final state = ref.watch(dialoguesProvider);
+    final state = ref.watch(dialoguesProvider(course));
     final dialogue = state.value?.where((d) => d.id == dialogueId).firstOrNull;
     final round = useState(0);
     if (dialogue == null) {
@@ -240,7 +251,7 @@ class DialogueQuizPage extends HookConsumerWidget {
         appBar: AppBar(),
         body: AsyncView<List<Dialogue>>(
           state: state,
-          onRetry: () => ref.invalidate(dialoguesProvider),
+          onRetry: () => ref.invalidate(dialoguesProvider(course)),
           builder: (_, _) => const SizedBox.shrink(),
         ),
       );
@@ -250,8 +261,9 @@ class DialogueQuizPage extends HookConsumerWidget {
       title: dialogue.name(language),
       exercises: dialogue.questions,
       learnedKey: dialogue.key,
-      color: Module.enDialogues.color,
+      color: Module.lesson(course, LessonKind.dialogues)!.color,
       onRetry: () => round.value++,
+      language: course.speechLanguage,
     );
   }
 }

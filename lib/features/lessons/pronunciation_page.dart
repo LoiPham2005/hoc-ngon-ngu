@@ -6,8 +6,8 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
 /// Bảng 44 âm IPA: bấm 1 âm → nghe từ ví dụ; ✓ = đã luyện.

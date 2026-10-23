@@ -6,11 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,92 +68,134 @@ void main() {
     });
   });
 
-  group('dữ liệu tiếng Anh', () {
-    late ProviderContainer c;
+  // Số lượng nội dung mỗi khoá: (chủ đề từ, số từ, số hội thoại).
+  const content = {Course.en: (44, 1349, 24), Course.ja: (24, 690, 20)};
 
-    setUp(() {
-      c = ProviderContainer();
-      addTearDown(c.dispose);
-    });
+  for (final MapEntry(
+        key: course,
+        value: (topicCount, wordCount, dialogueCount),
+      )
+      in content.entries) {
+    group('${course.name} lesson data', () {
+      late ProviderContainer c;
 
-    test(
-      'từ vựng: 44 chủ đề, 1349 từ không trùng, đủ IPA / nghĩa / ví dụ',
-      () async {
-        final topics = await c.read(vocabTopicsProvider.future);
-        final words = [for (final t in topics) ...t.items];
-        expect(topics, hasLength(44));
-        expect(words, hasLength(1349));
-        expect(words.map((w) => w.key).toSet(), hasLength(1349));
-        expect(topics.every((t) => t.items.length >= 10), isTrue);
-        for (final w in words) {
-          expect(
-            [w.ipa, w.meaning, w.example, w.exampleVi],
-            everyElement(isNotEmpty),
-            reason: w.word,
-          );
-          expect(w.ipa, isNot(contains('/')), reason: w.word);
-        }
-      },
-    );
+      setUp(() {
+        c = ProviderContainer();
+        addTearDown(c.dispose);
+      });
 
-    test('câu giao tiếp: 15 tình huống × 12 câu', () async {
-      final topics = await c.read(phraseTopicsProvider.future);
-      expect(topics, hasLength(15));
-      expect(topics.every((t) => t.items.length == 12), isTrue);
-    });
-
-    test(
-      'ngữ pháp: 24 bài, mỗi bài 6 trắc nghiệm + 4 ghép câu hợp lệ',
-      () async {
-        final lessons = await c.read(grammarLessonsProvider.future);
-        expect(lessons, hasLength(24));
-        expect(lessons.map((g) => g.id).toSet(), hasLength(24));
-        for (final g in lessons) {
-          expect(g.formulas, isNotEmpty, reason: g.id);
-          expect(g.examples, isNotEmpty, reason: g.id);
-          expect(g.exercises.whereType<ChoiceExercise>(), hasLength(6));
-          expect(g.exercises.whereType<OrderExercise>(), hasLength(4));
-          for (final e in g.exercises) {
-            switch (e) {
-              case ChoiceExercise():
-                expect(
-                  '___'.allMatches(e.prompt),
-                  hasLength(1),
-                  reason: e.prompt,
-                );
-                expect(e.options.toSet(), hasLength(4), reason: e.prompt);
-                expect(e.answer, inInclusiveRange(0, 3));
-              case OrderExercise():
-                expect(e.ending, isNotEmpty, reason: e.answer);
-                expect('${e.words.join(' ')}${e.ending}', e.answer);
-                expect(e.words.length, greaterThan(2), reason: e.answer);
+      test(
+        'vocabulary: $topicCount topics, $wordCount unique words, complete fields',
+        () async {
+          final topics = await c.read(vocabTopicsProvider(course).future);
+          final words = [for (final t in topics) ...t.items];
+          expect(topics, hasLength(topicCount));
+          expect(words, hasLength(wordCount));
+          expect(words.map((w) => w.key).toSet(), hasLength(wordCount));
+          expect(topics.every((t) => t.items.length >= 10), isTrue);
+          for (final w in words) {
+            expect(
+              [w.reading, w.meaning, w.example, w.exampleVi],
+              everyElement(isNotEmpty),
+              reason: w.word,
+            );
+            if (course == Course.en) {
+              expect(w.reading, isNot(contains('/')), reason: w.word);
+            } else {
+              expect(
+                w.reading,
+                matches(r'^[\u3040-\u30ffー]+$'),
+                reason: w.word,
+              );
+              expect(w.exampleReading, isNotEmpty, reason: w.word);
+              expect(w.level, anyOf('N5', 'N4'), reason: w.word);
             }
           }
-        }
-      },
-    );
-  });
+        },
+      );
 
-  group('english dialogues & sentence check', () {
-    test('dialogues: 24, A/B turns, 4 answerable questions each', () async {
-      final c = ProviderContainer();
-      addTearDown(c.dispose);
-      final dialogues = await c.read(dialoguesProvider.future);
-      expect(dialogues, hasLength(24));
-      expect(dialogues.map((d) => d.id).toSet(), hasLength(24));
-      for (final d in dialogues) {
-        expect(d.lines.length, inInclusiveRange(8, 12), reason: d.id);
-        for (final (i, l) in d.lines.indexed) {
-          expect(l.speaker, i.isEven ? 'A' : 'B', reason: d.id);
-          expect(d.speakers[l.speaker], isNotEmpty, reason: d.id);
+      test('phrases: 15 situations × 12', () async {
+        final topics = await c.read(phraseTopicsProvider(course).future);
+        expect(topics, hasLength(15));
+        expect(topics.every((t) => t.items.length == 12), isTrue);
+        if (course == Course.ja) {
+          for (final t in topics) {
+            expect(t.items.every((p) => p.reading != null), isTrue);
+          }
         }
-        expect(d.questions, hasLength(4), reason: d.id);
-        for (final q in d.questions) {
-          expect(q.options.toSet(), hasLength(4), reason: q.prompt);
-          expect(q.answer, inInclusiveRange(0, 3));
-          expect(q.hint, isNotEmpty);
+      });
+
+      test(
+        'grammar: 24 lessons, 6 choice + 4 valid sentence-building each',
+        () async {
+          final lessons = await c.read(grammarLessonsProvider(course).future);
+          expect(lessons, hasLength(24));
+          expect(lessons.map((g) => g.id).toSet(), hasLength(24));
+          for (final g in lessons) {
+            expect(g.formulas, isNotEmpty, reason: g.id);
+            expect(g.examples, isNotEmpty, reason: g.id);
+            expect(g.exercises.whereType<ChoiceExercise>(), hasLength(6));
+            expect(g.exercises.whereType<OrderExercise>(), hasLength(4));
+            for (final e in g.exercises) {
+              switch (e) {
+                case ChoiceExercise():
+                  expect(
+                    '___'.allMatches(e.prompt),
+                    hasLength(1),
+                    reason: e.prompt,
+                  );
+                  expect(e.options.toSet(), hasLength(4), reason: e.prompt);
+                  expect(e.answer, inInclusiveRange(0, 3));
+                case OrderExercise():
+                  expect(e.ending, isNotEmpty, reason: e.answer);
+                  expect('${e.words.join(' ')}${e.ending}', e.answer);
+                  expect(e.words.length, greaterThan(2), reason: e.answer);
+                  expect(e.display, isNot(contains('  ')));
+              }
+            }
+          }
+        },
+      );
+
+      test('dialogues: $dialogueCount, A/B turns, 4 questions each', () async {
+        final dialogues = await c.read(dialoguesProvider(course).future);
+        expect(dialogues, hasLength(dialogueCount));
+        expect(dialogues.map((d) => d.id).toSet(), hasLength(dialogueCount));
+        for (final d in dialogues) {
+          expect(d.lines.length, inInclusiveRange(8, 12), reason: d.id);
+          for (final (i, l) in d.lines.indexed) {
+            expect(l.speaker, i.isEven ? 'A' : 'B', reason: d.id);
+            expect(d.speakers[l.speaker], isNotEmpty, reason: d.id);
+            expect(l.sentence.text, isNotEmpty, reason: d.id);
+          }
+          expect(d.questions, hasLength(4), reason: d.id);
+          for (final q in d.questions) {
+            expect(q.options.toSet(), hasLength(4), reason: q.prompt);
+            expect(q.answer, inInclusiveRange(0, 3));
+            expect(q.hint, isNotEmpty);
+          }
         }
-      }
+      });
+    });
+  }
+
+  group('sentence check', () {
+    test('Japanese: compares by character, kana or kanji input both work', () {
+      List<bool> hits(String text, String? reading, String input) => [
+        for (final w in matchSentence(text, reading, input)) w.hit,
+      ];
+      // Gõ kana (Katakana = Hiragana), bỏ dấu câu, dấu cách.
+      expect(hits('水をください。', 'みずを ください。', 'ミズヲ ください'), everyElement(isTrue));
+      // Nói / gõ đúng Kanji.
+      expect(hits('水をください。', 'みずを ください。', '水をください'), everyElement(isTrue));
+      expect(
+        matchRatio(matchSentence('水をください。', 'みずを ください。', 'みず')),
+        closeTo(2 / 7, 1e-9),
+      );
+      expect(
+        const OrderExercise(answer: 'わたし は 学生 です。', meaning: '').display,
+        'わたしは学生です。',
+      );
     });
 
     test('matchWords: ignores case/punctuation, marks missing words', () {
@@ -212,6 +254,10 @@ void main() {
       const QuizTopic(Module.enVocabulary, QuizMode.meaning, group: 'food'),
       const QuizTopic(Module.enPhrases, QuizMode.meaning),
       const QuizTopic(Module.enPhrases, QuizMode.meaning, group: 'hotel'),
+      const QuizTopic(Module.jaVocabulary, QuizMode.meaning),
+      const QuizTopic(Module.jaVocabulary, QuizMode.listening),
+      const QuizTopic(Module.jaVocabulary, QuizMode.meaning, group: 'food'),
+      const QuizTopic(Module.jaPhrases, QuizMode.meaning),
     ];
 
     for (final topic in topics) {

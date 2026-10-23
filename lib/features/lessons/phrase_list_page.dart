@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
-import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -15,17 +14,22 @@ import 'package:lingua/shared/states/async_view.dart';
 /// Câu giao tiếp của 1 tình huống: câu tiếng Anh + nghĩa + ghi chú, 🔊 nghe, ✓ đã thuộc.
 @RoutePage()
 class PhraseListPage extends ConsumerWidget {
-  const PhraseListPage({required this.topicId, super.key});
+  const PhraseListPage({
+    required this.course,
+    required this.topicId,
+    super.key,
+  });
+
+  final Course course;
 
   final String topicId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
-    final state = ref.watch(phraseTopicsProvider);
+    final state = ref.watch(phraseTopicsProvider(course));
     final topic = state.value?.firstWhere((t) => t.id == topicId);
     final theme = Theme.of(context);
-    final colors = context.colors;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -34,7 +38,7 @@ class PhraseListPage extends ConsumerWidget {
       ),
       body: AsyncView<List<Topic<Phrase>>>(
         state: state,
-        onRetry: () => ref.invalidate(phraseTopicsProvider),
+        onRetry: () => ref.invalidate(phraseTopicsProvider(course)),
         builder: (context, _) {
           final phrases = topic!.items;
           final learned = learnedCount(ref, phrases.map((p) => p.key));
@@ -43,7 +47,7 @@ class PhraseListPage extends ConsumerWidget {
             children: [
               RoundedProgress(
                 learned / phrases.length,
-                color: Module.enPhrases.color,
+                color: Module.lesson(course, LessonKind.phrases)!.color,
               ),
               const SizedBox(height: 6),
               Text(
@@ -64,16 +68,10 @@ class PhraseListPage extends ConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                SentenceText(
                                   p.text,
-                                  style: theme.textTheme.titleMedium,
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  p.meaning,
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: colors.textMuted,
-                                  ),
+                                  reading: p.reading,
+                                  meaning: p.meaning,
                                 ),
                                 if (p.note != null) ...[
                                   const SizedBox(height: 4),
@@ -85,7 +83,10 @@ class PhraseListPage extends ConsumerWidget {
                               ],
                             ),
                           ),
-                          SpeakButton(p.text, language: 'en-US'),
+                          SpeakButton(
+                            p.text,
+                            language: p.course.speechLanguage,
+                          ),
                         ],
                       ),
                     ),

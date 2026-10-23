@@ -445,5 +445,60 @@
         "type": "String"
       }
     }
+  },
+  "module_jaGrammar_desc": "{count} lessons, N5–N4",
+  "pos_na": "na-adjective",
+  "pos_exp": "expression",
+  "@module_jaGrammar_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backup_export": "Back up progress",
+  "backup_export_desc": "Save to a file to move to another phone",
+  "backup_exported": "Backup saved",
+  "backup_restore": "Restore from file",
+  "backup_restore_desc": "Open a backup file you saved earlier",
+  "backup_restore_confirm": "Your current progress on this phone will be replaced by the file. Continue?",
+  "backup_restored": "Progress restored",
+  "backup_invalid": "This is not a Lingua backup file",
+  "search_title": "Search",
+  "search_hint": "Search words, phrases, kanji, meanings…",
+  "search_empty": "Type in Vietnamese (with or without accents) or in {course} to look things up.",
+  "search_noResult": "No results",
+  "search_words": "Vocabulary",
+  "search_phrases": "Phrases",
+  "stats_title": "Statistics",
+  "stats_more": "Details",
+  "stats_days": "{count} days",
+  "stats_activeDays": "Active days",
+  "stats_activity": "Daily activity",
+  "stats_newLearned": "{count} new items learned in this period",
+  "stats_due": "Due today",
+  "stats_scheduled": "Scheduled",
+  "stats_mastered": "Long-term",
+  "stats_modules": "Module progress",
+  "@search_empty": {
+    "placeholders": {
+      "course": {
+        "type": "String"
+      }
+    }
+  },
+  "@stats_days": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@stats_newLearned": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 
 /// Tỉ lệ đúng tối thiểu để tự đánh dấu "đã thuộc".
 const passRatio = 0.7;
@@ -19,6 +19,7 @@ class ExerciseQuiz extends HookConsumerWidget {
     required this.learnedKey,
     required this.color,
     required this.onRetry,
+    required this.language,
     super.key,
   });
 
@@ -29,6 +30,9 @@ class ExerciseQuiz extends HookConsumerWidget {
   /// Màu thanh tiến độ (màu học phần).
   final Color color;
   final VoidCallback onRetry;
+
+  /// Giọng đọc câu đúng (`Course.speechLanguage`).
+  final String language;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,6 +111,7 @@ class ExerciseQuiz extends HookConsumerWidget {
               exercise: exercise,
               result: result.value,
               onAnswer: answer,
+              language: language,
             ),
           },
         ],
@@ -216,12 +221,14 @@ class _OrderView extends HookWidget {
     required this.exercise,
     required this.result,
     required this.onAnswer,
+    required this.language,
     super.key,
   });
 
   final OrderExercise exercise;
   final bool? result;
   final void Function({required bool ok}) onAnswer;
+  final String language;
 
   @override
   Widget build(BuildContext context) {
@@ -317,8 +324,9 @@ class _OrderView extends HookWidget {
             ok: result!,
             detail: result!
                 ? null
-                : l10n.grammar_correctAnswer(exercise.answer),
-            speech: exercise.answer,
+                : l10n.grammar_correctAnswer(exercise.display),
+            speech: exercise.display,
+            language: language,
           ),
       ],
     );

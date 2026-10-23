@@ -4,9 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_colors.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/course/models/course_model.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
@@ -15,14 +16,20 @@ import 'package:lingua/shared/states/async_view.dart';
 /// 1 bài ngữ pháp: tóm tắt → công thức → ghi nhớ → ví dụ (🔊) → nút làm bài tập.
 @RoutePage()
 class GrammarLessonPage extends ConsumerWidget {
-  const GrammarLessonPage({required this.lessonId, super.key});
+  const GrammarLessonPage({
+    required this.course,
+    required this.lessonId,
+    super.key,
+  });
+
+  final Course course;
 
   final String lessonId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
-    final state = ref.watch(grammarLessonsProvider);
+    final state = ref.watch(grammarLessonsProvider(course));
     final lesson = state.value?.firstWhere((g) => g.id == lessonId);
     final l10n = context.l10n;
     final theme = Theme.of(context);
@@ -34,7 +41,7 @@ class GrammarLessonPage extends ConsumerWidget {
       ),
       body: AsyncView<List<GrammarLesson>>(
         state: state,
-        onRetry: () => ref.invalidate(grammarLessonsProvider),
+        onRetry: () => ref.invalidate(grammarLessonsProvider(course)),
         builder: (context, _) {
           final g = lesson!;
           return ListView(
@@ -95,20 +102,13 @@ class GrammarLessonPage extends ConsumerWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(e.en, style: theme.textTheme.titleMedium),
-                              Text(
-                                e.vi,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: colors.textMuted,
-                                ),
-                              ),
-                            ],
+                          child: SentenceText(
+                            e.text,
+                            reading: e.reading,
+                            meaning: e.vi,
                           ),
                         ),
-                        SpeakButton(e.en, language: 'en-US'),
+                        SpeakButton(e.text, language: course.speechLanguage),
                       ],
                     ),
                   ),
@@ -124,7 +124,7 @@ class GrammarLessonPage extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                 child: FilledButton.icon(
                   onPressed: () => context.router.push(
-                    GrammarPracticeRoute(lessonId: lesson.id),
+                    GrammarPracticeRoute(course: course, lessonId: lesson.id),
                   ),
                   icon: const Icon(Icons.edit_note_rounded),
                   label: Text(l10n.grammar_start(lesson.exercises.length)),

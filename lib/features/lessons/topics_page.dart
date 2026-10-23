@@ -4,23 +4,24 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
-/// Danh sách chủ đề từ vựng ([module] = enVocabulary) hoặc tình huống giao tiếp (enPhrases).
+/// Danh sách chủ đề từ vựng ([module] loại vocabulary) hoặc tình huống giao tiếp (phrases) của 1 khoá.
 @RoutePage()
-class EnglishTopicsPage extends ConsumerWidget {
-  const EnglishTopicsPage({required this.module, super.key});
+class TopicsPage extends ConsumerWidget {
+  const TopicsPage({required this.module, super.key});
 
   final Module module;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final words = module == Module.enVocabulary;
+    final words = module.lessonKind == LessonKind.vocabulary;
+    final course = module.course;
     final language = ref.watch(localeProvider).languageCode;
     final l10n = context.l10n;
 
@@ -44,8 +45,8 @@ class EnglishTopicsPage extends ConsumerWidget {
             child: InkWell(
               onTap: () => context.router.push(
                 words
-                    ? VocabListRoute(topicId: t.id)
-                    : PhraseListRoute(topicId: t.id),
+                    ? VocabListRoute(course: course, topicId: t.id)
+                    : PhraseListRoute(course: course, topicId: t.id),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(14),
@@ -94,14 +95,14 @@ class EnglishTopicsPage extends ConsumerWidget {
       appBar: AppBar(title: Text(module.title(context))),
       body: words
           ? list<Word>(
-              ref.watch(vocabTopicsProvider),
+              ref.watch(vocabTopicsProvider(course)),
               (w) => w.key,
-              () => ref.invalidate(vocabTopicsProvider),
+              () => ref.invalidate(vocabTopicsProvider(course)),
             )
           : list<Phrase>(
-              ref.watch(phraseTopicsProvider),
+              ref.watch(phraseTopicsProvider(course)),
               (p) => p.key,
-              () => ref.invalidate(phraseTopicsProvider),
+              () => ref.invalidate(phraseTopicsProvider(course)),
             ),
     );
   }

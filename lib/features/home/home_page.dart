@@ -78,7 +78,13 @@ class HomePage extends ConsumerWidget {
               label: Text(l10n.home_quickReview),
             ),
             const SizedBox(height: 24),
-            SectionTitle(l10n.home_stats),
+            SectionTitle(
+              l10n.home_stats,
+              trailing: TextButton(
+                onPressed: () => context.router.push(const StatsRoute()),
+                child: Text(l10n.stats_more),
+              ),
+            ),
             Row(
               children: [
                 Expanded(

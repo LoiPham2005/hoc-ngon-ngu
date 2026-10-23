@@ -19,15 +19,17 @@ import 'package:lingua/shared/base/app_ui.dart';
 /// Mở học phần (ghi nhớ để "Tiếp tục học" ở Trang chủ).
 void openModule(BuildContext context, WidgetRef ref, Module module) {
   ref.read(learnerProvider.notifier).openModule(module);
-  context.router.push(switch (module) {
-    Module.hiragana => KanaTableRoute(script: KanaScript.hiragana),
-    Module.katakana => KanaTableRoute(script: KanaScript.katakana),
-    Module.enPronunciation => const PronunciationRoute(),
-    Module.enVocabulary => EnglishTopicsRoute(module: Module.enVocabulary),
-    Module.enPhrases => EnglishTopicsRoute(module: Module.enPhrases),
-    Module.enGrammar => const GrammarListRoute(),
-    Module.enDialogues => const DialogueListRoute(),
-    _ => KanjiListRoute(level: module.kanjiLevel!),
+  final course = module.course;
+  context.router.push(switch (module.lessonKind) {
+    LessonKind.vocabulary || LessonKind.phrases => TopicsRoute(module: module),
+    LessonKind.grammar => GrammarListRoute(course: course),
+    LessonKind.dialogues => DialogueListRoute(course: course),
+    null => switch (module) {
+      Module.hiragana => KanaTableRoute(script: KanaScript.hiragana),
+      Module.katakana => KanaTableRoute(script: KanaScript.katakana),
+      Module.enPronunciation => const PronunciationRoute(),
+      _ => KanjiListRoute(level: module.kanjiLevel!),
+    },
   });
 }
 

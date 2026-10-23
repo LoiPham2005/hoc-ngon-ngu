@@ -1,0 +1,3742 @@
+[
+ {
+  "id": "desu",
+  "emoji": "🧩",
+  "name_vi": "Câu khẳng định với です",
+  "name_en": "Sentences with desu",
+  "level": "N5",
+  "summary": "Dùng để nói “A là B”: giới thiệu tên, nghề nghiệp, quốc tịch, tuổi… Phủ định dùng じゃありません, câu hỏi chỉ cần thêm か ở cuối.",
+  "formulas": [
+   {
+    "label": "Khẳng định",
+    "pattern": "N1 は N2 です"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "N1 は N2 じゃありません"
+   },
+   {
+    "label": "Nghi vấn",
+    "pattern": "N1 は N2 ですか"
+   },
+   {
+    "label": "Cũng là",
+    "pattern": "N1 も N2 です"
+   }
+  ],
+  "points": [
+   "は là trợ từ chủ đề: viết は nhưng đọc là “wa”.",
+   "です không đổi theo ngôi: tôi, bạn, anh ấy đều dùng です.",
+   "じゃありません là văn nói; では ありません trang trọng hơn, nghĩa như nhau.",
+   "Câu hỏi giữ nguyên trật tự, chỉ thêm か. Trả lời: はい、そうです／いいえ、ちがいます.",
+   "Gọi người khác là tên + さん; không bao giờ thêm さん vào tên mình."
+  ],
+  "examples": [
+   {
+    "ja": "わたしは 学生です。",
+    "r": "わたしは がくせいです。",
+    "vi": "Tôi là sinh viên."
+   },
+   {
+    "ja": "ミンさんは ベトナム人です。",
+    "r": "ミンさんは ベトナムじんです。",
+    "vi": "Anh Minh là người Việt Nam."
+   },
+   {
+    "ja": "田中さんは 先生じゃありません。",
+    "r": "たなかさんは せんせいじゃありません。",
+    "vi": "Anh Tanaka không phải là giáo viên."
+   },
+   {
+    "ja": "あなたは 日本人ですか。",
+    "r": "あなたは にほんじんですか。",
+    "vi": "Bạn là người Nhật phải không?"
+   },
+   {
+    "ja": "マイさんも 大学生です。",
+    "r": "マイさんも だいがくせいです。",
+    "vi": "Chị Mai cũng là sinh viên đại học."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "わたし ___ 学生です。",
+    "options": [
+     "は",
+     "を",
+     "に",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "は (đọc “wa”) đánh dấu chủ đề câu: “Tôi thì là sinh viên”. を, に, で không dùng trong câu N は N です."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：先生ですか。 B：いいえ、先生 ___。",
+    "options": [
+     "です",
+     "ですか",
+     "でした",
+     "じゃありません"
+    ],
+    "answer": 3,
+    "explain": "Đã trả lời いいえ (không) nên phải dùng dạng phủ định じゃありません."
+   },
+   {
+    "type": "choice",
+    "prompt": "あなたは 日本人です ___。",
+    "options": [
+     "か",
+     "を",
+     "に",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "Thêm か vào cuối câu để biến câu khẳng định thành câu hỏi."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：ミンさんは 学生ですか。 B：はい、___ です。",
+    "options": [
+     "どう",
+     "そう",
+     "なん",
+     "だれ"
+    ],
+    "answer": 1,
+    "explain": "はい、そうです = “Vâng, đúng vậy”. Từ để hỏi (どう, なん, だれ) không dùng trong câu trả lời."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：あの 人は ___ ですか。 B：山田さんです。",
+    "options": [
+     "なん",
+     "だれ",
+     "どこ",
+     "いつ"
+    ],
+    "answer": 1,
+    "explain": "Câu trả lời là tên người (山田さん) nên câu hỏi phải là だれ (ai)."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは 学生です。マイさん ___ 学生です。",
+    "options": [
+     "を",
+     "に",
+     "も",
+     "で"
+    ],
+    "answer": 2,
+    "explain": "も = “cũng”, thay cho は khi thông tin giống câu trước: chị Mai cũng là sinh viên."
+   },
+   {
+    "type": "order",
+    "answer": "わたし は ベトナム人 です。",
+    "vi": "Tôi là người Việt Nam."
+   },
+   {
+    "type": "order",
+    "answer": "田中さん は 先生 じゃありません。",
+    "vi": "Anh Tanaka không phải là giáo viên."
+   },
+   {
+    "type": "order",
+    "answer": "山田さん は 日本人 ですか。",
+    "vi": "Anh Yamada là người Nhật phải không?"
+   },
+   {
+    "type": "order",
+    "answer": "わたし も 学生 じゃありません。",
+    "vi": "Tôi cũng không phải là sinh viên."
+   }
+  ]
+ },
+ {
+  "id": "kosoado",
+  "emoji": "👉",
+  "name_vi": "Chỉ thị từ こ・そ・あ・ど",
+  "name_en": "Demonstratives ko-so-a-do",
+  "level": "N5",
+  "summary": "これ・それ・あれ đứng một mình thay cho đồ vật (cái này/đó/kia); この・その・あの phải đi kèm danh từ phía sau. どれ・どの dùng để hỏi “cái nào”.",
+  "formulas": [
+   {
+    "label": "Đại từ",
+    "pattern": "これ／それ／あれ は N です"
+   },
+   {
+    "label": "Hỏi cái nào",
+    "pattern": "N は どれ ですか"
+   },
+   {
+    "label": "Đi kèm danh từ",
+    "pattern": "この／その／あの N は … です"
+   },
+   {
+    "label": "Hỏi N nào",
+    "pattern": "どの N ですか"
+   }
+  ],
+  "points": [
+   "こ = gần người nói, そ = gần người nghe, あ = xa cả hai, ど = dùng để hỏi.",
+   "これ・それ・あれ đứng một mình; この・その・あの bắt buộc có danh từ theo sau (この本, không nói この は).",
+   "Khi người hỏi dùng それ (vật gần người nghe), người trả lời thường dùng これ.",
+   "Chỉ nơi chốn có bộ riêng: ここ・そこ・あそこ・どこ (chỗ này/đó/kia/đâu).",
+   "Từ để hỏi どれ làm chủ ngữ phải đi với が: どれが ミンさんの かばんですか."
+  ],
+  "examples": [
+   {
+    "ja": "これは 本です。",
+    "r": "これは ほんです。",
+    "vi": "Đây là quyển sách."
+   },
+   {
+    "ja": "それは わたしの かばんです。",
+    "r": "それは わたしの かばんです。",
+    "vi": "Đó là cặp của tôi."
+   },
+   {
+    "ja": "あの 人は 先生です。",
+    "r": "あの ひとは せんせいです。",
+    "vi": "Người kia là giáo viên."
+   },
+   {
+    "ja": "この 車は 新しいです。",
+    "r": "この くるまは あたらしいです。",
+    "vi": "Chiếc xe này mới."
+   },
+   {
+    "ja": "ミンさんの 本は どれですか。",
+    "r": "ミンさんの ほんは どれですか。",
+    "vi": "Sách của anh Minh là quyển nào?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "___ は 本です。",
+    "options": [
+     "この",
+     "あの",
+     "どの",
+     "これ"
+    ],
+    "answer": 3,
+    "explain": "Đứng một mình làm chủ đề phải dùng これ. この・あの・どの luôn cần danh từ phía sau."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ 本は わたしのです。",
+    "options": [
+     "これ",
+     "それ",
+     "あれ",
+     "この"
+    ],
+    "answer": 3,
+    "explain": "Có danh từ 本 ngay sau nên dùng この (+ danh từ), không dùng これ・それ・あれ."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：ミンさんの かばんは ___ ですか。 B：それです。",
+    "options": [
+     "どれ",
+     "どの",
+     "これ",
+     "あの"
+    ],
+    "answer": 0,
+    "explain": "Hỏi “cái nào” khi không có danh từ theo sau dùng どれ; どの phải đi kèm danh từ."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：それは 何ですか。 B：___ は 日本語の 本です。",
+    "options": [
+     "この",
+     "どれ",
+     "これ",
+     "あの"
+    ],
+    "answer": 2,
+    "explain": "Vật ở gần người trả lời nên đáp bằng これ; この cần danh từ, どれ là từ để hỏi."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：___ 人は だれですか。 B：山田さんです。",
+    "options": [
+     "あれ",
+     "どれ",
+     "あの",
+     "これ"
+    ],
+    "answer": 2,
+    "explain": "Có danh từ 人 phía sau nên phải dùng dạng あの; あれ・どれ・これ không đứng trước danh từ."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：トイレは ___ ですか。 B：あそこです。",
+    "options": [
+     "どれ",
+     "どこ",
+     "どの",
+     "だれ"
+    ],
+    "answer": 1,
+    "explain": "Hỏi nơi chốn dùng どこ (ở đâu); câu trả lời あそこ cũng là từ chỉ nơi chốn."
+   },
+   {
+    "type": "order",
+    "answer": "これ は わたし の 本 です。",
+    "vi": "Đây là sách của tôi."
+   },
+   {
+    "type": "order",
+    "answer": "あの 人 は 先生 です。",
+    "vi": "Người kia là giáo viên."
+   },
+   {
+    "type": "order",
+    "answer": "ミンさん の かさ は どれ ですか。",
+    "vi": "Ô của anh Minh là cái nào?"
+   },
+   {
+    "type": "order",
+    "answer": "この 車 は 日本 の 車 です。",
+    "vi": "Chiếc xe này là xe của Nhật."
+   }
+  ]
+ },
+ {
+  "id": "no",
+  "emoji": "🔗",
+  "name_vi": "Trợ từ の",
+  "name_en": "The particle no",
+  "level": "N5",
+  "summary": "の nối hai danh từ: N1 の N2 = N2 của/về/thuộc N1 (sở hữu, xuất xứ, nội dung, nơi học/làm). Danh từ chính luôn đứng SAU の.",
+  "formulas": [
+   {
+    "label": "Sở hữu",
+    "pattern": "N1 の N2"
+   },
+   {
+    "label": "Nội dung, xuất xứ",
+    "pattern": "N1 の N2"
+   },
+   {
+    "label": "Lược danh từ",
+    "pattern": "N の です"
+   },
+   {
+    "label": "Hỏi của ai",
+    "pattern": "だれ の N ですか"
+   }
+  ],
+  "points": [
+   "Trật tự ngược tiếng Việt: “sách của tôi” = わたしの 本 (người sở hữu đứng trước).",
+   "の không chỉ là “của”: 日本語の 本 = sách tiếng Nhật, 日本の 車 = xe Nhật, 大学の 学生 = sinh viên đại học.",
+   "Khi đã rõ danh từ, có thể lược: これは わたしの 本です → これは わたしのです.",
+   "Có thể nối nhiều の: わたしの 友だちの 本 = sách của bạn tôi.",
+   "Hỏi “của ai” dùng だれの, hỏi “về cái gì” dùng 何の (なんの)."
+  ],
+  "examples": [
+   {
+    "ja": "これは わたしの 本です。",
+    "r": "これは わたしの ほんです。",
+    "vi": "Đây là sách của tôi."
+   },
+   {
+    "ja": "田中さんは 日本語の 先生です。",
+    "r": "たなかさんは にほんごの せんせいです。",
+    "vi": "Anh Tanaka là giáo viên tiếng Nhật."
+   },
+   {
+    "ja": "それは だれの かばんですか。",
+    "r": "それは だれの かばんですか。",
+    "vi": "Đó là cặp của ai?"
+   },
+   {
+    "ja": "この かさは 友だちのです。",
+    "r": "この かさは ともだちのです。",
+    "vi": "Cái ô này là của bạn tôi."
+   },
+   {
+    "ja": "ミンさんは さくら大学の 学生です。",
+    "r": "ミンさんは さくらだいがくの がくせいです。",
+    "vi": "Anh Minh là sinh viên Đại học Sakura."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "これは わたし ___ 本です。",
+    "options": [
+     "は",
+     "の",
+     "を",
+     "が"
+    ],
+    "answer": 1,
+    "explain": "Nối hai danh từ “tôi” và “sách” để chỉ sở hữu phải dùng の: わたしの 本 = sách của tôi."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：それは ___ の かさですか。 B：マイさんのです。",
+    "options": [
+     "何",
+     "どこ",
+     "だれ",
+     "どれ"
+    ],
+    "answer": 2,
+    "explain": "Câu trả lời là “của chị Mai” (một người) nên câu hỏi là だれの (của ai)."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：それは 何の 本ですか。 B：___ の 本です。",
+    "options": [
+     "日本語",
+     "だれ",
+     "どこ",
+     "どれ"
+    ],
+    "answer": 0,
+    "explain": "何の hỏi nội dung sách; trả lời bằng danh từ cụ thể (日本語の本 = sách tiếng Nhật), không dùng từ để hỏi."
+   },
+   {
+    "type": "choice",
+    "prompt": "この 車は 田中さん ___。",
+    "options": [
+     "をです",
+     "のです",
+     "にです",
+     "がです"
+    ],
+    "answer": 1,
+    "explain": "Lược danh từ 車 phía sau: 田中さんの(車)です → 田中さんのです = là của anh Tanaka."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは さくら大学 ___ 学生です。",
+    "options": [
+     "に",
+     "で",
+     "を",
+     "の"
+    ],
+    "answer": 3,
+    "explain": "“Sinh viên của trường Đại học Sakura” → 大学の 学生; hai danh từ nối bằng の."
+   },
+   {
+    "type": "choice",
+    "prompt": "これは ___ 本です。",
+    "options": [
+     "わたしの",
+     "わたし",
+     "わたしは",
+     "わたしを"
+    ],
+    "answer": 0,
+    "explain": "Danh từ đứng trước 本 để bổ nghĩa phải có の; わたし 本 (thiếu の) là sai."
+   },
+   {
+    "type": "order",
+    "answer": "これ は 日本語 の 本 です。",
+    "vi": "Đây là sách tiếng Nhật."
+   },
+   {
+    "type": "order",
+    "answer": "それ は だれ の かさ ですか。",
+    "vi": "Đó là ô của ai?"
+   },
+   {
+    "type": "order",
+    "answer": "あの 車 は 先生 の です。",
+    "vi": "Chiếc xe kia là của thầy giáo."
+   },
+   {
+    "type": "order",
+    "answer": "友だち の 名前 は マイ です。",
+    "vi": "Tên bạn tôi là Mai."
+   }
+  ]
+ },
+ {
+  "id": "particles-wa-ga",
+  "emoji": "🎯",
+  "name_vi": "Trợ từ は và が",
+  "name_en": "Particles wa and ga",
+  "level": "N5",
+  "summary": "は nêu chủ đề (câu nói về cái gì); が chỉ chủ ngữ cụ thể, nhất là thông tin mới, sau từ để hỏi, và với すき・わかる・あります・います.",
+  "formulas": [
+   {
+    "label": "Chủ đề",
+    "pattern": "N は …"
+   },
+   {
+    "label": "Từ để hỏi làm chủ ngữ",
+    "pattern": "だれ／何 が … ですか"
+   },
+   {
+    "label": "Trả lời câu hỏi が",
+    "pattern": "N が …"
+   },
+   {
+    "label": "Đối tượng cảm xúc/hiểu biết",
+    "pattern": "N1 は N2 が すきです／わかります"
+   }
+  ],
+  "points": [
+   "Trợ từ は đọc “wa”; が đọc “ga”.",
+   "Từ để hỏi (だれ, 何, どれ) làm chủ ngữ luôn đi với が, không bao giờ với は.",
+   "Câu hỏi dùng が thì câu trả lời cũng dùng が: だれが 来ますか → 山田さんが 来ます.",
+   "すき, きらい, じょうず, わかる đi với が (không dùng を): 日本語が わかります.",
+   "は còn dùng để đối chiếu: コーヒーは すきですが、ビールは すきじゃありません."
+  ],
+  "examples": [
+   {
+    "ja": "わたしは ミンです。",
+    "r": "わたしは ミンです。",
+    "vi": "Tôi là Minh."
+   },
+   {
+    "ja": "だれが 来ますか。",
+    "r": "だれが きますか。",
+    "vi": "Ai sẽ đến?"
+   },
+   {
+    "ja": "山田さんが 来ます。",
+    "r": "やまださんが きます。",
+    "vi": "Anh Yamada sẽ đến."
+   },
+   {
+    "ja": "マイさんは 日本語が わかります。",
+    "r": "マイさんは にほんごが わかります。",
+    "vi": "Chị Mai hiểu tiếng Nhật."
+   },
+   {
+    "ja": "わたしは 魚が すきです。",
+    "r": "わたしは さかなが すきです。",
+    "vi": "Tôi thích cá."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "だれ ___ 来ますか。",
+    "options": [
+     "が",
+     "は",
+     "を",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "Từ để hỏi だれ làm chủ ngữ phải đi với が; だれは là sai."
+   },
+   {
+    "type": "choice",
+    "prompt": "はじめまして。わたし ___ ミンです。",
+    "options": [
+     "を",
+     "は",
+     "の",
+     "に"
+    ],
+    "answer": 1,
+    "explain": "Tự giới thiệu: わたし là chủ đề câu nên dùng は (đọc “wa”)."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは 日本語 ___ わかります。",
+    "options": [
+     "を",
+     "で",
+     "に",
+     "が"
+    ],
+    "answer": 3,
+    "explain": "わかります đi với が để chỉ cái được hiểu. Người Việt hay nhầm thành を."
+   },
+   {
+    "type": "choice",
+    "prompt": "マイさんは 魚 ___ すきです。",
+    "options": [
+     "を",
+     "に",
+     "で",
+     "が"
+    ],
+    "answer": 3,
+    "explain": "すき là tính từ, đối tượng được thích đánh dấu bằng が, không dùng を."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：何 ___ いいですか。 B：コーヒーが いいです。",
+    "options": [
+     "は",
+     "を",
+     "が",
+     "の"
+    ],
+    "answer": 2,
+    "explain": "Từ để hỏi 何 làm chủ ngữ đi với が; câu trả lời cũng dùng が (コーヒーが)."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：どれが ミンさんの かばんですか。 B：これ ___ わたしの かばんです。",
+    "options": [
+     "を",
+     "に",
+     "が",
+     "で"
+    ],
+    "answer": 2,
+    "explain": "Câu hỏi どれが… thì câu trả lời dùng が để chỉ đúng cái được hỏi: これが (chính cái này)."
+   },
+   {
+    "type": "order",
+    "answer": "だれ が 来ますか。",
+    "vi": "Ai sẽ đến?"
+   },
+   {
+    "type": "order",
+    "answer": "わたし は 日本語 が わかります。",
+    "vi": "Tôi hiểu tiếng Nhật."
+   },
+   {
+    "type": "order",
+    "answer": "マイさん は 魚 が すき です。",
+    "vi": "Chị Mai thích cá."
+   },
+   {
+    "type": "order",
+    "answer": "どれ が ミンさん の かばん ですか。",
+    "vi": "Cái nào là cặp của anh Minh?"
+   }
+  ]
+ },
+ {
+  "id": "particles-wo-ni-de",
+  "emoji": "🧭",
+  "name_vi": "Trợ từ を・に・で",
+  "name_en": "Particles wo, ni, de",
+  "level": "N5",
+  "summary": "を chỉ tân ngữ của động từ; に chỉ thời điểm, đích đến, người nhận; で chỉ nơi diễn ra hành động và phương tiện, công cụ.",
+  "formulas": [
+   {
+    "label": "Tân ngữ",
+    "pattern": "N を V"
+   },
+   {
+    "label": "Thời điểm",
+    "pattern": "giờ/ngày に V"
+   },
+   {
+    "label": "Đích đến",
+    "pattern": "nơi に／へ 行きます"
+   },
+   {
+    "label": "Nơi hành động",
+    "pattern": "nơi で V"
+   },
+   {
+    "label": "Phương tiện, công cụ",
+    "pattern": "N で V"
+   }
+  ],
+  "points": [
+   "Trợ từ を đọc là “o”; へ (chỉ hướng) đọc là “e”.",
+   "に đi với thời điểm có số (九時に, 月曜日に) nhưng KHÔNG dùng với きょう, あした, 毎日.",
+   "Đi đâu: に hoặc へ đều được: 学校に／へ 行きます.",
+   "Nơi làm hành động (ăn, đọc, mua…) dùng で, không dùng に: 店で 買います.",
+   "で còn chỉ phương tiện, công cụ: 電車で 行きます, はしで 食べます."
+  ],
+  "examples": [
+   {
+    "ja": "パンを 食べます。",
+    "r": "パンを たべます。",
+    "vi": "Tôi ăn bánh mì."
+   },
+   {
+    "ja": "九時に 学校に 行きます。",
+    "r": "くじに がっこうに いきます。",
+    "vi": "Tôi đi học lúc 9 giờ."
+   },
+   {
+    "ja": "電車で 会社に 行きます。",
+    "r": "でんしゃで かいしゃに いきます。",
+    "vi": "Tôi đi làm bằng tàu điện."
+   },
+   {
+    "ja": "店で 本を 買います。",
+    "r": "みせで ほんを かいます。",
+    "vi": "Tôi mua sách ở cửa hàng."
+   },
+   {
+    "ja": "母に 電話を します。",
+    "r": "ははに でんわを します。",
+    "vi": "Tôi gọi điện cho mẹ."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "水 ___ 飲みます。",
+    "options": [
+     "に",
+     "を",
+     "で",
+     "が"
+    ],
+    "answer": 1,
+    "explain": "水 là tân ngữ (cái được uống) của động từ 飲みます nên dùng を."
+   },
+   {
+    "type": "choice",
+    "prompt": "九時 ___ 学校へ 行きます。",
+    "options": [
+     "で",
+     "を",
+     "に",
+     "が"
+    ],
+    "answer": 2,
+    "explain": "Thời điểm có số (九時) đi với に: 九時に = lúc 9 giờ."
+   },
+   {
+    "type": "choice",
+    "prompt": "電車 ___ 会社に 行きます。",
+    "options": [
+     "に",
+     "で",
+     "を",
+     "が"
+    ],
+    "answer": 1,
+    "explain": "Phương tiện đi lại dùng で: 電車で = bằng tàu điện."
+   },
+   {
+    "type": "choice",
+    "prompt": "店 ___ 本を 買います。",
+    "options": [
+     "に",
+     "を",
+     "へ",
+     "で"
+    ],
+    "answer": 3,
+    "explain": "Nơi diễn ra hành động mua dùng で, không dùng に."
+   },
+   {
+    "type": "choice",
+    "prompt": "来週 日本 ___ 行きます。",
+    "options": [
+     "に",
+     "で",
+     "を",
+     "が"
+    ],
+    "answer": 0,
+    "explain": "Đích đến của động từ di chuyển 行きます dùng に (hoặc へ)."
+   },
+   {
+    "type": "choice",
+    "prompt": "はし ___ ごはんを 食べます。",
+    "options": [
+     "で",
+     "を",
+     "に",
+     "が"
+    ],
+    "answer": 0,
+    "explain": "Công cụ để làm hành động dùng で: はしで = bằng đũa."
+   },
+   {
+    "type": "order",
+    "answer": "わたし は パン を 食べます。",
+    "vi": "Tôi ăn bánh mì."
+   },
+   {
+    "type": "order",
+    "answer": "九時 に 学校 へ 行きます。",
+    "vi": "Tôi đi học lúc 9 giờ."
+   },
+   {
+    "type": "order",
+    "answer": "バス で 会社 に 行きます。",
+    "vi": "Tôi đi làm bằng xe buýt."
+   },
+   {
+    "type": "order",
+    "answer": "店 で 本 を 買います。",
+    "vi": "Tôi mua sách ở cửa hàng."
+   }
+  ]
+ },
+ {
+  "id": "masu-forms",
+  "emoji": "⏳",
+  "name_vi": "Thể ます: hiện tại, phủ định, quá khứ",
+  "name_en": "Polite verb forms (masu)",
+  "level": "N5",
+  "summary": "Đuôi ます dùng cho câu lịch sự. Đổi đuôi để nói phủ định (ません), quá khứ (ました) và quá khứ phủ định (ませんでした).",
+  "formulas": [
+   {
+    "label": "Hiện tại / tương lai",
+    "pattern": "V-ます"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "V-ません"
+   },
+   {
+    "label": "Quá khứ",
+    "pattern": "V-ました"
+   },
+   {
+    "label": "Quá khứ phủ định",
+    "pattern": "V-ませんでした"
+   }
+  ],
+  "points": [
+   "V-ます dùng cho cả thói quen và tương lai: あした 行きます = mai tôi sẽ đi.",
+   "ます đọc gần như “mas” (âm u rất nhẹ).",
+   "Quá khứ phủ định là ませんでした (ません + でした).",
+   "Từ chỉ quá khứ (きのう, 先週) đi với ました; tương lai (あした, 来週) đi với ます.",
+   "何も (không… gì) luôn đi với động từ phủ định: 何も 食べませんでした."
+  ],
+  "examples": [
+   {
+    "ja": "毎日 日本語を 話します。",
+    "r": "まいにち にほんごを はなします。",
+    "vi": "Hằng ngày tôi nói tiếng Nhật."
+   },
+   {
+    "ja": "わたしは コーヒーを 飲みません。",
+    "r": "わたしは コーヒーを のみません。",
+    "vi": "Tôi không uống cà phê."
+   },
+   {
+    "ja": "きのう 友だちに 会いました。",
+    "r": "きのう ともだちに あいました。",
+    "vi": "Hôm qua tôi đã gặp bạn."
+   },
+   {
+    "ja": "先週 学校へ 行きませんでした。",
+    "r": "せんしゅう がっこうへ いきませんでした。",
+    "vi": "Tuần trước tôi đã không đi học."
+   },
+   {
+    "ja": "あした 山へ 行きますか。",
+    "r": "あした やまへ いきますか。",
+    "vi": "Ngày mai bạn có đi núi không?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "きのう 本を ___。",
+    "options": [
+     "読みます",
+     "読みません",
+     "読みました",
+     "読みましょう"
+    ],
+    "answer": 2,
+    "explain": "きのう (hôm qua) là quá khứ nên dùng 読みました."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：きのう 学校へ 行きましたか。 B：いいえ、___。",
+    "options": [
+     "行きました",
+     "行きませんでした",
+     "行きます",
+     "行きません"
+    ],
+    "answer": 1,
+    "explain": "Câu hỏi ở quá khứ, trả lời いいえ nên dùng quá khứ phủ định ませんでした."
+   },
+   {
+    "type": "choice",
+    "prompt": "あした 友だちに ___。",
+    "options": [
+     "会います",
+     "会いました",
+     "会いませんでした",
+     "会いまして"
+    ],
+    "answer": 0,
+    "explain": "あした (ngày mai) là tương lai, dùng thể ます hiện tại."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：毎日 新聞を 読みますか。 B：いいえ、___。",
+    "options": [
+     "読みます",
+     "読みませんでした",
+     "読みました",
+     "読みません"
+    ],
+    "answer": 3,
+    "explain": "Hỏi thói quen hằng ngày (hiện tại), trả lời phủ định nên dùng ません."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのう、何も ___。",
+    "options": [
+     "食べました",
+     "食べます",
+     "食べませんでした",
+     "食べましょう"
+    ],
+    "answer": 2,
+    "explain": "何も (không… gì) cần động từ phủ định; きのう là quá khứ nên dùng ませんでした."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：日曜日に 何を しましたか。 B：テレビを ___。",
+    "options": [
+     "見ます",
+     "見ません",
+     "見ましょう",
+     "見ました"
+    ],
+    "answer": 3,
+    "explain": "Câu hỏi ở quá khứ (しましたか) nên trả lời bằng 見ました."
+   },
+   {
+    "type": "order",
+    "answer": "きのう 本 を 読みました。",
+    "vi": "Hôm qua tôi đã đọc sách."
+   },
+   {
+    "type": "order",
+    "answer": "あした 山 へ 行きます。",
+    "vi": "Ngày mai tôi sẽ đi núi."
+   },
+   {
+    "type": "order",
+    "answer": "先週 学校 へ 行きませんでした。",
+    "vi": "Tuần trước tôi đã không đi học."
+   },
+   {
+    "type": "order",
+    "answer": "わたし は コーヒー を 飲みません。",
+    "vi": "Tôi không uống cà phê."
+   }
+  ]
+ },
+ {
+  "id": "i-adjectives",
+  "emoji": "🌶️",
+  "name_vi": "Tính từ đuôi い",
+  "name_en": "i-adjectives",
+  "level": "N5",
+  "summary": "Tính từ đuôi い (高い, 新しい…) tự đổi đuôi để thành phủ định (くない) và quá khứ (かった). Đứng trước danh từ thì giữ nguyên dạng.",
+  "formulas": [
+   {
+    "label": "Khẳng định",
+    "pattern": "A-い です"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "A-くない です"
+   },
+   {
+    "label": "Quá khứ",
+    "pattern": "A-かった です"
+   },
+   {
+    "label": "Quá khứ phủ định",
+    "pattern": "A-くなかった です"
+   },
+   {
+    "label": "Bổ nghĩa danh từ",
+    "pattern": "A-い N"
+   }
+  ],
+  "points": [
+   "Chia ở chính tính từ, です giữ nguyên: 高かったです (đúng), 高いでした (sai).",
+   "Phủ định: bỏ い, thêm くないです (hoặc くありません).",
+   "Ngoại lệ いい: よくないです, よかったです (không nói いくない, いかった).",
+   "きれい, ゆうめい tận cùng bằng い nhưng là tính từ -na.",
+   "Trước danh từ dùng thẳng, không thêm な: 高い 山."
+  ],
+  "examples": [
+   {
+    "ja": "この 本は 高いです。",
+    "r": "この ほんは たかいです。",
+    "vi": "Quyển sách này đắt."
+   },
+   {
+    "ja": "あの 店は 安くないです。",
+    "r": "あの みせは やすくないです。",
+    "vi": "Cửa hàng kia không rẻ."
+   },
+   {
+    "ja": "きのうは 天気が よかったです。",
+    "r": "きのうは てんきが よかったです。",
+    "vi": "Hôm qua trời đẹp."
+   },
+   {
+    "ja": "先週の テストは むずかしくなかったです。",
+    "r": "せんしゅうの テストは むずかしくなかったです。",
+    "vi": "Bài kiểm tra tuần trước không khó."
+   },
+   {
+    "ja": "大きい 車を 買いました。",
+    "r": "おおきい くるまを かいました。",
+    "vi": "Tôi đã mua một chiếc xe lớn."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "A：その かばんは 新しいですか。 B：いいえ、___ です。",
+    "options": [
+     "新しい",
+     "新しいじゃない",
+     "新しかった",
+     "新しくない"
+    ],
+    "answer": 3,
+    "explain": "Phủ định tính từ -i: bỏ い thêm くない → 新しくないです. Không dùng じゃない cho tính từ -i."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのうの テストは ___。",
+    "options": [
+     "やさしいでした",
+     "やさしかったです",
+     "やさしくないでした",
+     "やさしいです"
+    ],
+    "answer": 1,
+    "explain": "Quá khứ tính từ -i chia ở tính từ: やさしい → やさしかったです; いでした là sai."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：きのうの 天気は どうでしたか。 B：とても ___ です。",
+    "options": [
+     "よかった",
+     "いかった",
+     "いい",
+     "いくなかった"
+    ],
+    "answer": 0,
+    "explain": "いい là ngoại lệ: quá khứ là よかった. Hỏi về hôm qua nên không dùng いい (hiện tại)."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ 山ですね。",
+    "options": [
+     "高いな",
+     "高く",
+     "高い",
+     "高かったの"
+    ],
+    "answer": 2,
+    "explain": "Tính từ -i bổ nghĩa danh từ giữ nguyên dạng: 高い 山, không thêm な hay の."
+   },
+   {
+    "type": "choice",
+    "prompt": "この 店は ___ ありません。",
+    "options": [
+     "安く",
+     "安い",
+     "安いじゃ",
+     "安くて"
+    ],
+    "answer": 0,
+    "explain": "Phủ định kiểu くありません: 安い → 安く + ありません."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：先週は いそがしかったですか。 B：いいえ、___ です。",
+    "options": [
+     "いそがしくない",
+     "いそがしくなかった",
+     "いそがしいじゃなかった",
+     "いそがしかった"
+    ],
+    "answer": 1,
+    "explain": "Hỏi về quá khứ, trả lời phủ định → quá khứ phủ định くなかったです."
+   },
+   {
+    "type": "order",
+    "answer": "この 本 は 高い です。",
+    "vi": "Quyển sách này đắt."
+   },
+   {
+    "type": "order",
+    "answer": "あの 店 は 安くない です。",
+    "vi": "Cửa hàng kia không rẻ."
+   },
+   {
+    "type": "order",
+    "answer": "きのう は 天気 が よかった です。",
+    "vi": "Hôm qua trời đẹp."
+   },
+   {
+    "type": "order",
+    "answer": "大きい 車 を 買いました。",
+    "vi": "Tôi đã mua một chiếc xe lớn."
+   }
+  ]
+ },
+ {
+  "id": "na-adjectives",
+  "emoji": "🌸",
+  "name_vi": "Tính từ đuôi な",
+  "name_en": "na-adjectives",
+  "level": "N5",
+  "summary": "Tính từ -na (しずか, きれい, げんき…) chia giống danh từ: です／じゃありません／でした. Đứng trước danh từ phải thêm な.",
+  "formulas": [
+   {
+    "label": "Khẳng định",
+    "pattern": "A-na です"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "A-na じゃありません"
+   },
+   {
+    "label": "Quá khứ",
+    "pattern": "A-na でした"
+   },
+   {
+    "label": "Quá khứ phủ định",
+    "pattern": "A-na じゃありませんでした"
+   },
+   {
+    "label": "Bổ nghĩa danh từ",
+    "pattern": "A-na な N"
+   }
+  ],
+  "points": [
+   "Trước danh từ bắt buộc có な: しずかな 山, ゆうめいな 店.",
+   "Chia ở phần です như danh từ, không đổi đuôi như tính từ -i: きれいじゃありません (không phải きれくない).",
+   "きれい, ゆうめい, きらい tận cùng bằng い nhưng là tính từ -na.",
+   "すき, きらい, じょうず, へた đi với が: 日本語が じょうずです.",
+   "Văn nói có thể dùng じゃないです thay じゃありません."
+  ],
+  "examples": [
+   {
+    "ja": "この 川は きれいです。",
+    "r": "この かわは きれいです。",
+    "vi": "Con sông này sạch đẹp."
+   },
+   {
+    "ja": "ここは しずかじゃありません。",
+    "r": "ここは しずかじゃありません。",
+    "vi": "Ở đây không yên tĩnh."
+   },
+   {
+    "ja": "先生は げんきでした。",
+    "r": "せんせいは げんきでした。",
+    "vi": "Thầy giáo đã khoẻ."
+   },
+   {
+    "ja": "ゆうめいな 店で 食べました。",
+    "r": "ゆうめいな みせで たべました。",
+    "vi": "Tôi đã ăn ở một quán nổi tiếng."
+   },
+   {
+    "ja": "マイさんは 日本語が じょうずです。",
+    "r": "マイさんは にほんごが じょうずです。",
+    "vi": "Chị Mai giỏi tiếng Nhật."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "ここは ___ 山です。",
+    "options": [
+     "しずか",
+     "しずかな",
+     "しずかい",
+     "しずかの"
+    ],
+    "answer": 1,
+    "explain": "Tính từ -na đứng trước danh từ phải thêm な: しずかな 山."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：その 花は きれいですか。 B：いいえ、___。",
+    "options": [
+     "きれくないです",
+     "きれいくないです",
+     "きれいです",
+     "きれいじゃありません"
+    ],
+    "answer": 3,
+    "explain": "きれい là tính từ -na nên phủ định bằng じゃありません, không chia くない."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのうは ひま ___。",
+    "options": [
+     "でした",
+     "かったです",
+     "くなかったです",
+     "ですでした"
+    ],
+    "answer": 0,
+    "explain": "Quá khứ của tính từ -na giống danh từ: ひまでした."
+   },
+   {
+    "type": "choice",
+    "prompt": "ミンさんは 日本語 ___ じょうずです。",
+    "options": [
+     "を",
+     "に",
+     "が",
+     "で"
+    ],
+    "answer": 2,
+    "explain": "じょうず (giỏi) đi với が để chỉ lĩnh vực giỏi: 日本語が じょうずです."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは 魚が ___ です。",
+    "options": [
+     "すきな",
+     "すきい",
+     "すきの",
+     "すき"
+    ],
+    "answer": 3,
+    "explain": "Đứng cuối câu trước です thì không có な: すきです. な chỉ dùng khi có danh từ phía sau."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：パーティーは にぎやかでしたか。 B：いいえ、にぎやか ___。",
+    "options": [
+     "くなかったです",
+     "じゃありません",
+     "じゃありませんでした",
+     "でした"
+    ],
+    "answer": 2,
+    "explain": "Hỏi quá khứ, trả lời phủ định → quá khứ phủ định của tính từ -na: じゃありませんでした."
+   },
+   {
+    "type": "order",
+    "answer": "この 川 は きれい です。",
+    "vi": "Con sông này sạch đẹp."
+   },
+   {
+    "type": "order",
+    "answer": "ここ は しずか じゃありません。",
+    "vi": "Ở đây không yên tĩnh."
+   },
+   {
+    "type": "order",
+    "answer": "ゆうめいな 店 で 食べました。",
+    "vi": "Tôi đã ăn ở một quán nổi tiếng."
+   },
+   {
+    "type": "order",
+    "answer": "マイさん は 日本語 が じょうず です。",
+    "vi": "Chị Mai giỏi tiếng Nhật."
+   }
+  ]
+ },
+ {
+  "id": "aru-iru",
+  "emoji": "📍",
+  "name_vi": "あります・います (có, ở)",
+  "name_en": "aru and iru: there is",
+  "level": "N5",
+  "summary": "あります dùng cho đồ vật, cây cối, sự kiện (không tự cử động); います dùng cho người và động vật. Dùng để nói có cái gì, có ai.",
+  "formulas": [
+   {
+    "label": "Đồ vật, sự kiện",
+    "pattern": "N が あります"
+   },
+   {
+    "label": "Người, động vật",
+    "pattern": "N が います"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "N が ありません／いません"
+   },
+   {
+    "label": "Không có gì / ai",
+    "pattern": "何も ありません／だれも いません"
+   }
+  ],
+  "points": [
+   "Cây, hoa dù là sinh vật vẫn dùng あります; cá, chó, mèo dùng います.",
+   "Xe cộ, robot là đồ vật → あります (dù chạy được).",
+   "Phủ định: ありません, いません; quá khứ: ありました, いました.",
+   "Hỏi “có gì” dùng 何が, “có ai” dùng だれが; trả lời “không có gì/ai”: 何も ありません, だれも いません.",
+   "あります còn nghĩa “có, sở hữu” và “có sự kiện”: あした テストが あります."
+  ],
+  "examples": [
+   {
+    "ja": "本が あります。",
+    "r": "ほんが あります。",
+    "vi": "Có quyển sách."
+   },
+   {
+    "ja": "男の子が います。",
+    "r": "おとこのこが います。",
+    "vi": "Có một cậu bé."
+   },
+   {
+    "ja": "だれも いません。",
+    "r": "だれも いません。",
+    "vi": "Không có ai cả."
+   },
+   {
+    "ja": "あした 日本語の テストが あります。",
+    "r": "あした にほんごの テストが あります。",
+    "vi": "Ngày mai có bài kiểm tra tiếng Nhật."
+   },
+   {
+    "ja": "わたしは 車が ありません。",
+    "r": "わたしは くるまが ありません。",
+    "vi": "Tôi không có xe hơi."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "花が ___。",
+    "options": [
+     "います",
+     "あります",
+     "いります",
+     "あるます"
+    ],
+    "answer": 1,
+    "explain": "Hoa là thực vật, không tự di chuyển nên dùng あります."
+   },
+   {
+    "type": "choice",
+    "prompt": "魚が ___。",
+    "options": [
+     "います",
+     "あります",
+     "いります",
+     "いるます"
+    ],
+    "answer": 0,
+    "explain": "Cá là động vật nên dùng います."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：何が ありますか。 B：___ ありません。",
+    "options": [
+     "だれも",
+     "何が",
+     "何を",
+     "何も"
+    ],
+    "answer": 3,
+    "explain": "“Không có gì cả” = 何も ありません; だれも dùng cho người."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：だれが いますか。 B：先生 ___ います。",
+    "options": [
+     "が",
+     "を",
+     "で",
+     "へ"
+    ],
+    "answer": 0,
+    "explain": "Chủ thể tồn tại đi với が; câu hỏi だれが thì trả lời cũng dùng が."
+   },
+   {
+    "type": "choice",
+    "prompt": "あした テストが ___。",
+    "options": [
+     "います",
+     "いません",
+     "あります",
+     "ありました"
+    ],
+    "answer": 2,
+    "explain": "Sự kiện (bài kiểm tra) dùng あります; あした là tương lai nên không dùng ありました."
+   },
+   {
+    "type": "choice",
+    "prompt": "へやに だれも ___。",
+    "options": [
+     "あります",
+     "いません",
+     "ありません",
+     "います"
+    ],
+    "answer": 1,
+    "explain": "だれも (không ai) đi với động từ phủ định; người dùng いる → いません."
+   },
+   {
+    "type": "order",
+    "answer": "本 が あります。",
+    "vi": "Có quyển sách."
+   },
+   {
+    "type": "order",
+    "answer": "男の子 が います。",
+    "vi": "Có một cậu bé."
+   },
+   {
+    "type": "order",
+    "answer": "だれ も いません。",
+    "vi": "Không có ai cả."
+   },
+   {
+    "type": "order",
+    "answer": "あした テスト が あります。",
+    "vi": "Ngày mai có bài kiểm tra."
+   }
+  ]
+ },
+ {
+  "id": "existence-place",
+  "emoji": "🏠",
+  "name_vi": "Vị trí: ở đâu có gì, ai ở đâu",
+  "name_en": "Location sentences",
+  "level": "N5",
+  "summary": "Hai mẫu nói về vị trí: “Ở chỗ N1 có N2” (N1 に N2 が あります／います) và “N1 ở chỗ N2” (N1 は N2 に あります／います).",
+  "formulas": [
+   {
+    "label": "Ở đâu có gì",
+    "pattern": "N1(nơi) に N2 が あります／います"
+   },
+   {
+    "label": "Cái gì ở đâu",
+    "pattern": "N1 は N2(nơi) に あります／います"
+   },
+   {
+    "label": "Vị trí chi tiết",
+    "pattern": "N の 上／下／中／前／となり に"
+   },
+   {
+    "label": "Nói gọn",
+    "pattern": "N1 は N2(nơi) です"
+   }
+  ],
+  "points": [
+   "Mẫu 1 trả lời “ở đó có gì”: vật/người là thông tin mới, dùng が.",
+   "Mẫu 2 trả lời “nó ở đâu”: vật/người đã biết làm chủ đề với は.",
+   "Nơi tồn tại dùng に, không dùng で: つくえの 上に あります.",
+   "Vị trí: N の 上 (trên), 下 (dưới), 中 (trong), 前 (trước), うしろ (sau), となり (bên cạnh).",
+   "Mẫu 2 có thể rút gọn: トイレは あそこに あります = トイレは あそこです."
+  ],
+  "examples": [
+   {
+    "ja": "つくえの 上に 本が あります。",
+    "r": "つくえの うえに ほんが あります。",
+    "vi": "Trên bàn có quyển sách."
+   },
+   {
+    "ja": "川に 魚が います。",
+    "r": "かわに さかなが います。",
+    "vi": "Dưới sông có cá."
+   },
+   {
+    "ja": "母は 店に います。",
+    "r": "ははは みせに います。",
+    "vi": "Mẹ tôi đang ở cửa hàng."
+   },
+   {
+    "ja": "駅の 前に 店が あります。",
+    "r": "えきの まえに みせが あります。",
+    "vi": "Trước nhà ga có cửa hàng."
+   },
+   {
+    "ja": "ミンさんの かばんは いすの 下に あります。",
+    "r": "ミンさんの かばんは いすの したに あります。",
+    "vi": "Cặp của anh Minh ở dưới ghế."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "つくえの 上 ___ 本が あります。",
+    "options": [
+     "に",
+     "で",
+     "を",
+     "へ"
+    ],
+    "answer": 0,
+    "explain": "Nơi tồn tại của vật đi với に: つくえの 上に = ở trên bàn."
+   },
+   {
+    "type": "choice",
+    "prompt": "かばんの 中に さいふ ___ あります。",
+    "options": [
+     "を",
+     "で",
+     "が",
+     "に"
+    ],
+    "answer": 2,
+    "explain": "Vật tồn tại (thông tin mới) đi với が: さいふが あります."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：田中さんは どこに いますか。 B：田中さんは 駅 ___ います。",
+    "options": [
+     "で",
+     "を",
+     "が",
+     "に"
+    ],
+    "answer": 3,
+    "explain": "Với います/あります, nơi chốn dùng に; で chỉ dùng cho nơi diễn ra hành động."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：山田さんは どこに いますか。 B：ミンさんの ___ に います。",
+    "options": [
+     "どこ",
+     "となり",
+     "ここ",
+     "それ"
+    ],
+    "answer": 1,
+    "explain": "N の となり = bên cạnh N; các từ còn lại không đứng sau の để chỉ vị trí."
+   },
+   {
+    "type": "choice",
+    "prompt": "木の 下に いぬが ___。",
+    "options": [
+     "あります",
+     "ありません",
+     "います",
+     "いりません"
+    ],
+    "answer": 2,
+    "explain": "Chó là động vật nên dùng います."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしの 車 ___ 駅の 前に あります。",
+    "options": [
+     "を",
+     "で",
+     "に",
+     "は"
+    ],
+    "answer": 3,
+    "explain": "Mẫu “N は nơi に あります”: vật đã biết (xe của tôi) làm chủ đề với は."
+   },
+   {
+    "type": "order",
+    "answer": "つくえ の 上 に 本 が あります。",
+    "vi": "Trên bàn có quyển sách."
+   },
+   {
+    "type": "order",
+    "answer": "川 に 魚 が います。",
+    "vi": "Dưới sông có cá."
+   },
+   {
+    "type": "order",
+    "answer": "母 は 店 に います。",
+    "vi": "Mẹ tôi đang ở cửa hàng."
+   },
+   {
+    "type": "order",
+    "answer": "駅 の 前 に 店 が あります。",
+    "vi": "Trước nhà ga có cửa hàng."
+   }
+  ]
+ },
+ {
+  "id": "want",
+  "emoji": "💭",
+  "name_vi": "Muốn: ～たい và ほしい",
+  "name_en": "Wanting: -tai and hoshii",
+  "level": "N5",
+  "summary": "ほしい = muốn có (một vật); V-たい = muốn làm (một hành động). Dùng để nói mong muốn của bản thân hoặc hỏi người nghe.",
+  "formulas": [
+   {
+    "label": "Muốn có",
+    "pattern": "N が ほしいです"
+   },
+   {
+    "label": "Muốn làm",
+    "pattern": "V(bỏ ます) たいです"
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "ほしくないです／V たくないです"
+   },
+   {
+    "label": "Quá khứ",
+    "pattern": "ほしかったです／V たかったです"
+   }
+  ],
+  "points": [
+   "たい ghép vào gốc động từ thể ます: 食べます → 食べたいです, 行きます → 行きたいです.",
+   "ほしい và たい chia như tính từ -i: ほしくないです, 行きたかったです.",
+   "Với ほしい, vật muốn có đi với が: 車が ほしいです (không dùng を).",
+   "Với V-たい, tân ngữ dùng を hoặc が đều được: 水を／が 飲みたいです.",
+   "Chỉ dùng cho mong muốn của mình hoặc khi hỏi người nghe; không nói thẳng người khác muốn gì."
+  ],
+  "examples": [
+   {
+    "ja": "新しい 車が ほしいです。",
+    "r": "あたらしい くるまが ほしいです。",
+    "vi": "Tôi muốn có một chiếc xe mới."
+   },
+   {
+    "ja": "日本へ 行きたいです。",
+    "r": "にほんへ いきたいです。",
+    "vi": "Tôi muốn đi Nhật."
+   },
+   {
+    "ja": "今 何が 食べたいですか。",
+    "r": "いま なにが たべたいですか。",
+    "vi": "Bây giờ bạn muốn ăn gì?"
+   },
+   {
+    "ja": "今日は 何も 買いたくないです。",
+    "r": "きょうは なにも かいたくないです。",
+    "vi": "Hôm nay tôi không muốn mua gì cả."
+   },
+   {
+    "ja": "子どもの とき、いぬが ほしかったです。",
+    "r": "こどもの とき、いぬが ほしかったです。",
+    "vi": "Hồi nhỏ tôi đã muốn có một con chó."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "新しい かばん ___ ほしいです。",
+    "options": [
+     "が",
+     "を",
+     "に",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "ほしい là tính từ, vật muốn có đi với が."
+   },
+   {
+    "type": "choice",
+    "prompt": "日本へ ___ です。",
+    "options": [
+     "行くたい",
+     "行きたく",
+     "行きました",
+     "行きたい"
+    ],
+    "answer": 3,
+    "explain": "たい ghép vào gốc thể ます: 行きます → 行きたいです; không ghép vào thể từ điển (行く)."
+   },
+   {
+    "type": "choice",
+    "prompt": "のどが かわきました。水が ___。",
+    "options": [
+     "飲むたいです",
+     "飲みたいです",
+     "飲みたいでした",
+     "飲みほしいです"
+    ],
+    "answer": 1,
+    "explain": "Muốn làm hành động (uống) dùng V-たい; たい chia như tính từ -i nên không có たいでした."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：何が ほしいですか。 B：何も ___。",
+    "options": [
+     "ほしくないです",
+     "ほしいです",
+     "ほしいじゃないです",
+     "ほしかったです"
+    ],
+    "answer": 0,
+    "explain": "何も cần dạng phủ định; ほしい chia như tính từ -i → ほしくないです."
+   },
+   {
+    "type": "choice",
+    "prompt": "子どもの とき、先生に ___ です。",
+    "options": [
+     "なりたい",
+     "なりたかった",
+     "なるたかった",
+     "なりたいでした"
+    ],
+    "answer": 1,
+    "explain": "子どもの とき (hồi nhỏ) là quá khứ → なりたかったです (chia như tính từ -i)."
+   },
+   {
+    "type": "choice",
+    "prompt": "パンが ___ です。",
+    "options": [
+     "たい",
+     "ほしいな",
+     "ほしい",
+     "ほしく"
+    ],
+    "answer": 2,
+    "explain": "Muốn có một vật (パン) dùng ほしい; たい phải gắn vào động từ."
+   },
+   {
+    "type": "order",
+    "answer": "新しい 車 が ほしい です。",
+    "vi": "Tôi muốn có một chiếc xe mới."
+   },
+   {
+    "type": "order",
+    "answer": "日本 へ 行きたい です。",
+    "vi": "Tôi muốn đi Nhật."
+   },
+   {
+    "type": "order",
+    "answer": "何 が 食べたい ですか。",
+    "vi": "Bạn muốn ăn gì?"
+   },
+   {
+    "type": "order",
+    "answer": "今日 は 何も 買いたくない です。",
+    "vi": "Hôm nay tôi không muốn mua gì cả."
+   }
+  ]
+ },
+ {
+  "id": "invitations",
+  "emoji": "🤝",
+  "name_vi": "Rủ rê: ～ませんか・～ましょう",
+  "name_en": "Invitations: masen ka / mashou",
+  "level": "N5",
+  "summary": "V-ませんか dùng để mời, rủ người khác một cách lịch sự (“…không?”); V-ましょう dùng để đề nghị cùng làm (“…nhé/thôi”).",
+  "formulas": [
+   {
+    "label": "Mời, rủ",
+    "pattern": "V(bỏ ます) ませんか"
+   },
+   {
+    "label": "Đề nghị cùng làm",
+    "pattern": "V(bỏ ます) ましょう"
+   },
+   {
+    "label": "Đề nghị giúp",
+    "pattern": "V(bỏ ます) ましょうか"
+   },
+   {
+    "label": "Nhận lời",
+    "pattern": "ええ、V(bỏ ます) ましょう"
+   }
+  ],
+  "points": [
+   "～ませんか có dạng phủ định nhưng nghĩa là lời mời, lịch sự và tôn trọng ý người nghe.",
+   "Nhận lời: ええ、いいですね／ええ、～ましょう.",
+   "Từ chối khéo: ちょっと… (bỏ lửng), tránh nói thẳng いいえ.",
+   "～ましょうか còn nghĩa “để tôi… nhé?” khi đề nghị giúp đỡ.",
+   "Thường đi kèm いっしょに (cùng nhau): いっしょに 行きませんか."
+  ],
+  "examples": [
+   {
+    "ja": "いっしょに ごはんを 食べませんか。",
+    "r": "いっしょに ごはんを たべませんか。",
+    "vi": "Cùng đi ăn cơm không?"
+   },
+   {
+    "ja": "ええ、食べましょう。",
+    "r": "ええ、たべましょう。",
+    "vi": "Ừ, ăn thôi."
+   },
+   {
+    "ja": "土曜日に 山へ 行きませんか。",
+    "r": "どようびに やまへ いきませんか。",
+    "vi": "Thứ Bảy đi núi không?"
+   },
+   {
+    "ja": "ちょっと 休みましょう。",
+    "r": "ちょっと やすみましょう。",
+    "vi": "Nghỉ một chút nhé."
+   },
+   {
+    "ja": "駅で 会いましょう。",
+    "r": "えきで あいましょう。",
+    "vi": "Gặp nhau ở ga nhé."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "A：あした、いっしょに 山へ ___。 B：ええ、行きましょう。",
+    "options": [
+     "行きましたか",
+     "行くませんか",
+     "行きませんでしたか",
+     "行きませんか"
+    ],
+    "answer": 3,
+    "explain": "Rủ người khác (ngày mai) dùng V-ませんか; ghép vào gốc thể ます, không ghép vào 行く."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：いっしょに ごはんを 食べませんか。 B：ええ、___。",
+    "options": [
+     "食べませんか",
+     "食べました",
+     "食べたくないです",
+     "食べましょう"
+    ],
+    "answer": 3,
+    "explain": "Nhận lời mời: ええ、V-ましょう (…thôi)."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：土曜日に テニスを しませんか。 B：土曜日は ___…。",
+    "options": [
+     "ちょっと",
+     "はい",
+     "ええ",
+     "そう"
+    ],
+    "answer": 0,
+    "explain": "Từ chối khéo bằng cách nói ちょっと… rồi bỏ lửng."
+   },
+   {
+    "type": "choice",
+    "prompt": "つかれましたね。ちょっと ___。",
+    "options": [
+     "休むましょう",
+     "休みましょか",
+     "休みましょう",
+     "休みますしょう"
+    ],
+    "answer": 2,
+    "explain": "Đề nghị cùng làm: gốc thể ます (休み) + ましょう."
+   },
+   {
+    "type": "choice",
+    "prompt": "駅 ___ 会いましょう。",
+    "options": [
+     "を",
+     "で",
+     "が",
+     "へ"
+    ],
+    "answer": 1,
+    "explain": "Nơi diễn ra hành động gặp mặt dùng で: 駅で 会いましょう."
+   },
+   {
+    "type": "choice",
+    "prompt": "A：にもつが 多いですね。一つ ___。 B：ありがとうございます。",
+    "options": [
+     "もちませんか",
+     "もちましたか",
+     "もちましょうか",
+     "もちたいですか"
+    ],
+    "answer": 2,
+    "explain": "Đề nghị giúp người khác (“để tôi xách giúp nhé?”) dùng V-ましょうか."
+   },
+   {
+    "type": "order",
+    "answer": "いっしょに ごはん を 食べませんか。",
+    "vi": "Cùng đi ăn cơm không?"
+   },
+   {
+    "type": "order",
+    "answer": "土曜日 に 山 へ 行きませんか。",
+    "vi": "Thứ Bảy đi núi không?"
+   },
+   {
+    "type": "order",
+    "answer": "駅 で 会いましょう。",
+    "vi": "Gặp nhau ở ga nhé."
+   },
+   {
+    "type": "order",
+    "answer": "ここ で ちょっと 休みましょう。",
+    "vi": "Nghỉ ở đây một chút nhé."
+   }
+  ]
+ },
+ {
+  "id": "verb-groups",
+  "emoji": "🧩",
+  "name_vi": "3 nhóm động từ & thể từ điển",
+  "name_en": "Verb groups & dictionary form",
+  "level": "N5",
+  "summary": "Động từ tiếng Nhật chia làm 3 nhóm, nhóm quyết định cách chia mọi thể khác. Thể từ điển là dạng gốc (tra trong từ điển), dùng trong văn nói thân mật.",
+  "formulas": [
+   {
+    "label": "Nhóm 1 (trước ます là cột い → đổi sang cột う)",
+    "pattern": "かいます → かう ・ のみます → のむ"
+   },
+   {
+    "label": "Nhóm 2 (bỏ ます + る)",
+    "pattern": "たべます → たべる ・ みます → みる"
+   },
+   {
+    "label": "Nhóm 3 (bất quy tắc)",
+    "pattern": "します → する ・ きます → くる"
+   },
+   {
+    "label": "Ngoại lệ nhóm 2 (cột い nhưng vẫn + る)",
+    "pattern": "おきます → おきる ・ かります → かりる"
+   }
+  ],
+  "points": [
+   "Âm trước ます thuộc cột い (かき, のみ, まち) thường là nhóm 1: đổi い → う.",
+   "Âm trước ます thuộc cột え (たべ, ね) là nhóm 2: bỏ ます thêm る.",
+   "Nhóm 3 chỉ có する, くる và 'danh từ + する' (べんきょうする).",
+   "Vài động từ cột い là nhóm 2 cần học thuộc: おきる, みる, かりる, あびる, できる.",
+   "Thể từ điển đứng trước ことができます, まえに, và dùng thay ～ます khi nói thân mật."
+  ],
+  "examples": [
+   {
+    "ja": "毎日日本語を勉強する。",
+    "r": "まいにち にほんごを べんきょうする。",
+    "vi": "Mỗi ngày (tôi) học tiếng Nhật."
+   },
+   {
+    "ja": "朝ご飯を食べる。",
+    "r": "あさごはんを たべる。",
+    "vi": "Ăn sáng."
+   },
+   {
+    "ja": "明日友だちが来る。",
+    "r": "あした ともだちが くる。",
+    "vi": "Ngày mai bạn (tôi) sẽ đến."
+   },
+   {
+    "ja": "七時に起きる。",
+    "r": "しちじに おきる。",
+    "vi": "Dậy lúc 7 giờ."
+   },
+   {
+    "ja": "今日は早く家に帰る。",
+    "r": "きょうは はやく うちに かえる。",
+    "vi": "Hôm nay về nhà sớm."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "「のみます」の じしょけいは ___ です。",
+    "options": [
+     "のみる",
+     "のまる",
+     "のむ",
+     "のめる"
+    ],
+    "answer": 2,
+    "explain": "のみます: み thuộc cột い → nhóm 1, đổi み → む: のむ."
+   },
+   {
+    "type": "choice",
+    "prompt": "「たべます」の じしょけいは ___ です。",
+    "options": [
+     "たべる",
+     "たぶ",
+     "たべう",
+     "たばる"
+    ],
+    "answer": 0,
+    "explain": "たべます: べ thuộc cột え → nhóm 2, bỏ ます thêm る: たべる."
+   },
+   {
+    "type": "choice",
+    "prompt": "「きます」(đến) の じしょけいは ___ です。",
+    "options": [
+     "きる",
+     "くる",
+     "きう",
+     "こる"
+    ],
+    "answer": 1,
+    "explain": "きます là nhóm 3 bất quy tắc, thể từ điển là くる."
+   },
+   {
+    "type": "choice",
+    "prompt": "「かえります」(về) の じしょけいは ___ です。",
+    "options": [
+     "かえりる",
+     "かえる",
+     "かえう",
+     "かえす"
+    ],
+    "answer": 1,
+    "explain": "かえります: り thuộc cột い → nhóm 1, đổi り → る: かえる."
+   },
+   {
+    "type": "choice",
+    "prompt": "「します」の じしょけいは ___ です。",
+    "options": [
+     "する",
+     "しる",
+     "す",
+     "さる"
+    ],
+    "answer": 0,
+    "explain": "します là nhóm 3 bất quy tắc, thể từ điển là する."
+   },
+   {
+    "type": "choice",
+    "prompt": "「おきます」は だい ___ グループの どうしです。",
+    "options": [
+     "1",
+     "3",
+     "4",
+     "2"
+    ],
+    "answer": 3,
+    "explain": "おきます có き cột い nhưng là ngoại lệ thuộc nhóm 2 → おきる."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 毎日 日本語を 勉強する。",
+    "vi": "Tôi học tiếng Nhật mỗi ngày."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 明日 六時に 起きる。",
+    "vi": "Ngày mai tôi dậy lúc 6 giờ."
+   },
+   {
+    "type": "order",
+    "answer": "友だちと いっしょに 映画を 見る。",
+    "vi": "Xem phim cùng với bạn."
+   },
+   {
+    "type": "order",
+    "answer": "今日は 早く 家に 帰る。",
+    "vi": "Hôm nay về nhà sớm."
+   }
+  ]
+ },
+ {
+  "id": "te-form",
+  "emoji": "🔗",
+  "name_vi": "Thể て",
+  "name_en": "Te-form",
+  "level": "N5",
+  "summary": "Thể て dùng để nối các hành động theo thứ tự (làm A rồi làm B) và là gốc của rất nhiều mẫu câu như ～てください, ～ています, ～てもいい.",
+  "formulas": [
+   {
+    "label": "Nhóm 1 (う・つ・る → って)",
+    "pattern": "かう → かって ・ まつ → まって ・ かえる → かえって"
+   },
+   {
+    "label": "Nhóm 1 (む・ぶ・ぬ → んで)",
+    "pattern": "のむ → のんで ・ あそぶ → あそんで ・ しぬ → しんで"
+   },
+   {
+    "label": "Nhóm 1 (く → いて / ぐ → いで)",
+    "pattern": "かく → かいて ・ およぐ → およいで"
+   },
+   {
+    "label": "Nhóm 1 (す → して)",
+    "pattern": "はなす → はなして"
+   },
+   {
+    "label": "Ngoại lệ",
+    "pattern": "いく → いって"
+   },
+   {
+    "label": "Nhóm 2 (る → て)",
+    "pattern": "たべる → たべて ・ みる → みて"
+   },
+   {
+    "label": "Nhóm 3",
+    "pattern": "する → して ・ くる → きて"
+   }
+  ],
+  "points": [
+   "Câu nối bằng て: Vて、Vて、Vます — thì của cả câu do động từ cuối quyết định.",
+   "Học thuộc: う・つ・る→って, む・ぶ・ぬ→んで, く→いて, ぐ→いで, す→して.",
+   "いく là ngoại lệ duy nhất của nhóm 1: いって (không phải いいて).",
+   "Nhóm 2 chỉ cần bỏ る thêm て, kể cả các động từ ngoại lệ như おきる → おきて."
+  ],
+  "examples": [
+   {
+    "ja": "朝起きて、ご飯を食べます。",
+    "r": "あさ おきて、ごはんを たべます。",
+    "vi": "Sáng dậy rồi ăn cơm."
+   },
+   {
+    "ja": "デパートへ行って、服を買いました。",
+    "r": "デパートへ いって、ふくを かいました。",
+    "vi": "Tôi đi trung tâm thương mại rồi mua quần áo."
+   },
+   {
+    "ja": "友だちに会って、話しました。",
+    "r": "ともだちに あって、はなしました。",
+    "vi": "Gặp bạn rồi nói chuyện."
+   },
+   {
+    "ja": "家に帰って、休みます。",
+    "r": "うちに かえって、やすみます。",
+    "vi": "Về nhà rồi nghỉ ngơi."
+   },
+   {
+    "ja": "本を読んで、レポートを書きます。",
+    "r": "ほんを よんで、レポートを かきます。",
+    "vi": "Đọc sách rồi viết báo cáo."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "毎朝 コーヒーを ___、会社へ 行きます。",
+    "options": [
+     "のみて",
+     "のって",
+     "のいで",
+     "のんで"
+    ],
+    "answer": 3,
+    "explain": "のむ đuôi む → んで: のんで."
+   },
+   {
+    "type": "choice",
+    "prompt": "手紙を ___、出しました。",
+    "options": [
+     "かって",
+     "かきて",
+     "かいて",
+     "かんで"
+    ],
+    "answer": 2,
+    "explain": "かく đuôi く → いて: かいて."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのう 東京へ ___、友だちに 会いました。",
+    "options": [
+     "いいて",
+     "いきて",
+     "いって",
+     "いんで"
+    ],
+    "answer": 2,
+    "explain": "いく là ngoại lệ: thể て là いって."
+   },
+   {
+    "type": "choice",
+    "prompt": "ここで 少し ___ ください。",
+    "options": [
+     "まちて",
+     "まんで",
+     "まいて",
+     "まって"
+    ],
+    "answer": 3,
+    "explain": "まつ đuôi つ → って: まって."
+   },
+   {
+    "type": "choice",
+    "prompt": "日本語で ___ ください。",
+    "options": [
+     "はなって",
+     "はなして",
+     "はないて",
+     "はなんで"
+    ],
+    "answer": 1,
+    "explain": "はなす đuôi す → して: はなして."
+   },
+   {
+    "type": "choice",
+    "prompt": "テレビを ___、ねました。",
+    "options": [
+     "見て",
+     "見って",
+     "見んで",
+     "見いて"
+    ],
+    "answer": 0,
+    "explain": "見る là nhóm 2: bỏ る thêm て → 見て."
+   },
+   {
+    "type": "order",
+    "answer": "朝 起きて、 シャワーを あびて、 会社へ 行きます。",
+    "vi": "Sáng dậy, tắm vòi sen rồi đi làm."
+   },
+   {
+    "type": "order",
+    "answer": "スーパーへ 行って、 肉を 買いました。",
+    "vi": "Tôi đi siêu thị rồi mua thịt."
+   },
+   {
+    "type": "order",
+    "answer": "ご飯を 食べて、 少し 休みました。",
+    "vi": "Ăn cơm xong rồi nghỉ một chút."
+   },
+   {
+    "type": "order",
+    "answer": "図書館で 本を 読んで、 家へ 帰りました。",
+    "vi": "Đọc sách ở thư viện rồi về nhà."
+   }
+  ]
+ },
+ {
+  "id": "te-kudasai",
+  "emoji": "🙏",
+  "name_vi": "～てください",
+  "name_en": "Te-kudasai (requests)",
+  "level": "N5",
+  "summary": "～てください dùng để nhờ, yêu cầu, hướng dẫn hoặc mời ai đó làm gì một cách lịch sự.",
+  "formulas": [
+   {
+    "label": "Nhờ / yêu cầu",
+    "pattern": "Vて + ください → まって ください"
+   },
+   {
+    "label": "Lịch sự hơn",
+    "pattern": "Vて + くださいませんか → おしえて くださいませんか"
+   },
+   {
+    "label": "Lời mời",
+    "pattern": "どうぞ + Vて + ください → どうぞ すわって ください"
+   },
+   {
+    "label": "Xin vật (khác mẫu)",
+    "pattern": "N + を ください → みずを ください"
+   }
+  ],
+  "points": [
+   "Dùng khi nhờ vả, ra hướng dẫn, chỉ đường; với người trên nên dùng ～てくださいませんか.",
+   "Đi với どうぞ thành lời mời: どうぞ 入って ください.",
+   "Mở đầu bằng すみませんが、… cho lời nhờ nhẹ nhàng hơn.",
+   "N を ください là 'cho tôi cái…', còn Vてください là 'hãy làm…'."
+  ],
+  "examples": [
+   {
+    "ja": "ちょっと待ってください。",
+    "r": "ちょっと まって ください。",
+    "vi": "Xin đợi một chút."
+   },
+   {
+    "ja": "もう一度言ってください。",
+    "r": "もう いちど いって ください。",
+    "vi": "Xin hãy nói lại một lần nữa."
+   },
+   {
+    "ja": "ここに名前を書いてください。",
+    "r": "ここに なまえを かいて ください。",
+    "vi": "Hãy viết tên vào đây."
+   },
+   {
+    "ja": "どうぞ入ってください。",
+    "r": "どうぞ はいって ください。",
+    "vi": "Mời vào."
+   },
+   {
+    "ja": "すみませんが、駅への道を教えてくださいませんか。",
+    "r": "すみませんが、えきへの みちを おしえて くださいませんか。",
+    "vi": "Xin lỗi, anh chỉ giúp tôi đường đến ga được không ạ?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "すみません、ゆっくり ___ ください。",
+    "options": [
+     "話す",
+     "話して",
+     "話した",
+     "話し"
+    ],
+    "answer": 1,
+    "explain": "Mẫu nhờ vả là Vて + ください → 話して ください."
+   },
+   {
+    "type": "choice",
+    "prompt": "この 漢字の 読み方を ___ ください。",
+    "options": [
+     "教える",
+     "教えた",
+     "教えて",
+     "教え"
+    ],
+    "answer": 2,
+    "explain": "教える (nhóm 2) → 教えて + ください: hãy chỉ cho tôi."
+   },
+   {
+    "type": "choice",
+    "prompt": "どうぞ、こちらに ___ ください。",
+    "options": [
+     "すわって",
+     "すわる",
+     "すわった",
+     "すわります"
+    ],
+    "answer": 0,
+    "explain": "どうぞ + Vてください là lời mời: mời ngồi đây."
+   },
+   {
+    "type": "choice",
+    "prompt": "あした 九時に ___ ください。",
+    "options": [
+     "来る",
+     "来た",
+     "来いて",
+     "来て"
+    ],
+    "answer": 3,
+    "explain": "来る (nhóm 3) có thể て là 来て (きて)."
+   },
+   {
+    "type": "choice",
+    "prompt": "すみません、コーヒー ___ ください。",
+    "options": [
+     "に",
+     "を",
+     "で",
+     "が"
+    ],
+    "answer": 1,
+    "explain": "Xin một vật: N + を ください → コーヒーを ください."
+   },
+   {
+    "type": "choice",
+    "prompt": "先生、もう一度 言って ___ 。",
+    "options": [
+     "くださいませんか",
+     "くださいか",
+     "くださいです",
+     "くださいました"
+    ],
+    "answer": 0,
+    "explain": "Nhờ người trên nên dùng ～てくださいませんか cho lịch sự."
+   },
+   {
+    "type": "order",
+    "answer": "すみませんが、 この 本を かして ください。",
+    "vi": "Xin lỗi, cho tôi mượn quyển sách này."
+   },
+   {
+    "type": "order",
+    "answer": "ここに 名前と 住所を 書いて ください。",
+    "vi": "Hãy viết tên và địa chỉ vào đây."
+   },
+   {
+    "type": "order",
+    "answer": "どうぞ 中へ 入って ください。",
+    "vi": "Xin mời vào trong."
+   },
+   {
+    "type": "order",
+    "answer": "もう 少し ゆっくり 話して ください。",
+    "vi": "Xin hãy nói chậm hơn một chút."
+   }
+  ]
+ },
+ {
+  "id": "te-imasu",
+  "emoji": "⏳",
+  "name_vi": "～ています: đang làm / trạng thái",
+  "name_en": "Te-imasu (ongoing & states)",
+  "level": "N5",
+  "summary": "～ています diễn tả hành động đang diễn ra, trạng thái còn lại sau một thay đổi (đã kết hôn, đang sống ở…), hoặc thói quen, nghề nghiệp.",
+  "formulas": [
+   {
+    "label": "Đang làm",
+    "pattern": "Vて + います → 今 本を 読んで います"
+   },
+   {
+    "label": "Trạng thái kết quả",
+    "pattern": "けっこんして います ・ 東京に 住んで います"
+   },
+   {
+    "label": "Thói quen / công việc",
+    "pattern": "毎朝 はしって います ・ 病院で 仕事を して います"
+   },
+   {
+    "label": "Phủ định / chưa làm",
+    "pattern": "まだ + Vて + いません → まだ 食べて いません"
+   }
+  ],
+  "points": [
+   "今 + Vています = đang làm ngay lúc nói.",
+   "Với động từ chỉ sự thay đổi (けっこんする, すむ, しる, もつ, かける), ～ています là trạng thái hiện tại.",
+   "知っています (biết) nhưng phủ định là 知りません, không nói 知っていません.",
+   "まだ ～ていません = vẫn chưa làm (việc dự định sẽ làm).",
+   "Văn thân mật: ～ている, nói nhanh thành ～てる."
+  ],
+  "examples": [
+   {
+    "ja": "今、雨がふっています。",
+    "r": "いま、あめが ふって います。",
+    "vi": "Bây giờ trời đang mưa."
+   },
+   {
+    "ja": "姉は病院で仕事をしています。",
+    "r": "あねは びょういんで しごとを して います。",
+    "vi": "Chị tôi làm việc ở bệnh viện."
+   },
+   {
+    "ja": "田中さんはけっこんしています。",
+    "r": "たなかさんは けっこんして います。",
+    "vi": "Anh Tanaka đã kết hôn."
+   },
+   {
+    "ja": "わたしは東京に住んでいます。",
+    "r": "わたしは とうきょうに すんで います。",
+    "vi": "Tôi sống ở Tokyo."
+   },
+   {
+    "ja": "子どもたちはこうえんであそんでいます。",
+    "r": "こどもたちは こうえんで あそんで います。",
+    "vi": "Bọn trẻ đang chơi ở công viên."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "今 弟は 本を ___ います。",
+    "options": [
+     "読み",
+     "読む",
+     "読んだ",
+     "読んで"
+    ],
+    "answer": 3,
+    "explain": "Đang làm: Vて + います → 読んで います."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは 大学の 近くに ___ います。",
+    "options": [
+     "住み",
+     "住んで",
+     "住む",
+     "住んだ"
+    ],
+    "answer": 1,
+    "explain": "住んでいます: trạng thái đang sống ở đâu đó."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: 田中さんの 住所を 知って いますか。 B: いいえ、___ 。",
+    "options": [
+     "知りません",
+     "知っていません",
+     "知って いました",
+     "知ります"
+    ],
+    "answer": 0,
+    "explain": "Phủ định của 知っています là 知りません (ngoại lệ)."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: しゅくだいは もう しましたか。 B: いいえ、まだ ___ 。",
+    "options": [
+     "しません",
+     "しませんでした",
+     "していません",
+     "しています"
+    ],
+    "answer": 2,
+    "explain": "まだ + ～ていません = vẫn chưa làm."
+   },
+   {
+    "type": "choice",
+    "prompt": "兄は めがねを ___ います。",
+    "options": [
+     "かけ",
+     "かける",
+     "かけて",
+     "かけた"
+    ],
+    "answer": 2,
+    "explain": "Đeo kính là trạng thái: かけて います."
+   },
+   {
+    "type": "choice",
+    "prompt": "今、何を ___ いますか。",
+    "options": [
+     "し",
+     "する",
+     "した",
+     "して"
+    ],
+    "answer": 3,
+    "explain": "Hỏi đang làm gì: 何を して いますか."
+   },
+   {
+    "type": "order",
+    "answer": "今 母は 台所で 料理を 作って います。",
+    "vi": "Bây giờ mẹ đang nấu ăn trong bếp."
+   },
+   {
+    "type": "order",
+    "answer": "わたしの 兄は 東京に 住んで います。",
+    "vi": "Anh trai tôi sống ở Tokyo."
+   },
+   {
+    "type": "order",
+    "answer": "まだ 昼ご飯を 食べて いません。",
+    "vi": "Tôi vẫn chưa ăn trưa."
+   },
+   {
+    "type": "order",
+    "answer": "子どもたちが 外で あそんで います。",
+    "vi": "Bọn trẻ đang chơi ở ngoài."
+   }
+  ]
+ },
+ {
+  "id": "te-mo-ii",
+  "emoji": "✅",
+  "name_vi": "～てもいいです・～てはいけません",
+  "name_en": "Permission & prohibition",
+  "level": "N5",
+  "summary": "～てもいいです dùng để cho phép hoặc xin phép (làm… cũng được); ～てはいけません dùng để cấm (không được làm…).",
+  "formulas": [
+   {
+    "label": "Cho phép",
+    "pattern": "Vて + も いいです → すわっても いいです"
+   },
+   {
+    "label": "Xin phép",
+    "pattern": "Vて + も いいですか → 入っても いいですか"
+   },
+   {
+    "label": "Cấm",
+    "pattern": "Vて + は いけません → ここで たばこを すっては いけません"
+   },
+   {
+    "label": "Trả lời",
+    "pattern": "ええ、いいですよ ／ すみません、ちょっと…"
+   }
+  ],
+  "points": [
+   "～てもいいですか là cách hỏi xin phép lịch sự.",
+   "～てはいけません là cấm khá mạnh (nội quy, người trên nói với người dưới).",
+   "Không dùng ～てはいけません để từ chối người trên; nói すみません、ちょっと… cho khéo.",
+   "Văn thân mật: ～てもいい？ / ～ちゃだめ."
+  ],
+  "examples": [
+   {
+    "ja": "このペンを使ってもいいですか。",
+    "r": "この ペンを つかっても いいですか。",
+    "vi": "Tôi dùng cây bút này được không?"
+   },
+   {
+    "ja": "もう家に帰ってもいいですよ。",
+    "r": "もう うちに かえっても いいですよ。",
+    "vi": "Bạn về nhà được rồi đấy."
+   },
+   {
+    "ja": "ここで写真をとってもいいですか。",
+    "r": "ここで しゃしんを とっても いいですか。",
+    "vi": "Tôi chụp ảnh ở đây được không?"
+   },
+   {
+    "ja": "図書館で食べ物を食べてはいけません。",
+    "r": "としょかんで たべものを たべては いけません。",
+    "vi": "Không được ăn đồ ăn trong thư viện."
+   },
+   {
+    "ja": "試験のとき、本を見てはいけません。",
+    "r": "しけんの とき、ほんを みては いけません。",
+    "vi": "Khi thi không được xem sách."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "ここで 写真を ___ もいいですか。",
+    "options": [
+     "とり",
+     "とる",
+     "とって",
+     "とった"
+    ],
+    "answer": 2,
+    "explain": "Xin phép: Vて + もいいですか → とっても いいですか."
+   },
+   {
+    "type": "choice",
+    "prompt": "この へやに ___ もいいですか。",
+    "options": [
+     "入り",
+     "入って",
+     "入る",
+     "入った"
+    ],
+    "answer": 1,
+    "explain": "入る (nhóm 1, ngoại lệ đuôi る) → 入って + もいいですか."
+   },
+   {
+    "type": "choice",
+    "prompt": "びょういんで たばこを すって ___ 。",
+    "options": [
+     "はいけません",
+     "もいいです",
+     "ください",
+     "います"
+    ],
+    "answer": 0,
+    "explain": "Bệnh viện cấm hút thuốc → ～てはいけません."
+   },
+   {
+    "type": "choice",
+    "prompt": "テストの とき、となりの 人と 話して ___ いけません。",
+    "options": [
+     "も",
+     "は",
+     "が",
+     "を"
+    ],
+    "answer": 1,
+    "explain": "Mẫu cấm là ～て + は + いけません."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: この 本を かりても いいですか。 B: ええ、___ よ。",
+    "options": [
+     "いいです",
+     "いけません",
+     "ください",
+     "かります"
+    ],
+    "answer": 0,
+    "explain": "Đồng ý cho phép: ええ、いいですよ."
+   },
+   {
+    "type": "choice",
+    "prompt": "おなかが いっぱいなら、___ もいいですよ。",
+    "options": [
+     "のこし",
+     "のこす",
+     "のこした",
+     "のこして"
+    ],
+    "answer": 3,
+    "explain": "Cho phép: のこして もいいです = để thừa lại cũng được."
+   },
+   {
+    "type": "order",
+    "answer": "ここに 車を とめても いいですか。",
+    "vi": "Tôi đỗ xe ở đây được không?"
+   },
+   {
+    "type": "order",
+    "answer": "教室で ジュースを 飲んでは いけません。",
+    "vi": "Không được uống nước ngọt trong lớp học."
+   },
+   {
+    "type": "order",
+    "answer": "すみません、 この 電話を 使っても いいですか。",
+    "vi": "Xin lỗi, tôi dùng điện thoại này được không?"
+   },
+   {
+    "type": "order",
+    "answer": "夜 おそく 電話を しては いけません。",
+    "vi": "Không được gọi điện thoại lúc khuya."
+   }
+  ]
+ },
+ {
+  "id": "nai-form",
+  "emoji": "🚫",
+  "name_vi": "Thể ない & ～ないでください",
+  "name_en": "Nai-form",
+  "level": "N5",
+  "summary": "Thể ない là dạng phủ định thân mật của động từ (không làm). Thêm でください thành lời nhờ người khác đừng làm gì.",
+  "formulas": [
+   {
+    "label": "Nhóm 1 (cột う → cột あ + ない)",
+    "pattern": "かく → かかない ・ のむ → のまない"
+   },
+   {
+    "label": "Nhóm 1 đuôi う → わない",
+    "pattern": "かう → かわない ・ いう → いわない"
+   },
+   {
+    "label": "Nhóm 2 (bỏ る + ない)",
+    "pattern": "たべる → たべない ・ みる → みない"
+   },
+   {
+    "label": "Nhóm 3",
+    "pattern": "する → しない ・ くる → こない"
+   },
+   {
+    "label": "Đặc biệt",
+    "pattern": "ある → ない"
+   },
+   {
+    "label": "Nhờ đừng làm",
+    "pattern": "Vない + で ください → わすれないで ください"
+   }
+  ],
+  "points": [
+   "Thể ない là phủ định thân mật, tương đương ～ません trong văn lịch sự.",
+   "Đuôi う đổi thành わ chứ không phải あ: かう → かわない.",
+   "ある phủ định là ない, không phải あらない.",
+   "～ないでください = xin đừng…; lịch sự hơn: ～ないでくださいませんか."
+  ],
+  "examples": [
+   {
+    "ja": "わたしはコーヒーを飲まない。",
+    "r": "わたしは コーヒーを のまない。",
+    "vi": "Tôi không uống cà phê."
+   },
+   {
+    "ja": "明日は会社へ行かない。",
+    "r": "あしたは かいしゃへ いかない。",
+    "vi": "Ngày mai tôi không đi làm."
+   },
+   {
+    "ja": "ここに車をとめないでください。",
+    "r": "ここに くるまを とめないで ください。",
+    "vi": "Xin đừng đỗ xe ở đây."
+   },
+   {
+    "ja": "しんぱいしないでください。",
+    "r": "しんぱいしないで ください。",
+    "vi": "Xin đừng lo lắng."
+   },
+   {
+    "ja": "田中さんは今日来ない。",
+    "r": "たなかさんは きょう こない。",
+    "vi": "Hôm nay anh Tanaka không đến."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "「書く」の ないけいは ___ です。",
+    "options": [
+     "書かない",
+     "書きない",
+     "書けない",
+     "書くない"
+    ],
+    "answer": 0,
+    "explain": "Nhóm 1: く → か + ない → 書かない."
+   },
+   {
+    "type": "choice",
+    "prompt": "「買う」の ないけいは ___ です。",
+    "options": [
+     "買あない",
+     "買わない",
+     "買いない",
+     "買えない"
+    ],
+    "answer": 1,
+    "explain": "Đuôi う đổi thành わ: 買わない."
+   },
+   {
+    "type": "choice",
+    "prompt": "「来る」の ないけいは ___ です。",
+    "options": [
+     "きない",
+     "くない",
+     "こない",
+     "くらない"
+    ],
+    "answer": 2,
+    "explain": "来る là nhóm 3 bất quy tắc: 来ない đọc là こない."
+   },
+   {
+    "type": "choice",
+    "prompt": "じゅぎょう中に 電話を ___ でください。",
+    "options": [
+     "使って",
+     "使う",
+     "使わない",
+     "使わなく"
+    ],
+    "answer": 2,
+    "explain": "Nhờ đừng làm: Vない + でください → 使わないで ください."
+   },
+   {
+    "type": "choice",
+    "prompt": "あしたの テストを ___ でください。",
+    "options": [
+     "わすれなく",
+     "わすれる",
+     "わすれて",
+     "わすれない"
+    ],
+    "answer": 3,
+    "explain": "わすれる (nhóm 2) → わすれない + でください: đừng quên."
+   },
+   {
+    "type": "choice",
+    "prompt": "「ある」の ないけいは ___ です。",
+    "options": [
+     "あらない",
+     "あない",
+     "ありない",
+     "ない"
+    ],
+    "answer": 3,
+    "explain": "ある là trường hợp đặc biệt: phủ định là ない."
+   },
+   {
+    "type": "order",
+    "answer": "ここで たばこを すわないで ください。",
+    "vi": "Xin đừng hút thuốc ở đây."
+   },
+   {
+    "type": "order",
+    "answer": "この へやに 入らないで ください。",
+    "vi": "Xin đừng vào phòng này."
+   },
+   {
+    "type": "order",
+    "answer": "じゅぎょうに おくれないで ください。",
+    "vi": "Xin đừng đến lớp muộn."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 毎朝 朝ご飯を 食べない。",
+    "vi": "Sáng nào tôi cũng không ăn sáng."
+   }
+  ]
+ },
+ {
+  "id": "ta-form",
+  "emoji": "🕰️",
+  "name_vi": "Thể た & ～たことがあります",
+  "name_en": "Ta-form & experience",
+  "level": "N5",
+  "summary": "Thể た là dạng quá khứ thân mật (đã làm). ～たことがあります dùng để nói về kinh nghiệm đã từng làm gì.",
+  "formulas": [
+   {
+    "label": "Cách chia (từ thể て: て → た, で → だ)",
+    "pattern": "かいて → かいた ・ のんで → のんだ"
+   },
+   {
+    "label": "Nhóm 2 / Nhóm 3",
+    "pattern": "たべる → たべた ・ する → した ・ くる → きた"
+   },
+   {
+    "label": "Kinh nghiệm",
+    "pattern": "Vた + ことが あります → 日本へ 行った ことが あります"
+   },
+   {
+    "label": "Chưa từng",
+    "pattern": "Vた + ことが ありません → 一度も 見た ことが ありません"
+   }
+  ],
+  "points": [
+   "Chia thể た: lấy thể て rồi đổi て → た, で → だ (いく → いった).",
+   "～たことがあります chỉ trải nghiệm đã từng, thường đã cách một khoảng thời gian.",
+   "Không dùng cho việc làm hằng ngày: × 朝ご飯を 食べた ことが あります.",
+   "一度も ～たことがありません = chưa từng một lần nào."
+  ],
+  "examples": [
+   {
+    "ja": "きのう映画を見た。",
+    "r": "きのう えいがを みた。",
+    "vi": "Hôm qua (tôi) đã xem phim."
+   },
+   {
+    "ja": "日本へ行ったことがあります。",
+    "r": "にほんへ いった ことが あります。",
+    "vi": "Tôi đã từng đi Nhật."
+   },
+   {
+    "ja": "すしを食べたことがありますか。",
+    "r": "すしを たべた ことが ありますか。",
+    "vi": "Bạn đã từng ăn sushi chưa?"
+   },
+   {
+    "ja": "一度も外国へ行ったことがありません。",
+    "r": "いちども がいこくへ いった ことが ありません。",
+    "vi": "Tôi chưa từng đi nước ngoài lần nào."
+   },
+   {
+    "ja": "先週、友だちと山にのぼった。",
+    "r": "せんしゅう、ともだちと やまに のぼった。",
+    "vi": "Tuần trước tôi đã leo núi cùng bạn."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "「飲む」の たけいは ___ です。",
+    "options": [
+     "飲みた",
+     "飲んだ",
+     "飲った",
+     "飲いだ"
+    ],
+    "answer": 1,
+    "explain": "飲む → 飲んで → 飲んだ (で → だ)."
+   },
+   {
+    "type": "choice",
+    "prompt": "「書く」の たけいは ___ です。",
+    "options": [
+     "書いた",
+     "書きた",
+     "書った",
+     "書いだ"
+    ],
+    "answer": 0,
+    "explain": "書く → 書いて → 書いた (て → た)."
+   },
+   {
+    "type": "choice",
+    "prompt": "ふじさんに ___ ことが あります。",
+    "options": [
+     "のぼる",
+     "のぼって",
+     "のぼり",
+     "のぼった"
+    ],
+    "answer": 3,
+    "explain": "Kinh nghiệm: Vた + ことが あります → のぼった ことが あります."
+   },
+   {
+    "type": "choice",
+    "prompt": "わたしは 一度も ゴルフを した ことが ___ 。",
+    "options": [
+     "あります",
+     "ありません",
+     "いません",
+     "しません"
+    ],
+    "answer": 1,
+    "explain": "一度も đi với phủ định: ～たことがありません = chưa từng."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのう 友だちと テニスを ___ 。",
+    "options": [
+     "した",
+     "する",
+     "して",
+     "しない"
+    ],
+    "answer": 0,
+    "explain": "きのう là quá khứ → thể た thân mật: した."
+   },
+   {
+    "type": "choice",
+    "prompt": "日本の 歌を 歌った ___ が ありますか。",
+    "options": [
+     "もの",
+     "とき",
+     "こと",
+     "ところ"
+    ],
+    "answer": 2,
+    "explain": "Mẫu kinh nghiệm cố định: Vた + こと が あります."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 日本へ 行った ことが あります。",
+    "vi": "Tôi đã từng đi Nhật."
+   },
+   {
+    "type": "order",
+    "answer": "あなたは さしみを 食べた ことが ありますか？",
+    "vi": "Bạn đã từng ăn sashimi chưa?"
+   },
+   {
+    "type": "order",
+    "answer": "一度も 外国へ 行った ことが ありません。",
+    "vi": "Tôi chưa từng đi nước ngoài lần nào."
+   },
+   {
+    "type": "order",
+    "answer": "きのう 友だちと 映画を 見た。",
+    "vi": "Hôm qua tôi đã xem phim với bạn."
+   }
+  ]
+ },
+ {
+  "id": "comparison",
+  "emoji": "⚖️",
+  "name_vi": "So sánh: より・のほうが・いちばん",
+  "name_en": "Comparison",
+  "level": "N5",
+  "summary": "Dùng より và のほうが để so sánh hai thứ, dùng ～の中で…いちばん để nói cái nhất trong một nhóm.",
+  "formulas": [
+   {
+    "label": "So sánh hơn",
+    "pattern": "A は B より + tính từ → この 車は あの 車より 高いです"
+   },
+   {
+    "label": "Hỏi so sánh 2 thứ",
+    "pattern": "A と B と どちらが + tính từ + ですか"
+   },
+   {
+    "label": "Trả lời",
+    "pattern": "B の ほうが + tính từ + です"
+   },
+   {
+    "label": "So sánh nhất",
+    "pattern": "N の 中で A が いちばん + tính từ + です"
+   },
+   {
+    "label": "Hỏi nhất",
+    "pattern": "N の 中で 何／だれ／どこ が いちばん ～ですか"
+   }
+  ],
+  "points": [
+   "より đứng sau vật được đem ra làm mốc so sánh.",
+   "Hỏi giữa 2 thứ luôn dùng どちら, kể cả khi so người hay nơi chốn.",
+   "のほうが đánh dấu vế được chọn, thường dùng trong câu trả lời.",
+   "Từ 3 thứ trở lên: ～の中で ～がいちばん; từ để hỏi đổi theo loại: 何, だれ, どこ, いつ.",
+   "Bằng nhau: どちらも ～です."
+  ],
+  "examples": [
+   {
+    "ja": "今日はきのうよりさむいです。",
+    "r": "きょうは きのうより さむいです。",
+    "vi": "Hôm nay lạnh hơn hôm qua."
+   },
+   {
+    "ja": "電車とバスとどちらがはやいですか。",
+    "r": "でんしゃと バスと どちらが はやいですか。",
+    "vi": "Tàu điện và xe buýt, cái nào nhanh hơn?"
+   },
+   {
+    "ja": "電車のほうがはやいです。",
+    "r": "でんしゃの ほうが はやいです。",
+    "vi": "Tàu điện nhanh hơn."
+   },
+   {
+    "ja": "一年の中で八月がいちばんあついです。",
+    "r": "いちねんの なかで はちがつが いちばん あついです。",
+    "vi": "Trong một năm, tháng 8 nóng nhất."
+   },
+   {
+    "ja": "家族の中で兄がいちばんせが高いです。",
+    "r": "かぞくの なかで あにが いちばん せが たかいです。",
+    "vi": "Trong gia đình, anh trai tôi cao nhất."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "ふじさんは 日本の 山の 中で ___ 高いです。",
+    "options": [
+     "より",
+     "ほう",
+     "いちばん",
+     "どちら"
+    ],
+    "answer": 2,
+    "explain": "～の中で ～がいちばん: cao nhất trong các núi ở Nhật."
+   },
+   {
+    "type": "choice",
+    "prompt": "この かばんは あの かばん ___ 安いです。",
+    "options": [
+     "ほう",
+     "ほど",
+     "いちばん",
+     "より"
+    ],
+    "answer": 3,
+    "explain": "A は B より + tính từ: cái này rẻ hơn cái kia. (ほど chỉ đi với phủ định.)"
+   },
+   {
+    "type": "choice",
+    "prompt": "コーヒーと お茶と ___ が すきですか。",
+    "options": [
+     "どれ",
+     "なに",
+     "いちばん",
+     "どちら"
+    ],
+    "answer": 3,
+    "explain": "Hỏi chọn giữa 2 thứ dùng どちら; どれ dùng cho 3 thứ trở lên."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: 犬と ねこと どちらが すきですか。 B: 犬 ___ ほうが すきです。",
+    "options": [
+     "が",
+     "の",
+     "より",
+     "は"
+    ],
+    "answer": 1,
+    "explain": "Trả lời: N + の + ほうが."
+   },
+   {
+    "type": "choice",
+    "prompt": "スポーツの 中で ___ が いちばん おもしろいですか。",
+    "options": [
+     "どちら",
+     "どこ",
+     "何",
+     "だれ"
+    ],
+    "answer": 2,
+    "explain": "Hỏi vật/môn trong nhóm từ 3 trở lên dùng 何."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: 東京と ソウルと どちらが 大きいですか。 B: 東京の ___ が 大きいです。",
+    "options": [
+     "ほう",
+     "より",
+     "ほど",
+     "いちばん"
+    ],
+    "answer": 0,
+    "explain": "Câu trả lời so sánh: N の ほうが + tính từ."
+   },
+   {
+    "type": "order",
+    "answer": "東京は ソウルより 人が 多いです。",
+    "vi": "Tokyo đông người hơn Seoul."
+   },
+   {
+    "type": "order",
+    "answer": "バスより 電車の ほうが はやいです。",
+    "vi": "Tàu điện nhanh hơn xe buýt."
+   },
+   {
+    "type": "order",
+    "answer": "クラスの 中で だれが いちばん せが 高いですか？",
+    "vi": "Trong lớp ai cao nhất?"
+   },
+   {
+    "type": "order",
+    "answer": "りんごと みかんと どちらが すきですか。",
+    "vi": "Táo và quýt, bạn thích loại nào hơn?"
+   }
+  ]
+ },
+ {
+  "id": "particles-time",
+  "emoji": "🕘",
+  "name_vi": "Trợ từ thời gian: に・から・まで・ごろ",
+  "name_en": "Time particles",
+  "level": "N5",
+  "summary": "に đánh dấu thời điểm cụ thể, から…まで chỉ khoảng từ… đến…, ごろ nghĩa là khoảng (thời điểm).",
+  "formulas": [
+   {
+    "label": "Thời điểm cụ thể",
+    "pattern": "giờ / ngày / tháng + に → 七時に 起きます"
+   },
+   {
+    "label": "Từ… đến…",
+    "pattern": "A から B まで → 九時から 五時まで"
+   },
+   {
+    "label": "Khoảng (thời điểm)",
+    "pattern": "thời gian + ごろ → 十時ごろ ねます"
+   },
+   {
+    "label": "Hạn chót (N4)",
+    "pattern": "thời gian + までに → 金曜日までに 出します"
+   },
+   {
+    "label": "Không dùng に",
+    "pattern": "今日・明日・毎日・毎朝・来週 …"
+   }
+  ],
+  "points": [
+   "に đi với thời điểm có số (3時, 5月, 2020年) và thứ trong tuần (月曜日に).",
+   "Từ thời gian tương đối như きのう, あした, 毎日, 今週 không đi với に.",
+   "ごろ = khoảng một thời điểm; ぐらい = khoảng một lượng thời gian (2時間ぐらい).",
+   "まで = kéo dài đến lúc đó; までに = trước hạn đó (làm một lần)."
+  ],
+  "examples": [
+   {
+    "ja": "毎朝六時に起きます。",
+    "r": "まいあさ ろくじに おきます。",
+    "vi": "Sáng nào tôi cũng dậy lúc 6 giờ."
+   },
+   {
+    "ja": "銀行は九時から三時までです。",
+    "r": "ぎんこうは くじから さんじまでです。",
+    "vi": "Ngân hàng mở từ 9 giờ đến 3 giờ."
+   },
+   {
+    "ja": "夜十一時ごろねます。",
+    "r": "よる じゅういちじごろ ねます。",
+    "vi": "Tôi ngủ khoảng 11 giờ đêm."
+   },
+   {
+    "ja": "夏休みは七月から八月までです。",
+    "r": "なつやすみは しちがつから はちがつまでです。",
+    "vi": "Kỳ nghỉ hè từ tháng 7 đến tháng 8."
+   },
+   {
+    "ja": "金曜日までにレポートを出してください。",
+    "r": "きんようびまでに レポートを だして ください。",
+    "vi": "Hãy nộp báo cáo trước thứ Sáu."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "毎日 十時 ___ ねます。",
+    "options": [
+     "で",
+     "に",
+     "を",
+     "が"
+    ],
+    "answer": 1,
+    "explain": "Giờ cụ thể (十時) dùng に."
+   },
+   {
+    "type": "choice",
+    "prompt": "しごとは 九時 ___ 六時までです。",
+    "options": [
+     "まで",
+     "から",
+     "に",
+     "ごろ"
+    ],
+    "answer": 1,
+    "explain": "Từ… đến…: A から B まで."
+   },
+   {
+    "type": "choice",
+    "prompt": "あした ___ 友だちと 会います。",
+    "options": [
+     "は",
+     "に",
+     "を",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "あした là thời gian tương đối nên không dùng に; có thể dùng は làm chủ đề."
+   },
+   {
+    "type": "choice",
+    "prompt": "きのうは 十二時 ___ まで 勉強しました。",
+    "options": [
+     "に",
+     "から",
+     "ごろ",
+     "を"
+    ],
+    "answer": 2,
+    "explain": "十二時ごろまで = đến khoảng 12 giờ."
+   },
+   {
+    "type": "choice",
+    "prompt": "金曜日 ___ この 本を かえして ください。",
+    "options": [
+     "まで",
+     "から",
+     "ごろ",
+     "までに"
+    ],
+    "answer": 3,
+    "explain": "Hạn chót (trả trước thứ Sáu) dùng までに."
+   },
+   {
+    "type": "choice",
+    "prompt": "この えいがは 二時間 ___ です。",
+    "options": [
+     "ぐらい",
+     "ごろ",
+     "に",
+     "まで"
+    ],
+    "answer": 0,
+    "explain": "Khoảng một lượng thời gian (2 tiếng) dùng ぐらい, không dùng ごろ."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 毎朝 六時に 起きます。",
+    "vi": "Sáng nào tôi cũng dậy lúc 6 giờ."
+   },
+   {
+    "type": "order",
+    "answer": "銀行は 九時から 三時までです。",
+    "vi": "Ngân hàng mở từ 9 giờ đến 3 giờ."
+   },
+   {
+    "type": "order",
+    "answer": "きのうは 十一時ごろ ねました。",
+    "vi": "Hôm qua tôi ngủ lúc khoảng 11 giờ."
+   },
+   {
+    "type": "order",
+    "answer": "学校の 冬休みは 十二月二十日から 一月五日までです。",
+    "vi": "Nghỉ đông của trường từ 20/12 đến 5/1."
+   }
+  ]
+ },
+ {
+  "id": "reasons",
+  "emoji": "💡",
+  "name_vi": "Lý do: から・ので",
+  "name_en": "Reasons: kara & node",
+  "level": "N4",
+  "summary": "から và ので đều nối lý do với kết quả (vì… nên…). から mang tính chủ quan, ので khách quan và lịch sự hơn.",
+  "formulas": [
+   {
+    "label": "Lý do (chủ quan)",
+    "pattern": "Câu 1 + から、Câu 2 → 時間が ないから、タクシーで 行きます"
+   },
+   {
+    "label": "Lý do (khách quan, mềm)",
+    "pattern": "Câu 1 + ので、Câu 2 → 雨が ふって いるので、出かけません"
+   },
+   {
+    "label": "Danh từ / tính từ な + ので",
+    "pattern": "N／Aな + なので → 休みなので"
+   },
+   {
+    "label": "Danh từ / tính từ な + から",
+    "pattern": "N／Aな + だから → 休みだから"
+   },
+   {
+    "label": "Trả lời どうして",
+    "pattern": "～から です"
+   }
+  ],
+  "points": [
+   "から chủ quan, mạnh; có thể đi với mệnh lệnh, rủ rê (～ましょう).",
+   "ので khách quan, mềm hơn; hay dùng khi xin phép, xin lỗi, giải thích.",
+   "Trước ので: danh từ / tính từ な dùng なので (không phải だので).",
+   "Trước から: danh từ / tính từ な dùng だから.",
+   "Trả lời câu hỏi どうして… bằng ～からです (không nói ～のでです)."
+  ],
+  "examples": [
+   {
+    "ja": "時間がないから、タクシーで行きます。",
+    "r": "じかんが ないから、タクシーで いきます。",
+    "vi": "Vì không có thời gian nên tôi đi taxi."
+   },
+   {
+    "ja": "雨がふっているので、出かけません。",
+    "r": "あめが ふって いるので、でかけません。",
+    "vi": "Vì trời đang mưa nên tôi không ra ngoài."
+   },
+   {
+    "ja": "今日は日曜日だから、学校は休みです。",
+    "r": "きょうは にちようびだから、がっこうは やすみです。",
+    "vi": "Hôm nay là Chủ nhật nên trường nghỉ."
+   },
+   {
+    "ja": "用事があるので、先に帰ります。",
+    "r": "ようじが あるので、さきに かえります。",
+    "vi": "Vì có việc bận nên tôi xin về trước."
+   },
+   {
+    "ja": "日本のアニメがすきだから、日本語を勉強しています。",
+    "r": "にほんの アニメが すきだから、にほんごを べんきょうして います。",
+    "vi": "Vì thích anime Nhật nên tôi đang học tiếng Nhật."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "かぜを ひいた ___ 、学校を 休みました。",
+    "options": [
+     "のに",
+     "けど",
+     "ので",
+     "まで"
+    ],
+    "answer": 2,
+    "explain": "Bị cảm (lý do) nên nghỉ học (kết quả) → ので."
+   },
+   {
+    "type": "choice",
+    "prompt": "あしたは 休み ___ から、いっしょに あそびましょう。",
+    "options": [
+     "な",
+     "の",
+     "で",
+     "だ"
+    ],
+    "answer": 3,
+    "explain": "Danh từ + から cần だ: 休みだから."
+   },
+   {
+    "type": "choice",
+    "prompt": "この へやは しずか ___ ので、よく 勉強できます。",
+    "options": [
+     "だ",
+     "の",
+     "な",
+     "に"
+    ],
+    "answer": 2,
+    "explain": "Tính từ な + ので → しずかなので."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: どうして 食べないんですか。 B: おなかが いっぱい ___ 。",
+    "options": [
+     "なのでです",
+     "だのでです",
+     "からです",
+     "だからです"
+    ],
+    "answer": 3,
+    "explain": "Trả lời どうして dùng ～からです; いっぱい là danh từ/tính từ な nên cần だ."
+   },
+   {
+    "type": "choice",
+    "prompt": "あぶない ___ 、さわらないで ください。",
+    "options": [
+     "から",
+     "のに",
+     "けど",
+     "まで"
+    ],
+    "answer": 0,
+    "explain": "Vì nguy hiểm nên đừng chạm vào → から đi được với lời yêu cầu."
+   },
+   {
+    "type": "choice",
+    "prompt": "道が こんで いた ___ 、おくれました。",
+    "options": [
+     "でも",
+     "ので",
+     "のに",
+     "ても"
+    ],
+    "answer": 1,
+    "explain": "Đường đông (lý do) nên đến muộn → ので, cách nói xin lỗi mềm mỏng."
+   },
+   {
+    "type": "order",
+    "answer": "時間が ないから、 タクシーで 行きましょう。",
+    "vi": "Vì không có thời gian nên mình đi taxi đi."
+   },
+   {
+    "type": "order",
+    "answer": "雨が ふって いるので、 今日は 出かけません。",
+    "vi": "Vì trời đang mưa nên hôm nay tôi không ra ngoài."
+   },
+   {
+    "type": "order",
+    "answer": "あしたは テストが あるので、 早く ねます。",
+    "vi": "Vì mai có bài kiểm tra nên tôi ngủ sớm."
+   },
+   {
+    "type": "order",
+    "answer": "この 店は 安いから、 いつも 人が 多いです。",
+    "vi": "Quán này rẻ nên lúc nào cũng đông người."
+   }
+  ]
+ },
+ {
+  "id": "kara-ato",
+  "emoji": "⏭️",
+  "name_vi": "Trước – sau: ～てから・～たあとで・～まえに",
+  "name_en": "Sequence: before & after",
+  "level": "N4",
+  "summary": "～てから và ～たあとで nói việc B xảy ra sau việc A; ～まえに nói việc B làm trước việc A.",
+  "formulas": [
+   {
+    "label": "Sau khi (nối tiếp)",
+    "pattern": "Vて + から → ご飯を 食べてから、出かけます"
+   },
+   {
+    "label": "Sau khi",
+    "pattern": "Vた + あとで → しゅくだいを した あとで、テレビを 見ます"
+   },
+   {
+    "label": "Danh từ + sau",
+    "pattern": "N + の あとで → じゅぎょうの あとで"
+   },
+   {
+    "label": "Trước khi",
+    "pattern": "Vる + まえに → ねる まえに、はを みがきます"
+   },
+   {
+    "label": "Danh từ / thời gian + trước",
+    "pattern": "N + の まえに ・ 三年まえに"
+   }
+  ],
+  "points": [
+   "～てから nhấn mạnh thứ tự: làm xong A rồi mới làm B.",
+   "～たあとで nhấn mạnh B xảy ra sau A (có thể cách một khoảng).",
+   "まえに luôn đi sau thể từ điển, kể cả khi câu ở quá khứ: 日本へ 来る まえに.",
+   "Với danh từ thêm の: 食事の まえに, じゅぎょうの あとで."
+  ],
+  "examples": [
+   {
+    "ja": "しゅくだいをしてから、あそびます。",
+    "r": "しゅくだいを してから、あそびます。",
+    "vi": "Làm bài tập xong rồi mới đi chơi."
+   },
+   {
+    "ja": "ご飯を食べたあとで、少し休みます。",
+    "r": "ごはんを たべた あとで、すこし やすみます。",
+    "vi": "Sau khi ăn cơm, tôi nghỉ một chút."
+   },
+   {
+    "ja": "ねるまえに、本を読みます。",
+    "r": "ねる まえに、ほんを よみます。",
+    "vi": "Trước khi ngủ, tôi đọc sách."
+   },
+   {
+    "ja": "日本へ来るまえに、日本語を勉強しました。",
+    "r": "にほんへ くる まえに、にほんごを べんきょうしました。",
+    "vi": "Trước khi đến Nhật, tôi đã học tiếng Nhật."
+   },
+   {
+    "ja": "じゅぎょうのあとで、先生に質問しました。",
+    "r": "じゅぎょうの あとで、せんせいに しつもんしました。",
+    "vi": "Sau giờ học, tôi đã hỏi thầy giáo."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "ご飯を ___ から、はを みがきます。",
+    "options": [
+     "食べた",
+     "食べる",
+     "食べ",
+     "食べて"
+    ],
+    "answer": 3,
+    "explain": "Sau khi: Vて + から → 食べてから."
+   },
+   {
+    "type": "choice",
+    "prompt": "ねる ___ 、シャワーを あびます。",
+    "options": [
+     "まえに",
+     "あとで",
+     "てから",
+     "ながら"
+    ],
+    "answer": 0,
+    "explain": "ねる là thể từ điển → ねる まえに (trước khi ngủ)."
+   },
+   {
+    "type": "choice",
+    "prompt": "しゅくだいを ___ あとで、テレビを 見ます。",
+    "options": [
+     "する",
+     "して",
+     "した",
+     "しない"
+    ],
+    "answer": 2,
+    "explain": "あとで đi sau thể た: した あとで."
+   },
+   {
+    "type": "choice",
+    "prompt": "日本へ ___ まえに、少し 日本語を 勉強しました。",
+    "options": [
+     "来た",
+     "来る",
+     "来て",
+     "来ない"
+    ],
+    "answer": 1,
+    "explain": "まえに luôn đi sau thể từ điển, dù câu ở quá khứ → 来る まえに."
+   },
+   {
+    "type": "choice",
+    "prompt": "じゅぎょう ___ あとで、図書館へ 行きます。",
+    "options": [
+     "の",
+     "が",
+     "を",
+     "で"
+    ],
+    "answer": 0,
+    "explain": "Danh từ + の + あとで."
+   },
+   {
+    "type": "choice",
+    "prompt": "おふろに 入って ___ 、ねます。",
+    "options": [
+     "あとで",
+     "から",
+     "まえに",
+     "ので"
+    ],
+    "answer": 1,
+    "explain": "Vて đi với から: 入ってから = tắm xong rồi ngủ."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは ご飯を 食べてから、 出かけます。",
+    "vi": "Tôi ăn cơm xong rồi mới ra ngoài."
+   },
+   {
+    "type": "order",
+    "answer": "ねる まえに、 はを みがきます。",
+    "vi": "Trước khi ngủ tôi đánh răng."
+   },
+   {
+    "type": "order",
+    "answer": "じゅぎょうの あとで、 図書館へ 行きました。",
+    "vi": "Sau giờ học tôi đã đến thư viện."
+   },
+   {
+    "type": "order",
+    "answer": "仕事が 終わった あとで、 友だちと 会います。",
+    "vi": "Sau khi xong việc, tôi gặp bạn."
+   }
+  ]
+ },
+ {
+  "id": "potential",
+  "emoji": "💪",
+  "name_vi": "Thể khả năng: ～ことができます・～られる",
+  "name_en": "Potential form",
+  "level": "N4",
+  "summary": "Diễn tả khả năng (biết, có thể làm gì) hoặc điều kiện cho phép làm gì. Dùng ～ことができます hoặc chia động từ sang thể khả năng.",
+  "formulas": [
+   {
+    "label": "Danh từ",
+    "pattern": "N + が できます → 日本語が できます"
+   },
+   {
+    "label": "Động từ",
+    "pattern": "Vる + ことが できます → ピアノを ひく ことが できます"
+   },
+   {
+    "label": "Nhóm 1 (cột う → cột え + る)",
+    "pattern": "かく → かける ・ のむ → のめる"
+   },
+   {
+    "label": "Nhóm 2 (る → られる)",
+    "pattern": "たべる → たべられる ・ みる → みられる"
+   },
+   {
+    "label": "Nhóm 3",
+    "pattern": "する → できる ・ くる → こられる"
+   }
+  ],
+  "points": [
+   "～ことができます trang trọng hơn; thể khả năng ngắn gọn, dùng nhiều khi nói.",
+   "Với thể khả năng, tân ngữ thường đổi を → が: 漢字が 読めます.",
+   "Thể khả năng chia như động từ nhóm 2: 読めます, 読めない, 読めた.",
+   "する → できる; văn nói hay bỏ ら ở nhóm 2 (見れる) nhưng khi thi chọn 見られる."
+  ],
+  "examples": [
+   {
+    "ja": "わたしは日本語が少しできます。",
+    "r": "わたしは にほんごが すこし できます。",
+    "vi": "Tôi biết một chút tiếng Nhật."
+   },
+   {
+    "ja": "兄はピアノをひくことができます。",
+    "r": "あには ピアノを ひく ことが できます。",
+    "vi": "Anh trai tôi biết chơi piano."
+   },
+   {
+    "ja": "漢字が読めますか。",
+    "r": "かんじが よめますか。",
+    "vi": "Bạn đọc được chữ Hán không?"
+   },
+   {
+    "ja": "ここでおいしい魚が食べられます。",
+    "r": "ここで おいしい さかなが たべられます。",
+    "vi": "Ở đây có thể ăn cá ngon."
+   },
+   {
+    "ja": "明日のパーティーに来られますか。",
+    "r": "あしたの パーティーに こられますか。",
+    "vi": "Bạn có đến dự tiệc ngày mai được không?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "わたしは 百メートル ___ ことが できます。",
+    "options": [
+     "およいで",
+     "およぎ",
+     "およぐ",
+     "およげる"
+    ],
+    "answer": 2,
+    "explain": "ことができます đi sau thể từ điển: およぐ ことが できます."
+   },
+   {
+    "type": "choice",
+    "prompt": "「書く」の かのうけいは ___ です。",
+    "options": [
+     "書かれる",
+     "書けれる",
+     "書きられる",
+     "書ける"
+    ],
+    "answer": 3,
+    "explain": "Nhóm 1: く → け + る → 書ける. (書かれる là thể bị động.)"
+   },
+   {
+    "type": "choice",
+    "prompt": "「食べる」の かのうけいは ___ です。",
+    "options": [
+     "食べれられる",
+     "食べられる",
+     "食べける",
+     "食べさせる"
+    ],
+    "answer": 1,
+    "explain": "Nhóm 2: bỏ る + られる → 食べられる."
+   },
+   {
+    "type": "choice",
+    "prompt": "「する」の かのうけいは ___ です。",
+    "options": [
+     "できる",
+     "しれる",
+     "しられる",
+     "される"
+    ],
+    "answer": 0,
+    "explain": "する là nhóm 3, thể khả năng đặc biệt là できる."
+   },
+   {
+    "type": "choice",
+    "prompt": "マリアさんは 漢字 ___ 読めます。",
+    "options": [
+     "に",
+     "で",
+     "へ",
+     "が"
+    ],
+    "answer": 3,
+    "explain": "Với thể khả năng, tân ngữ thường dùng が: 漢字が 読めます."
+   },
+   {
+    "type": "choice",
+    "prompt": "あしたは いそがしいので、パーティーに ___ 。",
+    "options": [
+     "来られます",
+     "来れられません",
+     "来られません",
+     "来させません"
+    ],
+    "answer": 2,
+    "explain": "Bận nên không đến được → thể khả năng phủ định 来られません (こられません)."
+   },
+   {
+    "type": "order",
+    "answer": "わたしは 日本語の 新聞が 読めます。",
+    "vi": "Tôi đọc được báo tiếng Nhật."
+   },
+   {
+    "type": "order",
+    "answer": "兄は ギターを ひく ことが できます。",
+    "vi": "Anh trai tôi biết chơi đàn guitar."
+   },
+   {
+    "type": "order",
+    "answer": "この 店で 安い 服が 買えます。",
+    "vi": "Ở cửa hàng này có thể mua quần áo rẻ."
+   },
+   {
+    "type": "order",
+    "answer": "あしたの パーティーに 来られますか？",
+    "vi": "Bạn có đến dự tiệc ngày mai được không?"
+   }
+  ]
+ }
+]

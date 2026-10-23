@@ -442,5 +442,60 @@
         "type": "String"
       }
     }
+  },
+  "module_jaGrammar_desc": "{count} bài N5–N4",
+  "pos_na": "tính từ -na",
+  "pos_exp": "cụm từ",
+  "@module_jaGrammar_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backup_export": "Sao lưu tiến độ",
+  "backup_export_desc": "Lưu ra file để chuyển sang máy khác",
+  "backup_exported": "Đã lưu file sao lưu",
+  "backup_restore": "Khôi phục từ file",
+  "backup_restore_desc": "Mở file sao lưu đã lưu trước đó",
+  "backup_restore_confirm": "Tiến độ hiện tại trên máy này sẽ bị thay bằng dữ liệu trong file. Tiếp tục?",
+  "backup_restored": "Đã khôi phục tiến độ",
+  "backup_invalid": "File không phải bản sao lưu của Lingua",
+  "search_title": "Tra cứu",
+  "search_hint": "Tìm từ, câu, Kanji, nghĩa…",
+  "search_empty": "Gõ tiếng Việt (có dấu hay không đều được) hoặc chữ của khoá {course} để tra.",
+  "search_noResult": "Không tìm thấy kết quả",
+  "search_words": "Từ vựng",
+  "search_phrases": "Câu giao tiếp",
+  "stats_title": "Thống kê",
+  "stats_more": "Xem chi tiết",
+  "stats_days": "{count} ngày",
+  "stats_activeDays": "Ngày có học",
+  "stats_activity": "Lượt học mỗi ngày",
+  "stats_newLearned": "{count} mục mới thuộc trong khoảng này",
+  "stats_due": "Cần ôn hôm nay",
+  "stats_scheduled": "Trong lịch ôn",
+  "stats_mastered": "Nhớ lâu",
+  "stats_modules": "Tiến độ học phần",
+  "@search_empty": {
+    "placeholders": {
+      "course": {
+        "type": "String"
+      }
+    }
+  },
+  "@stats_days": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@stats_newLearned": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

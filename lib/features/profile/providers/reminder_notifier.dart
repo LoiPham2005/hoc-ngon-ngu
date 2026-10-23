@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/services/notification_service.dart';
+import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -61,17 +62,22 @@ class ReminderNotifier extends _$ReminderNotifier {
       _save(Reminder(enabled: state.enabled, hour: hour, minute: minute));
 
   /// Đặt lại lịch theo cài đặt + ngôn ngữ app hiện tại (lúc mở app, khi đổi ngôn ngữ).
+  /// Lỗi đặt lịch (máy chặn thông báo…) chỉ ghi log, không làm hỏng thao tác đang làm.
   Future<void> sync() async {
     final notifications = ref.read(notificationServiceProvider);
-    if (!state.enabled) return notifications.cancel(_notificationId);
-    final l10n = lookupAppLocalizations(ref.read(localeProvider));
-    await notifications.scheduleDaily(
-      id: _notificationId,
-      title: l10n.reminder_notificationTitle,
-      body: l10n.reminder_notificationBody,
-      hour: state.hour,
-      minute: state.minute,
-    );
+    try {
+      if (!state.enabled) return await notifications.cancel(_notificationId);
+      final l10n = lookupAppLocalizations(ref.read(localeProvider));
+      await notifications.scheduleDaily(
+        id: _notificationId,
+        title: l10n.reminder_notificationTitle,
+        body: l10n.reminder_notificationBody,
+        hour: state.hour,
+        minute: state.minute,
+      );
+    } on Object catch (e, s) {
+      talker.error('[REMINDER] sync failed', e, s);
+    }
   }
 
   Future<void> _save(Reminder next) async {

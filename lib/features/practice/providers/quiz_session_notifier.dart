@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_session_notifier.g.dart';
@@ -61,15 +61,20 @@ class QuizTopic {
   final Course? review;
 
   /// Bài "Ôn nhanh 10 câu" của học phần (Trang chủ, phím tắt icon app).
+  /// Học phần không tự hỏi được (âm IPA, ngữ pháp, hội thoại) → ôn từ vựng của khoá.
   static QuizTopic quickReview(Module module) => switch (module) {
     Module.hiragana || Module.katakana => QuizTopic(module, QuizMode.reading),
-    Module.enPronunciation ||
-    Module.enVocabulary ||
-    Module.enGrammar ||
-    Module.enDialogues => const QuizTopic(
+    Module.enPronunciation => const QuizTopic(
       Module.enVocabulary,
       QuizMode.meaning,
     ),
+    _
+        when module.lessonKind == LessonKind.grammar ||
+            module.lessonKind == LessonKind.dialogues =>
+      QuizTopic(
+        Module.lesson(module.course, LessonKind.vocabulary),
+        QuizMode.meaning,
+      ),
     _ => QuizTopic(module, QuizMode.meaning),
   };
 
@@ -96,6 +101,7 @@ class QuizItem {
     required this.group,
     required this.module,
     required this.speech,
+    this.hint,
   });
 
   final String char;
@@ -110,6 +116,9 @@ class QuizItem {
 
   /// Nội dung đọc phát âm (Kana: chữ; Kanji: âm On/Kun; Tiếng Anh: từ / câu).
   final String speech;
+
+  /// Dòng phụ dưới câu hỏi: cách đọc kana của từ / câu Tiếng Nhật.
+  final String? hint;
 
   @override
   bool operator ==(Object other) =>
@@ -192,8 +201,12 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
         ),
   ];
 
-  Future<List<QuizItem>> words(QuizMode mode, String? group) async => [
-    for (final t in await ref.watch(vocabTopicsProvider.future))
+  Future<List<QuizItem>> words(
+    Course course,
+    QuizMode mode,
+    String? group,
+  ) async => [
+    for (final t in await ref.watch(vocabTopicsProvider(course).future))
       if (group == null || group == t.id)
         for (final w in t.items)
           QuizItem(
@@ -201,13 +214,16 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
             key: w.key,
             answer: mode == QuizMode.listening ? w.word : w.meaning,
             group: t.id,
-            module: Module.enVocabulary,
+            module: Module.lesson(course, LessonKind.vocabulary)!,
             speech: w.word,
+            hint: course == Course.en || mode == QuizMode.listening
+                ? null
+                : w.readingLabel,
           ),
   ];
 
-  Future<List<QuizItem>> phrases(String? group) async => [
-    for (final t in await ref.watch(phraseTopicsProvider.future))
+  Future<List<QuizItem>> phrases(Course course, String? group) async => [
+    for (final t in await ref.watch(phraseTopicsProvider(course).future))
       if (group == null || group == t.id)
         for (final p in t.items)
           QuizItem(
@@ -215,24 +231,27 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
             key: p.key,
             answer: p.meaning,
             group: t.id,
-            module: Module.enPhrases,
+            module: Module.lesson(course, LessonKind.phrases)!,
             speech: p.text,
+            hint: p.reading,
           ),
   ];
 
   if (topic.review case final course?) {
     return switch (course) {
-      Course.en => [
-        ...await words(QuizMode.meaning, null),
-        ...await phrases(null),
-      ],
-      _ => [
+      Course.ja => [
         ...kana(KanaScript.values, KanaSet.all),
         for (final m in course.modules.where((m) => m.isKanji))
           ...await kanji(
             m,
             language == 'vi' ? QuizMode.hanViet : QuizMode.meaning,
           ),
+        ...await words(course, QuizMode.meaning, null),
+        ...await phrases(course, null),
+      ],
+      _ => [
+        ...await words(course, QuizMode.meaning, null),
+        ...await phrases(course, null),
       ],
     };
   }
@@ -241,9 +260,16 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
     null => kana(KanaScript.values, topic.kanaSet),
     Module.hiragana => kana([KanaScript.hiragana], topic.kanaSet),
     Module.katakana => kana([KanaScript.katakana], topic.kanaSet),
-    Module.enPronunciation ||
-    Module.enVocabulary => await words(topic.mode, topic.group),
-    Module.enPhrases => await phrases(topic.group),
+    Module.enPronunciation => await words(Course.en, topic.mode, topic.group),
+    final Module m when m.lessonKind == LessonKind.vocabulary => await words(
+      m.course,
+      topic.mode,
+      topic.group,
+    ),
+    final Module m when m.lessonKind == LessonKind.phrases => await phrases(
+      m.course,
+      topic.group,
+    ),
     final Module m => await kanji(m, topic.mode),
   };
 }

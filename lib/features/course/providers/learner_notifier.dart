@@ -28,14 +28,37 @@ class Review {
   }
 }
 
-/// Mục có lịch ôn: chữ Kana/Kanji, từ, câu. Âm IPA, bài ngữ pháp, hội thoại không ôn bằng câu hỏi nên bỏ.
-bool isReviewable(String key) =>
-    !key.startsWith('en:ph:') &&
-    !key.startsWith('en:g:') &&
-    !key.startsWith('en:d:');
+/// Hoạt động 1 ngày (thống kê): số câu trả lời, số câu đúng, số mục mới thuộc.
+class DayStat {
+  const DayStat({this.answered = 0, this.correct = 0, this.learned = 0});
 
-/// Khoá học của 1 mục: Tiếng Anh có tiền tố `en:`, còn lại là Tiếng Nhật.
-Course courseOfKey(String key) => key.startsWith('en:') ? Course.en : Course.ja;
+  factory DayStat.fromJson(Object? json) {
+    final [answered, correct, learned] = json! as List;
+    return DayStat(
+      answered: answered as int,
+      correct: correct as int,
+      learned: learned as int,
+    );
+  }
+
+  final int answered;
+  final int correct;
+  final int learned;
+
+  /// Tổng lượt học trong ngày (như "lượt hôm nay").
+  int get total => answered + learned;
+
+  List<int> toJson() => [answered, correct, learned];
+}
+
+/// Mục có lịch ôn: chữ Kana/Kanji, từ, câu. Âm IPA, bài ngữ pháp, hội thoại không ôn bằng câu hỏi nên bỏ.
+bool isReviewable(String key) => !RegExp(r'^\w+:(ph|g|d):').hasMatch(key);
+
+/// Khoá học của 1 mục: bài học có tiền tố `<khoá>:` (`en:w:…`, `ja:p:…`), còn lại là chữ Kana/Kanji.
+Course courseOfKey(String key) {
+  final prefix = RegExp(r'^(\w+):\w+:').firstMatch(key)?.group(1);
+  return Course.values.asNameMap()[prefix] ?? Course.ja;
+}
 
 /// Hồ sơ người học — lưu trên máy (không cần tài khoản).
 class Learner {
@@ -50,6 +73,7 @@ class Learner {
     this.todayCount = 0,
     this.lastModule,
     this.reviews = const {},
+    this.history = const {},
   });
 
   factory Learner.fromJson(Map<String, dynamic> json) {
@@ -73,6 +97,9 @@ class Learner {
     Set<String> learned,
     Map<String, Review> reviews,
   ) => Learner(
+    history: (json['history'] as Map<String, dynamic>? ?? const {}).map(
+      (k, v) => MapEntry(k, DayStat.fromJson(v)),
+    ),
     course: Course.values.asNameMap()[json['course']],
     dailyGoal: json['dailyGoal'] as int? ?? 10,
     learned: learned,
@@ -107,6 +134,10 @@ class Learner {
   /// Lịch ôn theo khoá mục (cùng khoá với [learned]). Mục trả lời sai cũng được thêm vào.
   final Map<String, Review> reviews;
 
+  /// Hoạt động theo ngày (yyyy-MM-dd), giữ [historyDays] ngày gần nhất.
+  final Map<String, DayStat> history;
+  static const historyDays = 90;
+
   double get accuracy => answered == 0 ? 0 : correct / answered;
 
   Map<String, dynamic> toJson() => {
@@ -120,6 +151,7 @@ class Learner {
     'todayCount': todayCount,
     'lastModule': lastModule?.name,
     'reviews': reviews.map((k, v) => MapEntry(k, v.toJson())),
+    'history': history.map((k, v) => MapEntry(k, v.toJson())),
   };
 
   Learner copyWith({
@@ -133,6 +165,7 @@ class Learner {
     int? todayCount,
     Module? lastModule,
     Map<String, Review>? reviews,
+    Map<String, DayStat>? history,
   }) => Learner(
     course: course ?? this.course,
     dailyGoal: dailyGoal ?? this.dailyGoal,
@@ -144,6 +177,7 @@ class Learner {
     todayCount: todayCount ?? this.todayCount,
     lastModule: lastModule ?? this.lastModule,
     reviews: reviews ?? this.reviews,
+    history: history ?? this.history,
   );
 }
 
@@ -216,7 +250,7 @@ class LearnerNotifier extends _$LearnerNotifier {
       reviews.remove(char);
     }
     final next = state.copyWith(learned: learned, reviews: reviews);
-    return _save(added ? _withActivity(next) : next);
+    return _save(added ? _withActivity(next, learned: 1) : next);
   }
 
   /// Đánh dấu đã thuộc (không bỏ đánh dấu nếu đã có) — dùng khi làm bài đạt.
@@ -248,6 +282,8 @@ class LearnerNotifier extends _$LearnerNotifier {
           correct: state.correct + (correct ? 1 : 0),
           reviews: reviews,
         ),
+        answered: 1,
+        correct: correct ? 1 : 0,
       ),
     );
   }
@@ -256,9 +292,28 @@ class LearnerNotifier extends _$LearnerNotifier {
   Future<void> resetProgress() =>
       _save(Learner(course: state.course, dailyGoal: state.dailyGoal));
 
-  /// +1 lượt hôm nay; ngày đầu tiên học trong ngày → cập nhật chuỗi ngày.
-  Learner _withActivity(Learner l) {
+  /// +1 lượt hôm nay (+ ghi thống kê ngày); ngày đầu tiên học trong ngày → cập nhật chuỗi ngày.
+  Learner _withActivity(
+    Learner learner, {
+    int answered = 0,
+    int correct = 0,
+    int learned = 0,
+  }) {
     final today = _today;
+    final day = learner.history[today] ?? const DayStat();
+    final history = {
+      ...learner.history,
+      today: DayStat(
+        answered: day.answered + answered,
+        correct: day.correct + correct,
+        learned: day.learned + learned,
+      ),
+    };
+    final days = history.keys.toList()..sort();
+    for (final old in days.take(max(0, days.length - Learner.historyDays))) {
+      history.remove(old);
+    }
+    final l = learner.copyWith(history: history);
     if (l.lastActiveDay == today) {
       return l.copyWith(todayCount: l.todayCount + 1);
     }
@@ -268,6 +323,16 @@ class LearnerNotifier extends _$LearnerNotifier {
       todayCount: 1,
       streak: l.lastActiveDay == yesterday ? l.streak + 1 : 1,
     );
+  }
+
+  /// Thống kê [days] ngày gần nhất (cũ → mới), ngày không học = 0.
+  List<(DateTime, DayStat)> lastDays(int days) {
+    final d = now();
+    return [
+      for (var i = days - 1; i >= 0; i--)
+        if (DateTime(d.year, d.month, d.day - i) case final date)
+          (date, state.history[_day(date)] ?? const DayStat()),
+    ];
   }
 
   Future<void> _save(Learner next) async {

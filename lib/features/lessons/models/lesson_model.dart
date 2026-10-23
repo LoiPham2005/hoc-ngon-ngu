@@ -1,7 +1,10 @@
 import 'dart:math';
 
-// Dữ liệu khoá Tiếng Anh: chủ đề từ vựng / tình huống giao tiếp, từ, câu, âm IPA.
-// Nội dung: `assets/english/{vocabulary,phrases,grammar}.json` (soạn riêng cho app).
+import 'package:lingua/features/course/models/course_model.dart';
+
+// Bài học theo khoá (Tiếng Anh, Tiếng Nhật…): chủ đề từ vựng, câu giao tiếp, ngữ pháp, hội thoại.
+// Nội dung: `assets/<english|japanese>/{vocabulary,phrases,grammar,dialogues}.json` (soạn riêng cho app).
+// Khoá tiến độ có tiền tố khoá học: `en:w:<từ>`, `ja:p:<id câu>`, `ja:g:<id bài>`…
 
 /// 1 chủ đề (từ vựng) hoặc 1 tình huống (câu giao tiếp), chứa danh sách [items].
 class Topic<T> {
@@ -24,64 +27,104 @@ class Topic<T> {
 
 class Word {
   const Word({
+    required this.course,
     required this.word,
     required this.pos,
-    required this.ipa,
+    required this.reading,
     required this.meaning,
     required this.example,
     required this.exampleVi,
     required this.topicId,
+    this.exampleReading,
+    this.level,
   });
 
-  factory Word.fromJson(Map<String, dynamic> json, String topicId) => Word(
+  factory Word.fromJson(
+    Map<String, dynamic> json,
+    Course course,
+    String topicId,
+  ) => Word(
+    course: course,
     word: json['w'] as String,
     pos: json['pos'] as String,
-    ipa: json['ipa'] as String,
+    reading: (json['ipa'] ?? json['r']) as String,
     meaning: json['vi'] as String,
     example: json['ex'] as String,
+    exampleReading: json['ex_r'] as String?,
     exampleVi: json['ex_vi'] as String,
+    level: json['lv'] as String?,
     topicId: topicId,
   );
 
+  final Course course;
   final String word;
 
-  /// Loại từ viết tắt: n, v, adj, adv, num, prep, pron.
+  /// Loại từ viết tắt: n, v, adj, na (tính từ -na), adv, num, prep, pron, exp (cụm cố định).
   final String pos;
 
-  /// Phiên âm IPA giọng Mỹ, không có dấu `/`.
-  final String ipa;
+  /// Cách đọc: Tiếng Anh = IPA giọng Mỹ (không có `/`), Tiếng Nhật = kana.
+  final String reading;
   final String meaning;
   final String example;
+
+  /// Câu ví dụ viết bằng kana (Tiếng Nhật).
+  final String? exampleReading;
   final String exampleVi;
+
+  /// Cấp JLPT (Tiếng Nhật): N5, N4.
+  final String? level;
   final String topicId;
 
+  /// Cách đọc để hiện kèm từ: IPA trong `/…/`; kana chỉ hiện khi khác cách viết.
+  String? get readingLabel => course == Course.en
+      ? '/$reading/'
+      : reading == word
+      ? null
+      : reading;
+
   /// Khoá lưu tiến độ "đã thuộc".
-  String get key => 'en:w:$word';
+  String get key => '${course.name}:w:$word';
 }
 
 class Phrase {
   const Phrase({
+    required this.course,
     required this.id,
     required this.text,
     required this.meaning,
     required this.topicId,
+    this.reading,
     this.note,
   });
 
+  final Course course;
   final String id;
   final String text;
+
+  /// Câu viết bằng kana (Tiếng Nhật).
+  final String? reading;
   final String meaning;
   final String topicId;
 
   /// Ghi chú cách dùng (không bắt buộc).
   final String? note;
 
-  String get key => 'en:p:$id';
+  String get key => '${course.name}:p:$id';
 }
+
+/// 1 câu ví dụ / 1 lượt thoại: câu gốc, cách đọc kana (Tiếng Nhật), nghĩa.
+typedef Sentence = ({String text, String? reading, String vi});
+
+Sentence _sentence(Map<String, dynamic> json) => (
+  text: (json['en'] ?? json['ja']) as String,
+  reading: json['r'] as String?,
+  vi: json['vi'] as String,
+);
 
 /// 1 bài ngữ pháp: công thức, ghi nhớ, ví dụ và 10 bài tập (trắc nghiệm + ghép câu).
 class GrammarLesson {
   const GrammarLesson({
+    required this.course,
     required this.id,
     required this.emoji,
     required this.nameVi,
@@ -94,7 +137,11 @@ class GrammarLesson {
     required this.exercises,
   });
 
-  factory GrammarLesson.fromJson(Map<String, dynamic> json) => GrammarLesson(
+  factory GrammarLesson.fromJson(
+    Map<String, dynamic> json,
+    Course course,
+  ) => GrammarLesson(
+    course: course,
     id: json['id'] as String,
     emoji: json['emoji'] as String,
     nameVi: json['name_vi'] as String,
@@ -108,7 +155,7 @@ class GrammarLesson {
     points: (json['points'] as List).cast<String>(),
     examples: [
       for (final e in (json['examples'] as List).cast<Map<String, dynamic>>())
-        (en: e['en'] as String, vi: e['vi'] as String),
+        _sentence(e),
     ],
     exercises: [
       for (final e in (json['exercises'] as List).cast<Map<String, dynamic>>())
@@ -116,20 +163,21 @@ class GrammarLesson {
     ],
   );
 
+  final Course course;
   final String id;
   final String emoji;
   final String nameVi;
   final String nameEn;
 
-  /// Cấp CEFR: A1, A2, B1.
+  /// Cấp: CEFR (A1–B1) hoặc JLPT (N5, N4).
   final String level;
   final String summary;
   final List<({String label, String pattern})> formulas;
   final List<String> points;
-  final List<({String en, String vi})> examples;
+  final List<Sentence> examples;
   final List<Exercise> exercises;
 
-  String get key => 'en:g:$id';
+  String get key => '${course.name}:g:$id';
 
   String name(String languageCode) => languageCode == 'vi' ? nameVi : nameEn;
 }
@@ -171,30 +219,49 @@ class ChoiceExercise extends Exercise {
   final String explain;
 }
 
-/// Ghép câu: xếp các từ của [answer] theo đúng thứ tự, gợi ý bằng nghĩa [meaning].
+/// Ghép câu: xếp các cụm của [answer] (cách nhau dấu cách) theo đúng thứ tự, gợi ý bằng [meaning].
 class OrderExercise extends Exercise {
   const OrderExercise({required this.answer, required this.meaning});
 
   final String answer;
   final String meaning;
 
-  /// Dấu câu cuối (. ? !) — tách riêng để không lộ từ cuối câu.
-  String get ending => RegExp(r'[.?!]$').stringMatch(answer) ?? '';
+  /// Dấu câu cuối (. ? ! 。 ？) — tách riêng để không lộ cụm cuối câu.
+  String get ending => RegExp(r'[.?!。？！]$').stringMatch(answer) ?? '';
 
-  /// Các từ của câu, bỏ dấu câu cuối.
+  /// Các cụm của câu, bỏ dấu câu cuối.
   List<String> get words =>
       answer.substring(0, answer.length - ending.length).split(' ');
+
+  /// Câu để hiện: Tiếng Nhật viết liền (dấu cách chỉ để tách cụm khi ghép).
+  String get display => isCjk(answer) ? answer.replaceAll(' ', '') : answer;
 }
 
-/// So câu người học (gõ / nói) với câu mẫu: mỗi từ của [expected] kèm đã khớp chưa.
-/// Khớp theo thứ tự (dãy con chung dài nhất), bỏ qua hoa/thường và dấu câu.
+/// Có chữ Nhật / Hán (viết liền, không cách từ).
+bool isCjk(String text) => RegExp(r'[぀-ヿ㐀-鿿]').hasMatch(text);
+
+/// Katakana → Hiragana (so cách đọc không phân biệt 2 bảng chữ).
+String toHiragana(String text) => String.fromCharCodes([
+  for (final c in text.runes) c >= 0x30A1 && c <= 0x30F6 ? c - 0x60 : c,
+]);
+
+/// So câu người học (gõ / nói) với câu mẫu: mỗi đơn vị của [expected] kèm đã khớp chưa.
+/// Tiếng Anh so theo TỪ (bỏ qua hoa/thường, dấu câu); Tiếng Nhật so theo TỪNG CHỮ
+/// (bỏ dấu cách, dấu câu, Katakana = Hiragana). Khớp theo thứ tự (dãy con chung dài nhất).
 List<({String word, bool hit})> matchWords(String expected, String actual) {
-  String norm(String w) => w
-      .toLowerCase()
-      .replaceAll('’', "'")
-      .replaceAll(RegExp(r"[^a-z0-9']"), '');
-  List<String> split(String s) =>
-      s.split(RegExp(r'\s+')).where((w) => norm(w).isNotEmpty).toList();
+  final cjk = isCjk(expected);
+  String norm(String w) => cjk
+      ? toHiragana(w).replaceAll(RegExp(r'[\s、。，．？！?!.,「」・ー〜~]'), '')
+      : w
+            .toLowerCase()
+            .replaceAll('’', "'")
+            .replaceAll(RegExp(r"[^a-z0-9']"), '');
+  List<String> split(String s) => cjk
+      ? [
+          for (final c in s.runes.map(String.fromCharCode))
+            if (norm(c).isNotEmpty) c,
+        ]
+      : s.split(RegExp(r'\s+')).where((w) => norm(w).isNotEmpty).toList();
   final want = split(expected);
   final got = [for (final w in split(actual)) norm(w)];
   final n = want.length, m = got.length;
@@ -221,9 +288,27 @@ List<({String word, bool hit})> matchWords(String expected, String actual) {
   return [for (var i = 0; i < n; i++) (word: want[i], hit: hits[i])];
 }
 
+/// Như [matchWords] nhưng câu Tiếng Nhật có [reading] (kana): người học gõ kana hay
+/// Kanji đều được — lấy cách so cho kết quả khớp nhiều hơn.
+List<({String word, bool hit})> matchSentence(
+  String text,
+  String? reading,
+  String actual,
+) {
+  final byText = matchWords(text, actual);
+  if (reading == null) return byText;
+  final byReading = matchWords(reading, actual);
+  return matchRatio(byReading) > matchRatio(byText) ? byReading : byText;
+}
+
+/// Tỉ lệ đơn vị đã khớp (0–1).
+double matchRatio(List<({String word, bool hit})> m) =>
+    m.isEmpty ? 0 : m.where((w) => w.hit).length / m.length;
+
 /// 1 đoạn hội thoại 2 người (A/B) + 4 câu hỏi hiểu bài.
 class Dialogue {
   const Dialogue({
+    required this.course,
     required this.id,
     required this.emoji,
     required this.nameVi,
@@ -234,47 +319,47 @@ class Dialogue {
     required this.questions,
   });
 
-  factory Dialogue.fromJson(Map<String, dynamic> json) => Dialogue(
-    id: json['id'] as String,
-    emoji: json['emoji'] as String,
-    nameVi: json['name_vi'] as String,
-    nameEn: json['name_en'] as String,
-    level: json['level'] as String,
-    speakers: (json['speakers'] as Map<String, dynamic>).cast(),
-    lines: [
-      for (final l in (json['lines'] as List).cast<Map<String, dynamic>>())
-        (
-          speaker: l['s'] as String,
-          en: l['en'] as String,
-          vi: l['vi'] as String,
-        ),
-    ],
-    questions: [
-      for (final q in (json['questions'] as List).cast<Map<String, dynamic>>())
-        ChoiceExercise(
-          prompt: q['q'] as String,
-          hint: q['q_vi'] as String,
-          options: (q['options'] as List).cast<String>(),
-          answer: q['answer'] as int,
-          explain: q['explain'] as String,
-        ),
-    ],
-  );
+  factory Dialogue.fromJson(Map<String, dynamic> json, Course course) =>
+      Dialogue(
+        course: course,
+        id: json['id'] as String,
+        emoji: json['emoji'] as String,
+        nameVi: json['name_vi'] as String,
+        nameEn: json['name_en'] as String,
+        level: json['level'] as String,
+        speakers: (json['speakers'] as Map<String, dynamic>).cast(),
+        lines: [
+          for (final l in (json['lines'] as List).cast<Map<String, dynamic>>())
+            (speaker: l['s'] as String, sentence: _sentence(l)),
+        ],
+        questions: [
+          for (final q
+              in (json['questions'] as List).cast<Map<String, dynamic>>())
+            ChoiceExercise(
+              prompt: q['q'] as String,
+              hint: q['q_vi'] as String,
+              options: (q['options'] as List).cast<String>(),
+              answer: q['answer'] as int,
+              explain: q['explain'] as String,
+            ),
+        ],
+      );
 
+  final Course course;
   final String id;
   final String emoji;
   final String nameVi;
   final String nameEn;
 
-  /// Cấp CEFR: A1, A2, B1.
+  /// Cấp: CEFR (A1–B1) hoặc JLPT (N5, N4).
   final String level;
 
   /// Tên người nói theo vai: `{"A": "Tom", "B": "Mai"}`.
   final Map<String, String> speakers;
-  final List<({String speaker, String en, String vi})> lines;
+  final List<({String speaker, Sentence sentence})> lines;
   final List<ChoiceExercise> questions;
 
-  String get key => 'en:d:$id';
+  String get key => '${course.name}:d:$id';
 
   String name(String languageCode) => languageCode == 'vi' ? nameVi : nameEn;
 }

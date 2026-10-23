@@ -1,17 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lingua/features/course/models/course_model.dart';
-import 'package:lingua/features/english/dialogue_list_page.dart';
-import 'package:lingua/features/english/dialogue_page.dart';
-import 'package:lingua/features/english/english_topics_page.dart';
-import 'package:lingua/features/english/grammar_lesson_page.dart';
-import 'package:lingua/features/english/grammar_list_page.dart';
-import 'package:lingua/features/english/grammar_practice_page.dart';
-import 'package:lingua/features/english/phrase_list_page.dart';
-import 'package:lingua/features/english/pronunciation_page.dart';
-import 'package:lingua/features/english/sentence_practice_page.dart';
-import 'package:lingua/features/english/vocab_list_page.dart';
-import 'package:lingua/features/english/word_detail_page.dart';
 import 'package:lingua/features/home/home_page.dart';
 import 'package:lingua/features/japanese/kana_detail_page.dart';
 import 'package:lingua/features/japanese/kana_table_page.dart';
@@ -20,13 +9,26 @@ import 'package:lingua/features/japanese/kanji_list_page.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 import 'package:lingua/features/learn/learn_page.dart';
+import 'package:lingua/features/lessons/dialogue_list_page.dart';
+import 'package:lingua/features/lessons/dialogue_page.dart';
+import 'package:lingua/features/lessons/grammar_lesson_page.dart';
+import 'package:lingua/features/lessons/grammar_list_page.dart';
+import 'package:lingua/features/lessons/grammar_practice_page.dart';
+import 'package:lingua/features/lessons/phrase_list_page.dart';
+import 'package:lingua/features/lessons/pronunciation_page.dart';
+import 'package:lingua/features/lessons/sentence_practice_page.dart';
+import 'package:lingua/features/lessons/topics_page.dart';
+import 'package:lingua/features/lessons/vocab_list_page.dart';
+import 'package:lingua/features/lessons/word_detail_page.dart';
 import 'package:lingua/features/main/main_page.dart';
 import 'package:lingua/features/onboarding/onboarding_page.dart';
 import 'package:lingua/features/practice/practice_page.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:lingua/features/practice/quiz_page.dart';
 import 'package:lingua/features/profile/profile_page.dart';
+import 'package:lingua/features/search/search_page.dart';
 import 'package:lingua/features/splash/splash_page.dart';
+import 'package:lingua/features/stats/stats_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -55,7 +57,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: KanjiListRoute.page, path: '/kanji'),
     AutoRoute(page: KanjiDetailRoute.page, path: '/kanji/detail'),
     AutoRoute(page: PronunciationRoute.page, path: '/en/pronunciation'),
-    AutoRoute(page: EnglishTopicsRoute.page, path: '/en/topics'),
+    AutoRoute(page: TopicsRoute.page, path: '/en/topics'),
     AutoRoute(page: VocabListRoute.page, path: '/en/vocab'),
     AutoRoute(page: WordDetailRoute.page, path: '/en/word'),
     AutoRoute(page: PhraseListRoute.page, path: '/en/phrases'),
@@ -67,5 +69,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: DialogueQuizRoute.page, path: '/en/dialogue/quiz'),
     AutoRoute(page: SentencePracticeRoute.page, path: '/en/sentences'),
     AutoRoute(page: QuizRoute.page, path: '/quiz'),
+    AutoRoute(page: SearchRoute.page, path: '/search'),
+    AutoRoute(page: StatsRoute.page, path: '/stats'),
   ];
 }

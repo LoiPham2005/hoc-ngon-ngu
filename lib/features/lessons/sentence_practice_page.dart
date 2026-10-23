@@ -7,11 +7,12 @@ import 'package:lingua/core/services/voice_input_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_colors.dart';
+import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -24,7 +25,14 @@ const _speakingPass = 0.8;
 /// 10 câu giao tiếp của 1 tình huống ([topicId] = null → trộn mọi tình huống).
 @RoutePage()
 class SentencePracticePage extends HookConsumerWidget {
-  const SentencePracticePage({required this.mode, this.topicId, super.key});
+  const SentencePracticePage({
+    required this.course,
+    required this.mode,
+    this.topicId,
+    super.key,
+  });
+
+  final Course course;
 
   final SentenceMode mode;
   final String? topicId;
@@ -32,7 +40,7 @@ class SentencePracticePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
-    final state = ref.watch(phraseTopicsProvider);
+    final state = ref.watch(phraseTopicsProvider(course));
     final topics = state.value;
     final topic = topics?.where((t) => t.id == topicId).firstOrNull;
     final round = useState(0);
@@ -53,7 +61,7 @@ class SentencePracticePage extends HookConsumerWidget {
         appBar: AppBar(title: Text(title)),
         body: AsyncView<List<Topic<Phrase>>>(
           state: state,
-          onRetry: () => ref.invalidate(phraseTopicsProvider),
+          onRetry: () => ref.invalidate(phraseTopicsProvider(course)),
           builder: (_, _) => const SizedBox.shrink(),
         ),
       );
@@ -124,7 +132,7 @@ class _SentenceSession extends HookConsumerWidget {
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
             value: index.value / total,
-            color: Module.enPhrases.color,
+            color: AppPalette.phrases,
           ),
         ),
       ),
@@ -200,7 +208,7 @@ class _DictationView extends HookConsumerWidget {
 
     void play({bool slow = false}) => ref
         .read(speechProvider)
-        .speak(phrase.text, language: 'en-US', slow: slow);
+        .speak(phrase.text, language: phrase.course.speechLanguage, slow: slow);
     useEffect(() {
       play();
       return null;
@@ -267,7 +275,7 @@ class _DictationView extends HookConsumerWidget {
             onPressed: typed.isEmpty
                 ? null
                 : () {
-                    final m = matchWords(phrase.text, typed);
+                    final m = matchSentence(phrase.text, phrase.reading, typed);
                     matches.value = m;
                     onAnswer(ok: m.every((w) => w.hit));
                   },
@@ -282,6 +290,7 @@ class _DictationView extends HookConsumerWidget {
                 ? null
                 : l10n.sentence_score(_percent(matches.value!)),
             speech: phrase.text,
+            language: phrase.course.speechLanguage,
           ),
         ],
       ],
@@ -327,7 +336,7 @@ class _SpeakingView extends HookConsumerWidget {
         notHeard.value = true;
         return;
       }
-      final m = matchWords(phrase.text, words);
+      final m = matchSentence(phrase.text, phrase.reading, words);
       matches.value = m;
       if (!graded.value) {
         graded.value = true;
@@ -349,7 +358,7 @@ class _SpeakingView extends HookConsumerWidget {
       matches.value = null;
       listening.value = true;
       await voice.listen(
-        localeId: 'en_US',
+        localeId: phrase.course.speechLocaleId,
         onResult: (words, isFinal) {
           if (!mounted()) return;
           heard.value = words;
@@ -377,6 +386,13 @@ class _SpeakingView extends HookConsumerWidget {
                         Text(phrase.text, style: theme.textTheme.headlineSmall)
                       else
                         WordMatchText(m, style: theme.textTheme.headlineSmall),
+                      if (phrase.reading case final reading?)
+                        Text(
+                          reading,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: colors.textMuted,
+                          ),
+                        ),
                       const SizedBox(height: 4),
                       Text(
                         phrase.meaning,
@@ -387,7 +403,10 @@ class _SpeakingView extends HookConsumerWidget {
                     ],
                   ),
                 ),
-                SpeakButton(phrase.text, language: 'en-US'),
+                SpeakButton(
+                  phrase.text,
+                  language: phrase.course.speechLanguage,
+                ),
               ],
             ),
           ),
@@ -458,7 +477,6 @@ class _SpeakingView extends HookConsumerWidget {
   }
 }
 
-double _ratio(List<({String word, bool hit})> m) =>
-    m.isEmpty ? 0 : m.where((w) => w.hit).length / m.length;
+double _ratio(List<({String word, bool hit})> m) => matchRatio(m);
 
 int _percent(List<({String word, bool hit})> m) => (_ratio(m) * 100).round();

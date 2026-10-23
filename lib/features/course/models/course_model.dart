@@ -22,6 +22,25 @@ enum Course {
       if (m.course == this) m,
   ];
 
+  /// Thư mục nội dung trong `assets/`.
+  String get assetDir => switch (this) {
+    Course.ja => 'japanese',
+    Course.en => 'english',
+    Course.ko => 'korean',
+    Course.zh => 'chinese',
+  };
+
+  /// Giọng đọc (Text-to-Speech).
+  String get speechLanguage => switch (this) {
+    Course.ja => 'ja-JP',
+    Course.en => 'en-US',
+    Course.ko => 'ko-KR',
+    Course.zh => 'zh-CN',
+  };
+
+  /// Ngôn ngữ nhận giọng nói (luyện nói).
+  String get speechLocaleId => speechLanguage.replaceAll('-', '_');
+
   String title(BuildContext context) {
     final l10n = context.l10n;
     return switch (this) {
@@ -52,6 +71,9 @@ enum ModuleSection {
     };
   }
 }
+
+/// Loại bài học dùng chung cho mọi khoá (màn + dữ liệu cùng định dạng).
+enum LessonKind { vocabulary, phrases, dialogues, grammar }
 
 /// Học phần trong 1 khoá. [glyph] = chữ đại diện trên thẻ.
 enum Module {
@@ -85,26 +107,25 @@ enum Module {
     AppPalette.kanjiN2,
     JlptLevel.n2,
   ),
+  jaVocabulary(Course.ja, ModuleSection.vocabulary, '語', AppPalette.vocabulary),
+  jaPhrases(Course.ja, ModuleSection.vocabulary, '💬', AppPalette.phrases),
+  jaDialogues(Course.ja, ModuleSection.vocabulary, '🗣️', AppPalette.dialogues),
+  jaGrammar(Course.ja, ModuleSection.grammar, '✍️', AppPalette.grammar),
   enPronunciation(
     Course.en,
     ModuleSection.pronunciation,
     'ə',
-    AppPalette.enPronunciation,
+    AppPalette.pronunciation,
   ),
   enVocabulary(
     Course.en,
     ModuleSection.vocabulary,
     'Aa',
-    AppPalette.enVocabulary,
+    AppPalette.vocabulary,
   ),
-  enPhrases(Course.en, ModuleSection.vocabulary, '💬', AppPalette.enPhrases),
-  enDialogues(
-    Course.en,
-    ModuleSection.vocabulary,
-    '🗣️',
-    AppPalette.enDialogues,
-  ),
-  enGrammar(Course.en, ModuleSection.grammar, '✍️', AppPalette.enGrammar);
+  enPhrases(Course.en, ModuleSection.vocabulary, '💬', AppPalette.phrases),
+  enDialogues(Course.en, ModuleSection.vocabulary, '🗣️', AppPalette.dialogues),
+  enGrammar(Course.en, ModuleSection.grammar, '✍️', AppPalette.grammar);
 
   const Module(
     this.course,
@@ -127,7 +148,21 @@ enum Module {
   bool get isKana => this == Module.hiragana || this == Module.katakana;
 
   /// Ngôn ngữ giọng đọc phát âm của học phần.
-  String get speechLanguage => course == Course.en ? 'en-US' : 'ja-JP';
+  String get speechLanguage => course.speechLanguage;
+
+  /// Loại bài học dùng chung (từ vựng, câu, hội thoại, ngữ pháp); khác → `null`.
+  LessonKind? get lessonKind => switch (this) {
+    Module.enVocabulary || Module.jaVocabulary => LessonKind.vocabulary,
+    Module.enPhrases || Module.jaPhrases => LessonKind.phrases,
+    Module.enDialogues || Module.jaDialogues => LessonKind.dialogues,
+    Module.enGrammar || Module.jaGrammar => LessonKind.grammar,
+    _ => null,
+  };
+
+  /// Học phần [kind] của [course] (`null` nếu khoá chưa có).
+  static Module? lesson(Course course, LessonKind kind) => Module.values
+      .where((m) => m.course == course && m.lessonKind == kind)
+      .firstOrNull;
 
   String title(BuildContext context) {
     final l10n = context.l10n;
@@ -135,10 +170,10 @@ enum Module {
       Module.hiragana => l10n.module_hiragana,
       Module.katakana => l10n.module_katakana,
       Module.enPronunciation => l10n.module_enPronunciation,
-      Module.enVocabulary => l10n.module_enVocabulary,
-      Module.enPhrases => l10n.module_enPhrases,
-      Module.enDialogues => l10n.module_enDialogues,
-      Module.enGrammar => l10n.module_enGrammar,
+      Module.enVocabulary || Module.jaVocabulary => l10n.module_enVocabulary,
+      Module.enPhrases || Module.jaPhrases => l10n.module_enPhrases,
+      Module.enDialogues || Module.jaDialogues => l10n.module_enDialogues,
+      Module.enGrammar || Module.jaGrammar => l10n.module_enGrammar,
       _ => l10n.module_kanji(kanjiLevel!.label),
     };
   }
@@ -149,10 +184,13 @@ enum Module {
       Module.hiragana => l10n.module_hiragana_desc,
       Module.katakana => l10n.module_katakana_desc,
       Module.enPronunciation => l10n.module_enPronunciation_desc(total),
-      Module.enVocabulary => l10n.module_enVocabulary_desc(total),
-      Module.enPhrases => l10n.module_enPhrases_desc(total),
-      Module.enDialogues => l10n.module_enDialogues_desc(total),
+      Module.enVocabulary ||
+      Module.jaVocabulary => l10n.module_enVocabulary_desc(total),
+      Module.enPhrases || Module.jaPhrases => l10n.module_enPhrases_desc(total),
+      Module.enDialogues ||
+      Module.jaDialogues => l10n.module_enDialogues_desc(total),
       Module.enGrammar => l10n.module_enGrammar_desc(total),
+      Module.jaGrammar => l10n.module_jaGrammar_desc(total),
       _ => l10n.module_kanji_desc(total),
     };
   }

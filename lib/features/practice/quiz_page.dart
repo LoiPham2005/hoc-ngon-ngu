@@ -159,12 +159,20 @@ void openQuizItem(BuildContext context, QuizItem item) =>
         script: KanaScript.katakana,
         char: item.char,
       ),
-      Module.enPronunciation || Module.enVocabulary => WordDetailRoute(
+      final m when m.lessonKind == LessonKind.phrases => PhraseListRoute(
+        course: m.course,
+        topicId: item.group,
+      ),
+      final m when m.isKanji => KanjiDetailRoute(
+        level: m.kanjiLevel!,
+        char: item.char,
+      ),
+      // Từ vựng (kể cả bài nghe từ của học phần Phát âm).
+      final m => WordDetailRoute(
+        course: m.course,
         topicId: item.group,
         word: item.char,
       ),
-      Module.enPhrases => PhraseListRoute(topicId: item.group),
-      final m => KanjiDetailRoute(level: m.kanjiLevel!, char: item.char),
     });
 
 class _QuestionView extends StatelessWidget {
@@ -189,13 +197,13 @@ class _QuestionView extends StatelessWidget {
     final ask = switch (topic.mode) {
       _ when topic.review != null => switch (question.item.module) {
         Module.hiragana || Module.katakana => l10n.quiz_askReading,
-        Module.enPhrases => l10n.quiz_askPhrase,
+        final m when m.lessonKind == LessonKind.phrases => l10n.quiz_askPhrase,
         final m when m.isKanji && vietnamese => l10n.quiz_askHanViet,
         _ => l10n.quiz_askMeaning,
       },
       QuizMode.reading => l10n.quiz_askReading,
       QuizMode.hanViet => l10n.quiz_askHanViet,
-      QuizMode.meaning when topic.module == Module.enPhrases =>
+      QuizMode.meaning when topic.module?.lessonKind == LessonKind.phrases =>
         l10n.quiz_askPhrase,
       QuizMode.meaning => l10n.quiz_askMeaning,
       QuizMode.listening => l10n.quiz_askListening,
@@ -244,8 +252,12 @@ class _QuestionView extends StatelessWidget {
                                   border: Border.all(color: colors.border),
                                 ),
                                 // Chữ / từ ngắn → to hết cỡ; câu dài → xuống dòng.
-                                child: question.item.char.length <= 8
-                                    ? FittedBox(
+                                // Tiếng Nhật: cách đọc kana nhỏ bên dưới.
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (question.item.char.length <= 8)
+                                      FittedBox(
                                         child: Text(
                                           question.item.char,
                                           style: const TextStyle(
@@ -254,11 +266,21 @@ class _QuestionView extends StatelessWidget {
                                           ),
                                         ),
                                       )
-                                    : Text(
+                                    else
+                                      Text(
                                         question.item.char,
                                         textAlign: TextAlign.center,
                                         style: theme.textTheme.headlineSmall,
                                       ),
+                                    if (question.item.hint case final hint?)
+                                      Text(
+                                        hint,
+                                        textAlign: TextAlign.center,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(color: colors.textMuted),
+                                      ),
+                                  ],
+                                ),
                               ),
                       ),
                     ),

@@ -10,6 +10,7 @@ import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/profile/providers/backup_service.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
@@ -246,6 +247,40 @@ class ProfilePage extends HookConsumerWidget {
           SectionTitle(l10n.section_data),
           _Panel(
             children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.upload_file_rounded),
+                title: Text(l10n.backup_export),
+                subtitle: Text(l10n.backup_export_desc),
+                onTap: () async {
+                  if (await ref.read(backupProvider).export()) {
+                    toast.success(l10n.backup_exported);
+                  }
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.download_rounded),
+                title: Text(l10n.backup_restore),
+                subtitle: Text(l10n.backup_restore_desc),
+                onTap: () async {
+                  final ok = await AppConfirmationDialog.show(
+                    context,
+                    title: l10n.backup_restore,
+                    message: l10n.backup_restore_confirm,
+                    confirmText: l10n.backup_restore,
+                  );
+                  if (!ok) return;
+                  switch (await ref.read(backupProvider).restore()) {
+                    case RestoreResult.restored:
+                      toast.success(l10n.backup_restored);
+                    case RestoreResult.invalid:
+                      toast.error(l10n.backup_invalid);
+                    case RestoreResult.cancelled:
+                  }
+                },
+              ),
+              const Divider(height: 20),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.restart_alt_rounded, color: colors.error),

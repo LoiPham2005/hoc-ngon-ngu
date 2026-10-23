@@ -5,6 +5,7 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
+import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
 /// Khoá học: các học phần của ngôn ngữ đang học, kèm tiến độ.
@@ -22,6 +23,11 @@ class LearnPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.learn_title),
         actions: [
+          IconButton(
+            tooltip: l10n.search_title,
+            icon: const Icon(Icons.search_rounded),
+            onPressed: () => context.router.push(const SearchRoute()),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: Chip(

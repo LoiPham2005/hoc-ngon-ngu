@@ -160,4 +160,39 @@ void main() {
       expect(c.read(learnerProvider).reviews.keys, ['あ']);
     });
   });
+
+  test(
+    'daily history: answers, accuracy and new items per day, kept 90 days',
+    () async {
+      final c = newContainer();
+      final n = c.read(learnerProvider.notifier);
+      var day = DateTime(2026, 10, 1, 9);
+      n.now = () => day;
+      await n.recordAnswer(correct: true, key: 'あ');
+      await n.recordAnswer(correct: false, key: 'い');
+      await n.toggleLearned('う');
+      day = DateTime(2026, 10, 3, 9);
+      await n.recordAnswer(correct: true);
+
+      final last = n.lastDays(3);
+      expect(last.map((d) => d.$1.day), [1, 2, 3]);
+      final first = last.first.$2;
+      expect((first.answered, first.correct, first.learned), (2, 1, 1));
+      expect(last[1].$2.total, 0);
+      expect(last[2].$2.answered, 1);
+
+      // Saved and read back.
+      final again = newContainer().read(learnerProvider).history['2026-10-01']!;
+      expect(again.total, 3);
+
+      // Older than 90 days is dropped.
+      for (var i = 0; i < 95; i++) {
+        day = DateTime(2026, 11, 1).add(Duration(days: i));
+        await n.recordAnswer(correct: true);
+      }
+      final history = c.read(learnerProvider).history;
+      expect(history, hasLength(Learner.historyDays));
+      expect(history.containsKey('2026-10-01'), isFalse);
+    },
+  );
 }

@@ -5,9 +5,9 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -15,19 +15,30 @@ import 'package:lingua/shared/states/async_view.dart';
 /// Chi tiết 1 từ: từ, phiên âm, loại từ, nghĩa, câu ví dụ (đều nghe được), đã thuộc, từ trước/sau.
 @RoutePage()
 class WordDetailPage extends ConsumerWidget {
-  const WordDetailPage({required this.topicId, required this.word, super.key});
+  const WordDetailPage({
+    required this.course,
+    required this.topicId,
+    required this.word,
+    super.key,
+  });
+
+  final Course course;
 
   final String topicId;
   final String word;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(vocabTopicsProvider);
+    final state = ref.watch(vocabTopicsProvider(course));
     return Scaffold(
-      appBar: AppBar(title: Text(Module.enVocabulary.title(context))),
+      appBar: AppBar(
+        title: Text(
+          Module.lesson(course, LessonKind.vocabulary)!.title(context),
+        ),
+      ),
       body: AsyncView<List<Topic<Word>>>(
         state: state,
-        onRetry: () => ref.invalidate(vocabTopicsProvider),
+        onRetry: () => ref.invalidate(vocabTopicsProvider(course)),
         builder: (context, topics) {
           final words = topics.firstWhere((t) => t.id == topicId).items;
           final index = words.indexWhere((w) => w.word == word);
@@ -61,7 +72,7 @@ class _WordView extends ConsumerWidget {
       learnerProvider.select((l) => l.learned.contains(word.key)),
     );
     void open(Word w) => context.router.replace(
-      WordDetailRoute(topicId: w.topicId, word: w.word),
+      WordDetailRoute(course: w.course, topicId: w.topicId, word: w.word),
     );
 
     return Column(
@@ -76,7 +87,13 @@ class _WordView extends ConsumerWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Tag(posLabel(context, word.pos)),
+                      Wrap(
+                        spacing: 6,
+                        children: [
+                          Tag(posLabel(context, word.pos)),
+                          if (word.level case final level?) Tag(level),
+                        ],
+                      ),
                       const SizedBox(height: 10),
                       FittedBox(
                         child: Text(
@@ -86,14 +103,18 @@ class _WordView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        '/${word.ipa}/',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: colors.textMuted,
+                      if (word.readingLabel case final reading?)
+                        Text(
+                          reading,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: colors.textMuted,
+                          ),
                         ),
-                      ),
                       const SizedBox(height: 12),
-                      SpeakButton(word.word, language: 'en-US'),
+                      SpeakButton(
+                        word.word,
+                        language: word.course.speechLanguage,
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         word.meaning,
@@ -121,21 +142,18 @@ class _WordView extends ConsumerWidget {
                               style: theme.textTheme.labelSmall,
                             ),
                             const SizedBox(height: 4),
-                            Text(
+                            SentenceText(
                               word.example,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              word.exampleVi,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colors.textMuted,
-                              ),
+                              reading: word.exampleReading,
+                              meaning: word.exampleVi,
                             ),
                           ],
                         ),
                       ),
-                      SpeakButton(word.example, language: 'en-US'),
+                      SpeakButton(
+                        word.example,
+                        language: word.course.speechLanguage,
+                      ),
                     ],
                   ),
                 ),
@@ -205,6 +223,8 @@ String posLabel(BuildContext context, String pos) {
     'num' => l10n.pos_num,
     'prep' => l10n.pos_prep,
     'pron' => l10n.pos_pron,
+    'na' => l10n.pos_na,
+    'exp' => l10n.pos_exp,
     _ => pos,
   };
 }

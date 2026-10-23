@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 
 /// Số mục đã thuộc trong [keys].
@@ -64,10 +65,14 @@ class AnswerFeedback extends StatelessWidget {
     this.detail,
     this.speech,
     this.title,
+    this.language = 'en-US',
     super.key,
   });
 
   final bool ok;
+
+  /// Giọng đọc cho [speech] (`Course.speechLanguage`).
+  final String language;
   final String? detail;
   final String? speech;
 
@@ -105,7 +110,7 @@ class AnswerFeedback extends StatelessWidget {
               ],
             ),
           ),
-          if (speech != null) SpeakButton(speech!, language: 'en-US'),
+          if (speech != null) SpeakButton(speech!, language: language),
         ],
       ),
     );
@@ -212,12 +217,14 @@ class WordMatchText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    // Tiếng Nhật viết liền, Tiếng Anh cách nhau 1 dấu cách.
+    final gap = words.any((w) => isCjk(w.word)) ? '' : ' ';
     return Text.rich(
       TextSpan(
         children: [
           for (final (i, w) in words.indexed)
             TextSpan(
-              text: i == 0 ? w.word : ' ${w.word}',
+              text: i == 0 ? w.word : '$gap${w.word}',
               style: TextStyle(
                 color: w.hit ? colors.success : colors.error,
                 decoration: w.hit ? null : TextDecoration.underline,
@@ -227,6 +234,48 @@ class WordMatchText extends StatelessWidget {
         ],
       ),
       style: style ?? Theme.of(context).textTheme.titleLarge,
+    );
+  }
+}
+
+/// 1 câu: câu gốc, cách đọc kana nhỏ bên dưới (Tiếng Nhật, nếu có), nghĩa tiếng Việt.
+class SentenceText extends StatelessWidget {
+  const SentenceText(
+    this.text, {
+    required this.meaning,
+    this.reading,
+    this.style,
+    super.key,
+  });
+
+  final String text;
+  final String? reading;
+  final String? meaning;
+
+  /// Kiểu chữ câu gốc (mặc định titleMedium).
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final muted = context.colors.textMuted;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(text, style: style ?? theme.textTheme.titleMedium),
+        if (reading != null && reading != text)
+          Text(
+            reading!,
+            style: theme.textTheme.bodySmall?.copyWith(color: muted),
+          ),
+        if (meaning != null) ...[
+          const SizedBox(height: 2),
+          Text(
+            meaning!,
+            style: theme.textTheme.bodyMedium?.copyWith(color: muted),
+          ),
+        ],
+      ],
     );
   }
 }

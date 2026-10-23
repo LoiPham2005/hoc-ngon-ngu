@@ -5,9 +5,9 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
-import 'package:lingua/features/english/models/english_model.dart';
-import 'package:lingua/features/english/providers/english_provider.dart';
-import 'package:lingua/features/english/widgets/english_widgets.dart';
+import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -15,17 +15,21 @@ import 'package:lingua/shared/states/async_view.dart';
 /// Danh sách bài ngữ pháp theo thứ tự học, kèm cấp độ và dấu ✓ đã thuộc.
 @RoutePage()
 class GrammarListPage extends ConsumerWidget {
-  const GrammarListPage({super.key});
+  const GrammarListPage({required this.course, super.key});
+
+  final Course course;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(localeProvider).languageCode;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(Module.enGrammar.title(context))),
+      appBar: AppBar(
+        title: Text(Module.lesson(course, LessonKind.grammar)!.title(context)),
+      ),
       body: AsyncView<List<GrammarLesson>>(
-        state: ref.watch(grammarLessonsProvider),
-        onRetry: () => ref.invalidate(grammarLessonsProvider),
+        state: ref.watch(grammarLessonsProvider(course)),
+        onRetry: () => ref.invalidate(grammarLessonsProvider(course)),
         builder: (context, lessons) {
           final learned = learnedCount(ref, lessons.map((g) => g.key));
           return ListView(
@@ -33,7 +37,7 @@ class GrammarListPage extends ConsumerWidget {
             children: [
               RoundedProgress(
                 learned / lessons.length,
-                color: Module.enGrammar.color,
+                color: Module.lesson(course, LessonKind.grammar)!.color,
               ),
               const SizedBox(height: 6),
               Text(
@@ -48,7 +52,7 @@ class GrammarListPage extends ConsumerWidget {
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
                       onTap: () => context.router.push(
-                        GrammarLessonRoute(lessonId: g.id),
+                        GrammarLessonRoute(course: course, lessonId: g.id),
                       ),
                       contentPadding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
                       leading: Text(
