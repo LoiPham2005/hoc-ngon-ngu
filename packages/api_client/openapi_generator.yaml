@@ -1,4 +1,0 @@
-openapi_generator:
-  schema_url: https://next-base.deploybox.io.vn/api/v1/openapi.json
-  output_directory: lib/src
-  json_serializer: freezed

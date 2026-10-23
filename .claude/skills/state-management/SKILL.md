@@ -1,6 +1,6 @@
 ---
 name: state-management
-description: State bằng Riverpod codegen + mixin BaseNotifier (1 hàm `run` cho mọi thao tác async), PaginatedNotifier cho phân trang, ref.cacheFor, AsyncView (render + toast), provider sinh sẵn từ api_client, trạng thái đăng nhập sessionProvider. Đọc khi viết Notifier mới, gọi API từ UI, xử lý loading/error/empty, search, phân trang, create/update/delete. Cấm BLoC/Cubit/GetX, cấm setState cho logic async.
+description: State bằng Riverpod codegen + mixin BaseNotifier (1 hàm `run` cho mọi thao tác async), PaginatedNotifier cho phân trang, ref.cacheFor, AsyncView (render + toast), trạng thái đăng nhập sessionProvider. Đọc khi viết Notifier mới, gọi API từ UI, xử lý loading/error/empty, search, phân trang, create/update/delete. Cấm BLoC/Cubit/GetX, cấm setState cho logic async.
 ---
 
 # State management — Riverpod + BaseNotifier
@@ -74,29 +74,22 @@ Quy tắc:
 
 ## Phân trang — PaginatedNotifier
 
-Mẫu `_reference/openapi_user` (client OpenAPI trả meta riêng → map sang `PaginatedResponse`):
+Mẫu (service Retrofit trả `ApiResponse<PaginatedResponse<T>>`):
 ```dart
 @riverpod
-class OpenapiUserNotifier extends _$OpenapiUserNotifier
-    with BaseNotifier<List<User>>, PaginatedNotifier<User> {
-  late UsersClient _api;
+class ProductListNotifier extends _$ProductListNotifier
+    with BaseNotifier, PaginatedNotifier {
+  late ProductService _service;
 
   @override
-  Future<List<User>> build() {
-    _api = ref.apiClient.users;
+  Future<List<ProductModel>> build() {
+    _service = ProductService(ref.dio);
     return loadFirstPage();
   }
 
   @override
-  Future<PaginatedResponse<User>> fetchPage(int page) async {
-    final res = await _api.getUsers(page: page, limit: 20);
-    final meta = res.data.meta;
-    return PaginatedResponse(
-      items: res.data.items,
-      meta: PageMeta(page: meta.page, limit: meta.limit, total: meta.total,
-          totalPages: meta.totalPages, hasNext: meta.hasNext),
-    );
-  }
+  Future<PaginatedResponse<ProductModel>> fetchPage(int page) async =>
+      (await _service.getProducts(page: page, limit: 20)).data;
 }
 ```
 Service Retrofit đã trả `ApiResponse<PaginatedResponse<E>>` thì chỉ cần unwrap `res.data` (xem `_reference/pagination_demo`). Có sẵn: `loadFirstPage()`, `refresh()`, `loadMore()` (bỏ kết quả nếu refresh chen ngang), `hasMore` (`meta.hasNext`), `isLoadingMore`, `currentPage`. Chỉ phân trang theo số trang.
@@ -136,13 +129,8 @@ Cần toast mà không dùng AsyncView: gọi hook `useRunMessages(notifier)` (l
 
 Widget dùng hook → `HookConsumerWidget`; không hook → `ConsumerWidget`. `ref.watch` trong `build`, `ref.read(...notifier)` cho callback.
 
-## Provider sinh sẵn từ api_client
-
-GET → `ref.watch(getUsersProvider(page: 1, limit: 20))`; ghi → `ref.read(usersActionsProvider.notifier).deleteUsersId(id: id)` (ném lỗi, xong tự invalidate GET cùng nhóm). Màn đơn giản dùng thẳng (`_reference/generated_api`); cần toast chung/optimistic thì đặt lời gọi Actions vào `run(...)` của notifier. Chi tiết ở skill `network-error`.
-
 ## Trạng thái đăng nhập
 
 - `sessionProvider` (lib/core/services/session_notifier.dart): state `bool` (có access token). `await ref.read(sessionProvider.notifier).ready` trước khi đọc lúc cold start. `login(access, [refresh])` ghi token, `logout()` xoá token.
-- `authProvider` (features/auth, `BaseNotifier<User?>` — `User` của `api_client`, keepAlive): gọi backend qua `ref.apiClient.auth` — `login`, `register`, `refreshMe` (`GET /auth/me`), `logout` (thu hồi phiên server + xoá token). Đăng nhập xong lưu token qua `sessionProvider.notifier.login(...)`.
 - `app.dart` lắng nghe `sessionProvider`: `true → false` thì về `LoginRoute`.
 

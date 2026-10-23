@@ -8,7 +8,6 @@ import 'package:lingua/app.dart';
 import 'package:lingua/config/app_initializer.dart';
 import 'package:lingua/config/flavor_config.dart';
 import 'package:lingua/core/di/global_providers.dart';
-import 'package:lingua/core/network/api_client_provider.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,7 +56,6 @@ Future<void> main() async {
         sharedPrefsProvider.overrideWithValue(
           await SharedPreferences.getInstance(),
         ),
-        ...apiClientOverrides,
       ],
     );
 

@@ -1,6 +1,0 @@
-# Generated code
-**/*.freezed.dart
-**/*.g.dart
-.dart_tool/
-pubspec.lock
-build/

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/di/global_providers.dart';
-import 'package:lingua/core/network/api_client_provider.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
@@ -36,7 +35,6 @@ Future<void> pumpApp(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...apiClientOverrides,
         sharedPrefsProvider.overrideWithValue(sharedPrefs),
         ...overrides,
       ],

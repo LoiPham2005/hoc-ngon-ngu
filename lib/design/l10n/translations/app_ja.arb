@@ -325,5 +325,9 @@
   "voice_female_n": "女性の声 {n}",
   "voice_male_n": "男性の声 {n}",
   "voice_fewVoices": "このエンジンにはこの言語の声が {count} 個しかありません。男性・女性の声を増やすには、上で Google エンジンを選ぶか、「Google の音声サービス」をインストールして音声をダウンロードしてください。",
-  "voice_installGoogle": "Google の音声を入手"
+  "voice_installGoogle": "Google の音声を入手",
+  "speaking_errNetwork": "音声認識にはインターネット接続が必要です（または Google アプリでオフライン言語パックをダウンロードしてください）。",
+  "speaking_errLanguage": "この端末はこの言語の音声認識に対応していません。Google アプリ → 設定 → 音声 → 言語 で追加してください。",
+  "speaking_errBusy": "マイクが使用中です。少し待ってから「もう一度読む」を押してください。",
+  "speaking_errOther": "音声を認識できませんでした。「もう一度読む」でもう一度お試しください。"
 }

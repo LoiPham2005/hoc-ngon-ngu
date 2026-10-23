@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/network/api_response.dart';
 
-/// Đúng dạng response của backend (giống model sinh trong `api_client`).
+/// Đúng dạng response của backend.
 void main() {
   test('ApiResponse: { "data": {...} }', () {
     final res = ApiResponse<Map<String, dynamic>>.fromJson({

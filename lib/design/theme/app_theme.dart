@@ -75,6 +75,15 @@ abstract final class AppTheme {
       textTheme: text,
       extensions: [c],
       scaffoldBackgroundColor: c.background,
+      // Chuyển màn kiểu iPhone trên MỌI nền tảng (auto_route dùng theme này cho mọi trang):
+      // màn mới trượt từ phải, màn cũ lùi nhẹ + tối đi, vuốt từ mép trái để quay lại.
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       dividerTheme: DividerThemeData(color: c.border, space: 1),
       appBarTheme: AppBarTheme(
         backgroundColor: c.background,

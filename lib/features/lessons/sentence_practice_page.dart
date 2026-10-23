@@ -326,20 +326,21 @@ class _SpeakingView extends HookConsumerWidget {
     final heard = useState('');
     final matches = useState<List<({String word, bool hit})>?>(null);
     final unavailable = useState(false);
-    final notHeard = useState(false);
+    // Lý do lượt đọc vừa rồi không chấm được (null = không có vấn đề).
+    final problem = useState<String?>(null);
     final graded = useRef(false);
     // Lượt đọc hiện tại đã chấm chưa (chấm đúng 1 lần dù có kết quả cuối hay không).
     final attemptDone = useRef(true);
     final mounted = useIsMounted();
 
-    useEffect(() => voice.stop, const []);
+    useEffect(() => voice.cancel, const []);
 
     void evaluate(String words) {
       if (attemptDone.value) return;
       attemptDone.value = true;
       listening.value = false;
       if (words.trim().isEmpty) {
-        notHeard.value = true;
+        problem.value = l10n.speaking_notHeard;
         return;
       }
       final m = matchSentence(phrase.text, phrase.reading, words);
@@ -367,7 +368,7 @@ class _SpeakingView extends HookConsumerWidget {
         return;
       }
       heard.value = '';
-      notHeard.value = false;
+      problem.value = null;
       matches.value = null;
       attemptDone.value = false;
       listening.value = true;
@@ -379,8 +380,24 @@ class _SpeakingView extends HookConsumerWidget {
           if (isFinal) evaluate(words);
         },
         // Máy tự ngừng nghe (im lặng, hết giờ, lỗi) mà chưa có kết quả cuối → chấm phần đã nghe.
-        onDone: () {
-          if (mounted()) evaluate(heard.value);
+        onDone: (error) {
+          if (!mounted()) return;
+          // Lỗi thật (mạng, ngôn ngữ, bận…) mà chưa nghe được gì → báo đúng lý do.
+          if (error != null &&
+              error != VoiceInputError.noSpeech &&
+              heard.value.trim().isEmpty) {
+            attemptDone.value = true;
+            listening.value = false;
+            problem.value = switch (error) {
+              VoiceInputError.network => l10n.speaking_errNetwork,
+              VoiceInputError.language => l10n.speaking_errLanguage,
+              VoiceInputError.busy => l10n.speaking_errBusy,
+              VoiceInputError.permission => l10n.permission_microphone_reason,
+              _ => l10n.speaking_errOther,
+            };
+            return;
+          }
+          evaluate(heard.value);
         },
       );
     }
@@ -462,7 +479,7 @@ class _SpeakingView extends HookConsumerWidget {
                   icon: const Icon(Icons.stop_rounded),
                   label: Text(l10n.speaking_stop),
                 )
-              : m != null || notHeard.value
+              : m != null || problem.value != null
               ? OutlinedButton.icon(
                   onPressed: toggleMic,
                   icon: const Icon(Icons.replay_rounded),
@@ -478,10 +495,10 @@ class _SpeakingView extends HookConsumerWidget {
             style: theme.textTheme.bodyLarge?.copyWith(color: colors.textMuted),
           ),
         ],
-        if (notHeard.value) ...[
+        if (problem.value case final text?) ...[
           const SizedBox(height: 12),
           Text(
-            l10n.speaking_notHeard,
+            text,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(color: colors.warning),
           ),

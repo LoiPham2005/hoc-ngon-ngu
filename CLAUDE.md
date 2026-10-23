@@ -11,20 +11,19 @@ lib/
     di/          globalContainer, sharedPrefsProvider, secureStorageProvider
     errors/      Failure (sealed) + ErrorHandler.handle(e)
     riverpod/    BaseNotifier (`run`), PaginatedNotifier, ref.cacheFor
-    network/     dioProvider, apiClientProvider, AuthInterceptor, ApiResponse<T> / PaginatedResponse<T>
+    network/     dioProvider, AuthInterceptor, ApiResponse<T> / PaginatedResponse<T>
     services/    session_notifier (token đăng nhập), biometric (vân tay/Face ID), connectivity, notification, fcm, app_version, quick_actions
     utils/       talker (log), toast
   design/        theme (theme_tailor tokens) + l10n (+ context.l10n)
   shared/        base (AppScaffold, AppButton, AppTextField), dialogs, states (AsyncView, Loading/Empty/Error)
   features/{name}/
     {name}_page.dart                  HookConsumerWidget — page để thẳng ở gốc feature
-    models/     {name}_model.dart     @freezed            ┐ CHỈ khi API chưa có trong packages/api_client
-    services/   {name}_service.dart   @RestApi (Retrofit) ┘ (có sẵn → dùng model/client sinh sẵn, không tạo)
+    models/     {name}_model.dart     @freezed            ┐ CHỈ khi feature gọi API
+    services/   {name}_service.dart   @RestApi (Retrofit) ┘
     providers/  {name}_notifier.dart  @riverpod class ... with BaseNotifier<T>
     widgets/    (khi page có widget con riêng)
   modules/       ads (AdManager), iap (isPremiumProvider), analytics, app_config — Remote Config dùng chung ở core/services
   routes/        app_router (`appRouter` toàn cục), route_guards
-packages/api_client  client sinh từ OpenAPI (`make gen-api`) — KHÔNG sửa tay
 ```
 
 ## DI = Riverpod (không get_it)
@@ -89,7 +88,7 @@ Page: dùng `AsyncView<T>(state:, notifier:, onRetry:, onRefresh:, builder:)` �
 
 1. Ưu tiên thư viện có sẵn, không viết tay lại thứ thư viện đã làm.
 2. Sau khi sửa `@riverpod`, `@freezed`, `@RestApi`, `@RoutePage`: `make gen`.
-3. Feature mới: API đã có trong `packages/api_client` → dùng thẳng (`ref.apiClient.<nhóm>`), KHÔNG viết model/service; chưa có → tự viết model + service theo `_reference/voucher`. Thêm route vào `app_router.dart`.
+3. Feature mới gọi API: tự viết model `@freezed` + service Retrofit `@RestApi` trong feature (app hiện chạy offline, chưa có backend). Thêm route vào `app_router.dart`.
 4. Code chưa dùng thì không thêm "để sẵn".
 
 ## Skills

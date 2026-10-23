@@ -15,17 +15,15 @@ lib/
   core/di/             global_providers (globalContainer, sharedPrefs, secureStorage)
   core/errors/         Failure (sealed) + ErrorHandler
   core/riverpod/       BaseNotifier (`run`), PaginatedNotifier, ref_extensions
-  core/network/        dio_provider, api_client_provider, AuthInterceptor, ApiResponse/PaginatedResponse
+  core/network/        dio_provider, AuthInterceptor, ApiResponse/PaginatedResponse
   core/services/       session_notifier, notification, fcm, app_version, quick_actions
   core/utils/          logger (talker), toast
   design/              theme (theme_tailor) + l10n (ARB, LocaleNotifier)
   shared/              base / dialogs / states
-  features/<name>/     <name>_page.dart ở gốc · models/ services/ (chỉ khi API chưa có trong api_client) · providers/ · widgets/
-  features/_reference/ voucher, pagination_demo, openapi_user, generated_api (mẫu để copy)
+  features/<name>/     <name>_page.dart ở gốc · models/ services/ (chỉ khi gọi API) · providers/ · widgets/
   modules/             ads, iap, analytics, app_config
   routes/              config/app_router.dart, route_guards.dart
   gen/                 sinh tự động (assets, l10n) — không sửa tay
-packages/api_client/   client sinh từ OpenAPI bằng `make gen-api` — không sửa tay
 ```
 
 Không có tầng domain/use case: notifier gọi thẳng service Retrofit.
@@ -35,7 +33,7 @@ Không có tầng domain/use case: notifier gọi thẳng service Retrofit.
 `main()` (lib/main.dart, flavor = `appFlavor` từ `--flavor`), tất cả trong `runZonedGuarded`:
 1. `WidgetsFlutterBinding.ensureInitialized()`, đọc `FlavorConfig.current` (tự lấy flavor từ `appFlavor`).
 2. `configureTalker(...)` theo flavor; `SentryFlutter.init` nếu có `sentryDsn` và không phải debug.
-3. Tạo `globalContainer = ProviderContainer(observers: [TalkerRiverpodObserver...], overrides: [sharedPrefsProvider.overrideWithValue(await SharedPreferences.getInstance()), ...apiClientOverrides])`.
+3. Tạo `globalContainer = ProviderContainer(observers: [TalkerRiverpodObserver...], overrides: [sharedPrefsProvider.overrideWithValue(await SharedPreferences.getInstance())])`.
 4. `await AppInitializer.initialize()` — Firebase → local notification → FCM → SystemUI → IAP → AdConfig → AdConsent → AdManager → AdLifecycle. Mỗi bước bọc `_step(name, fn)`: lỗi chỉ log, không chặn app.
 5. Gắn `FlutterError.onError` (Crashlytics) và `PlatformDispatcher.instance.onError` (`talker.error`).
 6. `runApp(const App())`.
@@ -67,12 +65,12 @@ class NotificationService { ... }
 @Riverpod(keepAlive: true)
 NotificationService notificationService(Ref ref) => NotificationService();
 ```
-Phụ thuộc service khác → `ref.read(...)` trong provider (vd `FcmService(ref.read(notificationServiceProvider))`). Provider có sẵn: `dioProvider`, `apiClientProvider`, `sharedPrefsProvider`, `secureStorageProvider`, `notificationServiceProvider`, `fcmServiceProvider`, `appVersionServiceProvider`, `analyticsServiceProvider`, `appConfigServiceProvider`, `iapServiceProvider`, provider Ads trong `lib/modules/ads/ads_providers.dart`.
+Phụ thuộc service khác → `ref.read(...)` trong provider (vd `FcmService(ref.read(notificationServiceProvider))`). Provider có sẵn: `dioProvider`, `sharedPrefsProvider`, `secureStorageProvider`, `notificationServiceProvider`, `fcmServiceProvider`, `appVersionServiceProvider`, `analyticsServiceProvider`, `appConfigServiceProvider`, `iapServiceProvider`, provider Ads trong `lib/modules/ads/ads_providers.dart`.
 
 Đọc:
 - Trong widget/notifier: `ref.read(xProvider)` / `ref.watch(xProvider)`.
 - Chỗ không có `ref` (interceptor, guard, static helper, AppInitializer): `globalContainer.read(xProvider)` — import `core/di/global_providers.dart`.
-- Viết tắt có sẵn: `ref.dio` (dio_provider.dart), `ref.apiClient` (api_client_provider.dart).
+- Viết tắt có sẵn: `ref.dio` (dio_provider.dart).
 
 Chọn kiểu provider:
 - Service dùng chung nhiều nơi / cần override trong test → `@Riverpod(keepAlive: true)` functional.

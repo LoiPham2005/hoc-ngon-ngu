@@ -23,8 +23,6 @@ help:
 	@echo ""
 	@echo "⚡ CODE GENERATION"
 	@echo "  make gen                        build_runner build"
-	@echo "  make gen-api [PKG=..]            Sinh REST client + provider Riverpod — tool trong repo (tools/gen_api.dart)"
-	@echo "  make gen-api-server [API=url]    Sinh REST client + provider Riverpod — script lấy từ backend (/api/flutter/gen_api.dart)"
 	@echo "  make watch                      build_runner watch"
 	@echo "  make l10n                       Generate localizations"
 	@echo "  make l10n-sync                  ARB: xoá key thừa + liệt kê key chưa dịch"
@@ -72,23 +70,6 @@ upgrade:
 # ─── CODE GENERATION ──────────────────────────────────────────────
 gen:
 	fvm dart run build_runner build --delete-conflicting-outputs
-
-# Sinh REST client từ OpenAPI — HAI cách, kết quả như nhau (Retrofit + Freezed, tự tạo packages/<tên>,
-# build_runner trong package và root). Tên package khác: thêm PKG=api_client2.
-#
-# Cách 1 — tool trong repo này (tools/gen_api.dart). Đổi URL backend ở `schemaUrl` đầu file script.
-gen-api:
-	fvm dart run tools/gen_api.dart $(PKG)
-
-# Cách 2 — script do BACKEND phục vụ (nextjs_base: GET /api/flutter/gen_api.dart), URL openapi.json điền sẵn,
-# luôn khớp bản API đang deploy. Backend khác: make gen-api-server API=http://localhost:3000
-# Gõ tay không qua make (đứng ở gốc dự án; thêm `--package api_client2` vào cuối nếu muốn package khác):
-#   curl -fsSL --create-dirs https://next-base.deploybox.io.vn/api/flutter/gen_api.dart -o .dart_tool/gen_api.dart && fvm dart run .dart_tool/gen_api.dart
-# (`--create-dirs` thay `mkdir -p`: CMD Windows hiểu `-p` là tên thư mục -> lỗi ".dart_tool already exists".)
-API ?= https://next-base.deploybox.io.vn
-gen-api-server:
-	curl -fsSL --create-dirs $(API)/api/flutter/gen_api.dart -o .dart_tool/gen_api.dart
-	fvm dart run .dart_tool/gen_api.dart $(if $(PKG),--package $(PKG))
 
 watch:
 	fvm dart run build_runner watch --delete-conflicting-outputs

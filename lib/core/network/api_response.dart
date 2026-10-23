@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'api_response.freezed.dart';
 part 'api_response.g.dart';
 
-/// Vỏ response thành công của backend: `{ "data": ... }` (giống model sinh trong `api_client`).
+/// Vỏ response thành công của backend: `{ "data": ... }`.
 ///
 /// Lỗi KHÔNG đi qua đây: backend trả HTTP 4xx/5xx + `{ "error": { "code", "message", "fields" } }`
 /// → Dio ném → `ErrorHandler` đổi thành `Failure`. Nên có response là có `data`.
@@ -37,7 +37,7 @@ abstract class PaginatedResponse<T> with _$PaginatedResponse<T> {
   bool get hasMore => meta.hasNext;
 }
 
-/// Thông tin phân trang (đặt tên `PageMeta` để không trùng `PaginationMeta` của `api_client`).
+/// Thông tin phân trang.
 @freezed
 abstract class PageMeta with _$PageMeta {
   const factory PageMeta({

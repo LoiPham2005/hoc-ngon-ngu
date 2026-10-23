@@ -24,8 +24,6 @@ dependencies:
   retrofit: ^4.9.2
   dio_smart_retry: ^7.0.1
   internet_connection_checker_plus: ^3.1.1
-  api_client:
-    path: packages/api_client
 
   # Model
   json_annotation: ^4.9.0

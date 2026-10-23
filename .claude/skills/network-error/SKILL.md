@@ -1,6 +1,6 @@
 ---
 name: network-error
-description: Tầng mạng và lỗi — dioProvider (AuthInterceptor refresh token + RetryInterceptor của dio_smart_retry + TalkerDioLogger), service Retrofit @RestApi, ApiResponse/PaginatedResponse, client OpenAPI (apiClientProvider, make gen-api), Failure sealed + ErrorHandler.handle, trạng thái mạng isOnlineProvider + ConnectivityBanner. Đọc khi viết service gọi API, định nghĩa model request/response, xử lý lỗi HTTP, thêm interceptor, hoặc dùng packages/api_client.
+description: Tầng mạng và lỗi — dioProvider (AuthInterceptor refresh token + RetryInterceptor của dio_smart_retry + TalkerDioLogger), service Retrofit @RestApi, ApiResponse/PaginatedResponse Failure sealed + ErrorHandler.handle, trạng thái mạng isOnlineProvider + ConnectivityBanner. Đọc khi viết service gọi API, định nghĩa model request/response, xử lý lỗi HTTP, hoặc thêm interceptor.
 ---
 
 # Network & Error
@@ -43,7 +43,7 @@ abstract class VoucherService {
 }
 ```
 - Kiểu trả: `Future<ApiResponse<T>>` (backend bọc `{ "data": ... }`), `Future<T>` (backend trả object thô, vd `AppVersionApi.checkVersion`), hoặc `Future<void>`.
-- Request body: class `@freezed` riêng (`LoginRequest`, `RegisterRequest`...). Tính năng có trong `api_client` thì dùng model sinh sẵn của nó, không tự viết lại.
+- Request body: class `@freezed` riêng (`LoginRequest`, `RegisterRequest`...).
 - Path viết thẳng trên annotation Retrofit (`@GET('/items')`), không gom vào file hằng riêng.
 - Tạo service: trong `build()` của notifier `VoucherService(ref.dio)`, hoặc provider keepAlive nếu dùng chung: `AppVersionService(AppVersionApi(ref.dio))`.
 - Sửa xong `make gen`.
@@ -68,18 +68,11 @@ abstract class VoucherModel with _$VoucherModel {
 
 ## ApiResponse / PaginatedResponse (lib/core/network/api_response.dart)
 
-Đúng dạng backend (giống model sinh trong `api_client`):
+Đúng dạng backend:
 - `ApiResponse<T>`: chỉ có `data` (json `{ "data": ... }`). Không có `success`/`message` — lỗi đi bằng HTTP 4xx/5xx + `{ "error": { code, message, fields } }`, Dio ném → `ErrorHandler`.
 - `PaginatedResponse<T>`: `items` + `meta` (`PageMeta`: `page`, `limit`, `total`, `totalPages`, `hasNext`); getter `hasMore` = `meta.hasNext`. Service: `Future<ApiResponse<PaginatedResponse<T>>>`.
 - JSON camelCase, không đổi tên field (build.yaml không bật `field_rename`). Model đọc JSON snake_case (Remote Config) tự khai báo `@JsonSerializable(fieldRename: FieldRename.snake)`.
 - Lấy dữ liệu trong notifier: `(await _service.getX()).data`.
-
-## Client OpenAPI (packages/api_client)
-
-`make gen-api` sinh `RestClient` + model freezed + provider Riverpod từ OpenAPI vào `packages/api_client` (không sửa tay). App nối Dio qua:
-- `apiClientProvider` (lib/core/network/api_client_provider.dart): `RestClient(ref.read(dioProvider))`, viết tắt `ref.apiClient`. Nhóm endpoint: `ref.apiClient.users` — không tạo provider riêng cho từng nhóm.
-- `apiClientOverrides`: nối `restClientProvider` của package về `apiClientProvider`; đã gắn trong `main.dart` và `test/helpers/pump_app.dart`.
-- Client trả thẳng model (không bọc `ApiResponse`) → dùng `run` trực tiếp. Tra endpoint: `packages/api_client/API_USAGE.md`. Mẫu: `_reference/openapi_user` (notifier) và `_reference/generated_api` (provider sinh sẵn).
 
 ## Lỗi
 

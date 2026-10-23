@@ -1,6 +1,6 @@
 ---
 name: commands
-description: Lệnh dự án — Makefile (get/gen/gen-api/l10n/analyze/test/run/build/rename), script trong tools/ (gen_api.dart, l10n_sync.dart), VSCode tasks, và multi-flavor dev/stg/prod + Firebase theo flavor + cấu hình native (flavorizr, google-services, Info.plist, signing Android, checklist release). Đọc khi cần biết "lệnh nào để làm X", build/chạy theo flavor, sinh code, đổi Firebase project/bundle ID, hoặc chuẩn bị release.
+description: Lệnh dự án — Makefile (get/gen/l10n/analyze/test/run/build/rename), script trong tools/ (l10n_sync.dart), VSCode tasks, và multi-flavor dev/stg/prod + Firebase theo flavor + cấu hình native (flavorizr, google-services, Info.plist, signing Android, checklist release). Đọc khi cần biết "lệnh nào để làm X", build/chạy theo flavor, sinh code, đổi Firebase project/bundle ID, hoặc chuẩn bị release.
 ---
 
 # Commands, flavors & native
@@ -16,8 +16,6 @@ Mọi lệnh chạy qua `fvm` (xem Makefile). `make help` in danh sách.
 | | `make watch` | build_runner watch |
 | | `make full-gen` | clean + get + gen-l10n + gen |
 | | `make gen-assets` | như `gen` (sinh `lib/gen/assets.gen.dart`) |
-| API | `make gen-api [PKG=api_client2]` | `dart run tools/gen_api.dart` — sinh REST client + provider từ OpenAPI vào `packages/<PKG>` |
-| | `make gen-api-server [API=url] [PKG=..]` | tải script sinh từ backend (`$(API)/api/flutter/gen_api.dart`) rồi chạy |
 | L10n | `make l10n` | `flutter gen-l10n` |
 | | `make l10n-sync` | xoá key thừa + liệt kê key chưa dịch (so với `app_en.arb`) |
 | | `make l10n-sync-translate` | sync + dịch Google + gen-l10n |
@@ -39,7 +37,6 @@ Sau khi sửa `@riverpod`, `@freezed`, `@RestApi`, `@RoutePage`, `@TailorMixin` 
 
 ## tools/
 
-- `tools/gen_api.dart` — đổi URL spec ở hằng `schemaUrl` đầu file. Tự tạo `packages/<pkg>` (pubspec, build.yaml, openapi_generator.yaml), thêm dependency vào pubspec gốc, chạy `openapi_retrofit_generator`, tạo barrel, chạy build_runner trong package và gốc. Kết quả: Retrofit + Freezed + provider Riverpod, bảng endpoint ở `packages/<pkg>/API_USAGE.md`. Không sửa tay file trong package — chạy lại sẽ ghi đè.
 - `tools/l10n_sync.dart` — cờ `--translate`, `--dry-run`. Đọc đường dẫn từ `l10n.yaml`.
 
 ## VSCode

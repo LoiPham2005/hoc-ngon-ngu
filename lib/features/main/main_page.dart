@@ -12,6 +12,21 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return AutoTabsRouter(
+      // Đổi tab: mờ dần + phóng nhẹ (fade-through) thay vì nháy cứng.
+      duration: const Duration(milliseconds: 260),
+      transitionBuilder: (context, child, animation) {
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: ScaleTransition(
+            scale: Tween(begin: 0.985, end: 1.0).animate(curved),
+            child: child,
+          ),
+        );
+      },
       routes: const [
         HomeRoute(),
         LearnRoute(),
