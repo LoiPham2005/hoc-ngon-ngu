@@ -364,6 +364,95 @@ class Dialogue {
   String name(String languageCode) => languageCode == 'vi' ? nameVi : nameEn;
 }
 
+/// Động từ bất quy tắc (Tiếng Anh): V1 – V2 – V3. Dạng có 2 cách viết nối bằng "/" ("was/were").
+class IrregularVerb {
+  const IrregularVerb({
+    required this.base,
+    required this.past,
+    required this.participle,
+    required this.meaning,
+    required this.pattern,
+    required this.example,
+    required this.exampleVi,
+  });
+
+  factory IrregularVerb.fromJson(Map<String, dynamic> json) => IrregularVerb(
+    base: json['v1'] as String,
+    past: json['v2'] as String,
+    participle: json['v3'] as String,
+    meaning: json['vi'] as String,
+    pattern: json['pattern'] as String,
+    example: json['ex'] as String,
+    exampleVi: json['ex_vi'] as String,
+  );
+
+  final String base;
+  final String past;
+  final String participle;
+  final String meaning;
+
+  /// Nhóm hình thái: AAA (cut-cut-cut), ABB (buy-bought-bought), ABA (come-came-come), ABC (go-went-gone).
+  final String pattern;
+  final String example;
+  final String exampleVi;
+
+  String get key => 'en:iv:$base';
+
+  /// Đọc liền 3 dạng: "go, went, gone".
+  String get speech =>
+      '$base, ${past.split('/').first}, '
+      '${participle.split('/').first}';
+
+  /// [answer] có đúng 1 trong các cách viết của [forms] không (không phân biệt hoa/thường).
+  static bool matches(String forms, String answer) =>
+      forms.split('/').contains(answer.trim().toLowerCase());
+}
+
+/// 1 nhóm "cặp từ gần âm" (minimal pairs): 2 âm người Việt hay nhầm + các cặp từ chỉ khác âm đó.
+class MinimalPairSet {
+  const MinimalPairSet({
+    required this.id,
+    required this.soundA,
+    required this.soundB,
+    required this.nameVi,
+    required this.nameEn,
+    required this.tip,
+    required this.pairs,
+  });
+
+  factory MinimalPairSet.fromJson(Map<String, dynamic> json) => MinimalPairSet(
+    id: json['id'] as String,
+    soundA: json['a'] as String,
+    soundB: json['b'] as String,
+    nameVi: json['name_vi'] as String,
+    nameEn: json['name_en'] as String,
+    tip: json['tip'] as String,
+    pairs: [
+      for (final p in (json['pairs'] as List).cast<Map<String, dynamic>>())
+        (
+          a: p['a'] as String,
+          b: p['b'] as String,
+          aVi: p['a_vi'] as String,
+          bVi: p['b_vi'] as String,
+        ),
+    ],
+  );
+
+  final String id;
+
+  /// Âm IPA của từ [pairs].a / [pairs].b.
+  final String soundA;
+  final String soundB;
+  final String nameVi;
+  final String nameEn;
+  final String tip;
+  final List<({String a, String b, String aVi, String bVi})> pairs;
+
+  String get key => 'en:mp:$id';
+
+  String name(String languageCode) => languageCode == 'vi' ? nameVi : nameEn;
+}
+
 enum PhonemeKind { vowel, diphthong, consonant }
 
 /// 1 âm trong bảng IPA. [tip] = mẹo đọc cho người Việt.

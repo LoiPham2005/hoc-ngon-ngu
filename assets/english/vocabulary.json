@@ -6308,6 +6308,142 @@
     "vi": "nạn phá rừng",
     "ex": "Deforestation is destroying the homes of many animals.",
     "ex_vi": "Nạn phá rừng đang hủy hoại nơi sống của nhiều loài vật."
+   },
+   {
+    "w": "pollute",
+    "pos": "v",
+    "ipa": "pəˈluːt",
+    "vi": "làm ô nhiễm",
+    "ex": "Factories pollute the river with chemicals.",
+    "ex_vi": "Các nhà máy làm ô nhiễm dòng sông bằng hóa chất."
+   },
+   {
+    "w": "habitat",
+    "pos": "n",
+    "ipa": "ˈhæbɪtæt",
+    "vi": "môi trường sống (của sinh vật)",
+    "ex": "The forest is a habitat for many animals.",
+    "ex_vi": "Khu rừng là môi trường sống của nhiều loài động vật."
+   },
+   {
+    "w": "ecosystem",
+    "pos": "n",
+    "ipa": "ˈiːkoʊsɪstəm",
+    "vi": "hệ sinh thái",
+    "ex": "Plastic waste damages the ocean ecosystem.",
+    "ex_vi": "Rác thải nhựa làm hại hệ sinh thái đại dương."
+   },
+   {
+    "w": "eco-friendly",
+    "pos": "adj",
+    "ipa": "ˌiːkoʊ ˈfrendli",
+    "vi": "thân thiện với môi trường",
+    "ex": "This shop only sells eco-friendly bags.",
+    "ex_vi": "Cửa hàng này chỉ bán túi thân thiện với môi trường."
+   },
+   {
+    "w": "organic",
+    "pos": "adj",
+    "ipa": "ɔːrˈɡænɪk",
+    "vi": "hữu cơ",
+    "ex": "My mother buys organic vegetables at the market.",
+    "ex_vi": "Mẹ tôi mua rau hữu cơ ở chợ."
+   },
+   {
+    "w": "landfill",
+    "pos": "n",
+    "ipa": "ˈlændfɪl",
+    "vi": "bãi chôn lấp rác",
+    "ex": "Most of our trash goes to a landfill.",
+    "ex_vi": "Phần lớn rác của chúng ta bị đưa tới bãi chôn lấp."
+   },
+   {
+    "w": "recycling bin",
+    "pos": "n",
+    "ipa": "riːˈsaɪklɪŋ bɪn",
+    "vi": "thùng rác tái chế",
+    "ex": "Put the empty bottles in the recycling bin.",
+    "ex_vi": "Hãy bỏ những chai rỗng vào thùng rác tái chế."
+   },
+   {
+    "w": "plastic bag",
+    "pos": "n",
+    "ipa": "ˌplæstɪk ˈbæɡ",
+    "vi": "túi ni lông",
+    "ex": "Please don't give me a plastic bag.",
+    "ex_vi": "Làm ơn đừng đưa tôi túi ni lông."
+   },
+   {
+    "w": "solar panel",
+    "pos": "n",
+    "ipa": "ˌsoʊlər ˈpænəl",
+    "vi": "tấm pin mặt trời",
+    "ex": "We put a solar panel on our roof.",
+    "ex_vi": "Chúng tôi lắp một tấm pin mặt trời trên mái nhà."
+   },
+   {
+    "w": "electricity",
+    "pos": "n",
+    "ipa": "ɪˌlekˈtrɪsəti",
+    "vi": "điện",
+    "ex": "Turn off the lights to save electricity.",
+    "ex_vi": "Hãy tắt đèn để tiết kiệm điện."
+   },
+   {
+    "w": "fuel",
+    "pos": "n",
+    "ipa": "ˈfjuːəl",
+    "vi": "nhiên liệu",
+    "ex": "Cars that use less fuel are better for the air.",
+    "ex_vi": "Xe dùng ít nhiên liệu hơn thì tốt hơn cho không khí."
+   },
+   {
+    "w": "destroy",
+    "pos": "v",
+    "ipa": "dɪˈstrɔɪ",
+    "vi": "phá hủy",
+    "ex": "People destroy forests to build new roads.",
+    "ex_vi": "Con người phá rừng để làm đường mới."
+   },
+   {
+    "w": "toxic",
+    "pos": "adj",
+    "ipa": "ˈtɑːksɪk",
+    "vi": "độc hại",
+    "ex": "The smoke from the factory is toxic.",
+    "ex_vi": "Khói từ nhà máy rất độc hại."
+   },
+   {
+    "w": "rainforest",
+    "pos": "n",
+    "ipa": "ˈreɪnfɔːrɪst",
+    "vi": "rừng mưa nhiệt đới",
+    "ex": "Many rare animals live in the rainforest.",
+    "ex_vi": "Nhiều loài động vật quý hiếm sống trong rừng mưa nhiệt đới."
+   },
+   {
+    "w": "heatwave",
+    "pos": "n",
+    "ipa": "ˈhiːtweɪv",
+    "vi": "đợt nắng nóng",
+    "ex": "The heatwave lasted for two weeks.",
+    "ex_vi": "Đợt nắng nóng kéo dài hai tuần."
+   },
+   {
+    "w": "disaster",
+    "pos": "n",
+    "ipa": "dɪˈzæstər",
+    "vi": "thảm họa",
+    "ex": "The storm was a disaster for local farmers.",
+    "ex_vi": "Cơn bão là một thảm họa đối với nông dân địa phương."
+   },
+   {
+    "w": "environmental",
+    "pos": "adj",
+    "ipa": "ɪnˌvaɪrənˈmentəl",
+    "vi": "(thuộc) môi trường",
+    "ex": "Climate change is a big environmental problem.",
+    "ex_vi": "Biến đổi khí hậu là một vấn đề môi trường lớn."
    }
   ]
  },
@@ -6620,6 +6756,22 @@
     "vi": "đồ ăn thừa",
     "ex": "We had the leftovers for lunch the next day.",
     "ex_vi": "Hôm sau chúng tôi ăn đồ thừa cho bữa trưa."
+   },
+   {
+    "w": "roast",
+    "pos": "v",
+    "ipa": "roʊst",
+    "vi": "quay, nướng (bằng lò)",
+    "ex": "We roast a chicken every Sunday.",
+    "ex_vi": "Chủ nhật nào chúng tôi cũng quay một con gà."
+   },
+   {
+    "w": "fish sauce",
+    "pos": "n",
+    "ipa": "ˈfɪʃ sɔːs",
+    "vi": "nước mắm",
+    "ex": "Add a little fish sauce to the soup.",
+    "ex_vi": "Cho một chút nước mắm vào canh."
    }
   ]
  },
@@ -6932,6 +7084,22 @@
     "vi": "(thuộc) tài chính",
     "ex": "They are having financial problems.",
     "ex_vi": "Họ đang gặp khó khăn về tài chính."
+   },
+   {
+    "w": "ATM",
+    "pos": "n",
+    "ipa": "ˌeɪ tiː ˈem",
+    "vi": "cây ATM, máy rút tiền",
+    "ex": "Is there an ATM near here?",
+    "ex_vi": "Gần đây có cây ATM nào không?"
+   },
+   {
+    "w": "rent",
+    "pos": "n",
+    "ipa": "rent",
+    "vi": "tiền thuê nhà",
+    "ex": "I pay the rent at the start of every month.",
+    "ex_vi": "Tôi trả tiền thuê nhà vào đầu mỗi tháng."
    }
   ]
  },
@@ -7252,6 +7420,14 @@
     "vi": "trụ sở chính",
     "ex": "The company's headquarters are in Ho Chi Minh City.",
     "ex_vi": "Trụ sở chính của công ty ở Thành phố Hồ Chí Minh."
+   },
+   {
+    "w": "overtime",
+    "pos": "n",
+    "ipa": "ˈoʊvərtaɪm",
+    "vi": "giờ làm thêm",
+    "ex": "I get paid more for overtime.",
+    "ex_vi": "Tôi được trả nhiều tiền hơn khi làm thêm giờ."
    }
   ]
  },
@@ -7388,6 +7564,198 @@
     "vi": "phát sóng",
     "ex": "The final will be broadcast around the world.",
     "ex_vi": "Trận chung kết sẽ được phát sóng khắp thế giới."
+   },
+   {
+    "w": "editor",
+    "pos": "n",
+    "ipa": "ˈedɪtər",
+    "vi": "biên tập viên",
+    "ex": "The editor checks every article before printing.",
+    "ex_vi": "Biên tập viên kiểm tra mọi bài báo trước khi in."
+   },
+   {
+    "w": "publish",
+    "pos": "v",
+    "ipa": "ˈpʌblɪʃ",
+    "vi": "xuất bản, đăng",
+    "ex": "The newspaper will publish the story tomorrow.",
+    "ex_vi": "Tờ báo sẽ đăng câu chuyện này vào ngày mai."
+   },
+   {
+    "w": "program",
+    "pos": "n",
+    "ipa": "ˈproʊɡræm",
+    "vi": "chương trình (TV, radio)",
+    "ex": "My favorite TV program starts at eight.",
+    "ex_vi": "Chương trình TV yêu thích của tôi bắt đầu lúc tám giờ."
+   },
+   {
+    "w": "presenter",
+    "pos": "n",
+    "ipa": "prɪˈzentər",
+    "vi": "người dẫn chương trình",
+    "ex": "The presenter smiled and said good evening.",
+    "ex_vi": "Người dẫn chương trình mỉm cười và chào buổi tối."
+   },
+   {
+    "w": "story",
+    "pos": "n",
+    "ipa": "ˈstɔːri",
+    "vi": "câu chuyện, bản tin",
+    "ex": "The story about the flood was on TV.",
+    "ex_vi": "Bản tin về trận lũ đã lên TV."
+   },
+   {
+    "w": "trend",
+    "pos": "n",
+    "ipa": "trend",
+    "vi": "xu hướng",
+    "ex": "This dance is a new trend on TikTok.",
+    "ex_vi": "Điệu nhảy này là xu hướng mới trên TikTok."
+   },
+   {
+    "w": "hashtag",
+    "pos": "n",
+    "ipa": "ˈhæʃtæɡ",
+    "vi": "hashtag, thẻ (#)",
+    "ex": "Add a hashtag so more people can find your post.",
+    "ex_vi": "Thêm hashtag để nhiều người tìm thấy bài đăng của bạn hơn."
+   },
+   {
+    "w": "caption",
+    "pos": "n",
+    "ipa": "ˈkæpʃən",
+    "vi": "chú thích (ảnh, video)",
+    "ex": "She wrote a funny caption under the photo.",
+    "ex_vi": "Cô ấy viết một dòng chú thích hài hước dưới bức ảnh."
+   },
+   {
+    "w": "follower",
+    "pos": "n",
+    "ipa": "ˈfɑːloʊər",
+    "vi": "người theo dõi",
+    "ex": "Every new follower makes her very happy.",
+    "ex_vi": "Mỗi người theo dõi mới đều khiến cô ấy rất vui."
+   },
+   {
+    "w": "streaming",
+    "pos": "n",
+    "ipa": "ˈstriːmɪŋ",
+    "vi": "phát trực tuyến",
+    "ex": "Many people watch movies on streaming apps now.",
+    "ex_vi": "Bây giờ nhiều người xem phim trên các ứng dụng phát trực tuyến."
+   },
+   {
+    "w": "content",
+    "pos": "n",
+    "ipa": "ˈkɑːntent",
+    "vi": "nội dung",
+    "ex": "This channel makes useful content for students.",
+    "ex_vi": "Kênh này làm nội dung hữu ích cho học sinh."
+   },
+   {
+    "w": "creator",
+    "pos": "n",
+    "ipa": "kriˈeɪtər",
+    "vi": "người sáng tạo (nội dung)",
+    "ex": "She is a famous video creator in Vietnam.",
+    "ex_vi": "Cô ấy là một nhà sáng tạo video nổi tiếng ở Việt Nam."
+   },
+   {
+    "w": "media",
+    "pos": "n",
+    "ipa": "ˈmiːdiə",
+    "vi": "truyền thông, báo chí",
+    "ex": "The media talked about the singer all week.",
+    "ex_vi": "Truyền thông bàn tán về ca sĩ đó suốt cả tuần."
+   },
+   {
+    "w": "press conference",
+    "pos": "n",
+    "ipa": "ˈpres ˌkɑːnfərəns",
+    "vi": "họp báo",
+    "ex": "The coach answered questions at the press conference.",
+    "ex_vi": "Huấn luyện viên trả lời câu hỏi tại buổi họp báo."
+   },
+   {
+    "w": "source",
+    "pos": "n",
+    "ipa": "sɔːrs",
+    "vi": "nguồn (tin)",
+    "ex": "Always check the source before you share news.",
+    "ex_vi": "Luôn kiểm tra nguồn trước khi chia sẻ tin tức."
+   },
+   {
+    "w": "breaking news",
+    "pos": "n",
+    "ipa": "ˌbreɪkɪŋ ˈnuːz",
+    "vi": "tin nóng, tin khẩn",
+    "ex": "We stopped the movie to watch the breaking news.",
+    "ex_vi": "Chúng tôi dừng phim để xem tin nóng."
+   },
+   {
+    "w": "commercial",
+    "pos": "n",
+    "ipa": "kəˈmɜːrʃəl",
+    "vi": "quảng cáo (trên TV, radio)",
+    "ex": "There was a commercial in the middle of the film.",
+    "ex_vi": "Có một đoạn quảng cáo giữa bộ phim."
+   },
+   {
+    "w": "announce",
+    "pos": "v",
+    "ipa": "əˈnaʊns",
+    "vi": "thông báo, công bố",
+    "ex": "The company will announce the winner on Friday.",
+    "ex_vi": "Công ty sẽ công bố người thắng cuộc vào thứ Sáu."
+   },
+   {
+    "w": "edit",
+    "pos": "v",
+    "ipa": "ˈedɪt",
+    "vi": "chỉnh sửa, biên tập",
+    "ex": "I need to edit this video before posting it.",
+    "ex_vi": "Tôi cần chỉnh sửa video này trước khi đăng."
+   },
+   {
+    "w": "photographer",
+    "pos": "n",
+    "ipa": "fəˈtɑːɡrəfər",
+    "vi": "nhiếp ảnh gia, thợ chụp ảnh",
+    "ex": "The photographer took pictures of the president.",
+    "ex_vi": "Nhiếp ảnh gia chụp ảnh tổng thống."
+   },
+   {
+    "w": "front page",
+    "pos": "n",
+    "ipa": "ˌfrʌnt ˈpeɪdʒ",
+    "vi": "trang nhất",
+    "ex": "Her photo was on the front page of the newspaper.",
+    "ex_vi": "Ảnh của cô ấy lên trang nhất tờ báo."
+   },
+   {
+    "w": "talk show",
+    "pos": "n",
+    "ipa": "ˈtɔːk ʃoʊ",
+    "vi": "chương trình trò chuyện",
+    "ex": "The actor was a guest on a talk show.",
+    "ex_vi": "Nam diễn viên là khách mời của một chương trình trò chuyện."
+   },
+   {
+    "w": "viewer",
+    "pos": "n",
+    "ipa": "ˈvjuːər",
+    "vi": "người xem (TV, video)",
+    "ex": "Each viewer can vote for their favorite singer.",
+    "ex_vi": "Mỗi người xem có thể bình chọn cho ca sĩ yêu thích."
+   },
+   {
+    "w": "reader",
+    "pos": "n",
+    "ipa": "ˈriːdər",
+    "vi": "độc giả, người đọc",
+    "ex": "As a reader, I like short and clear articles.",
+    "ex_vi": "Là độc giả, tôi thích những bài báo ngắn gọn và rõ ràng."
    }
   ]
  },
@@ -8028,6 +8396,22 @@
     "vi": "bi quan",
     "ex": "Don't be so pessimistic about the future.",
     "ex_vi": "Đừng bi quan quá về tương lai."
+   },
+   {
+    "w": "thoughtful",
+    "pos": "adj",
+    "ipa": "ˈθɔːtfəl",
+    "vi": "chu đáo, ân cần",
+    "ex": "It was thoughtful of you to bring me soup.",
+    "ex_vi": "Bạn thật chu đáo khi mang súp cho tôi."
+   },
+   {
+    "w": "impatient",
+    "pos": "adj",
+    "ipa": "ɪmˈpeɪʃənt",
+    "vi": "thiếu kiên nhẫn, nóng vội",
+    "ex": "He gets impatient when he has to wait.",
+    "ex_vi": "Anh ấy dễ mất kiên nhẫn khi phải chờ đợi."
    }
   ]
  },
@@ -8316,6 +8700,46 @@
     "vi": "người quen",
     "ex": "He is not a friend, just an acquaintance.",
     "ex_vi": "Anh ấy không phải bạn, chỉ là người quen."
+   },
+   {
+    "w": "best friend",
+    "pos": "n",
+    "ipa": "ˌbest ˈfrend",
+    "vi": "bạn thân",
+    "ex": "Lan has been my best friend since primary school.",
+    "ex_vi": "Lan là bạn thân của tôi từ hồi tiểu học."
+   },
+   {
+    "w": "crush",
+    "pos": "n",
+    "ipa": "krʌʃ",
+    "vi": "người mình thầm thích; sự cảm nắng",
+    "ex": "I had a crush on a boy in my class.",
+    "ex_vi": "Tôi từng thầm thích một bạn trai trong lớp."
+   },
+   {
+    "w": "propose",
+    "pos": "v",
+    "ipa": "prəˈpoʊz",
+    "vi": "cầu hôn; đề xuất",
+    "ex": "He plans to propose to her on the beach.",
+    "ex_vi": "Anh ấy định cầu hôn cô ấy trên bãi biển."
+   },
+   {
+    "w": "honeymoon",
+    "pos": "n",
+    "ipa": "ˈhʌnimuːn",
+    "vi": "tuần trăng mật",
+    "ex": "They went to Phu Quoc for their honeymoon.",
+    "ex_vi": "Họ đi Phú Quốc hưởng tuần trăng mật."
+   },
+   {
+    "w": "make up",
+    "pos": "v",
+    "ipa": "ˌmeɪk ˈʌp",
+    "vi": "làm lành",
+    "ex": "After every fight, they make up the next day.",
+    "ex_vi": "Sau mỗi lần cãi nhau, ngày hôm sau họ lại làm lành."
    }
   ]
  },
@@ -8948,6 +9372,30 @@
     "vi": "sạch bong",
     "ex": "The kitchen is spotless now.",
     "ex_vi": "Giờ căn bếp sạch bong."
+   },
+   {
+    "w": "take out the trash",
+    "pos": "v",
+    "ipa": "ˌteɪk aʊt ðə ˈtræʃ",
+    "vi": "đổ rác",
+    "ex": "Can you take out the trash tonight?",
+    "ex_vi": "Tối nay con đi đổ rác được không?"
+   },
+   {
+    "w": "rinse",
+    "pos": "v",
+    "ipa": "rɪns",
+    "vi": "tráng, xả (nước)",
+    "ex": "Rinse the dishes with clean water.",
+    "ex_vi": "Tráng bát đĩa bằng nước sạch."
+   },
+   {
+    "w": "dryer",
+    "pos": "n",
+    "ipa": "ˈdraɪər",
+    "vi": "máy sấy quần áo",
+    "ex": "Put the wet clothes in the dryer.",
+    "ex_vi": "Cho quần áo ướt vào máy sấy."
    }
   ]
  },
@@ -9564,6 +10012,46 @@
     "vi": "(thuộc) truyền thống",
     "ex": "She wore a traditional ao dai.",
     "ex_vi": "Cô ấy mặc áo dài truyền thống."
+   },
+   {
+    "w": "bride",
+    "pos": "n",
+    "ipa": "braɪd",
+    "vi": "cô dâu",
+    "ex": "The bride wore a red ao dai.",
+    "ex_vi": "Cô dâu mặc áo dài đỏ."
+   },
+   {
+    "w": "groom",
+    "pos": "n",
+    "ipa": "ɡruːm",
+    "vi": "chú rể",
+    "ex": "The groom looked nervous before the wedding.",
+    "ex_vi": "Chú rể trông hồi hộp trước đám cưới."
+   },
+   {
+    "w": "picnic",
+    "pos": "n",
+    "ipa": "ˈpɪknɪk",
+    "vi": "chuyến dã ngoại",
+    "ex": "Let's have a picnic in the park on Sunday.",
+    "ex_vi": "Chủ nhật mình đi dã ngoại ở công viên nhé."
+   },
+   {
+    "w": "reunion",
+    "pos": "n",
+    "ipa": "riˈjuːnjən",
+    "vi": "buổi họp mặt, sự đoàn tụ",
+    "ex": "Our class reunion is next month.",
+    "ex_vi": "Buổi họp lớp của chúng tôi vào tháng sau."
+   },
+   {
+    "w": "feast",
+    "pos": "n",
+    "ipa": "fiːst",
+    "vi": "bữa tiệc lớn, mâm cỗ",
+    "ex": "My grandmother cooks a big feast for Tet.",
+    "ex_vi": "Bà tôi nấu một mâm cỗ lớn vào dịp Tết."
    }
   ]
  },
@@ -9812,6 +10300,86 @@
     "vi": "thuyết phục",
     "ex": "I persuaded him to come with us.",
     "ex_vi": "Tôi đã thuyết phục anh ấy đi cùng chúng tôi."
+   },
+   {
+    "w": "voice",
+    "pos": "n",
+    "ipa": "vɔɪs",
+    "vi": "giọng nói",
+    "ex": "She has a beautiful voice.",
+    "ex_vi": "Cô ấy có giọng nói rất hay."
+   },
+   {
+    "w": "letter",
+    "pos": "n",
+    "ipa": "ˈletər",
+    "vi": "thư, lá thư",
+    "ex": "I wrote a letter to my grandmother.",
+    "ex_vi": "Tôi đã viết một lá thư cho bà."
+   },
+   {
+    "w": "greet",
+    "pos": "v",
+    "ipa": "ɡriːt",
+    "vi": "chào hỏi",
+    "ex": "We greet our teacher when she comes in.",
+    "ex_vi": "Chúng tôi chào cô giáo khi cô bước vào."
+   },
+   {
+    "w": "spell",
+    "pos": "v",
+    "ipa": "spel",
+    "vi": "đánh vần",
+    "ex": "Can you spell your name, please?",
+    "ex_vi": "Bạn đánh vần tên mình giúp tôi được không?"
+   },
+   {
+    "w": "warn",
+    "pos": "v",
+    "ipa": "wɔːrn",
+    "vi": "cảnh báo",
+    "ex": "I must warn you that the floor is wet.",
+    "ex_vi": "Tôi phải báo trước với bạn là sàn nhà đang ướt."
+   },
+   {
+    "w": "admit",
+    "pos": "v",
+    "ipa": "ədˈmɪt",
+    "vi": "thừa nhận",
+    "ex": "He didn't want to admit his mistake.",
+    "ex_vi": "Anh ấy không muốn thừa nhận lỗi của mình."
+   },
+   {
+    "w": "express",
+    "pos": "v",
+    "ipa": "ɪkˈspres",
+    "vi": "bày tỏ, diễn đạt",
+    "ex": "It is hard to express my feelings in English.",
+    "ex_vi": "Thật khó để bày tỏ cảm xúc bằng tiếng Anh."
+   },
+   {
+    "w": "misunderstand",
+    "pos": "v",
+    "ipa": "ˌmɪsʌndərˈstænd",
+    "vi": "hiểu lầm",
+    "ex": "Please don't misunderstand what I said.",
+    "ex_vi": "Xin đừng hiểu lầm điều tôi nói."
+   },
+   {
+    "w": "body language",
+    "pos": "n",
+    "ipa": "ˈbɑːdi ˌlæŋɡwɪdʒ",
+    "vi": "ngôn ngữ cơ thể",
+    "ex": "Body language can show how you really feel.",
+    "ex_vi": "Ngôn ngữ cơ thể có thể cho thấy bạn thật sự cảm thấy thế nào."
+   },
+   {
+    "w": "eye contact",
+    "pos": "n",
+    "ipa": "ˈaɪ ˌkɑːntækt",
+    "vi": "giao tiếp bằng mắt",
+    "ex": "Make eye contact when you talk to someone.",
+    "ex_vi": "Hãy nhìn vào mắt người đối diện khi nói chuyện."
    }
   ]
  },
@@ -10084,6 +10652,62 @@
     "vi": "trách nhiệm",
     "ex": "Taking care of a pet is a responsibility.",
     "ex_vi": "Nuôi thú cưng là một trách nhiệm."
+   },
+   {
+    "w": "peace",
+    "pos": "n",
+    "ipa": "piːs",
+    "vi": "hòa bình, sự yên bình",
+    "ex": "Everyone wants to live in peace.",
+    "ex_vi": "Ai cũng muốn sống trong hòa bình."
+   },
+   {
+    "w": "quality",
+    "pos": "n",
+    "ipa": "ˈkwɑːləti",
+    "vi": "chất lượng",
+    "ex": "The quality of this phone is very good.",
+    "ex_vi": "Chất lượng của chiếc điện thoại này rất tốt."
+   },
+   {
+    "w": "effort",
+    "pos": "n",
+    "ipa": "ˈefərt",
+    "vi": "nỗ lực, công sức",
+    "ex": "She put a lot of effort into her studies.",
+    "ex_vi": "Cô ấy đã dồn nhiều công sức vào việc học."
+   },
+   {
+    "w": "progress",
+    "pos": "n",
+    "ipa": "ˈprɑːɡres",
+    "vi": "sự tiến bộ",
+    "ex": "You have made great progress in English.",
+    "ex_vi": "Bạn đã tiến bộ rất nhiều trong tiếng Anh."
+   },
+   {
+    "w": "patience",
+    "pos": "n",
+    "ipa": "ˈpeɪʃəns",
+    "vi": "sự kiên nhẫn",
+    "ex": "Learning a language takes time and patience.",
+    "ex_vi": "Học một ngôn ngữ cần thời gian và sự kiên nhẫn."
+   },
+   {
+    "w": "ability",
+    "pos": "n",
+    "ipa": "əˈbɪləti",
+    "vi": "khả năng, năng lực",
+    "ex": "He has the ability to learn very fast.",
+    "ex_vi": "Anh ấy có khả năng học rất nhanh."
+   },
+   {
+    "w": "advantage",
+    "pos": "n",
+    "ipa": "ədˈvæntɪdʒ",
+    "vi": "lợi thế, ưu điểm",
+    "ex": "Speaking English is a big advantage at work.",
+    "ex_vi": "Nói được tiếng Anh là một lợi thế lớn trong công việc."
    }
   ]
  },
@@ -10380,6 +11004,38 @@
     "vi": "xuất hiện, có mặt",
     "ex": "He didn't show up for the meeting.",
     "ex_vi": "Anh ấy không đến dự cuộc họp."
+   },
+   {
+    "w": "look up",
+    "pos": "v",
+    "ipa": "ˌlʊk ˈʌp",
+    "vi": "tra (từ điển, thông tin)",
+    "ex": "Look up new words in the dictionary.",
+    "ex_vi": "Hãy tra từ mới trong từ điển."
+   },
+   {
+    "w": "calm down",
+    "pos": "v",
+    "ipa": "ˌkɑːm ˈdaʊn",
+    "vi": "bình tĩnh lại",
+    "ex": "Calm down and tell me what happened.",
+    "ex_vi": "Bình tĩnh lại và kể cho tôi chuyện gì đã xảy ra."
+   },
+   {
+    "w": "hang out",
+    "pos": "v",
+    "ipa": "ˌhæŋ ˈaʊt",
+    "vi": "đi chơi, tụ tập",
+    "ex": "I often hang out with my friends at the mall.",
+    "ex_vi": "Tôi hay đi chơi với bạn bè ở trung tâm thương mại."
+   },
+   {
+    "w": "take part in",
+    "pos": "v",
+    "ipa": "ˌteɪk ˈpɑːrt ɪn",
+    "vi": "tham gia",
+    "ex": "All students must take part in the school trip.",
+    "ex_vi": "Tất cả học sinh phải tham gia chuyến đi của trường."
    }
   ]
  },
@@ -10900,6 +11556,142 @@
     "vi": "tránh",
     "ex": "Try to avoid fast food.",
     "ex_vi": "Cố gắng tránh đồ ăn nhanh nhé."
+   },
+   {
+    "w": "arrive",
+    "pos": "v",
+    "ipa": "əˈraɪv",
+    "vi": "đến, tới nơi",
+    "ex": "What time does the train arrive?",
+    "ex_vi": "Mấy giờ tàu đến?"
+   },
+   {
+    "w": "leave",
+    "pos": "v",
+    "ipa": "liːv",
+    "vi": "rời đi; để lại",
+    "ex": "I leave home at seven every morning.",
+    "ex_vi": "Tôi rời nhà lúc bảy giờ mỗi sáng."
+   },
+   {
+    "w": "stay",
+    "pos": "v",
+    "ipa": "steɪ",
+    "vi": "ở lại, lưu trú",
+    "ex": "We will stay at my aunt's house.",
+    "ex_vi": "Chúng tôi sẽ ở nhà dì tôi."
+   },
+   {
+    "w": "finish",
+    "pos": "v",
+    "ipa": "ˈfɪnɪʃ",
+    "vi": "hoàn thành, làm xong",
+    "ex": "I need to finish my homework first.",
+    "ex_vi": "Tôi cần làm xong bài tập về nhà trước."
+   },
+   {
+    "w": "happen",
+    "pos": "v",
+    "ipa": "ˈhæpən",
+    "vi": "xảy ra",
+    "ex": "What will happen if it rains tomorrow?",
+    "ex_vi": "Chuyện gì sẽ xảy ra nếu mai trời mưa?"
+   },
+   {
+    "w": "become",
+    "pos": "v",
+    "ipa": "bɪˈkʌm",
+    "vi": "trở thành",
+    "ex": "She wants to become a doctor.",
+    "ex_vi": "Cô ấy muốn trở thành bác sĩ."
+   },
+   {
+    "w": "keep",
+    "pos": "v",
+    "ipa": "kiːp",
+    "vi": "giữ, giữ lại",
+    "ex": "Please keep this secret for me.",
+    "ex_vi": "Làm ơn giữ bí mật này giúp tôi."
+   },
+   {
+    "w": "push",
+    "pos": "v",
+    "ipa": "pʊʃ",
+    "vi": "đẩy",
+    "ex": "Push the door to open it.",
+    "ex_vi": "Đẩy cửa để mở."
+   },
+   {
+    "w": "pull",
+    "pos": "v",
+    "ipa": "pʊl",
+    "vi": "kéo",
+    "ex": "Don't pull the dog's tail.",
+    "ex_vi": "Đừng kéo đuôi con chó."
+   },
+   {
+    "w": "drop",
+    "pos": "v",
+    "ipa": "drɑːp",
+    "vi": "làm rơi, đánh rơi",
+    "ex": "Be careful, don't drop the glass.",
+    "ex_vi": "Cẩn thận, đừng làm rơi cái ly."
+   },
+   {
+    "w": "receive",
+    "pos": "v",
+    "ipa": "rɪˈsiːv",
+    "vi": "nhận được",
+    "ex": "Did you receive my email yesterday?",
+    "ex_vi": "Hôm qua bạn có nhận được email của tôi không?"
+   },
+   {
+    "w": "accept",
+    "pos": "v",
+    "ipa": "əkˈsept",
+    "vi": "chấp nhận, nhận",
+    "ex": "Do you accept credit cards here?",
+    "ex_vi": "Ở đây có nhận thẻ tín dụng không?"
+   },
+   {
+    "w": "refuse",
+    "pos": "v",
+    "ipa": "rɪˈfjuːz",
+    "vi": "từ chối",
+    "ex": "She may refuse to help us.",
+    "ex_vi": "Cô ấy có thể từ chối giúp chúng ta."
+   },
+   {
+    "w": "offer",
+    "pos": "v",
+    "ipa": "ˈɔːfər",
+    "vi": "mời, đề nghị",
+    "ex": "Can I offer you a cup of tea?",
+    "ex_vi": "Tôi mời bạn một tách trà nhé?"
+   },
+   {
+    "w": "compare",
+    "pos": "v",
+    "ipa": "kəmˈper",
+    "vi": "so sánh",
+    "ex": "Don't compare yourself with other people.",
+    "ex_vi": "Đừng so sánh bản thân với người khác."
+   },
+   {
+    "w": "expect",
+    "pos": "v",
+    "ipa": "ɪkˈspekt",
+    "vi": "mong đợi, dự kiến",
+    "ex": "I expect the package to arrive on Monday.",
+    "ex_vi": "Tôi dự kiến gói hàng sẽ đến vào thứ Hai."
+   },
+   {
+    "w": "prefer",
+    "pos": "v",
+    "ipa": "prɪˈfɜːr",
+    "vi": "thích hơn",
+    "ex": "I prefer tea to coffee.",
+    "ex_vi": "Tôi thích trà hơn cà phê."
    }
   ]
  },
@@ -11140,6 +11932,94 @@
     "vi": "có sẵn, còn trống",
     "ex": "Are there any rooms available tonight?",
     "ex_vi": "Tối nay còn phòng trống không?"
+   },
+   {
+    "w": "strange",
+    "pos": "adj",
+    "ipa": "streɪndʒ",
+    "vi": "lạ, kỳ lạ",
+    "ex": "I heard a strange noise last night.",
+    "ex_vi": "Tối qua tôi nghe thấy một tiếng động lạ."
+   },
+   {
+    "w": "terrible",
+    "pos": "adj",
+    "ipa": "ˈterəbəl",
+    "vi": "tệ, kinh khủng",
+    "ex": "The food at that restaurant was terrible.",
+    "ex_vi": "Đồ ăn ở nhà hàng đó rất tệ."
+   },
+   {
+    "w": "wonderful",
+    "pos": "adj",
+    "ipa": "ˈwʌndərfəl",
+    "vi": "tuyệt vời",
+    "ex": "We had a wonderful time in Da Lat.",
+    "ex_vi": "Chúng tôi đã có khoảng thời gian tuyệt vời ở Đà Lạt."
+   },
+   {
+    "w": "perfect",
+    "pos": "adj",
+    "ipa": "ˈpɜːrfɪkt",
+    "vi": "hoàn hảo",
+    "ex": "The weather is perfect for a picnic.",
+    "ex_vi": "Thời tiết thật hoàn hảo cho một buổi dã ngoại."
+   },
+   {
+    "w": "simple",
+    "pos": "adj",
+    "ipa": "ˈsɪmpəl",
+    "vi": "đơn giản",
+    "ex": "The rules of this game are simple.",
+    "ex_vi": "Luật của trò chơi này rất đơn giản."
+   },
+   {
+    "w": "special",
+    "pos": "adj",
+    "ipa": "ˈspeʃəl",
+    "vi": "đặc biệt",
+    "ex": "Today is a special day for my family.",
+    "ex_vi": "Hôm nay là một ngày đặc biệt với gia đình tôi."
+   },
+   {
+    "w": "normal",
+    "pos": "adj",
+    "ipa": "ˈnɔːrməl",
+    "vi": "bình thường",
+    "ex": "It's normal to feel nervous before an exam.",
+    "ex_vi": "Cảm thấy hồi hộp trước kỳ thi là chuyện bình thường."
+   },
+   {
+    "w": "noisy",
+    "pos": "adj",
+    "ipa": "ˈnɔɪzi",
+    "vi": "ồn ào",
+    "ex": "My street is very noisy at night.",
+    "ex_vi": "Con phố nhà tôi rất ồn vào ban đêm."
+   },
+   {
+    "w": "crowded",
+    "pos": "adj",
+    "ipa": "ˈkraʊdɪd",
+    "vi": "đông đúc",
+    "ex": "The market is always crowded on Sundays.",
+    "ex_vi": "Chợ lúc nào cũng đông vào Chủ nhật."
+   },
+   {
+    "w": "useful",
+    "pos": "adj",
+    "ipa": "ˈjuːsfəl",
+    "vi": "hữu ích",
+    "ex": "This app is very useful for learning English.",
+    "ex_vi": "Ứng dụng này rất hữu ích cho việc học tiếng Anh."
+   },
+   {
+    "w": "narrow",
+    "pos": "adj",
+    "ipa": "ˈnæroʊ",
+    "vi": "hẹp",
+    "ex": "The road to the village is very narrow.",
+    "ex_vi": "Con đường vào làng rất hẹp."
    }
   ]
  }

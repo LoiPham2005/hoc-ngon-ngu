@@ -64,4 +64,5 @@ abstract final class AppPalette {
   static const phrases = Color(0xFFE8590C);
   static const grammar = Color(0xFF7048E8);
   static const dialogues = Color(0xFF2F9E44);
+  static const irregularVerbs = Color(0xFFC2255C);
 }

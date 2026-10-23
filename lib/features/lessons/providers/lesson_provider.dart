@@ -57,6 +57,20 @@ Future<List<Dialogue>> dialogues(Ref ref, Course course) async => [
     Dialogue.fromJson(d, course),
 ];
 
+/// ~100 động từ bất quy tắc thông dụng (Tiếng Anh).
+@Riverpod(keepAlive: true)
+Future<List<IrregularVerb>> irregularVerbs(Ref ref) async => [
+  for (final v in await _load(Course.en, 'irregular_verbs'))
+    IrregularVerb.fromJson(v),
+];
+
+/// Nhóm cặp âm dễ nhầm của người Việt (Tiếng Anh).
+@Riverpod(keepAlive: true)
+Future<List<MinimalPairSet>> minimalPairs(Ref ref) async => [
+  for (final m in await _load(Course.en, 'minimal_pairs'))
+    MinimalPairSet.fromJson(m),
+];
+
 Future<List<Map<String, dynamic>>> _load(Course course, String name) async =>
     (jsonDecode(
               await rootBundle.loadString(

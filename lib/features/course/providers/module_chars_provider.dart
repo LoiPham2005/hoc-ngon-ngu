@@ -9,7 +9,7 @@ part 'module_chars_provider.g.dart';
 
 /// Khoá "đã thuộc" của mọi mục trong 1 học phần, đúng thứ tự học (tính tiến độ, chữ trước/sau).
 /// Kana/Kanji = chính chữ; bài học = `<khoá>:w:<từ>` / `:p:<id câu>` / `:g:<id bài>` / `:d:<id hội thoại>`;
-/// âm IPA = `en:ph:<âm>`.
+/// âm IPA = `en:ph:<âm>`; động từ bất quy tắc = `en:iv:<V1>`.
 @Riverpod(keepAlive: true)
 Future<List<String>> moduleChars(Ref ref, Module module) async {
   final course = module.course;
@@ -33,6 +33,9 @@ Future<List<String>> moduleChars(Ref ref, Module module) async {
       Module.hiragana => _kana(KanaScript.hiragana),
       Module.katakana => _kana(KanaScript.katakana),
       Module.enPronunciation => [for (final p in phonemes) p.key],
+      Module.enIrregularVerbs => [
+        for (final v in await ref.watch(irregularVerbsProvider.future)) v.key,
+      ],
       _ => [
         for (final k in await ref.watch(kanjiListProvider.future))
           if (k.level == module.kanjiLevel) k.char,

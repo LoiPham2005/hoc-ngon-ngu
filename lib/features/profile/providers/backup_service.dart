@@ -10,8 +10,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'backup_service.g.dart';
 
+/// Kết quả lưu file sao lưu.
+enum ExportResult { saved, cancelled, failed }
+
 /// Kết quả nhập file sao lưu.
-enum RestoreResult { restored, cancelled, invalid }
+enum RestoreResult { restored, cancelled, invalid, failed }
 
 /// Sao lưu / khôi phục tiến độ học ra 1 file JSON (không cần mạng, không cần tài khoản):
 /// đổi máy / cài lại app → nhập lại file là giữ nguyên chuỗi ngày, mục đã thuộc, lịch ôn.
@@ -62,26 +65,39 @@ class BackupService {
     return true;
   }
 
-  /// Chọn chỗ lưu file. `false` = người dùng huỷ.
-  Future<bool> export() async {
+  /// Chọn chỗ lưu file. Lỗi hệ thống (không mở được trình lưu file…) → [ExportResult.failed].
+  Future<ExportResult> export() async {
     final day = DateTime.now().toIso8601String().substring(0, 10);
-    final uri = await FilePicker.saveFile(
-      fileName: 'lingua-backup-$day.json',
-      bytes: Uint8List.fromList(utf8.encode(encode())),
-      mimeType: 'application/json',
-    );
-    return uri != null;
+    try {
+      final uri = await FilePicker.saveFile(
+        fileName: 'lingua-backup-$day.json',
+        bytes: Uint8List.fromList(utf8.encode(encode())),
+        mimeType: 'application/json',
+      );
+      return uri == null ? ExportResult.cancelled : ExportResult.saved;
+    } on Object catch (e, s) {
+      talker.error('[BACKUP] export failed', e, s);
+      return ExportResult.failed;
+    }
   }
 
   /// Chọn file sao lưu rồi khôi phục.
   Future<RestoreResult> restore() async {
-    final files = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-    );
-    if (files.isEmpty) return RestoreResult.cancelled;
-    final ok = await decode(await files.first.xFile.readAsString());
-    return ok ? RestoreResult.restored : RestoreResult.invalid;
+    final String content;
+    try {
+      final files = await FilePicker.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
+      if (files.isEmpty) return RestoreResult.cancelled;
+      content = await files.first.xFile.readAsString();
+    } on Object catch (e, s) {
+      talker.error('[BACKUP] restore failed', e, s);
+      return RestoreResult.failed;
+    }
+    return await decode(content)
+        ? RestoreResult.restored
+        : RestoreResult.invalid;
   }
 }
 

@@ -62,4 +62,11 @@ void main() {
       expect(c.read(learnerProvider).learned, {'en:w:rice'});
     },
   );
+
+  test('file picker unavailable → failed result, no exception', () async {
+    final c = await container({});
+    // Môi trường test không có plugin native (giống app chưa build lại sau khi thêm plugin).
+    expect(await c.read(backupProvider).export(), ExportResult.failed);
+    expect(await c.read(backupProvider).restore(), RestoreResult.failed);
+  });
 }

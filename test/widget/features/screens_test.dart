@@ -21,8 +21,12 @@ import 'package:lingua/features/lessons/dialogue_page.dart';
 import 'package:lingua/features/lessons/grammar_lesson_page.dart';
 import 'package:lingua/features/lessons/grammar_list_page.dart';
 import 'package:lingua/features/lessons/grammar_practice_page.dart';
+import 'package:lingua/features/lessons/irregular_typing_page.dart';
+import 'package:lingua/features/lessons/irregular_verbs_page.dart';
+import 'package:lingua/features/lessons/minimal_pairs_page.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/phrase_list_page.dart';
+import 'package:lingua/features/lessons/phrase_order_page.dart';
 import 'package:lingua/features/lessons/pronunciation_page.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/sentence_practice_page.dart';
@@ -91,6 +95,7 @@ void main() {
   final jaDialogues = english(
     (c) => c.read(dialoguesProvider(Course.ja).future),
   );
+  final pairs = english((c) => c.read(minimalPairsProvider.future));
   Future<void> jaSearch(WidgetTester t) =>
       loadAsset(t, (c) => c.read(searchIndexProvider(Course.ja).future));
 
@@ -230,6 +235,33 @@ void main() {
             mode: SentenceMode.speaking,
             topicId: 'restaurant',
           ),
+          jaPhrases,
+          null,
+        ),
+        'EN động từ bất quy tắc': (
+          const IrregularVerbsPage(),
+          english((c) => c.read(irregularVerbsProvider.future)),
+          enPrefs,
+        ),
+        'EN tự gõ V2 V3': (
+          const IrregularTypingPage(),
+          english((c) => c.read(irregularVerbsProvider.future)),
+          enPrefs,
+        ),
+        'EN cặp âm': (const MinimalPairsPage(), pairs, enPrefs),
+        'EN 1 nhóm cặp âm': (
+          const MinimalPairSetPage(setId: 'final-s'),
+          pairs,
+          enPrefs,
+        ),
+        'EN luyện nghe cặp âm': (const MinimalPairQuizPage(), pairs, enPrefs),
+        'EN ghép câu giao tiếp': (
+          const PhraseOrderPage(course: Course.en, topicId: 'restaurant'),
+          phrases,
+          enPrefs,
+        ),
+        'JA ghép câu giao tiếp': (
+          const PhraseOrderPage(course: Course.ja),
           jaPhrases,
           null,
         ),
@@ -452,5 +484,88 @@ void main() {
     await tester.pump();
     expect(find.text('2 mục cần ôn — ôn ngay để nhớ lâu'), findsOneWidget);
     expect(find.text('Ôn ngay'), findsOneWidget);
+  });
+
+  testWidgets(
+    'irregular verbs typing: correct forms → right, wrong → shows answer',
+    (tester) async {
+      final verbs = {
+        for (final v
+            in (jsonDecode(
+                      File(
+                        'assets/english/irregular_verbs.json',
+                      ).readAsStringSync(),
+                    )
+                    as List)
+                .cast<Map<String, dynamic>>())
+          v['v1'] as String: IrregularVerb.fromJson(v),
+      };
+      await pumpApp(
+        tester,
+        const IrregularTypingPage(),
+        prefs: enPrefs,
+        settle: false,
+      );
+      await loadAsset(tester, (c) => c.read(irregularVerbsProvider.future));
+      await tester.pumpAndSettle();
+
+      // Động từ đang hỏi = chữ to (displaySmall) trên màn.
+      IrregularVerb current() =>
+          verbs[tester
+              .widgetList<Text>(find.byType(Text))
+              .map((t) => t.data)
+              .firstWhere(verbs.containsKey)]!;
+
+      var v = current();
+      await tester.enterText(
+        find.byType(TextField).at(0),
+        v.past.split('/').first,
+      );
+      await tester.enterText(
+        find.byType(TextField).at(1),
+        v.participle.split('/').last,
+      );
+      await tester.pump();
+      await tester.tap(find.text('Kiểm tra'));
+      await tester.pumpAndSettle();
+      expect(find.text('Chính xác!'), findsOneWidget);
+      await tester.tap(find.text('Tiếp tục'));
+      await tester.pumpAndSettle();
+
+      v = current();
+      await tester.enterText(find.byType(TextField).at(0), 'xxx');
+      await tester.enterText(find.byType(TextField).at(1), 'yyy');
+      await tester.pump();
+      await tester.tap(find.text('Kiểm tra'));
+      await tester.pumpAndSettle();
+      expect(find.text('Chưa đúng rồi'), findsOneWidget);
+      expect(
+        find.text('${v.base} · ${v.past} · ${v.participle}'),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('minimal pair quiz: picking a word reveals the answer', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      const MinimalPairQuizPage(setId: 'l-r'),
+      prefs: enPrefs,
+      settle: false,
+    );
+    await loadAsset(tester, (c) => c.read(minimalPairsProvider.future));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(OutlinedButton).first);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Chính xác!').evaluate().length +
+          find.text('Chưa đúng rồi').evaluate().length,
+      1,
+    );
+    expect(find.text('Tiếp tục'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

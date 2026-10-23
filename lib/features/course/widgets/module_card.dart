@@ -28,6 +28,7 @@ void openModule(BuildContext context, WidgetRef ref, Module module) {
       Module.hiragana => KanaTableRoute(script: KanaScript.hiragana),
       Module.katakana => KanaTableRoute(script: KanaScript.katakana),
       Module.enPronunciation => const PronunciationRoute(),
+      Module.enIrregularVerbs => const IrregularVerbsRoute(),
       _ => KanjiListRoute(level: module.kanjiLevel!),
     },
   });

@@ -14,7 +14,11 @@ import 'package:lingua/features/lessons/dialogue_page.dart';
 import 'package:lingua/features/lessons/grammar_lesson_page.dart';
 import 'package:lingua/features/lessons/grammar_list_page.dart';
 import 'package:lingua/features/lessons/grammar_practice_page.dart';
+import 'package:lingua/features/lessons/irregular_typing_page.dart';
+import 'package:lingua/features/lessons/irregular_verbs_page.dart';
+import 'package:lingua/features/lessons/minimal_pairs_page.dart';
 import 'package:lingua/features/lessons/phrase_list_page.dart';
+import 'package:lingua/features/lessons/phrase_order_page.dart';
 import 'package:lingua/features/lessons/pronunciation_page.dart';
 import 'package:lingua/features/lessons/sentence_practice_page.dart';
 import 'package:lingua/features/lessons/topics_page.dart';
@@ -68,6 +72,15 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: DialogueRoute.page, path: '/en/dialogue'),
     AutoRoute(page: DialogueQuizRoute.page, path: '/en/dialogue/quiz'),
     AutoRoute(page: SentencePracticeRoute.page, path: '/en/sentences'),
+    AutoRoute(page: IrregularVerbsRoute.page, path: '/en/irregular-verbs'),
+    AutoRoute(
+      page: IrregularTypingRoute.page,
+      path: '/en/irregular-verbs/typing',
+    ),
+    AutoRoute(page: MinimalPairsRoute.page, path: '/en/minimal-pairs'),
+    AutoRoute(page: MinimalPairSetRoute.page, path: '/en/minimal-pairs/set'),
+    AutoRoute(page: MinimalPairQuizRoute.page, path: '/en/minimal-pairs/quiz'),
+    AutoRoute(page: PhraseOrderRoute.page, path: '/phrases/order'),
     AutoRoute(page: QuizRoute.page, path: '/quiz'),
     AutoRoute(page: SearchRoute.page, path: '/search'),
     AutoRoute(page: StatsRoute.page, path: '/stats'),

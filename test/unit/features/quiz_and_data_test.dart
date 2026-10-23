@@ -10,6 +10,7 @@ import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/lessons/phrase_order_page.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,12 +69,15 @@ void main() {
     });
   });
 
-  // Số lượng nội dung mỗi khoá: (chủ đề từ, số từ, số hội thoại).
-  const content = {Course.en: (44, 1349, 24), Course.ja: (24, 690, 20)};
+  // Số lượng nội dung mỗi khoá: (chủ đề từ, số từ, số hội thoại, tình huống giao tiếp, bài ngữ pháp).
+  const content = {
+    Course.en: (44, 1459, 24, 25, 36),
+    Course.ja: (24, 690, 20, 15, 24),
+  };
 
   for (final MapEntry(
         key: course,
-        value: (topicCount, wordCount, dialogueCount),
+        value: (topicCount, wordCount, dialogueCount, situations, lessonCount),
       )
       in content.entries) {
     group('${course.name} lesson data', () {
@@ -114,9 +118,9 @@ void main() {
         },
       );
 
-      test('phrases: 15 situations × 12', () async {
+      test('phrases: $situations situations × 12', () async {
         final topics = await c.read(phraseTopicsProvider(course).future);
-        expect(topics, hasLength(15));
+        expect(topics, hasLength(situations));
         expect(topics.every((t) => t.items.length == 12), isTrue);
         if (course == Course.ja) {
           for (final t in topics) {
@@ -126,11 +130,11 @@ void main() {
       });
 
       test(
-        'grammar: 24 lessons, 6 choice + 4 valid sentence-building each',
+        'grammar: $lessonCount lessons, 6 choice + 4 valid sentence-building each',
         () async {
           final lessons = await c.read(grammarLessonsProvider(course).future);
-          expect(lessons, hasLength(24));
-          expect(lessons.map((g) => g.id).toSet(), hasLength(24));
+          expect(lessons, hasLength(lessonCount));
+          expect(lessons.map((g) => g.id).toSet(), hasLength(lessonCount));
           for (final g in lessons) {
             expect(g.formulas, isNotEmpty, reason: g.id);
             expect(g.examples, isNotEmpty, reason: g.id);
@@ -178,6 +182,68 @@ void main() {
       });
     });
   }
+
+  group('english extra data', () {
+    late ProviderContainer c;
+
+    setUp(() {
+      c = ProviderContainer();
+      addTearDown(c.dispose);
+    });
+
+    test('irregular verbs: 100 unique, pattern matches the forms', () async {
+      final verbs = await c.read(irregularVerbsProvider.future);
+      expect(verbs, hasLength(100));
+      expect(verbs.map((v) => v.base).toSet(), hasLength(100));
+      for (final v in verbs) {
+        final (a, b, c) = (
+          v.base,
+          v.past.split('/').first,
+          v.participle.split('/').first,
+        );
+        final expected = a == b && b == c
+            ? 'AAA'
+            : b == c
+            ? 'ABB'
+            : a == c
+            ? 'ABA'
+            : 'ABC';
+        expect(v.pattern, expected, reason: v.base);
+        expect(IrregularVerb.matches(v.past, v.past.split('/').last), isTrue);
+      }
+      expect(IrregularVerb.matches('was/were', ' Were '), isTrue);
+      expect(IrregularVerb.matches('went', 'goed'), isFalse);
+    });
+
+    test('minimal pairs: 16 sound groups × 8 real pairs', () async {
+      final sets = await c.read(minimalPairsProvider.future);
+      expect(sets, hasLength(16));
+      for (final s in sets) {
+        expect(s.pairs, hasLength(8), reason: s.id);
+        for (final p in s.pairs) {
+          expect(p.a, isNot(p.b));
+          expect([p.aVi, p.bVi], everyElement(isNotEmpty));
+        }
+      }
+    });
+
+    test('phrase building: most phrases become 3–9 word exercises', () async {
+      for (final course in [Course.en, Course.ja]) {
+        final phrases = [
+          for (final t in await c.read(phraseTopicsProvider(course).future))
+            ...t.items,
+        ];
+        final exercises = [
+          for (final p in phrases) ?PhraseOrderPage.exerciseOf(p),
+        ];
+        expect(exercises.length, greaterThan(phrases.length ~/ 2));
+        for (final e in exercises) {
+          expect(e.words.length, inInclusiveRange(3, 9));
+          expect('${e.words.join(' ')}${e.ending}', e.answer);
+        }
+      }
+    });
+  });
 
   group('sentence check', () {
     test('Japanese: compares by character, kana or kanji input both work', () {
@@ -258,6 +324,7 @@ void main() {
       const QuizTopic(Module.jaVocabulary, QuizMode.listening),
       const QuizTopic(Module.jaVocabulary, QuizMode.meaning, group: 'food'),
       const QuizTopic(Module.jaPhrases, QuizMode.meaning),
+      const QuizTopic(Module.enIrregularVerbs, QuizMode.meaning),
     ];
 
     for (final topic in topics) {
@@ -275,7 +342,11 @@ void main() {
               expect(q.options, hasLength(4));
               expect(q.options, contains(q.item));
               expect(q.options.map((o) => o.answer).toSet(), hasLength(4));
-              expect(q.options.every((o) => o.group == q.item.group), isTrue);
+              expect(q.options.every((o) => o.module == q.item.module), isTrue);
+              // Nhóm động từ ABA chỉ có 3 từ → được lấy thêm đáp án nhiễu khác nhóm.
+              if (q.item.group != 'ABA') {
+                expect(q.options.every((o) => o.group == q.item.group), isTrue);
+              }
               if (topic.group != null) expect(q.item.group, topic.group);
             }
             c.read(provider.notifier).restart();

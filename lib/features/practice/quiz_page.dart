@@ -159,6 +159,7 @@ void openQuizItem(BuildContext context, QuizItem item) =>
         script: KanaScript.katakana,
         char: item.char,
       ),
+      Module.enIrregularVerbs => const IrregularVerbsRoute(),
       final m when m.lessonKind == LessonKind.phrases => PhraseListRoute(
         course: m.course,
         topicId: item.group,
@@ -198,6 +199,7 @@ class _QuestionView extends StatelessWidget {
       _ when topic.review != null => switch (question.item.module) {
         Module.hiragana || Module.katakana => l10n.quiz_askReading,
         final m when m.lessonKind == LessonKind.phrases => l10n.quiz_askPhrase,
+        Module.enIrregularVerbs => l10n.quiz_askIrregular,
         final m when m.isKanji && vietnamese => l10n.quiz_askHanViet,
         _ => l10n.quiz_askMeaning,
       },
@@ -205,6 +207,8 @@ class _QuestionView extends StatelessWidget {
       QuizMode.hanViet => l10n.quiz_askHanViet,
       QuizMode.meaning when topic.module?.lessonKind == LessonKind.phrases =>
         l10n.quiz_askPhrase,
+      QuizMode.meaning when topic.module == Module.enIrregularVerbs =>
+        l10n.quiz_askIrregular,
       QuizMode.meaning => l10n.quiz_askMeaning,
       QuizMode.listening => l10n.quiz_askListening,
     };

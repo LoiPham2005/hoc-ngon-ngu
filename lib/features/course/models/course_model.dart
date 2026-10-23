@@ -125,7 +125,13 @@ enum Module {
   ),
   enPhrases(Course.en, ModuleSection.vocabulary, '💬', AppPalette.phrases),
   enDialogues(Course.en, ModuleSection.vocabulary, '🗣️', AppPalette.dialogues),
-  enGrammar(Course.en, ModuleSection.grammar, '✍️', AppPalette.grammar);
+  enGrammar(Course.en, ModuleSection.grammar, '✍️', AppPalette.grammar),
+  enIrregularVerbs(
+    Course.en,
+    ModuleSection.grammar,
+    'V3',
+    AppPalette.irregularVerbs,
+  );
 
   const Module(
     this.course,
@@ -174,6 +180,7 @@ enum Module {
       Module.enPhrases || Module.jaPhrases => l10n.module_enPhrases,
       Module.enDialogues || Module.jaDialogues => l10n.module_enDialogues,
       Module.enGrammar || Module.jaGrammar => l10n.module_enGrammar,
+      Module.enIrregularVerbs => l10n.module_enIrregularVerbs,
       _ => l10n.module_kanji(kanjiLevel!.label),
     };
   }
@@ -191,6 +198,7 @@ enum Module {
       Module.jaDialogues => l10n.module_enDialogues_desc(total),
       Module.enGrammar => l10n.module_enGrammar_desc(total),
       Module.jaGrammar => l10n.module_jaGrammar_desc(total),
+      Module.enIrregularVerbs => l10n.module_enIrregularVerbs_desc(total),
       _ => l10n.module_kanji_desc(total),
     };
   }

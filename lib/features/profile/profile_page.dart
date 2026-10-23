@@ -253,8 +253,12 @@ class ProfilePage extends HookConsumerWidget {
                 title: Text(l10n.backup_export),
                 subtitle: Text(l10n.backup_export_desc),
                 onTap: () async {
-                  if (await ref.read(backupProvider).export()) {
-                    toast.success(l10n.backup_exported);
+                  switch (await ref.read(backupProvider).export()) {
+                    case ExportResult.saved:
+                      toast.success(l10n.backup_exported);
+                    case ExportResult.failed:
+                      toast.error(l10n.backup_failed);
+                    case ExportResult.cancelled:
                   }
                 },
               ),
@@ -276,6 +280,8 @@ class ProfilePage extends HookConsumerWidget {
                       toast.success(l10n.backup_restored);
                     case RestoreResult.invalid:
                       toast.error(l10n.backup_invalid);
+                    case RestoreResult.failed:
+                      toast.error(l10n.backup_failed);
                     case RestoreResult.cancelled:
                   }
                 },

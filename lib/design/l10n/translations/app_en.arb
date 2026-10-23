@@ -503,5 +503,43 @@
   },
   "search_didYouMean": "Did you mean:",
   "search_recent": "Recent searches",
-  "search_clearRecent": "Clear"
+  "search_clearRecent": "Clear",
+  "backup_failed": "Couldn't open the file picker. Please try again.",
+  "module_enIrregularVerbs": "Irregular verbs",
+  "module_enIrregularVerbs_desc": "{count} verbs, V1 – V2 – V3",
+  "irregular_all": "All",
+  "irregular_quiz": "Quiz",
+  "irregular_typing": "Type V2, V3",
+  "irregular_v2": "Past (V2)",
+  "irregular_v3": "Past participle (V3)",
+  "irregular_typeAsk": "Type the past (V2) and past participle (V3)",
+  "irregular_pattern_AAA": "All the same",
+  "irregular_pattern_ABB": "V2 = V3",
+  "irregular_pattern_ABA": "V1 = V3",
+  "irregular_pattern_ABC": "All different",
+  "quiz_askIrregular": "What are V2 – V3 of this verb?",
+  "pairs_title": "Minimal pairs",
+  "pairs_desc": "Hear a word, pick the one you heard — train your ear for tricky sounds",
+  "pairs_practice": "Listening practice ({count})",
+  "pairs_replay": "Listen again",
+  "practice_phraseOrder": "Build phrases",
+  "practice_phraseOrder_desc": "Put the words in the right order",
+  "practice_irregular": "Irregular verbs",
+  "practice_irregular_desc": "Pick the right V2 – V3",
+  "practice_pairs": "Sound discrimination",
+  "practice_pairs_desc": "ship or sheep? Train your ear",
+  "@module_enIrregularVerbs_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@pairs_practice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

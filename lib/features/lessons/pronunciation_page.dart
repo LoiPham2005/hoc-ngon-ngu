@@ -8,6 +8,7 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
 /// Bảng 44 âm IPA: bấm 1 âm → nghe từ ví dụ; ✓ = đã luyện.
@@ -37,6 +38,17 @@ class PronunciationPage extends ConsumerWidget {
           Text(
             '${l10n.learn_progress(p.learned, p.total)} · ${l10n.ipa_hint}',
             style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 12),
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: ListTile(
+              onTap: () => context.router.push(const MinimalPairsRoute()),
+              leading: const Text('🎧', style: TextStyle(fontSize: 28)),
+              title: Text(l10n.pairs_title),
+              subtitle: Text(l10n.pairs_desc),
+              trailing: const Icon(Icons.chevron_right_rounded),
+            ),
           ),
           for (final (title, kind) in sections) ...[
             const SizedBox(height: 12),

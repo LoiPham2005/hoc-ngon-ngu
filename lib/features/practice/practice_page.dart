@@ -243,6 +243,46 @@ class _LessonTiles extends ConsumerWidget {
         () => startSentences(SentenceMode.speaking, l10n.practice_speaking),
       ),
       (
+        phraseModule,
+        '🧩',
+        l10n.practice_phraseOrder,
+        l10n.practice_phraseOrder_desc,
+        () async {
+          final picked = await showTopicSheet(
+            context,
+            title: l10n.practice_phraseOrder,
+            topics: [
+              for (final t in phrases) (t.id, '${t.emoji}  ${t.name(lang)}'),
+            ],
+          );
+          if (picked != null && context.mounted) {
+            await context.router.push(
+              PhraseOrderRoute(course: course, topicId: picked.id),
+            );
+          }
+        },
+      ),
+      if (course == Course.en) ...[
+        (
+          Module.enIrregularVerbs,
+          Module.enIrregularVerbs.glyph,
+          l10n.practice_irregular,
+          l10n.practice_irregular_desc,
+          () => context.router.push(
+            QuizRoute(
+              topic: const QuizTopic(Module.enIrregularVerbs, QuizMode.meaning),
+            ),
+          ),
+        ),
+        (
+          Module.enPronunciation,
+          '👂',
+          l10n.practice_pairs,
+          l10n.practice_pairs_desc,
+          () => context.router.push(MinimalPairQuizRoute()),
+        ),
+      ],
+      (
         Module.lesson(course, LessonKind.grammar)!,
         '✍️',
         l10n.practice_grammar,

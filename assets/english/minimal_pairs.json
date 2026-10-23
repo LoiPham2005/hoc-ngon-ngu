@@ -1,0 +1,930 @@
+[
+ {
+  "id": "i-long-short",
+  "a": "iː",
+  "b": "ɪ",
+  "name_vi": "/iː/ dài và /ɪ/ ngắn",
+  "name_en": "Long /iː/ vs short /ɪ/",
+  "tip": "Tiếng Việt chỉ có một âm \"i\" nên người Việt hay đọc hai âm giống nhau. /iː/ kéo dài, căng môi như cười; /ɪ/ ngắn, lỏng miệng, hơi gần \"ê\".",
+  "pairs": [
+   {
+    "a": "sheep",
+    "b": "ship",
+    "a_vi": "con cừu",
+    "b_vi": "con tàu"
+   },
+   {
+    "a": "leave",
+    "b": "live",
+    "a_vi": "rời đi",
+    "b_vi": "sống"
+   },
+   {
+    "a": "feel",
+    "b": "fill",
+    "a_vi": "cảm thấy",
+    "b_vi": "làm đầy"
+   },
+   {
+    "a": "seat",
+    "b": "sit",
+    "a_vi": "chỗ ngồi",
+    "b_vi": "ngồi"
+   },
+   {
+    "a": "beat",
+    "b": "bit",
+    "a_vi": "đánh, nhịp",
+    "b_vi": "một chút"
+   },
+   {
+    "a": "heel",
+    "b": "hill",
+    "a_vi": "gót chân",
+    "b_vi": "ngọn đồi"
+   },
+   {
+    "a": "sleep",
+    "b": "slip",
+    "a_vi": "ngủ",
+    "b_vi": "trượt"
+   },
+   {
+    "a": "cheap",
+    "b": "chip",
+    "a_vi": "rẻ",
+    "b_vi": "miếng khoai chiên"
+   }
+  ]
+ },
+ {
+  "id": "u-long-short",
+  "a": "uː",
+  "b": "ʊ",
+  "name_vi": "/uː/ dài và /ʊ/ ngắn",
+  "name_en": "Long /uː/ vs short /ʊ/",
+  "tip": "Tiếng Việt chỉ có một âm \"u\" nên dễ đọc lẫn. /uː/ kéo dài, chu tròn môi; /ʊ/ rất ngắn, môi thả lỏng, gần giữa \"u\" và \"ư\".",
+  "pairs": [
+   {
+    "a": "pool",
+    "b": "pull",
+    "a_vi": "hồ bơi",
+    "b_vi": "kéo"
+   },
+   {
+    "a": "fool",
+    "b": "full",
+    "a_vi": "kẻ ngốc",
+    "b_vi": "đầy"
+   },
+   {
+    "a": "suit",
+    "b": "soot",
+    "a_vi": "bộ com-lê",
+    "b_vi": "bồ hóng"
+   },
+   {
+    "a": "wooed",
+    "b": "wood",
+    "a_vi": "đã tán tỉnh",
+    "b_vi": "gỗ"
+   },
+   {
+    "a": "cooed",
+    "b": "could",
+    "a_vi": "đã gù (chim)",
+    "b_vi": "có thể (quá khứ)"
+   },
+   {
+    "a": "shooed",
+    "b": "should",
+    "a_vi": "đã xua đuổi",
+    "b_vi": "nên"
+   },
+   {
+    "a": "stewed",
+    "b": "stood",
+    "a_vi": "đã hầm",
+    "b_vi": "đã đứng"
+   },
+   {
+    "a": "kook",
+    "b": "cook",
+    "a_vi": "người lập dị",
+    "b_vi": "nấu ăn"
+   }
+  ]
+ },
+ {
+  "id": "ae-e",
+  "a": "æ",
+  "b": "e",
+  "name_vi": "/æ/ và /e/",
+  "name_en": "/æ/ vs /e/",
+  "tip": "Tiếng Việt không có /æ/ nên người Việt hay đọc thành \"e\". Với /æ/ hãy mở miệng rộng, hạ hàm như nói \"a\" nhưng đặt lưỡi ở vị trí \"e\".",
+  "pairs": [
+   {
+    "a": "bad",
+    "b": "bed",
+    "a_vi": "tệ",
+    "b_vi": "cái giường"
+   },
+   {
+    "a": "man",
+    "b": "men",
+    "a_vi": "người đàn ông",
+    "b_vi": "những người đàn ông"
+   },
+   {
+    "a": "sad",
+    "b": "said",
+    "a_vi": "buồn",
+    "b_vi": "đã nói"
+   },
+   {
+    "a": "pan",
+    "b": "pen",
+    "a_vi": "cái chảo",
+    "b_vi": "cái bút"
+   },
+   {
+    "a": "bag",
+    "b": "beg",
+    "a_vi": "cái túi",
+    "b_vi": "van xin"
+   },
+   {
+    "a": "had",
+    "b": "head",
+    "a_vi": "đã có",
+    "b_vi": "cái đầu"
+   },
+   {
+    "a": "tan",
+    "b": "ten",
+    "a_vi": "rám nắng",
+    "b_vi": "số mười"
+   },
+   {
+    "a": "pat",
+    "b": "pet",
+    "a_vi": "vỗ nhẹ",
+    "b_vi": "thú cưng"
+   }
+  ]
+ },
+ {
+  "id": "ae-ah",
+  "a": "æ",
+  "b": "ʌ",
+  "name_vi": "/æ/ và /ʌ/",
+  "name_en": "/æ/ vs /ʌ/",
+  "tip": "Người Việt hay đọc cả hai thành \"a\". /æ/ mở miệng rộng, kéo hai khóe môi sang ngang; /ʌ/ ngắn, miệng mở vừa, gần \"ă\" hoặc \"â\" tiếng Việt.",
+  "pairs": [
+   {
+    "a": "cat",
+    "b": "cut",
+    "a_vi": "con mèo",
+    "b_vi": "cắt"
+   },
+   {
+    "a": "cap",
+    "b": "cup",
+    "a_vi": "mũ lưỡi trai",
+    "b_vi": "cái cốc"
+   },
+   {
+    "a": "hat",
+    "b": "hut",
+    "a_vi": "cái mũ",
+    "b_vi": "túp lều"
+   },
+   {
+    "a": "ran",
+    "b": "run",
+    "a_vi": "đã chạy",
+    "b_vi": "chạy"
+   },
+   {
+    "a": "match",
+    "b": "much",
+    "a_vi": "trận đấu, que diêm",
+    "b_vi": "nhiều"
+   },
+   {
+    "a": "fan",
+    "b": "fun",
+    "a_vi": "cái quạt",
+    "b_vi": "vui"
+   },
+   {
+    "a": "track",
+    "b": "truck",
+    "a_vi": "đường đua",
+    "b_vi": "xe tải"
+   },
+   {
+    "a": "lack",
+    "b": "luck",
+    "a_vi": "thiếu",
+    "b_vi": "may mắn"
+   }
+  ]
+ },
+ {
+  "id": "th-s",
+  "a": "θ",
+  "b": "s",
+  "name_vi": "/θ/ và /s/",
+  "name_en": "/θ/ vs /s/",
+  "tip": "Tiếng Việt không có /θ/ nên người Việt hay thay bằng \"s\" hoặc \"th\". Đặt đầu lưỡi giữa hai hàm răng rồi thổi hơi ra, không rung dây thanh.",
+  "pairs": [
+   {
+    "a": "think",
+    "b": "sink",
+    "a_vi": "nghĩ",
+    "b_vi": "bồn rửa"
+   },
+   {
+    "a": "thing",
+    "b": "sing",
+    "a_vi": "đồ vật",
+    "b_vi": "hát"
+   },
+   {
+    "a": "thick",
+    "b": "sick",
+    "a_vi": "dày",
+    "b_vi": "ốm"
+   },
+   {
+    "a": "path",
+    "b": "pass",
+    "a_vi": "con đường mòn",
+    "b_vi": "đi qua"
+   },
+   {
+    "a": "mouth",
+    "b": "mouse",
+    "a_vi": "cái miệng",
+    "b_vi": "con chuột"
+   },
+   {
+    "a": "faith",
+    "b": "face",
+    "a_vi": "niềm tin",
+    "b_vi": "khuôn mặt"
+   },
+   {
+    "a": "thumb",
+    "b": "sum",
+    "a_vi": "ngón tay cái",
+    "b_vi": "tổng"
+   },
+   {
+    "a": "worth",
+    "b": "worse",
+    "a_vi": "đáng giá",
+    "b_vi": "tệ hơn"
+   }
+  ]
+ },
+ {
+  "id": "th-t",
+  "a": "θ",
+  "b": "t",
+  "name_vi": "/θ/ và /t/",
+  "name_en": "/θ/ vs /t/",
+  "tip": "Người Việt hay đọc \"th\" tiếng Anh thành \"th\" hoặc \"t\" tiếng Việt (lưỡi chạm lợi). Với /θ/ lưỡi phải thè nhẹ giữa hai răng và hơi thoát ra liên tục, không bật.",
+  "pairs": [
+   {
+    "a": "three",
+    "b": "tree",
+    "a_vi": "số ba",
+    "b_vi": "cái cây"
+   },
+   {
+    "a": "thank",
+    "b": "tank",
+    "a_vi": "cảm ơn",
+    "b_vi": "bể chứa, xe tăng"
+   },
+   {
+    "a": "thin",
+    "b": "tin",
+    "a_vi": "gầy, mỏng",
+    "b_vi": "thiếc, hộp thiếc"
+   },
+   {
+    "a": "thought",
+    "b": "taught",
+    "a_vi": "đã nghĩ",
+    "b_vi": "đã dạy"
+   },
+   {
+    "a": "both",
+    "b": "boat",
+    "a_vi": "cả hai",
+    "b_vi": "con thuyền"
+   },
+   {
+    "a": "thick",
+    "b": "tick",
+    "a_vi": "dày",
+    "b_vi": "dấu tích"
+   },
+   {
+    "a": "thorn",
+    "b": "torn",
+    "a_vi": "cái gai",
+    "b_vi": "bị rách"
+   },
+   {
+    "a": "math",
+    "b": "mat",
+    "a_vi": "toán học",
+    "b_vi": "tấm thảm"
+   }
+  ]
+ },
+ {
+  "id": "dh-d",
+  "a": "ð",
+  "b": "d",
+  "name_vi": "/ð/ và /d/",
+  "name_en": "/ð/ vs /d/",
+  "tip": "Người Việt hay đọc /ð/ thành \"đ\" hoặc \"d\". Đặt lưỡi giữa hai răng như /θ/ nhưng rung dây thanh (sờ cổ thấy rung), hơi thoát ra liên tục.",
+  "pairs": [
+   {
+    "a": "they",
+    "b": "day",
+    "a_vi": "họ",
+    "b_vi": "ngày"
+   },
+   {
+    "a": "then",
+    "b": "den",
+    "a_vi": "sau đó",
+    "b_vi": "hang thú"
+   },
+   {
+    "a": "there",
+    "b": "dare",
+    "a_vi": "ở đó",
+    "b_vi": "dám"
+   },
+   {
+    "a": "though",
+    "b": "dough",
+    "a_vi": "mặc dù",
+    "b_vi": "bột nhào"
+   },
+   {
+    "a": "breathe",
+    "b": "breed",
+    "a_vi": "thở",
+    "b_vi": "nhân giống"
+   },
+   {
+    "a": "those",
+    "b": "doze",
+    "a_vi": "những cái đó",
+    "b_vi": "ngủ gà gật"
+   },
+   {
+    "a": "worthy",
+    "b": "wordy",
+    "a_vi": "xứng đáng",
+    "b_vi": "dài dòng"
+   },
+   {
+    "a": "lather",
+    "b": "ladder",
+    "a_vi": "bọt xà phòng",
+    "b_vi": "cái thang"
+   }
+  ]
+ },
+ {
+  "id": "l-r",
+  "a": "l",
+  "b": "r",
+  "name_vi": "/l/ và /r/",
+  "name_en": "/l/ vs /r/",
+  "tip": "Nhiều vùng ở Việt Nam không phân biệt rõ \"l\" với \"r\" (hoặc đọc \"r\" thành \"z\"). Với /l/ đầu lưỡi chạm lợi trên; với /r/ lưỡi cong lên, không chạm vòm miệng, môi hơi tròn.",
+  "pairs": [
+   {
+    "a": "light",
+    "b": "right",
+    "a_vi": "ánh sáng",
+    "b_vi": "bên phải, đúng"
+   },
+   {
+    "a": "long",
+    "b": "wrong",
+    "a_vi": "dài",
+    "b_vi": "sai"
+   },
+   {
+    "a": "lane",
+    "b": "rain",
+    "a_vi": "làn đường",
+    "b_vi": "mưa"
+   },
+   {
+    "a": "glass",
+    "b": "grass",
+    "a_vi": "thủy tinh, cái cốc",
+    "b_vi": "cỏ"
+   },
+   {
+    "a": "fly",
+    "b": "fry",
+    "a_vi": "bay",
+    "b_vi": "rán"
+   },
+   {
+    "a": "collect",
+    "b": "correct",
+    "a_vi": "thu thập",
+    "b_vi": "đúng, sửa"
+   },
+   {
+    "a": "play",
+    "b": "pray",
+    "a_vi": "chơi",
+    "b_vi": "cầu nguyện"
+   },
+   {
+    "a": "lock",
+    "b": "rock",
+    "a_vi": "khóa",
+    "b_vi": "hòn đá"
+   }
+  ]
+ },
+ {
+  "id": "v-w",
+  "a": "v",
+  "b": "w",
+  "name_vi": "/v/ và /w/",
+  "name_en": "/v/ vs /w/",
+  "tip": "Người Việt hay đọc /w/ thành \"v\" hoặc \"qu\" vì tiếng Việt không có phụ âm đầu /w/. /v/: răng trên chạm môi dưới; /w/: chu tròn môi như \"u\" rồi mở nhanh, răng không chạm môi.",
+  "pairs": [
+   {
+    "a": "vest",
+    "b": "west",
+    "a_vi": "áo gi-lê",
+    "b_vi": "phía tây"
+   },
+   {
+    "a": "vine",
+    "b": "wine",
+    "a_vi": "cây nho, dây leo",
+    "b_vi": "rượu vang"
+   },
+   {
+    "a": "vet",
+    "b": "wet",
+    "a_vi": "bác sĩ thú y",
+    "b_vi": "ướt"
+   },
+   {
+    "a": "vary",
+    "b": "wary",
+    "a_vi": "thay đổi",
+    "b_vi": "thận trọng"
+   },
+   {
+    "a": "verse",
+    "b": "worse",
+    "a_vi": "câu thơ",
+    "b_vi": "tệ hơn"
+   },
+   {
+    "a": "vow",
+    "b": "wow",
+    "a_vi": "lời thề",
+    "b_vi": "ồ (cảm thán)"
+   },
+   {
+    "a": "viper",
+    "b": "wiper",
+    "a_vi": "rắn độc",
+    "b_vi": "cần gạt nước"
+   },
+   {
+    "a": "vent",
+    "b": "went",
+    "a_vi": "lỗ thông hơi",
+    "b_vi": "đã đi"
+   }
+  ]
+ },
+ {
+  "id": "s-sh",
+  "a": "s",
+  "b": "ʃ",
+  "name_vi": "/s/ và /ʃ/",
+  "name_en": "/s/ vs /ʃ/",
+  "tip": "Nhiều người Việt (nhất là miền Bắc) không phân biệt \"s\" và \"x\". /s/: lưỡi gần lợi, môi dẹt, tiếng xì mảnh; /ʃ/: lưỡi lùi về sau, môi chu tròn ra trước như khi suỵt.",
+  "pairs": [
+   {
+    "a": "see",
+    "b": "she",
+    "a_vi": "nhìn thấy",
+    "b_vi": "cô ấy"
+   },
+   {
+    "a": "sip",
+    "b": "ship",
+    "a_vi": "nhấp một ngụm",
+    "b_vi": "con tàu"
+   },
+   {
+    "a": "sort",
+    "b": "short",
+    "a_vi": "sắp xếp, loại",
+    "b_vi": "ngắn"
+   },
+   {
+    "a": "save",
+    "b": "shave",
+    "a_vi": "cứu, tiết kiệm",
+    "b_vi": "cạo râu"
+   },
+   {
+    "a": "seat",
+    "b": "sheet",
+    "a_vi": "chỗ ngồi",
+    "b_vi": "tờ giấy, ga giường"
+   },
+   {
+    "a": "sell",
+    "b": "shell",
+    "a_vi": "bán",
+    "b_vi": "vỏ sò"
+   },
+   {
+    "a": "mass",
+    "b": "mash",
+    "a_vi": "khối lượng",
+    "b_vi": "nghiền nhuyễn"
+   },
+   {
+    "a": "sock",
+    "b": "shock",
+    "a_vi": "chiếc tất",
+    "b_vi": "cú sốc"
+   }
+  ]
+ },
+ {
+  "id": "z-s-final",
+  "a": "z",
+  "b": "s",
+  "name_vi": "Âm cuối /z/ và /s/",
+  "name_en": "Final /z/ vs /s/",
+  "tip": "Tiếng Việt không có âm cuối /z/ nên người Việt hay đọc thành /s/ hoặc bỏ hẳn. Với /z/ cuối, giữ rung dây thanh và đọc nguyên âm phía trước dài hơn; với /s/ nguyên âm ngắn, gọn.",
+  "pairs": [
+   {
+    "a": "rise",
+    "b": "rice",
+    "a_vi": "tăng lên",
+    "b_vi": "gạo, cơm"
+   },
+   {
+    "a": "prize",
+    "b": "price",
+    "a_vi": "giải thưởng",
+    "b_vi": "giá cả"
+   },
+   {
+    "a": "peas",
+    "b": "peace",
+    "a_vi": "hạt đậu Hà Lan",
+    "b_vi": "hòa bình"
+   },
+   {
+    "a": "raise",
+    "b": "race",
+    "a_vi": "nâng lên",
+    "b_vi": "cuộc đua"
+   },
+   {
+    "a": "buzz",
+    "b": "bus",
+    "a_vi": "tiếng vo ve",
+    "b_vi": "xe buýt"
+   },
+   {
+    "a": "lose",
+    "b": "loose",
+    "a_vi": "mất, thua",
+    "b_vi": "lỏng"
+   },
+   {
+    "a": "plays",
+    "b": "place",
+    "a_vi": "chơi (ngôi 3)",
+    "b_vi": "nơi chốn"
+   },
+   {
+    "a": "eyes",
+    "b": "ice",
+    "a_vi": "đôi mắt",
+    "b_vi": "nước đá"
+   }
+  ]
+ },
+ {
+  "id": "final-s",
+  "a": "-s",
+  "b": "∅",
+  "name_vi": "Có và không có âm cuối -s",
+  "name_en": "With vs without final -s",
+  "tip": "Tiếng Việt không có phụ âm cuối /s/, /z/ nên người Việt hay nuốt mất đuôi -s, làm sai số nhiều và động từ ngôi 3. Đọc rõ tiếng xì /s/ hoặc /z/ ở cuối, đừng kết thúc từ đột ngột.",
+  "pairs": [
+   {
+    "a": "cards",
+    "b": "card",
+    "a_vi": "những tấm thẻ",
+    "b_vi": "tấm thẻ"
+   },
+   {
+    "a": "books",
+    "b": "book",
+    "a_vi": "những cuốn sách",
+    "b_vi": "cuốn sách"
+   },
+   {
+    "a": "cats",
+    "b": "cat",
+    "a_vi": "những con mèo",
+    "b_vi": "con mèo"
+   },
+   {
+    "a": "hands",
+    "b": "hand",
+    "a_vi": "đôi tay",
+    "b_vi": "bàn tay"
+   },
+   {
+    "a": "keys",
+    "b": "key",
+    "a_vi": "những chìa khóa",
+    "b_vi": "chìa khóa"
+   },
+   {
+    "a": "needs",
+    "b": "need",
+    "a_vi": "cần (ngôi 3)",
+    "b_vi": "cần"
+   },
+   {
+    "a": "friends",
+    "b": "friend",
+    "a_vi": "những người bạn",
+    "b_vi": "người bạn"
+   },
+   {
+    "a": "shops",
+    "b": "shop",
+    "a_vi": "những cửa hàng",
+    "b_vi": "cửa hàng"
+   }
+  ]
+ },
+ {
+  "id": "final-t-d",
+  "a": "t",
+  "b": "d",
+  "name_vi": "Âm cuối /t/ và /d/",
+  "name_en": "Final /t/ vs /d/",
+  "tip": "Âm cuối tiếng Việt luôn bị chặn, không bật hơi, nên người Việt đọc /t/ và /d/ cuối giống nhau. Trước /d/ cuối, kéo dài nguyên âm và giữ rung; trước /t/ cuối, nguyên âm ngắn và dứt gọn.",
+  "pairs": [
+   {
+    "a": "bet",
+    "b": "bed",
+    "a_vi": "đặt cược",
+    "b_vi": "cái giường"
+   },
+   {
+    "a": "cart",
+    "b": "card",
+    "a_vi": "xe đẩy",
+    "b_vi": "tấm thẻ"
+   },
+   {
+    "a": "write",
+    "b": "ride",
+    "a_vi": "viết",
+    "b_vi": "cưỡi, đi xe"
+   },
+   {
+    "a": "seat",
+    "b": "seed",
+    "a_vi": "chỗ ngồi",
+    "b_vi": "hạt giống"
+   },
+   {
+    "a": "white",
+    "b": "wide",
+    "a_vi": "màu trắng",
+    "b_vi": "rộng"
+   },
+   {
+    "a": "heart",
+    "b": "hard",
+    "a_vi": "trái tim",
+    "b_vi": "khó, cứng"
+   },
+   {
+    "a": "coat",
+    "b": "code",
+    "a_vi": "áo khoác",
+    "b_vi": "mã"
+   },
+   {
+    "a": "bat",
+    "b": "bad",
+    "a_vi": "con dơi, gậy",
+    "b_vi": "tệ"
+   }
+  ]
+ },
+ {
+  "id": "final-consonant-drop",
+  "a": "-C",
+  "b": "∅",
+  "name_vi": "Có và không có phụ âm cuối",
+  "name_en": "With vs without final consonant",
+  "tip": "Người Việt hay bỏ hoặc nuốt phụ âm cuối như /k/, /t/, /p/, /m/, /f/, /d/ khiến \"bike\" nghe thành \"buy\". Hãy đọc rõ phụ âm cuối, có thể bật nhẹ hơi ở cuối từ.",
+  "pairs": [
+   {
+    "a": "bike",
+    "b": "buy",
+    "a_vi": "xe đạp",
+    "b_vi": "mua"
+   },
+   {
+    "a": "make",
+    "b": "may",
+    "a_vi": "làm",
+    "b_vi": "có thể"
+   },
+   {
+    "a": "keep",
+    "b": "key",
+    "a_vi": "giữ",
+    "b_vi": "chìa khóa"
+   },
+   {
+    "a": "wait",
+    "b": "way",
+    "a_vi": "chờ",
+    "b_vi": "con đường, cách"
+   },
+   {
+    "a": "goat",
+    "b": "go",
+    "a_vi": "con dê",
+    "b_vi": "đi"
+   },
+   {
+    "a": "time",
+    "b": "tie",
+    "a_vi": "thời gian",
+    "b_vi": "cà vạt, buộc"
+   },
+   {
+    "a": "safe",
+    "b": "say",
+    "a_vi": "an toàn",
+    "b_vi": "nói"
+   },
+   {
+    "a": "feed",
+    "b": "fee",
+    "a_vi": "cho ăn",
+    "b_vi": "phí"
+   }
+  ]
+ },
+ {
+  "id": "n-ng",
+  "a": "n",
+  "b": "ŋ",
+  "name_vi": "/n/ và /ŋ/",
+  "name_en": "/n/ vs /ŋ/",
+  "tip": "Tiếng Việt có cả \"n\" và \"ng\" cuối nhưng người Việt hay lẫn khi gặp nguyên âm tiếng Anh. Với /n/ đầu lưỡi chạm lợi trên; với /ŋ/ cuống lưỡi nâng chạm vòm mềm, không bật thêm âm /g/.",
+  "pairs": [
+   {
+    "a": "thin",
+    "b": "thing",
+    "a_vi": "gầy, mỏng",
+    "b_vi": "đồ vật"
+   },
+   {
+    "a": "sin",
+    "b": "sing",
+    "a_vi": "tội lỗi",
+    "b_vi": "hát"
+   },
+   {
+    "a": "win",
+    "b": "wing",
+    "a_vi": "chiến thắng",
+    "b_vi": "cánh"
+   },
+   {
+    "a": "ran",
+    "b": "rang",
+    "a_vi": "đã chạy",
+    "b_vi": "đã reo (chuông)"
+   },
+   {
+    "a": "ban",
+    "b": "bang",
+    "a_vi": "cấm",
+    "b_vi": "tiếng nổ"
+   },
+   {
+    "a": "ton",
+    "b": "tongue",
+    "a_vi": "tấn",
+    "b_vi": "cái lưỡi"
+   },
+   {
+    "a": "sun",
+    "b": "sung",
+    "a_vi": "mặt trời",
+    "b_vi": "đã hát (phân từ)"
+   },
+   {
+    "a": "fan",
+    "b": "fang",
+    "a_vi": "cái quạt",
+    "b_vi": "răng nanh"
+   }
+  ]
+ },
+ {
+  "id": "ch-j",
+  "a": "tʃ",
+  "b": "dʒ",
+  "name_vi": "/tʃ/ và /dʒ/",
+  "name_en": "/tʃ/ vs /dʒ/",
+  "tip": "Người Việt hay đọc cả hai thành \"ch\" (hoặc /dʒ/ thành \"gi\", \"d\"). /tʃ/ bật hơi mạnh, không rung dây thanh; /dʒ/ cùng khẩu hình nhưng rung dây thanh, hơi nhẹ hơn.",
+  "pairs": [
+   {
+    "a": "cheap",
+    "b": "jeep",
+    "a_vi": "rẻ",
+    "b_vi": "xe jeep"
+   },
+   {
+    "a": "choke",
+    "b": "joke",
+    "a_vi": "nghẹn",
+    "b_vi": "trò đùa"
+   },
+   {
+    "a": "chin",
+    "b": "gin",
+    "a_vi": "cái cằm",
+    "b_vi": "rượu gin"
+   },
+   {
+    "a": "chunk",
+    "b": "junk",
+    "a_vi": "miếng to",
+    "b_vi": "đồ bỏ đi"
+   },
+   {
+    "a": "rich",
+    "b": "ridge",
+    "a_vi": "giàu",
+    "b_vi": "sống núi"
+   },
+   {
+    "a": "batch",
+    "b": "badge",
+    "a_vi": "mẻ, lô",
+    "b_vi": "huy hiệu"
+   },
+   {
+    "a": "search",
+    "b": "surge",
+    "a_vi": "tìm kiếm",
+    "b_vi": "dâng trào"
+   },
+   {
+    "a": "etch",
+    "b": "edge",
+    "a_vi": "khắc",
+    "b_vi": "mép, cạnh"
+   }
+  ]
+ }
+]

@@ -237,6 +237,20 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
           ),
   ];
 
+  Future<List<QuizItem>> irregularVerbs() async => [
+    for (final v in await ref.watch(irregularVerbsProvider.future))
+      QuizItem(
+        char: v.base,
+        key: v.key,
+        answer: '${v.past} – ${v.participle}',
+        // Đáp án nhiễu cùng nhóm hình thái → phải nhớ thật, không đoán theo dạng.
+        group: v.pattern,
+        module: Module.enIrregularVerbs,
+        speech: v.speech,
+        hint: v.meaning,
+      ),
+  ];
+
   if (topic.review case final course?) {
     return switch (course) {
       Course.ja => [
@@ -252,6 +266,7 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
       _ => [
         ...await words(course, QuizMode.meaning, null),
         ...await phrases(course, null),
+        if (course == Course.en) ...await irregularVerbs(),
       ],
     };
   }
@@ -261,6 +276,7 @@ Future<List<QuizItem>> quizPool(Ref ref, QuizTopic topic) async {
     Module.hiragana => kana([KanaScript.hiragana], topic.kanaSet),
     Module.katakana => kana([KanaScript.katakana], topic.kanaSet),
     Module.enPronunciation => await words(Course.en, topic.mode, topic.group),
+    Module.enIrregularVerbs => await irregularVerbs(),
     final Module m when m.lessonKind == LessonKind.vocabulary => await words(
       m.course,
       topic.mode,
@@ -329,12 +345,14 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
 
   List<QuizItem> _options(QuizItem item, List<QuizItem> pool) {
     final seen = {item.answer};
+    List<QuizItem> shuffled(bool Function(QuizItem o) test) =>
+        pool.where(test).toList()..shuffle(_random);
+    // Ưu tiên đáp án nhiễu cùng nhóm; nhóm quá nhỏ (vd ABA chỉ 3 động từ) → lấy thêm cùng học phần.
     final others = [
-      for (final o
-          in pool
-              .where((o) => o.group == item.group && o.module == item.module)
-              .toList()
-            ..shuffle(_random))
+      for (final o in [
+        ...shuffled((o) => o.group == item.group && o.module == item.module),
+        ...shuffled((o) => o.group != item.group && o.module == item.module),
+      ])
         if (seen.add(o.answer)) o,
     ].take(3);
     return [item, ...others]..shuffle(_random);

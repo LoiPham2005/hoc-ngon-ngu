@@ -1,0 +1,902 @@
+[
+ {
+  "v1": "be",
+  "v2": "was/were",
+  "v3": "been",
+  "vi": "thì, là, ở",
+  "pattern": "ABC",
+  "ex": "She was very tired yesterday.",
+  "ex_vi": "Hôm qua cô ấy rất mệt."
+ },
+ {
+  "v1": "have",
+  "v2": "had",
+  "v3": "had",
+  "vi": "có; ăn (bữa)",
+  "pattern": "ABB",
+  "ex": "I have had this phone for two years.",
+  "ex_vi": "Tôi đã dùng chiếc điện thoại này được hai năm."
+ },
+ {
+  "v1": "do",
+  "v2": "did",
+  "v3": "done",
+  "vi": "làm",
+  "pattern": "ABC",
+  "ex": "I did my homework after dinner.",
+  "ex_vi": "Tôi làm bài tập sau bữa tối."
+ },
+ {
+  "v1": "say",
+  "v2": "said",
+  "v3": "said",
+  "vi": "nói",
+  "pattern": "ABB",
+  "ex": "Have you said sorry to your sister?",
+  "ex_vi": "Con đã xin lỗi chị chưa?"
+ },
+ {
+  "v1": "go",
+  "v2": "went",
+  "v3": "gone",
+  "vi": "đi",
+  "pattern": "ABC",
+  "ex": "We went to the beach last summer.",
+  "ex_vi": "Mùa hè năm ngoái chúng tôi đã đi biển."
+ },
+ {
+  "v1": "get",
+  "v2": "got",
+  "v3": "gotten/got",
+  "vi": "nhận được; trở nên",
+  "pattern": "ABC",
+  "ex": "Your English has gotten much better.",
+  "ex_vi": "Tiếng Anh của bạn đã tiến bộ nhiều."
+ },
+ {
+  "v1": "make",
+  "v2": "made",
+  "v3": "made",
+  "vi": "làm, chế tạo",
+  "pattern": "ABB",
+  "ex": "My mother made a cake for my birthday.",
+  "ex_vi": "Mẹ tôi đã làm bánh cho sinh nhật tôi."
+ },
+ {
+  "v1": "know",
+  "v2": "knew",
+  "v3": "known",
+  "vi": "biết, quen",
+  "pattern": "ABC",
+  "ex": "I have known him since childhood.",
+  "ex_vi": "Tôi quen anh ấy từ nhỏ."
+ },
+ {
+  "v1": "think",
+  "v2": "thought",
+  "v3": "thought",
+  "vi": "nghĩ",
+  "pattern": "ABB",
+  "ex": "I thought the test was easy.",
+  "ex_vi": "Tôi đã nghĩ bài kiểm tra dễ."
+ },
+ {
+  "v1": "take",
+  "v2": "took",
+  "v3": "taken",
+  "vi": "cầm, lấy; mất (thời gian)",
+  "pattern": "ABC",
+  "ex": "Someone has taken my umbrella.",
+  "ex_vi": "Ai đó đã lấy mất cái ô của tôi."
+ },
+ {
+  "v1": "see",
+  "v2": "saw",
+  "v3": "seen",
+  "vi": "nhìn thấy",
+  "pattern": "ABC",
+  "ex": "I saw a cat on the roof.",
+  "ex_vi": "Tôi thấy một con mèo trên mái nhà."
+ },
+ {
+  "v1": "come",
+  "v2": "came",
+  "v3": "come",
+  "vi": "đến",
+  "pattern": "ABA",
+  "ex": "Spring has come early this year.",
+  "ex_vi": "Năm nay mùa xuân đến sớm."
+ },
+ {
+  "v1": "give",
+  "v2": "gave",
+  "v3": "given",
+  "vi": "cho, đưa",
+  "pattern": "ABC",
+  "ex": "He gave me a book for Christmas.",
+  "ex_vi": "Anh ấy tặng tôi một cuốn sách dịp Giáng sinh."
+ },
+ {
+  "v1": "find",
+  "v2": "found",
+  "v3": "found",
+  "vi": "tìm thấy",
+  "pattern": "ABB",
+  "ex": "Have you found your keys yet?",
+  "ex_vi": "Bạn đã tìm thấy chìa khóa chưa?"
+ },
+ {
+  "v1": "tell",
+  "v2": "told",
+  "v3": "told",
+  "vi": "kể, bảo",
+  "pattern": "ABB",
+  "ex": "She told me a funny story.",
+  "ex_vi": "Cô ấy kể cho tôi một câu chuyện vui."
+ },
+ {
+  "v1": "become",
+  "v2": "became",
+  "v3": "become",
+  "vi": "trở thành",
+  "pattern": "ABA",
+  "ex": "He has become a famous singer.",
+  "ex_vi": "Anh ấy đã trở thành ca sĩ nổi tiếng."
+ },
+ {
+  "v1": "leave",
+  "v2": "left",
+  "v3": "left",
+  "vi": "rời đi; để lại",
+  "pattern": "ABB",
+  "ex": "The train left at six o'clock.",
+  "ex_vi": "Tàu rời ga lúc sáu giờ."
+ },
+ {
+  "v1": "feel",
+  "v2": "felt",
+  "v3": "felt",
+  "vi": "cảm thấy",
+  "pattern": "ABB",
+  "ex": "I have never felt so happy.",
+  "ex_vi": "Tôi chưa bao giờ thấy vui như thế."
+ },
+ {
+  "v1": "put",
+  "v2": "put",
+  "v3": "put",
+  "vi": "đặt, để",
+  "pattern": "AAA",
+  "ex": "She put the milk in the fridge.",
+  "ex_vi": "Cô ấy cất sữa vào tủ lạnh."
+ },
+ {
+  "v1": "bring",
+  "v2": "brought",
+  "v3": "brought",
+  "vi": "mang đến",
+  "pattern": "ABB",
+  "ex": "Have you brought your passport?",
+  "ex_vi": "Bạn đã mang hộ chiếu theo chưa?"
+ },
+ {
+  "v1": "begin",
+  "v2": "began",
+  "v3": "begun",
+  "vi": "bắt đầu",
+  "pattern": "ABC",
+  "ex": "The movie began at eight o'clock.",
+  "ex_vi": "Bộ phim bắt đầu lúc tám giờ."
+ },
+ {
+  "v1": "keep",
+  "v2": "kept",
+  "v3": "kept",
+  "vi": "giữ",
+  "pattern": "ABB",
+  "ex": "She has kept all his letters.",
+  "ex_vi": "Cô ấy vẫn giữ tất cả thư của anh ấy."
+ },
+ {
+  "v1": "hold",
+  "v2": "held",
+  "v3": "held",
+  "vi": "cầm, nắm; tổ chức",
+  "pattern": "ABB",
+  "ex": "He held his daughter's hand tightly.",
+  "ex_vi": "Anh ấy nắm chặt tay con gái."
+ },
+ {
+  "v1": "write",
+  "v2": "wrote",
+  "v3": "written",
+  "vi": "viết",
+  "pattern": "ABC",
+  "ex": "She has written three books.",
+  "ex_vi": "Cô ấy đã viết ba cuốn sách."
+ },
+ {
+  "v1": "stand",
+  "v2": "stood",
+  "v3": "stood",
+  "vi": "đứng",
+  "pattern": "ABB",
+  "ex": "We stood in line for an hour.",
+  "ex_vi": "Chúng tôi đứng xếp hàng suốt một tiếng."
+ },
+ {
+  "v1": "hear",
+  "v2": "heard",
+  "v3": "heard",
+  "vi": "nghe thấy",
+  "pattern": "ABB",
+  "ex": "Have you heard the news?",
+  "ex_vi": "Bạn đã nghe tin gì chưa?"
+ },
+ {
+  "v1": "let",
+  "v2": "let",
+  "v3": "let",
+  "vi": "để, cho phép",
+  "pattern": "AAA",
+  "ex": "My dad let me drive his car.",
+  "ex_vi": "Bố cho tôi lái xe của bố."
+ },
+ {
+  "v1": "mean",
+  "v2": "meant",
+  "v3": "meant",
+  "vi": "có nghĩa là; định",
+  "pattern": "ABB",
+  "ex": "I meant to call you yesterday.",
+  "ex_vi": "Hôm qua tôi định gọi cho bạn."
+ },
+ {
+  "v1": "set",
+  "v2": "set",
+  "v3": "set",
+  "vi": "đặt; (mặt trời) lặn",
+  "pattern": "AAA",
+  "ex": "The sun has already set.",
+  "ex_vi": "Mặt trời đã lặn rồi."
+ },
+ {
+  "v1": "meet",
+  "v2": "met",
+  "v3": "met",
+  "vi": "gặp",
+  "pattern": "ABB",
+  "ex": "I met my best friend at school.",
+  "ex_vi": "Tôi quen bạn thân ở trường."
+ },
+ {
+  "v1": "run",
+  "v2": "ran",
+  "v3": "run",
+  "vi": "chạy",
+  "pattern": "ABA",
+  "ex": "She has run five kilometers today.",
+  "ex_vi": "Hôm nay cô ấy đã chạy được năm cây số."
+ },
+ {
+  "v1": "pay",
+  "v2": "paid",
+  "v3": "paid",
+  "vi": "trả tiền",
+  "pattern": "ABB",
+  "ex": "I paid for dinner last night.",
+  "ex_vi": "Tối qua tôi trả tiền bữa tối."
+ },
+ {
+  "v1": "sit",
+  "v2": "sat",
+  "v3": "sat",
+  "vi": "ngồi",
+  "pattern": "ABB",
+  "ex": "We have sat here for two hours.",
+  "ex_vi": "Chúng tôi ngồi đây hai tiếng rồi."
+ },
+ {
+  "v1": "speak",
+  "v2": "spoke",
+  "v3": "spoken",
+  "vi": "nói (ngôn ngữ), phát biểu",
+  "pattern": "ABC",
+  "ex": "She spoke to the teacher after class.",
+  "ex_vi": "Cô ấy nói chuyện với thầy giáo sau giờ học."
+ },
+ {
+  "v1": "lie",
+  "v2": "lay",
+  "v3": "lain",
+  "vi": "nằm",
+  "pattern": "ABC",
+  "ex": "He lay on the sofa and slept.",
+  "ex_vi": "Anh ấy nằm ngủ trên ghế sofa."
+ },
+ {
+  "v1": "lead",
+  "v2": "led",
+  "v3": "led",
+  "vi": "dẫn dắt; dẫn đến",
+  "pattern": "ABB",
+  "ex": "His hard work has led to success.",
+  "ex_vi": "Sự chăm chỉ đã đưa anh ấy đến thành công."
+ },
+ {
+  "v1": "read",
+  "v2": "read",
+  "v3": "read",
+  "vi": "đọc",
+  "pattern": "AAA",
+  "ex": "I read an interesting article this morning.",
+  "ex_vi": "Sáng nay tôi đọc một bài báo thú vị."
+ },
+ {
+  "v1": "grow",
+  "v2": "grew",
+  "v3": "grown",
+  "vi": "lớn lên; trồng",
+  "pattern": "ABC",
+  "ex": "Your son has grown so tall!",
+  "ex_vi": "Con trai chị lớn nhanh quá!"
+ },
+ {
+  "v1": "lose",
+  "v2": "lost",
+  "v3": "lost",
+  "vi": "mất; thua",
+  "pattern": "ABB",
+  "ex": "I lost my wallet on the bus.",
+  "ex_vi": "Tôi bị mất ví trên xe buýt."
+ },
+ {
+  "v1": "fall",
+  "v2": "fell",
+  "v3": "fallen",
+  "vi": "rơi, ngã",
+  "pattern": "ABC",
+  "ex": "All the leaves have fallen from the tree.",
+  "ex_vi": "Lá trên cây đã rụng hết."
+ },
+ {
+  "v1": "send",
+  "v2": "sent",
+  "v3": "sent",
+  "vi": "gửi",
+  "pattern": "ABB",
+  "ex": "She sent me a message last night.",
+  "ex_vi": "Tối qua cô ấy nhắn tin cho tôi."
+ },
+ {
+  "v1": "build",
+  "v2": "built",
+  "v3": "built",
+  "vi": "xây dựng",
+  "pattern": "ABB",
+  "ex": "This bridge was built in 1990.",
+  "ex_vi": "Cây cầu này được xây năm 1990."
+ },
+ {
+  "v1": "understand",
+  "v2": "understood",
+  "v3": "understood",
+  "vi": "hiểu",
+  "pattern": "ABB",
+  "ex": "I understood the lesson very well.",
+  "ex_vi": "Tôi hiểu bài rất rõ."
+ },
+ {
+  "v1": "draw",
+  "v2": "drew",
+  "v3": "drawn",
+  "vi": "vẽ",
+  "pattern": "ABC",
+  "ex": "The children have drawn a big sun.",
+  "ex_vi": "Bọn trẻ đã vẽ một ông mặt trời thật to."
+ },
+ {
+  "v1": "break",
+  "v2": "broke",
+  "v3": "broken",
+  "vi": "làm vỡ, gãy",
+  "pattern": "ABC",
+  "ex": "He broke his leg playing football.",
+  "ex_vi": "Anh ấy bị gãy chân khi chơi bóng đá."
+ },
+ {
+  "v1": "spend",
+  "v2": "spent",
+  "v3": "spent",
+  "vi": "tiêu (tiền); dành (thời gian)",
+  "pattern": "ABB",
+  "ex": "I have spent all my money.",
+  "ex_vi": "Tôi tiêu hết tiền rồi."
+ },
+ {
+  "v1": "cut",
+  "v2": "cut",
+  "v3": "cut",
+  "vi": "cắt",
+  "pattern": "AAA",
+  "ex": "She cut the cake into eight pieces.",
+  "ex_vi": "Cô ấy cắt bánh thành tám miếng."
+ },
+ {
+  "v1": "rise",
+  "v2": "rose",
+  "v3": "risen",
+  "vi": "tăng lên; mọc (mặt trời)",
+  "pattern": "ABC",
+  "ex": "Prices have risen a lot this year.",
+  "ex_vi": "Năm nay giá cả tăng nhiều."
+ },
+ {
+  "v1": "drive",
+  "v2": "drove",
+  "v3": "driven",
+  "vi": "lái xe",
+  "pattern": "ABC",
+  "ex": "We drove to Da Lat last weekend.",
+  "ex_vi": "Cuối tuần trước chúng tôi lái xe lên Đà Lạt."
+ },
+ {
+  "v1": "buy",
+  "v2": "bought",
+  "v3": "bought",
+  "vi": "mua",
+  "pattern": "ABB",
+  "ex": "I have just bought a new laptop.",
+  "ex_vi": "Tôi vừa mua một chiếc laptop mới."
+ },
+ {
+  "v1": "wear",
+  "v2": "wore",
+  "v3": "worn",
+  "vi": "mặc, đội, đeo",
+  "pattern": "ABC",
+  "ex": "She wore a red dress to the party.",
+  "ex_vi": "Cô ấy mặc váy đỏ đi dự tiệc."
+ },
+ {
+  "v1": "choose",
+  "v2": "chose",
+  "v3": "chosen",
+  "vi": "chọn",
+  "pattern": "ABC",
+  "ex": "Have you chosen a name for the baby?",
+  "ex_vi": "Anh chị đã chọn tên cho em bé chưa?"
+ },
+ {
+  "v1": "sell",
+  "v2": "sold",
+  "v3": "sold",
+  "vi": "bán",
+  "pattern": "ABB",
+  "ex": "He sold his old motorbike last month.",
+  "ex_vi": "Tháng trước anh ấy đã bán chiếc xe máy cũ."
+ },
+ {
+  "v1": "eat",
+  "v2": "ate",
+  "v3": "eaten",
+  "vi": "ăn",
+  "pattern": "ABC",
+  "ex": "Have you eaten lunch yet?",
+  "ex_vi": "Bạn ăn trưa chưa?"
+ },
+ {
+  "v1": "drink",
+  "v2": "drank",
+  "v3": "drunk",
+  "vi": "uống",
+  "pattern": "ABC",
+  "ex": "I drank two cups of coffee this morning.",
+  "ex_vi": "Sáng nay tôi uống hai cốc cà phê."
+ },
+ {
+  "v1": "sleep",
+  "v2": "slept",
+  "v3": "slept",
+  "vi": "ngủ",
+  "pattern": "ABB",
+  "ex": "I haven't slept well for days.",
+  "ex_vi": "Mấy hôm nay tôi ngủ không ngon."
+ },
+ {
+  "v1": "teach",
+  "v2": "taught",
+  "v3": "taught",
+  "vi": "dạy",
+  "pattern": "ABB",
+  "ex": "Mr. Nam taught us math last year.",
+  "ex_vi": "Năm ngoái thầy Nam dạy chúng tôi môn Toán."
+ },
+ {
+  "v1": "catch",
+  "v2": "caught",
+  "v3": "caught",
+  "vi": "bắt; đón (xe)",
+  "pattern": "ABB",
+  "ex": "The police have caught the thief.",
+  "ex_vi": "Cảnh sát đã bắt được tên trộm."
+ },
+ {
+  "v1": "fight",
+  "v2": "fought",
+  "v3": "fought",
+  "vi": "đánh nhau, chiến đấu",
+  "pattern": "ABB",
+  "ex": "The two boys fought over a toy.",
+  "ex_vi": "Hai cậu bé đánh nhau vì một món đồ chơi."
+ },
+ {
+  "v1": "throw",
+  "v2": "threw",
+  "v3": "thrown",
+  "vi": "ném, vứt",
+  "pattern": "ABC",
+  "ex": "Who has thrown trash on the floor?",
+  "ex_vi": "Ai đã vứt rác ra sàn thế này?"
+ },
+ {
+  "v1": "forget",
+  "v2": "forgot",
+  "v3": "forgotten",
+  "vi": "quên",
+  "pattern": "ABC",
+  "ex": "I forgot my homework at home.",
+  "ex_vi": "Tôi để quên bài tập ở nhà."
+ },
+ {
+  "v1": "win",
+  "v2": "won",
+  "v3": "won",
+  "vi": "thắng",
+  "pattern": "ABB",
+  "ex": "Our team has won the match!",
+  "ex_vi": "Đội mình thắng trận rồi!"
+ },
+ {
+  "v1": "swim",
+  "v2": "swam",
+  "v3": "swum",
+  "vi": "bơi",
+  "pattern": "ABC",
+  "ex": "We swam in the lake yesterday.",
+  "ex_vi": "Hôm qua chúng tôi bơi ở hồ."
+ },
+ {
+  "v1": "sing",
+  "v2": "sang",
+  "v3": "sung",
+  "vi": "hát",
+  "pattern": "ABC",
+  "ex": "She has sung this song many times.",
+  "ex_vi": "Cô ấy đã hát bài này nhiều lần."
+ },
+ {
+  "v1": "fly",
+  "v2": "flew",
+  "v3": "flown",
+  "vi": "bay",
+  "pattern": "ABC",
+  "ex": "We flew from Hanoi to Tokyo.",
+  "ex_vi": "Chúng tôi bay từ Hà Nội sang Tokyo."
+ },
+ {
+  "v1": "ride",
+  "v2": "rode",
+  "v3": "ridden",
+  "vi": "cưỡi, đi (xe đạp, xe máy)",
+  "pattern": "ABC",
+  "ex": "Have you ever ridden a horse?",
+  "ex_vi": "Bạn đã bao giờ cưỡi ngựa chưa?"
+ },
+ {
+  "v1": "hit",
+  "v2": "hit",
+  "v3": "hit",
+  "vi": "đánh, đập vào",
+  "pattern": "AAA",
+  "ex": "The ball hit the window.",
+  "ex_vi": "Quả bóng đập vào cửa sổ."
+ },
+ {
+  "v1": "shut",
+  "v2": "shut",
+  "v3": "shut",
+  "vi": "đóng",
+  "pattern": "AAA",
+  "ex": "The shop has shut for the holiday.",
+  "ex_vi": "Cửa hàng đã đóng cửa nghỉ lễ."
+ },
+ {
+  "v1": "hurt",
+  "v2": "hurt",
+  "v3": "hurt",
+  "vi": "làm đau; bị đau",
+  "pattern": "AAA",
+  "ex": "I hurt my back at the gym.",
+  "ex_vi": "Tôi bị đau lưng ở phòng tập."
+ },
+ {
+  "v1": "cost",
+  "v2": "cost",
+  "v3": "cost",
+  "vi": "có giá, tốn",
+  "pattern": "AAA",
+  "ex": "This trip has cost us a lot.",
+  "ex_vi": "Chuyến đi này tốn của chúng tôi khá nhiều tiền."
+ },
+ {
+  "v1": "wake",
+  "v2": "woke",
+  "v3": "woken",
+  "vi": "thức dậy; đánh thức",
+  "pattern": "ABC",
+  "ex": "I woke up at five this morning.",
+  "ex_vi": "Sáng nay tôi dậy lúc năm giờ."
+ },
+ {
+  "v1": "hide",
+  "v2": "hid",
+  "v3": "hidden",
+  "vi": "trốn, giấu",
+  "pattern": "ABC",
+  "ex": "Mom has hidden the candy somewhere.",
+  "ex_vi": "Mẹ đã giấu kẹo ở đâu đó rồi."
+ },
+ {
+  "v1": "bite",
+  "v2": "bit",
+  "v3": "bitten",
+  "vi": "cắn",
+  "pattern": "ABC",
+  "ex": "A dog bit my little brother.",
+  "ex_vi": "Một con chó đã cắn em trai tôi."
+ },
+ {
+  "v1": "feed",
+  "v2": "fed",
+  "v3": "fed",
+  "vi": "cho ăn",
+  "pattern": "ABB",
+  "ex": "Have you fed the cat today?",
+  "ex_vi": "Hôm nay con cho mèo ăn chưa?"
+ },
+ {
+  "v1": "shoot",
+  "v2": "shot",
+  "v3": "shot",
+  "vi": "bắn; sút (bóng)",
+  "pattern": "ABB",
+  "ex": "He shot the ball into the net.",
+  "ex_vi": "Anh ấy sút bóng vào lưới."
+ },
+ {
+  "v1": "forgive",
+  "v2": "forgave",
+  "v3": "forgiven",
+  "vi": "tha thứ",
+  "pattern": "ABC",
+  "ex": "She has never forgiven him.",
+  "ex_vi": "Cô ấy chưa bao giờ tha thứ cho anh ta."
+ },
+ {
+  "v1": "steal",
+  "v2": "stole",
+  "v3": "stolen",
+  "vi": "lấy trộm",
+  "pattern": "ABC",
+  "ex": "Someone stole my bike last night.",
+  "ex_vi": "Tối qua ai đó đã lấy trộm xe đạp của tôi."
+ },
+ {
+  "v1": "ring",
+  "v2": "rang",
+  "v3": "rung",
+  "vi": "reo; gọi điện",
+  "pattern": "ABC",
+  "ex": "The bell has already rung.",
+  "ex_vi": "Chuông reo rồi."
+ },
+ {
+  "v1": "shake",
+  "v2": "shook",
+  "v3": "shaken",
+  "vi": "lắc, rung",
+  "pattern": "ABC",
+  "ex": "He shook my hand and smiled.",
+  "ex_vi": "Anh ấy bắt tay tôi và mỉm cười."
+ },
+ {
+  "v1": "blow",
+  "v2": "blew",
+  "v3": "blown",
+  "vi": "thổi",
+  "pattern": "ABC",
+  "ex": "The wind has blown the door open.",
+  "ex_vi": "Gió đã thổi bật cửa ra."
+ },
+ {
+  "v1": "freeze",
+  "v2": "froze",
+  "v3": "frozen",
+  "vi": "đóng băng",
+  "pattern": "ABC",
+  "ex": "The lake froze last winter.",
+  "ex_vi": "Mùa đông năm ngoái hồ bị đóng băng."
+ },
+ {
+  "v1": "hang",
+  "v2": "hung",
+  "v3": "hung",
+  "vi": "treo",
+  "pattern": "ABB",
+  "ex": "We have hung the pictures on the wall.",
+  "ex_vi": "Chúng tôi đã treo tranh lên tường."
+ },
+ {
+  "v1": "lend",
+  "v2": "lent",
+  "v3": "lent",
+  "vi": "cho mượn",
+  "pattern": "ABB",
+  "ex": "She lent me her umbrella.",
+  "ex_vi": "Cô ấy cho tôi mượn ô."
+ },
+ {
+  "v1": "light",
+  "v2": "lit",
+  "v3": "lit",
+  "vi": "thắp, châm (lửa)",
+  "pattern": "ABB",
+  "ex": "The candles have been lit.",
+  "ex_vi": "Nến đã được thắp lên."
+ },
+ {
+  "v1": "dig",
+  "v2": "dug",
+  "v3": "dug",
+  "vi": "đào",
+  "pattern": "ABB",
+  "ex": "The dog dug a hole in the garden.",
+  "ex_vi": "Con chó đào một cái hố trong vườn."
+ },
+ {
+  "v1": "stick",
+  "v2": "stuck",
+  "v3": "stuck",
+  "vi": "dán; mắc kẹt",
+  "pattern": "ABB",
+  "ex": "We were stuck in traffic for an hour.",
+  "ex_vi": "Chúng tôi bị kẹt xe cả tiếng."
+ },
+ {
+  "v1": "spread",
+  "v2": "spread",
+  "v3": "spread",
+  "vi": "lan ra; trải, phết",
+  "pattern": "AAA",
+  "ex": "The news spread quickly around the village.",
+  "ex_vi": "Tin tức lan nhanh khắp làng."
+ },
+ {
+  "v1": "quit",
+  "v2": "quit",
+  "v3": "quit",
+  "vi": "bỏ (việc, thói quen)",
+  "pattern": "AAA",
+  "ex": "My father has quit smoking.",
+  "ex_vi": "Bố tôi đã bỏ thuốc lá."
+ },
+ {
+  "v1": "learn",
+  "v2": "learned/learnt",
+  "v3": "learned/learnt",
+  "vi": "học",
+  "pattern": "ABB",
+  "ex": "I learned to swim when I was six.",
+  "ex_vi": "Tôi học bơi từ năm sáu tuổi."
+ },
+ {
+  "v1": "show",
+  "v2": "showed",
+  "v3": "shown/showed",
+  "vi": "cho xem, chỉ",
+  "pattern": "ABC",
+  "ex": "He has shown me his new house.",
+  "ex_vi": "Anh ấy đã dẫn tôi đi xem nhà mới."
+ },
+ {
+  "v1": "lay",
+  "v2": "laid",
+  "v3": "laid",
+  "vi": "đặt, để; đẻ (trứng)",
+  "pattern": "ABB",
+  "ex": "She laid the baby on the bed.",
+  "ex_vi": "Cô ấy đặt em bé lên giường."
+ },
+ {
+  "v1": "tear",
+  "v2": "tore",
+  "v3": "torn",
+  "vi": "xé, làm rách",
+  "pattern": "ABC",
+  "ex": "My jeans are torn at the knee.",
+  "ex_vi": "Quần bò của tôi bị rách ở đầu gối."
+ },
+ {
+  "v1": "bend",
+  "v2": "bent",
+  "v3": "bent",
+  "vi": "uốn cong; cúi",
+  "pattern": "ABB",
+  "ex": "She bent down to pick up the pen.",
+  "ex_vi": "Cô ấy cúi xuống nhặt cây bút."
+ },
+ {
+  "v1": "deal",
+  "v2": "dealt",
+  "v3": "dealt",
+  "vi": "giải quyết, xử lý",
+  "pattern": "ABB",
+  "ex": "Have you dealt with the problem?",
+  "ex_vi": "Bạn đã giải quyết vấn đề đó chưa?"
+ },
+ {
+  "v1": "burn",
+  "v2": "burned/burnt",
+  "v3": "burned/burnt",
+  "vi": "đốt, làm cháy, bỏng",
+  "pattern": "ABB",
+  "ex": "I burned my finger on the stove.",
+  "ex_vi": "Tôi bị bỏng ngón tay vì bếp nóng."
+ },
+ {
+  "v1": "dream",
+  "v2": "dreamed/dreamt",
+  "v3": "dreamed/dreamt",
+  "vi": "mơ, mơ ước",
+  "pattern": "ABB",
+  "ex": "I have always dreamed of visiting Japan.",
+  "ex_vi": "Tôi luôn mơ được đến Nhật Bản."
+ },
+ {
+  "v1": "sweep",
+  "v2": "swept",
+  "v3": "swept",
+  "vi": "quét",
+  "pattern": "ABB",
+  "ex": "He swept the floor after dinner.",
+  "ex_vi": "Anh ấy quét nhà sau bữa tối."
+ },
+ {
+  "v1": "sink",
+  "v2": "sank",
+  "v3": "sunk",
+  "vi": "chìm",
+  "pattern": "ABC",
+  "ex": "The old ship has sunk.",
+  "ex_vi": "Con tàu cũ đã chìm."
+ },
+ {
+  "v1": "swear",
+  "v2": "swore",
+  "v3": "sworn",
+  "vi": "thề; chửi thề",
+  "pattern": "ABC",
+  "ex": "He swore he would never lie again.",
+  "ex_vi": "Anh ấy thề sẽ không bao giờ nói dối nữa."
+ },
+ {
+  "v1": "bleed",
+  "v2": "bled",
+  "v3": "bled",
+  "vi": "chảy máu",
+  "pattern": "ABB",
+  "ex": "His nose has bled twice today.",
+  "ex_vi": "Hôm nay anh ấy bị chảy máu cam hai lần."
+ }
+]

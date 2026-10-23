@@ -500,5 +500,43 @@
   },
   "search_didYouMean": "Có phải bạn muốn tìm:",
   "search_recent": "Tra gần đây",
-  "search_clearRecent": "Xoá"
+  "search_clearRecent": "Xoá",
+  "backup_failed": "Không mở được trình chọn file của máy. Hãy thử lại.",
+  "module_enIrregularVerbs": "Động từ bất quy tắc",
+  "module_enIrregularVerbs_desc": "{count} động từ V1 – V2 – V3",
+  "irregular_all": "Tất cả",
+  "irregular_quiz": "Trắc nghiệm",
+  "irregular_typing": "Tự gõ V2, V3",
+  "irregular_v2": "Quá khứ (V2)",
+  "irregular_v3": "Phân từ II (V3)",
+  "irregular_typeAsk": "Gõ dạng quá khứ (V2) và phân từ II (V3)",
+  "irregular_pattern_AAA": "Giống nhau cả 3",
+  "irregular_pattern_ABB": "V2 = V3",
+  "irregular_pattern_ABA": "V1 = V3",
+  "irregular_pattern_ABC": "Khác nhau cả 3",
+  "quiz_askIrregular": "V2 – V3 của động từ này là gì?",
+  "pairs_title": "Cặp âm dễ nhầm",
+  "pairs_desc": "Nghe 1 từ, chọn đúng từ vừa nghe — luyện tai các âm người Việt hay nhầm",
+  "pairs_practice": "Luyện nghe ({count} câu)",
+  "pairs_replay": "Nghe lại",
+  "practice_phraseOrder": "Ghép câu giao tiếp",
+  "practice_phraseOrder_desc": "Xếp các từ thành câu hoàn chỉnh",
+  "practice_irregular": "Động từ bất quy tắc",
+  "practice_irregular_desc": "Chọn đúng V2 – V3",
+  "practice_pairs": "Nghe phân biệt âm",
+  "practice_pairs_desc": "ship hay sheep? Luyện tai nghe chuẩn",
+  "@module_enIrregularVerbs_desc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@pairs_practice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

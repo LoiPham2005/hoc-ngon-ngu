@@ -51,8 +51,9 @@ class DayStat {
   List<int> toJson() => [answered, correct, learned];
 }
 
-/// Mục có lịch ôn: chữ Kana/Kanji, từ, câu. Âm IPA, bài ngữ pháp, hội thoại không ôn bằng câu hỏi nên bỏ.
-bool isReviewable(String key) => !RegExp(r'^\w+:(ph|g|d):').hasMatch(key);
+/// Mục có lịch ôn: chữ Kana/Kanji, từ, câu, động từ bất quy tắc.
+/// Âm IPA, cặp âm, bài ngữ pháp, hội thoại không ôn bằng câu hỏi nên bỏ.
+bool isReviewable(String key) => !RegExp(r'^\w+:(ph|mp|g|d):').hasMatch(key);
 
 /// Khoá học của 1 mục: bài học có tiền tố `<khoá>:` (`en:w:…`, `ja:p:…`), còn lại là chữ Kana/Kanji.
 Course courseOfKey(String key) {
