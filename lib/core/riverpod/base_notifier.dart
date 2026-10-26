@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
+
 import 'package:lingua/core/errors/error_handler.dart';
 import 'package:lingua/core/errors/failures.dart';
 import 'package:lingua/core/utils/logger.dart';
@@ -112,10 +114,15 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
       return true;
     } catch (e, s) {
       if (!owner.mounted || (cancelPrevious && id != _latest)) return false;
+      // Huỷ chủ động (CancelToken: bấm "Huỷ" upload, rời màn) không phải lỗi: không toast,
+      // không báo Crashlytics; giữ dữ liệu, hoàn tác thay đổi lạc quan nếu có.
+      final cancelled = e is DioException && e.type == DioExceptionType.cancel;
       final failure = ErrorHandler.handle(e);
       // Lỗi đoán trước (mất mạng, hết phiên, nhập sai, 4xx) chỉ ghi vết; lỗi lạ / server 5xx
       // mới báo Crashlytics + Sentry như lỗi app.
-      if (_isExpected(failure)) {
+      if (cancelled) {
+        talker.info('run cancelled');
+      } else if (_isExpected(failure)) {
         talker.warning('run failed: ${failure.message}');
       } else {
         talker.error('run failed', e, s);
@@ -131,11 +138,11 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
         } else {
           ref.invalidateSelf();
         }
-        _emit(RunMessage(text, failure: failure));
-      } else if (state.hasValue) {
+        if (!cancelled) _emit(RunMessage(text, failure: failure));
+      } else if (state.hasValue || cancelled) {
         // Còn data (của lúc bắt đầu hoặc do lần chạy khác vừa cập nhật) → giữ data + toast lỗi.
         if (showLoading) set(_settled(previous));
-        _emit(RunMessage(text, failure: failure));
+        if (!cancelled) _emit(RunMessage(text, failure: failure));
       } else {
         set(AsyncError(failure, s));
       }

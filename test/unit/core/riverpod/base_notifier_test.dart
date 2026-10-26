@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua/core/errors/failures.dart';
@@ -322,6 +323,24 @@ void main() {
         expect(value(), isEmpty);
       },
     );
+  });
+
+  test('a cancelled request is not an error: no toast, data kept', () async {
+    final n = await ready();
+    await n.run(() async => [1]);
+    final messages = <RunMessage>[];
+    n.messages.listen(messages.add);
+    final ok = await n.run<void>(
+      () async => throw DioException(
+        requestOptions: RequestOptions(),
+        type: DioExceptionType.cancel,
+      ),
+    );
+    await Future<void>.delayed(Duration.zero);
+    expect(ok, isFalse);
+    expect(messages, isEmpty);
+    expect(value(), [1]);
+    expect(container.read(_provider).isLoading, isFalse);
   });
 }
 
