@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-
 import 'package:lingua/core/errors/error_handler.dart';
 import 'package:lingua/core/errors/failures.dart';
 import 'package:lingua/core/utils/logger.dart';
