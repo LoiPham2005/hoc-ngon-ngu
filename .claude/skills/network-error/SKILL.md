@@ -42,10 +42,10 @@ abstract class VoucherService {
   Future<ApiResponse<VoucherModel>> deleteVoucher(@Path('id') String id);
 }
 ```
-- Kiểu trả: `Future<ApiResponse<T>>` (backend bọc `{ "data": ... }`), `Future<T>` (backend trả object thô, vd `AppVersionApi.checkVersion`), hoặc `Future<void>`.
+- Kiểu trả: `Future<ApiResponse<T>>` (backend bọc `{ "data": ... }`), `Future<T>` (backend trả object thô), hoặc `Future<void>`.
 - Request body: class `@freezed` riêng (`LoginRequest`, `RegisterRequest`...).
 - Path viết thẳng trên annotation Retrofit (`@GET('/items')`), không gom vào file hằng riêng.
-- Tạo service: trong `build()` của notifier `VoucherService(ref.dio)`, hoặc provider keepAlive nếu dùng chung: `AppVersionService(AppVersionApi(ref.dio))`.
+- Tạo service: trong `build()` của notifier `VoucherService(ref.dio)`, hoặc provider keepAlive nếu dùng chung: `@Riverpod(keepAlive: true) FooService fooService(Ref ref) => FooService(ref.dio);`.
 - Sửa xong `make gen`.
 
 ## Model

@@ -34,7 +34,6 @@ class AuthInterceptor extends Interceptor {
     _refreshPath,
     '/auth/forgot-password',
     '/auth/reset-password',
-    '/app-version/check',
   };
 
   /// Dio không gắn interceptor — dùng gọi refresh + gửi lại request (tránh lặp vô hạn).

@@ -79,7 +79,7 @@ globalContainer.read(fcmServiceProvider).onMessageTap = (data) {
 ```
 
 ### AppVersionService — kiểm tra cập nhật
-`appVersionServiceProvider` → `checkAndPrompt(BuildContext)`: gọi `GET /app-version/check` (`AppVersionApi`), `status` `optional` → dialog có nút "Để sau", `force` → dialog không đóng được; trả `false` khi bắt buộc cập nhật. Lỗi mạng → bỏ qua, trả `true`. Đã gọi trong `SplashPage`.
+`appVersionServiceProvider` → `checkAndPrompt(BuildContext)`: hỏi thẳng store, không cần server — Android: Google Play In-App Updates (`in_app_update`, cập nhật ngay trong app); iOS: `itunes.apple.com/lookup?bundleId=…` rồi mở App Store. Bắt buộc cập nhật = đặt update priority 4–5 khi phát hành trên Play Console (iOS luôn là gợi ý). "Để sau" → 3 ngày sau mới hỏi lại bản đó. Trả `false` khi bắt buộc; lỗi / app không cài từ store → bỏ qua, trả `true`. Đã gọi trong `SplashPage`.
 
 ### AppQuickActions — shortcut icon app
 `lib/core/services/quick_actions_service.dart`, static: `AppQuickActions.init()` (gọi sau frame đầu trong `app.dart`), `AppQuickActions.update(isAuthenticated:)` (tự gọi khi `sessionProvider` đổi). Thêm shortcut: thêm `ShortcutItem` trong `update` + `case` trong `init` (điều hướng bằng `appRouter`). Icon = drawable Android / imageset iOS.
