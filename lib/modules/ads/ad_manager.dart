@@ -245,7 +245,11 @@ class AdManager {
         onClosed: () {
           Navigator.of(dialogContext).pop();
           entry.$1.dispose();
-          if (cfg.preload) _preloadNative(placement);
+          // Nạp sẵn cái kế tiếp chỉ khi bật preload cả chung lẫn riêng vị trí này.
+          if (cfg.preload &&
+              (cfg.unit(AdType.native, placement)?.preload ?? false)) {
+            _preloadNative(placement);
+          }
           onClosed?.call();
         },
       ),
