@@ -620,5 +620,7 @@
   "speaking_errNetwork": "Speech recognition needs an internet connection (or download the offline language pack in the Google app).",
   "speaking_errLanguage": "This device can't recognise this language yet. Open the Google app → Settings → Voice → Languages to add it.",
   "speaking_errBusy": "The microphone is busy — wait a moment and tap “Read again”.",
-  "speaking_errOther": "Couldn't hear you — tap “Read again” to try once more."
+  "speaking_errOther": "Couldn't hear you — tap “Read again” to try once more.",
+  "sound_effects": "Answer sounds & vibration",
+  "sound_effects_desc": "A chime when right, a soft tone when wrong, music when done"
 }

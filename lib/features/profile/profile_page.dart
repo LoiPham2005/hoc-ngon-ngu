@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/core/services/permission_service.dart';
+import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/core/utils/toast.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
@@ -181,6 +182,21 @@ class ProfilePage extends HookConsumerWidget {
                 ],
               ),
               const Divider(height: 28),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                secondary: const Icon(Icons.music_note_rounded),
+                title: Text(l10n.sound_effects),
+                subtitle: Text(l10n.sound_effects_desc),
+                value: ref.watch(soundEnabledProvider),
+                onChanged: (on) async {
+                  await ref
+                      .read(soundEnabledProvider.notifier)
+                      .set(enabled: on);
+                  if (on) {
+                    await ref.read(soundServiceProvider).play(Sfx.correct);
+                  }
+                },
+              ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.record_voice_over_rounded),

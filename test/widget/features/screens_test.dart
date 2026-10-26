@@ -604,14 +604,21 @@ void main() {
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
         await pumpApp(tester, const ProfilePage(), prefs: enPrefs);
-        await tester.tap(find.byType(Switch));
+        await tester.tap(find.text('Nhắc học hằng ngày'));
         await tester.pumpAndSettle();
         expect(find.text('Mở cài đặt'), findsOneWidget);
         await tester.tap(find.text('Mở cài đặt'));
         await tester.pumpAndSettle();
         expect(calls, contains('openAppSettings'));
         // Chưa có quyền → nhắc học vẫn tắt.
-        expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+        expect(
+          tester
+              .widget<SwitchListTile>(
+                find.widgetWithText(SwitchListTile, 'Nhắc học hằng ngày'),
+              )
+              .value,
+          isFalse,
+        );
       },
     );
   }

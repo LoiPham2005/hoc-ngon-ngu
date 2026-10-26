@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/core/services/permission_service.dart';
+import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/core/services/speech_service.dart';
 import 'package:lingua/core/services/voice_input_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
@@ -110,12 +111,16 @@ class _SentenceSession extends HookConsumerWidget {
       ref
           .read(learnerProvider.notifier)
           .recordAnswer(correct: ok, key: phrases[index.value].key);
+      ref.read(soundServiceProvider).answer(correct: ok);
     }
 
     /// Sang câu kế ([result] = null khi bỏ qua câu không làm được).
     void next() {
       result.value = null;
       index.value++;
+      if (index.value >= total) {
+        ref.read(soundServiceProvider).play(Sfx.complete);
+      }
     }
 
     if (index.value >= total) {

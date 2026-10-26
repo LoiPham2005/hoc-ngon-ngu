@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
@@ -310,11 +311,13 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
     ref
         .read(learnerProvider.notifier)
         .recordAnswer(correct: ok, key: state.current.item.key);
+    ref.read(soundServiceProvider).answer(correct: ok);
   }
 
   /// Câu tiếp theo; ở câu cuối → kết thúc bài (màn kết quả).
   void next() {
     if (!state.isAnswered) return;
+    if (state.isLast) ref.read(soundServiceProvider).play(Sfx.complete);
     state = QuizSession(
       questions: state.questions,
       index: state.isLast ? state.index : state.index + 1,

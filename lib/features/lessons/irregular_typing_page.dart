@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
@@ -88,6 +89,7 @@ class _TypingSession extends HookConsumerWidget {
       ref
           .read(learnerProvider.notifier)
           .recordAnswer(correct: ok2 && ok3, key: verb.key);
+      ref.read(soundServiceProvider).answer(correct: ok2 && ok3);
     }
 
     void next() {
@@ -95,6 +97,9 @@ class _TypingSession extends HookConsumerWidget {
       participle.clear();
       checked.value = null;
       index.value++;
+      if (index.value >= total) {
+        ref.read(soundServiceProvider).play(Sfx.complete);
+      }
     }
 
     InputDecoration field(String label, bool? ok) => InputDecoration(

@@ -589,5 +589,7 @@
   "speaking_errNetwork": "Cần kết nối mạng để nhận giọng nói (hoặc tải gói ngôn ngữ ngoại tuyến trong ứng dụng Google).",
   "speaking_errLanguage": "Máy chưa nhận được giọng ngôn ngữ này. Mở ứng dụng Google → Cài đặt → Giọng nói → Ngôn ngữ để thêm.",
   "speaking_errBusy": "Micro đang bận, đợi một chút rồi bấm “Đọc lại”.",
-  "speaking_errOther": "Không nhận được giọng nói, bấm “Đọc lại” để thử lần nữa."
+  "speaking_errOther": "Không nhận được giọng nói, bấm “Đọc lại” để thử lần nữa.",
+  "sound_effects": "Âm thanh & rung khi trả lời",
+  "sound_effects_desc": "“Ting” khi đúng, tiếng trầm khi sai, nhạc khi xong bài"
 }

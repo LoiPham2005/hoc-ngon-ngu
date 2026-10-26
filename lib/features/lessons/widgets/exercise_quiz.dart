@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
@@ -48,11 +49,15 @@ class ExerciseQuiz extends HookConsumerWidget {
       result.value = ok;
       if (ok) correct.value++;
       ref.read(learnerProvider.notifier).recordAnswer(correct: ok);
+      ref.read(soundServiceProvider).answer(correct: ok);
     }
 
     void next() {
       result.value = null;
       index.value++;
+      if (index.value >= total) {
+        ref.read(soundServiceProvider).play(Sfx.complete);
+      }
       if (index.value == total &&
           learnedKey != null &&
           correct.value >= (total * passRatio).ceil()) {

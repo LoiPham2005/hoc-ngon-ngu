@@ -106,6 +106,7 @@ flutter:
     - assets/icons/
     - assets/japanese/
     - assets/japanese/audio/
+    - assets/sounds/
     - assets/english/
 
 flutter_native_splash:
