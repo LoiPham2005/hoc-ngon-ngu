@@ -40,7 +40,7 @@ Không có tầng domain/use case: notifier gọi thẳng service Retrofit.
 
 `App` (lib/app.dart): `UncontrolledProviderScope(container: globalContainer)`; trong `_AppView` gắn `ErrorWidget.builder = AppErrorScreen`, `AppLifecycleListener(onResume: SystemUIManager.applyUiMode)`, `AppQuickActions.init()` sau frame đầu; `ref.listen(sessionProvider, ...)` → hết đăng nhập thì `appRouter.replaceAll([const LoginRoute()])`. MaterialApp bọc `ToastificationWrapper`, `builder: FlutterSmartDialog.init()`, `navigatorObservers: [TalkerRouteObserver(talker)]`.
 
-Sau đó `SplashPage` lo: check mạng (`InternetConnection().hasInternetAccess`) → `appVersionServiceProvider.checkAndPrompt(context)` → `sessionProvider.notifier.ready` → Main hoặc Login.
+Sau đó `SplashPage` lo: `appVersionServiceProvider.checkAndPrompt(context)` (bản mới không bắt buộc) → `showAppNotice` → Onboarding hoặc Main. Bắt buộc cập nhật / bảo trì do `AppGate` (trong `MaterialApp.builder`) khoá mọi màn.
 
 ### Thêm bước init
 

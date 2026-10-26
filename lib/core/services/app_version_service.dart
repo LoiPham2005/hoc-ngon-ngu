@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:lingua/config/app_info.dart';
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
@@ -15,34 +16,25 @@ part 'app_version_service.g.dart';
 
 /// Bản mới trên store.
 class StoreUpdate {
-  const StoreUpdate({
-    required this.version,
-    required this.force,
-    this.currentVersion,
-    this.storeUrl,
-    this.android,
-  });
+  const StoreUpdate({required this.version, this.currentVersion});
 
   /// Mã bản mới để nhớ "Để sau": tên phiên bản (iOS) hoặc versionCode (Android).
   final String version;
-
-  /// Bắt buộc cập nhật (Android: bản phát hành đặt độ ưu tiên ≥ 4 trên Play Console).
-  final bool force;
   final String? currentVersion;
-
-  /// iOS: trang App Store của app.
-  final String? storeUrl;
-
-  /// Android: thông tin của Google Play để mở màn cập nhật trong app.
-  final AppUpdateInfo? android;
 }
 
-/// Kiểm tra bản mới NGAY TRÊN STORE khi mở app (không cần server riêng):
-/// - Android: Google Play In-App Updates — cập nhật ngay trong app (màn của Google Play).
-/// - iOS: API tra cứu công khai của Apple (`itunes.apple.com/lookup`) → mở App Store.
+/// Phiên bản app đang chạy (đọc 1 lần).
+@Riverpod(keepAlive: true)
+Future<PackageInfo> packageInfo(Ref ref) => PackageInfo.fromPlatform();
+
+/// Cập nhật app qua store (không cần server riêng):
+/// - [checkAndPrompt] — bản mới KHÔNG bắt buộc: lúc mở app hỏi "Cập nhật ngay / Để sau"
+///   (bấm "Để sau" → 3 ngày sau mới hỏi lại bản đó).
+///   Android: Google Play In-App Updates; iOS: API tra cứu công khai `itunes.apple.com/lookup`.
+/// - [openStore] — mở cập nhật (Android: màn cập nhật của Google Play ngay trong app).
 ///
-/// Bắt buộc cập nhật: đặt "update priority" 4–5 khi phát hành trên Play Console
-/// (iOS không có khái niệm này → luôn là gợi ý). Bấm "Để sau" → 3 ngày sau mới hỏi lại bản đó.
+/// BẮT BUỘC cập nhật không làm ở đây: đặt `min_version` trong Remote Config `app_config`
+/// → `AppGate` khoá app (áp dụng cho cả Android lẫn iOS, đổi được bất cứ lúc nào).
 /// Mọi lỗi (không có mạng, app không cài từ store…) → bỏ qua, không chặn người dùng.
 class AppVersionService {
   AppVersionService(this._prefs, {Dio? dio}) : _dio = dio ?? Dio();
@@ -51,27 +43,34 @@ class AppVersionService {
   final Dio _dio;
 
   static const _snoozeKey = 'update_snooze_v1';
+
+  /// Giả lập có bản mới để xem hộp thoại (chỉ khi build kèm cờ, bản phát hành không có):
+  /// `flutter run --flavor dev --dart-define=MOCK_UPDATE=true`.
+  static const _mock = bool.fromEnvironment('MOCK_UPDATE');
   static const remindAfter = Duration(days: 3);
 
-  /// Trả `false` khi bắt buộc cập nhật (splash dừng lại), còn lại `true`.
-  Future<bool> checkAndPrompt(BuildContext context) async {
+  Future<void> checkAndPrompt(BuildContext context) async {
     final StoreUpdate? update;
     try {
-      update = Platform.isAndroid ? await _checkPlay() : await _checkAppStore();
+      update = _mock
+          ? StoreUpdate(
+              version: '9.9.9',
+              currentVersion: (await PackageInfo.fromPlatform()).version,
+            )
+          : Platform.isAndroid
+          ? await _checkPlay()
+          : await _checkAppStore();
     } on Object catch (e, s) {
       talker.warning('[APP-VERSION] store check skipped: $e', s);
-      return true;
+      return;
     }
-    if (update == null || !context.mounted) return true;
-    if (!update.force && isSnoozed(update.version)) return true;
-
-    final now = await _ask(context, update);
-    if (now) {
-      await _install(update);
+    if (update == null || !context.mounted) return;
+    if (!_mock && isSnoozed(update.version)) return;
+    if (await _ask(context, update)) {
+      await openStore();
     } else {
       await snooze(update.version);
     }
-    return !update.force;
   }
 
   Future<StoreUpdate?> _checkPlay() async {
@@ -79,31 +78,28 @@ class AppVersionService {
     if (info.updateAvailability != UpdateAvailability.updateAvailable) {
       return null;
     }
-    return StoreUpdate(
-      version: '${info.availableVersionCode ?? ''}',
-      force: info.updatePriority >= 4 && info.immediateUpdateAllowed,
-      android: info,
-    );
+    return StoreUpdate(version: '${info.availableVersionCode ?? ''}');
   }
 
   Future<StoreUpdate?> _checkAppStore() async {
     final pkg = await PackageInfo.fromPlatform();
+    final store = await _lookupAppStore(pkg.packageName);
+    if (store == null || !isNewer(store.version, pkg.version)) return null;
+    return StoreUpdate(version: store.version, currentVersion: pkg.version);
+  }
+
+  Future<({String version, String url})?> _lookupAppStore(
+    String bundleId,
+  ) async {
     final res = await _dio.get<Map<String, dynamic>>(
       'https://itunes.apple.com/lookup',
       queryParameters: {
-        'bundleId': pkg.packageName,
+        'bundleId': bundleId,
         // Thêm tham số thời gian để không nhận kết quả cũ trong bộ nhớ đệm của Apple.
         't': DateTime.now().millisecondsSinceEpoch,
       },
     );
-    final store = parseAppStoreLookup(res.data);
-    if (store == null || !isNewer(store.version, pkg.version)) return null;
-    return StoreUpdate(
-      version: store.version,
-      currentVersion: pkg.version,
-      force: false,
-      storeUrl: store.url,
-    );
+    return parseAppStoreLookup(res.data);
   }
 
   Future<bool> _ask(BuildContext context, StoreUpdate update) async {
@@ -113,58 +109,67 @@ class AppVersionService {
         : '\n\n${update.currentVersion} → ${update.version}';
     final result = await showDialog<bool>(
       context: context,
-      barrierDismissible: !update.force,
-      builder: (ctx) => PopScope(
-        // Bắt buộc: không đóng được, cũng không tự thoát app (store không cho phép).
-        canPop: !update.force,
-        child: AlertDialog(
-          title: Text(
-            update.force ? l10n.update_forceTitle : l10n.update_optionalTitle,
-          ),
-          content: Text(
-            '${update.force ? l10n.update_forceMessage : l10n.update_optionalMessage}'
-            '$versions',
-          ),
-          actions: [
-            if (!update.force)
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(l10n.update_later),
-              ),
-            FilledButton(
+      builder: (ctx) => AlertDialog(
+        actionsOverflowButtonSpacing: 4,
+        icon: const Icon(Icons.system_update_rounded, size: 40),
+        title: Text(l10n.update_optionalTitle, textAlign: TextAlign.center),
+        content: Text(
+          '${l10n.update_optionalMessage}$versions',
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          // Nút chính rộng hết khung, "Để sau" là chữ nhỏ bên dưới (chữ dài không gãy dòng).
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
               child: Text(l10n.update_now),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l10n.update_later),
+            ),
+          ),
+        ],
       ),
     );
     return result ?? false;
   }
 
-  Future<void> _install(StoreUpdate update) async {
+  /// Mở cập nhật: Android → màn cập nhật của Google Play ngay trong app (không được thì mở
+  /// trang app trên Google Play); iOS → trang app trên App Store.
+  Future<void> openStore() async {
     try {
-      final info = update.android;
-      if (info != null) {
-        // Màn cập nhật của Google Play ngay trong app; không được phép → mở CH Play.
-        if (info.immediateUpdateAllowed) {
+      if (Platform.isAndroid) {
+        final info = await InAppUpdate.checkForUpdate();
+        if (info.updateAvailability == UpdateAvailability.updateAvailable &&
+            info.immediateUpdateAllowed) {
           await InAppUpdate.performImmediateUpdate();
           return;
         }
-        final pkg = await PackageInfo.fromPlatform();
-        await _open(
-          'https://play.google.com/store/apps/details?id=${pkg.packageName}',
-        );
+        await _open(AppInfo.playStoreUrl);
         return;
       }
-      if (update.storeUrl case final url?) await _open(url);
+      final pkg = await PackageInfo.fromPlatform();
+      final url = AppInfo.appStoreUrl.isNotEmpty
+          ? AppInfo.appStoreUrl
+          : (await _lookupAppStore(pkg.packageName))?.url;
+      if (url != null) await _open(url);
     } on Object catch (e, s) {
-      talker.error('[APP-VERSION] install failed', e, s);
+      talker.error('[APP-VERSION] open store failed', e, s);
+      await _open(
+        Platform.isAndroid ? AppInfo.playStoreUrl : AppInfo.appStoreUrl,
+      );
     }
   }
 
-  Future<void> _open(String url) =>
-      launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  Future<void> _open(String url) async {
+    if (url.isEmpty) return;
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  }
 
   /// Đã bấm "Để sau" cho bản [version] trong [remindAfter] vừa qua.
   bool isSnoozed(String version, {DateTime? now}) {

@@ -35,12 +35,11 @@ class RemoteConfigService {
       ),
     );
     _rc = rc;
-    try {
-      await rc.fetchAndActivate();
-    } catch (e) {
-      talker.warning('[REMOTE-CONFIG] fetch failed, dùng giá trị đã cache: $e');
-    }
+    // Dùng ngay giá trị đã tải lần trước, tải bản mới chạy nền → không chờ mạng lúc mở app
+    // (mạng chậm / offline vẫn vào ngay). Tải xong → [onUpdated] → module tự cập nhật.
+    await rc.activate();
     _updated.add(null);
+    unawaited(_fetch(rc));
     rc.onConfigUpdated.listen(
       (_) async {
         await rc.activate();
@@ -49,6 +48,14 @@ class RemoteConfigService {
       onError: (Object e) =>
           talker.warning('[REMOTE-CONFIG] realtime update lỗi: $e'),
     );
+  }
+
+  Future<void> _fetch(FirebaseRemoteConfig rc) async {
+    try {
+      if (await rc.fetchAndActivate()) _updated.add(null);
+    } on Object catch (e) {
+      talker.warning('[REMOTE-CONFIG] fetch failed, dùng giá trị đã cache: $e');
+    }
   }
 
   /// Giá trị JSON object của [key]; `null` khi chưa có hoặc JSON sai.

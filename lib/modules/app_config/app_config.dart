@@ -1,28 +1,34 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:lingua/core/services/app_version_service.dart';
 import 'package:lingua/core/services/remote_config_service.dart';
+import 'package:lingua/core/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_config.freezed.dart';
 part 'app_config.g.dart';
 
-/// Cấu hình bật/tắt từ xa — Remote Config key `app_config` (JSON), field thiếu dùng mặc định:
+/// Điều khiển app từ xa không cần phát hành bản mới — Remote Config key `app_config` (JSON).
+/// Field thiếu / JSON sai → giá trị mặc định (không chặn gì), nên cấu hình hỏng không khoá app.
 /// ```json
-/// { "maintenance_mode": false, "maintenance_message": "...",
-///   "notice_enabled": true, "notice_title": "...", "notice_body": "...", "notice_url": "...",
-///   "policy_url": "...", "terms_url": "..." }
+/// {
+///   "min_version": "1.2.0",          // bản thấp hơn → BẮT BUỘC cập nhật mới dùng được
+///   "maintenance": false,            // true → khoá app, hiện màn bảo trì
+///   "maintenance_message": "",       // trống → câu mặc định
+///   "notice_title": "", "notice_body": "", "notice_url": ""  // thông báo lúc mở app
+/// }
 /// ```
+/// Áp dụng ngay khi đổi trên Firebase Console (realtime), không cần mở lại app — xem `AppGate`.
+/// Bản mới KHÔNG bắt buộc: app tự thấy trên store (`AppVersionService`), không cần khai ở đây.
 @freezed
 abstract class AppConfig with _$AppConfig {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory AppConfig({
-    @JsonKey(name: 'maintenance_mode') @Default(false) bool isMaintenance,
+    @Default('') String minVersion,
+    @Default(false) bool maintenance,
     @Default('') String maintenanceMessage,
-    @Default(false) bool noticeEnabled,
     @Default('') String noticeTitle,
     @Default('') String noticeBody,
     @Default('') String noticeUrl,
-    @Default('') String policyUrl,
-    @Default('') String termsUrl,
   }) = _AppConfig;
 
   const AppConfig._();
@@ -30,7 +36,16 @@ abstract class AppConfig with _$AppConfig {
   factory AppConfig.fromJson(Map<String, dynamic> json) =>
       _$AppConfigFromJson(json);
 
-  bool get hasNotice => noticeEnabled && noticeTitle.isNotEmpty;
+  /// Bản [current] thấp hơn [minVersion] → phải cập nhật.
+  bool mustUpdate(String current) =>
+      minVersion.isNotEmpty && isNewer(minVersion, current);
+
+  /// Có thông báo (để trống tiêu đề = tắt).
+  bool get hasNotice => noticeTitle.isNotEmpty;
+
+  /// Mã nội dung thông báo: sửa chữ → coi là thông báo mới, hiện lại cho mọi người.
+  String get noticeId =>
+      Object.hash(noticeTitle, noticeBody, noticeUrl).toString();
 }
 
 /// `final cfg = ref.watch(appConfigProvider);` — tự cập nhật khi Remote Config đổi.
@@ -51,7 +66,8 @@ class AppConfigNotifier extends _$AppConfigNotifier {
     if (json == null) return const AppConfig();
     try {
       return AppConfig.fromJson(json);
-    } catch (_) {
+    } on Object catch (e) {
+      talker.error('[APP-CONFIG] "$_key" sai kiểu dữ liệu → dùng mặc định', e);
       return const AppConfig();
     }
   }

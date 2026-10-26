@@ -1,6 +1,6 @@
 ---
 name: modules
-description: Module trong lib/modules (Ads AdMob qua AdManager, IAP RevenueCat + isPremiumProvider, Analytics Firebase, AppConfig Remote Config) + RemoteConfigService dùng chung và core services trong lib/core/services (NotificationService, FcmService, AppVersionService.checkAndPrompt, AppQuickActions, SessionNotifier, BiometricNotifier vân tay/Face ID). Đọc khi hiện quảng cáo, mua premium, log event, đọc maintenance/notice từ Remote Config, bắn local notification, xử lý push FCM, kiểm tra cập nhật app, hoặc sửa app shortcut.
+description: Module trong lib/modules (Ads AdMob qua AdManager, IAP RevenueCat + isPremiumProvider, Analytics Firebase, AppConfig Remote Config) + RemoteConfigService dùng chung và core services trong lib/core/services (NotificationService, FcmService, AppVersionService.checkAndPrompt, AppQuickActions, SessionNotifier, BiometricNotifier vân tay/Face ID). Đọc khi hiện quảng cáo, mua premium, log event, bắt buộc cập nhật / bảo trì / thông báo từ Remote Config, bắn local notification, xử lý push FCM, kiểm tra cập nhật app, hoặc sửa app shortcut.
 ---
 
 # Modules & core services
@@ -9,7 +9,7 @@ Mọi service là provider `@Riverpod(keepAlive: true)` đặt cạnh class. Tro
 
 ## Remote Config (lib/core/services/remote_config_service.dart)
 
-`remoteConfigServiceProvider` dùng chung cho ads + app_config: `initialize()` (boot, sau Firebase), `json(key)` (Map hoặc null), `getBool/getString`, `onUpdated` (stream realtime). Bật/tắt theo flavor: `FlavorConfig.useRemoteConfig` (mặc định dev `false` → module dùng cấu hình local; đổi `true` để dev đọc Remote Config của project Firebase dev).
+`remoteConfigServiceProvider` dùng chung cho ads + app_config: `initialize()` (boot, sau Firebase — dùng ngay giá trị đã cache, tải mới chạy nền nên không chờ mạng), `json(key)` (Map hoặc null), `getBool/getString`, `onUpdated` (stream realtime). Bật/tắt theo flavor: `FlavorConfig.useRemoteConfig` (mặc định dev `false` → module dùng cấu hình local; đổi `true` để dev đọc Remote Config của project Firebase dev).
 
 ## Ads (lib/modules/ads)
 
@@ -56,14 +56,20 @@ final isPremium = ref.watch(isPremiumProvider);       // tự cập nhật
 
 `analyticsServiceProvider` → `logEvent(name, params)` (tự bỏ param null), `logScreenView(name)`, `setUserId(id)`, `logAdRevenue(...)` (ads tự gọi). Tắt ở dev. Lỗi chỉ log, không ném.
 
-## AppConfig (lib/modules/app_config/app_config.dart)
+## AppConfig (lib/modules/app_config/) — điều khiển app từ xa
 
-Remote Config key `app_config` (JSON): `maintenance_mode`, `maintenance_message`, `notice_enabled`, `notice_title`, `notice_body`, `notice_url`, `policy_url`, `terms_url`; getter `hasNotice`.
-```dart
-final cfg = ref.watch(appConfigProvider);   // AppConfig, tự cập nhật realtime
-if (cfg.isMaintenance) return MaintenanceView(message: cfg.maintenanceMessage);
-```
-Dev / chưa có key → `AppConfig()` mặc định (tắt hết).
+Remote Config key `app_config` (JSON, mẫu ở `firebase/remote_config.test.json`). Field thiếu / JSON sai → mặc định (không khoá gì):
+
+| Key | Tác dụng |
+|---|---|
+| `min_version` | Bản đang chạy thấp hơn → **bắt buộc cập nhật** (khoá app, chỉ còn nút "Cập nhật ngay") |
+| `maintenance` + `maintenance_message` | Khoá app, hiện màn bảo trì (message trống → câu mặc định) |
+| `notice_title` / `notice_body` / `notice_url` | Thông báo lúc mở app, mỗi nội dung hiện 1 lần (tiêu đề trống = tắt) |
+
+- `AppGate` (`app_gate.dart`) đặt sẵn trong `MaterialApp.builder` (app.dart): đổi trên Firebase là áp dụng **ngay** (realtime), gỡ khoá thì về đúng màn đang dở. Không cần tự kiểm tra ở màn nào.
+- `showAppNotice(context, ref)` (`app_notice.dart`) — đã gọi trong `SplashPage`.
+- Đọc ở chỗ khác: `ref.watch(appConfigProvider)` → `AppConfig` (`mustUpdate(version)`, `hasNotice`).
+- Link chính sách / điều khoản KHÔNG ở đây (phải có cả khi offline lúc Apple duyệt) → `AppInfo.privacyPolicyUrl` / `termsUrl`.
 
 ## Core services (lib/core/services)
 
@@ -79,7 +85,11 @@ globalContainer.read(fcmServiceProvider).onMessageTap = (data) {
 ```
 
 ### AppVersionService — kiểm tra cập nhật
-`appVersionServiceProvider` → `checkAndPrompt(BuildContext)`: hỏi thẳng store, không cần server — Android: Google Play In-App Updates (`in_app_update`, cập nhật ngay trong app); iOS: `itunes.apple.com/lookup?bundleId=…` rồi mở App Store. Bắt buộc cập nhật = đặt update priority 4–5 khi phát hành trên Play Console (iOS luôn là gợi ý). "Để sau" → 3 ngày sau mới hỏi lại bản đó. Trả `false` khi bắt buộc; lỗi / app không cài từ store → bỏ qua, trả `true`. Đã gọi trong `SplashPage`.
+`appVersionServiceProvider`:
+- `checkAndPrompt(BuildContext)` — bản mới **không bắt buộc**: hỏi thẳng store, không cần server. Android: Google Play In-App Updates (`in_app_update`); iOS: `itunes.apple.com/lookup?bundleId=…`. "Để sau" → 3 ngày sau mới hỏi lại bản đó. Lỗi / app không cài từ store → bỏ qua. Đã gọi trong `SplashPage`. Xem thử: `--dart-define=MOCK_UPDATE=true`.
+- `openStore()` — Android: màn cập nhật của Google Play ngay trong app (không được → trang CH Play); iOS: trang App Store.
+- **Bắt buộc** cập nhật: đặt `min_version` trong Remote Config `app_config` (xem AppConfig) — chạy cho cả 2 nền tảng, đổi bất cứ lúc nào.
+- `packageInfoProvider` — phiên bản app đang chạy.
 
 ### AppQuickActions — shortcut icon app
 `lib/core/services/quick_actions_service.dart`, static: `AppQuickActions.init()` (gọi sau frame đầu trong `app.dart`), `AppQuickActions.update(isAuthenticated:)` (tự gọi khi `sessionProvider` đổi). Thêm shortcut: thêm `ShortcutItem` trong `update` + `case` trong `init` (điều hướng bằng `appRouter`). Icon = drawable Android / imageset iOS.

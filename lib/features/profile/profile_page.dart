@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/config/app_info.dart';
 import 'package:lingua/core/services/permission_service.dart';
 import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/core/utils/toast.dart';
@@ -19,6 +20,7 @@ import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
 import 'package:lingua/shared/dialogs/permission_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Hồ sơ người học + cài đặt: giao diện, ngôn ngữ app, mục tiêu, dữ liệu, giới thiệu.
 @RoutePage()
@@ -364,6 +366,29 @@ class ProfilePage extends HookConsumerWidget {
                 title: Text(l10n.about_data),
                 subtitle: Text(l10n.about_data_desc),
               ),
+              for (final (icon, title, url) in [
+                (
+                  Icons.privacy_tip_outlined,
+                  l10n.about_privacy,
+                  AppInfo.privacyPolicyUrl,
+                ),
+                (
+                  Icons.description_outlined,
+                  l10n.about_terms,
+                  AppInfo.termsUrl,
+                ),
+              ])
+                if (url.isNotEmpty)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(icon),
+                    title: Text(title),
+                    trailing: const Icon(Icons.open_in_new_rounded, size: 18),
+                    onTap: () => launchUrl(
+                      Uri.parse(url),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                  ),
             ],
           ),
         ],

@@ -14,6 +14,7 @@ import 'package:lingua/design/theme/app_theme.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
+import 'package:lingua/modules/app_config/app_gate.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/app_error_screen.dart';
 import 'package:lingua/shared/states/connectivity_banner.dart';
@@ -75,7 +76,7 @@ class _AppView extends HookConsumerWidget {
                       : SystemUiOverlayStyle.dark)
                   .copyWith(statusBarColor: AppPalette.transparent),
           child: ConnectivityBanner(
-            child: FlutterSmartDialog.init()(context, child),
+            child: AppGate(child: FlutterSmartDialog.init()(context, child)),
           ),
         ),
       ),

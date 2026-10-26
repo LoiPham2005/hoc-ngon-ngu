@@ -45,6 +45,9 @@ void main() {
   test('app_config parse được', () {
     final raw = (params['app_config'] as Map<String, dynamic>)['defaultValue'];
     final cfg = AppConfig.fromJson(value(raw as Map<String, dynamic>));
-    expect(cfg.isMaintenance, isFalse);
+    // Mẫu mặc định không được khoá app.
+    expect(cfg.maintenance, isFalse);
+    expect(cfg.mustUpdate('0.0.1'), isFalse);
+    expect(cfg.hasNotice, isFalse);
   });
 }

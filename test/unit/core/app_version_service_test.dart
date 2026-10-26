@@ -24,7 +24,10 @@ void main() {
       }),
       (version: '1.3.0', url: 'https://apps.apple.com/app/id1'),
     );
-    expect(parseAppStoreLookup({'resultCount': 0, 'results': <Object>[]}), isNull);
+    expect(
+      parseAppStoreLookup({'resultCount': 0, 'results': <Object>[]}),
+      isNull,
+    );
     expect(parseAppStoreLookup(null), isNull);
   });
 

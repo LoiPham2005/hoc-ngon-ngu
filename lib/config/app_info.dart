@@ -14,4 +14,9 @@ abstract class AppInfo {
       : 'https://apps.apple.com/app/id$appStoreId';
   static const playStoreUrl =
       'https://play.google.com/store/apps/details?id=$playStoreId';
+
+  /// Link chính sách bảo mật / điều khoản (hiện ở Hồ sơ → Thông tin; trống → ẩn).
+  /// App Store bắt buộc có link chính sách bảo mật trong app (nhất là app có mua trong app).
+  static const privacyPolicyUrl = '';
+  static const termsUrl = '';
 }

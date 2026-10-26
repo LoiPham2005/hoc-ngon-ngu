@@ -7,9 +7,10 @@ import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/gen/assets.gen.dart';
+import 'package:lingua/modules/app_config/app_notice.dart';
 import 'package:lingua/routes/app_router.dart';
 
-/// Khởi động: kiểm tra phiên bản → chưa chọn khoá học thì Onboarding, có rồi thì vào app.
+/// Khởi động: hỏi cập nhật nếu có bản mới → thông báo (Remote Config) → chưa chọn khoá học thì Onboarding, có rồi thì vào app.
 @RoutePage()
 class SplashPage extends HookConsumerWidget {
   const SplashPage({super.key});
@@ -19,11 +20,8 @@ class SplashPage extends HookConsumerWidget {
     useEffect(() {
       Future<void> bootstrap() async {
         try {
-          if (!await ref
-              .read(appVersionServiceProvider)
-              .checkAndPrompt(context)) {
-            return;
-          }
+          await ref.read(appVersionServiceProvider).checkAndPrompt(context);
+          if (context.mounted) await showAppNotice(context, ref);
         } catch (e, s) {
           talker.error('Splash bootstrap failed', e, s);
         }
