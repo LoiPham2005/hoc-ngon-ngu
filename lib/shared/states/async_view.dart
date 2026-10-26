@@ -86,9 +86,12 @@ class AsyncView<T> extends HookWidget {
       ),
       AsyncValue(:final value?, isLoading: true) => _content(context, value),
       AsyncData(:final value) => _content(context, value),
-      AsyncError(:final error) => ErrorRetry(
+      // Đang thử lại (bấm "Thử lại" / Riverpod tự retry) → nút hiện vòng xoay + khoá,
+      // vẫn giữ màn lỗi (không nháy qua lại lỗi ↔ loading).
+      AsyncError(:final error, :final isLoading) => ErrorRetry(
         message: error.toString(),
         onRetry: onRetry,
+        retrying: isLoading,
       ),
       _ => const LoadingWidget(),
     };

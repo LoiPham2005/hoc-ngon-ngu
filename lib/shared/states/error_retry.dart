@@ -9,11 +9,15 @@ class ErrorRetry extends StatelessWidget {
     this.message,
     this.onRetry,
     this.icon = Icons.error_outline_rounded,
+    this.retrying = false,
   });
 
   final String? message;
   final VoidCallback? onRetry;
   final IconData icon;
+
+  /// Đang thử lại: nút hiện vòng xoay + khoá (chống bấm liên tục khi mạng chậm).
+  final bool retrying;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +30,13 @@ class ErrorRetry extends StatelessWidget {
       action: onRetry == null
           ? null
           : FilledButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
+              onPressed: retrying ? null : onRetry,
+              icon: retrying
+                  ? const SizedBox.square(
+                      dimension: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.refresh_rounded),
               label: Text(l10n.common_retry),
             ),
     );
