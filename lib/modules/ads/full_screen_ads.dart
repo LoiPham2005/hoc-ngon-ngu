@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/modules/ads/ad_config.dart';
@@ -181,13 +182,13 @@ class FullScreenAds<T extends AdWithoutView> {
     ..._ready.keys,
   };
 
-  /// Hiện ad. Trả `false` khi không hiện được (vượt giới hạn, không có ad / load quá
-  /// [timeout]) — khi đó [onDismissed] KHÔNG được gọi, nơi gọi tự đi tiếp.
+  /// Hiện ad và CHỜ tới khi ad đóng hẳn: `true` = đã hiện rồi đóng; `false` = không hiện
+  /// được (vượt giới hạn, không có ad / load quá [timeout], lỗi hiện).
   Future<bool> show(
     String placement,
     AdUnit unit,
     AdRules rules, {
-    VoidCallback? onDismissed,
+    VoidCallback? onShowed,
     void Function(RewardItem reward)? onReward,
     Duration timeout = const Duration(seconds: 5),
   }) async {
@@ -201,6 +202,7 @@ class FullScreenAds<T extends AdWithoutView> {
     }
     _showing = true;
     var presented = false;
+    final closed = Completer<bool>();
     try {
       unawaited(_analytics.logEvent('ad_requested', {'ad_unit_name': name}));
       final ad = await _take(placement, unit, timeout);
@@ -218,6 +220,7 @@ class FullScreenAds<T extends AdWithoutView> {
             _lastShownAt = DateTime.now();
             _shownCount++;
             _analytics.logEvent('ad_impression_custom', {'ad_unit_name': name});
+            onShowed?.call();
           },
           onAdClicked: (_) =>
               _analytics.logEvent('ad_click', {'ad_unit_name': name}),
@@ -227,19 +230,19 @@ class FullScreenAds<T extends AdWithoutView> {
             if (preloader == null && unit.preload) {
               unawaited(_preloadManually(placement, unit));
             }
-            onDismissed?.call();
+            closed.complete(true);
           },
           onAdFailedToShowFullScreenContent: (ad, e) {
             ad.dispose();
             _showing = false;
             talker.warning('[ADS] $name show failed: ${e.code} ${e.message}');
-            onDismissed?.call(); // nơi gọi đang chờ đóng ad → cho đi tiếp
+            closed.complete(false);
           },
         ),
       );
       await present(ad, onReward);
       presented = true; // callback dismiss/failed sẽ mở khoá `_showing`
-      return true;
+      return await closed.future;
     } catch (e, s) {
       talker.error('[ADS] $name show threw', e, s);
       return false;
@@ -247,6 +250,9 @@ class FullScreenAds<T extends AdWithoutView> {
       if (!presented) _showing = false;
     }
   }
+
+  /// Đang hiện trên màn hình.
+  bool get isShowing => _showing;
 
   void resetSession() {
     _shownCount = 0;

@@ -25,11 +25,13 @@ File: `ad_config.dart` (model + placement + cấu hình dev), `ad_manager.dart` 
 
 ```dart
 final ads = ref.read(adManagerProvider);
-await ads.showInterstitial(InterstitialPlacement.afterQuiz, onDismissed: next);  // Future<bool>, tự hiện native full sau khi đóng
+await ads.showInterstitial(InterstitialPlacement.afterQuiz);  next();  // chờ đóng hẳn (kể cả native full theo sau)
 await ads.showAppOpen(AppOpenPlacement.splash);
 await ads.showRewarded(RewardedPlacement.bonus, onReward: (r) => addCoin(r.amount));
 await ads.showRewardedInterstitial(RewardedInterstitialPlacement.levelEnd, onReward: (r) => ...);  // không cần user bấm xem
-ads.showNativeFull(onClosed: next);
+await ads.showNativeFull();
+// Cần phản ứng đúng lúc ad lên màn (vd game): onShowed — iOS hiện ad không đổi vòng đời app
+await ads.showInterstitial(p, onShowed: game.pause);  game.resume();
 ads.preload(AdType.interstitial, InterstitialPlacement.splash);   // nạp sẵn trước khi vào màn
 ads.setPremium(true); ads.pauseAds(const Duration(minutes: 30)); ads.resumeAds(); ads.adFreeRemaining;
 ads.showPrivacyOptions();  ads.resetSession();
@@ -38,7 +40,7 @@ const AdBannerWidget(placement: BannerPlacement.home)                           
 Scaffold(bottomNavigationBar: SafeArea(top: false, child: AdBannerWidget(placement: BannerPlacement.bottom, collapsible: CollapsibleBanner.bottom)))
 const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 ```
-- Hàm show trả `false` (không gọi `onDismissed`) khi: tắt ads/premium, chưa consent, vượt giới hạn, đang cooldown 10s sau ad khác, offline, load quá 5s → nơi gọi tự đi tiếp.
+- Mọi hàm show **chờ tới khi ad đóng hẳn** rồi mới xong → `await` xong là đi tiếp, không cần callback, không bao giờ kẹt. Trả `true` = đã hiện; `false` = không hiện (xong ngay): tắt ads/premium, chưa consent, vượt giới hạn, đang hiện / vừa đóng ad khác < 10s, offline, load quá 5s.
 - Placement = chuỗi = key trong `ad_units.<loại>` (hằng sẵn: `InterstitialPlacement`, `AppOpenPlacement`, `RewardedPlacement`, `NativePlacement`, `BannerPlacement`; truyền chuỗi khác cũng được).
 - `AdManager.initialize()` (step `Ads` ở AppInitializer) tự lo: áp Remote Config → consent (timeout 8s) → `MobileAds.initialize` → nạp sẵn → app open khi resume (bỏ qua nếu vừa hiện ad khác).
 - Remote Config key `ad_config` (JSON snake_case, field thiếu = mặc định): `show_all_ads`, `preload`, `enable_interstitial|app_open|rewarded|rewarded_interstitial|native|banner`, `enable_native_full_after_interstitial`, `rules` (`interstitial_interval`, `app_open_interval`, `rewarded_interval`, `native_full_interval`, `max_interstitial_per_session`, `max_app_open_per_session`, `max_rewarded_per_session`, `max_native_full_per_session`; 0 = không giới hạn; rewarded interstitial dùng chung giới hạn rewarded), `ad_units.<loại>.<placement>` = `{id, enable, preload, native_full_after}`. Chưa có / JSON sai → tắt ads.

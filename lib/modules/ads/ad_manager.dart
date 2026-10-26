@@ -22,10 +22,11 @@ part 'ad_manager.g.dart';
 ///
 /// ```dart
 /// final ads = ref.read(adManagerProvider);
-/// await ads.showInterstitial(InterstitialPlacement.splash, onDismissed: goNext);
+/// // Mọi hàm show CHỜ tới khi ad đóng hẳn (không hiện được → xong ngay) → await xong là đi tiếp.
+/// await ads.showInterstitial(InterstitialPlacement.splash);  goNext();
 /// await ads.showRewarded(RewardedPlacement.bonus, onReward: (r) => addCoin(r.amount));
 /// await ads.showRewardedInterstitial(RewardedInterstitialPlacement.levelEnd, onReward: (r) => ...);
-/// ads.showNativeFull();
+/// await ads.showNativeFull();
 /// AdBannerWidget(placement: BannerPlacement.home);  NativeAdWidget(placement: NativePlacement.home);
 /// ads.setPremium(true);  ads.pauseAds(const Duration(minutes: 30));
 /// ```
@@ -54,8 +55,8 @@ class AdManager {
   /// Thêm hashed id máy test (in ra console lần load đầu) — chỉ áp ở dev/stg.
   static const _testDeviceIds = <String>[];
 
-  /// Vừa hiện ad toàn màn → chặn app open/native full trong 10s (tránh 2 ad chồng nhau,
-  /// vd đóng interstitial → app resume → app open).
+  /// Đang hiện / vừa ĐÓNG ad toàn màn → chặn app open/native full trong 10s (tránh 2 ad
+  /// chồng nhau, vd đóng interstitial → app resume → app open).
   static const _cooldown = Duration(seconds: 10);
 
   AdConfig _base = AdConfig.disabled;
@@ -106,11 +107,17 @@ class AdManager {
 
   // ── Toàn màn ────────────────────────────────────────────────
 
-  /// Tự hiện native full sau khi đóng (nếu unit + config cho phép), rồi mới gọi [onDismissed].
+  /// Các hàm show dưới đây CHỜ tới khi ad đóng hẳn rồi mới xong (không hiện được → xong
+  /// ngay): `true` = đã hiện; `false` = không hiện (tắt / premium / chưa consent / vượt giới
+  /// hạn / cooldown / chưa tải được). Nơi gọi chỉ cần `await` rồi đi tiếp, không cần callback.
+  /// [onShowed]: gọi đúng lúc ad lên màn hình (vd tạm dừng game / nhạc — iOS hiện ad không
+  /// đổi vòng đời app nên không tự dừng được).
+
+  /// Đóng xong tự hiện native full (nếu unit + config cho phép) — `await` chờ cả 2.
   Future<bool> showInterstitial(
     String placement, {
-    VoidCallback? onDismissed,
     bool nativeAfter = true,
+    VoidCallback? onShowed,
   }) async {
     final cfg = config.value;
     final unit = cfg.unit(AdType.interstitial, placement);
@@ -124,27 +131,20 @@ class AdManager {
         NativePlacement.afterInterstitial,
       ); // kịp sẵn lúc interstitial đóng
     }
-    final shown = await interstitial.show(
-      placement,
-      unit,
-      cfg.rules,
-      onDismissed: chain
-          ? () => showNativeFull(
-              placement: NativePlacement.afterInterstitial,
-              onClosed: onDismissed,
-              ignoreCooldown: true,
-            )
-          : onDismissed,
+    final shown = await _track(
+      interstitial.show(placement, unit, cfg.rules, onShowed: onShowed),
     );
-    if (shown) _lastFullScreenAt = DateTime.now();
+    if (shown && chain) {
+      await showNativeFull(
+        placement: NativePlacement.afterInterstitial,
+        ignoreCooldown: true,
+      );
+    }
     return shown;
   }
 
   /// Placement không có unit → dùng unit `resume`.
-  Future<bool> showAppOpen(
-    String placement, {
-    VoidCallback? onDismissed,
-  }) async {
+  Future<bool> showAppOpen(String placement, {VoidCallback? onShowed}) async {
     final cfg = config.value;
     final unit =
         cfg.unit(AdType.appOpen, placement) ??
@@ -160,61 +160,54 @@ class AdManager {
       );
       return false;
     }
-    final shown = await appOpen.show(
-      placement,
-      unit,
-      cfg.rules,
-      onDismissed: onDismissed,
-    );
-    if (shown) _lastFullScreenAt = DateTime.now();
-    return shown;
+    return _track(appOpen.show(placement, unit, cfg.rules, onShowed: onShowed));
   }
 
   Future<bool> showRewarded(
     String placement, {
     required void Function(RewardItem reward) onReward,
-    VoidCallback? onDismissed,
+    VoidCallback? onShowed,
   }) async {
     final cfg = config.value;
     final unit = cfg.unit(AdType.rewarded, placement);
     if (unit == null || !_canRequest) return false;
-    final shown = await rewarded.show(
-      placement,
-      unit,
-      cfg.rules,
-      onReward: onReward,
-      onDismissed: onDismissed,
+    return _track(
+      rewarded.show(
+        placement,
+        unit,
+        cfg.rules,
+        onShowed: onShowed,
+        onReward: onReward,
+      ),
     );
-    if (shown) _lastFullScreenAt = DateTime.now();
-    return shown;
   }
 
   /// Rewarded interstitial — hiện ở điểm chuyển màn, user không cần bấm xem vẫn có thưởng.
   Future<bool> showRewardedInterstitial(
     String placement, {
     required void Function(RewardItem reward) onReward,
-    VoidCallback? onDismissed,
+    VoidCallback? onShowed,
   }) async {
     final cfg = config.value;
     final unit = cfg.unit(AdType.rewardedInterstitial, placement);
     if (unit == null || !_canRequest) return false;
-    final shown = await rewardedInterstitial.show(
-      placement,
-      unit,
-      cfg.rules,
-      onReward: onReward,
-      onDismissed: onDismissed,
+    return _track(
+      rewardedInterstitial.show(
+        placement,
+        unit,
+        cfg.rules,
+        onShowed: onShowed,
+        onReward: onReward,
+      ),
     );
-    if (shown) _lastFullScreenAt = DateTime.now();
-    return shown;
   }
 
-  /// Native toàn màn. Chưa sẵn sàng / bị giới hạn → gọi [onClosed] ngay và nạp sẵn cho lần sau.
-  void showNativeFull({
+  /// Native toàn màn. Chưa sẵn sàng / bị giới hạn → xong ngay (`false`) và nạp sẵn cho lần sau.
+  Future<bool> showNativeFull({
     String placement = NativePlacement.full,
-    VoidCallback? onClosed,
     bool ignoreCooldown = false,
-  }) {
+    VoidCallback? onShowed,
+  }) async {
     final cfg = config.value;
     final rules = cfg.rules;
     final max = rules.maxPerSessionOf(AdType.native);
@@ -230,30 +223,36 @@ class AdManager {
     final context = appRouter.navigatorKey.currentContext;
     if (entry == null || context == null) {
       if (!blocked) _preloadNative(placement);
-      onClosed?.call();
-      return;
+      return false;
     }
     _nativeShownAt = DateTime.now();
     _nativeShownCount++;
     _lastFullScreenAt = DateTime.now();
-    showDialog<void>(
+    onShowed?.call();
+    await showDialog<void>(
       context: context,
       barrierDismissible: false,
       useSafeArea: false,
       builder: (dialogContext) => NativeAdFullScreen(
         ad: entry.$1,
-        onClosed: () {
-          Navigator.of(dialogContext).pop();
-          entry.$1.dispose();
-          // Nạp sẵn cái kế tiếp chỉ khi bật preload cả chung lẫn riêng vị trí này.
-          if (cfg.preload &&
-              (cfg.unit(AdType.native, placement)?.preload ?? false)) {
-            _preloadNative(placement);
-          }
-          onClosed?.call();
-        },
+        onClosed: () => Navigator.of(dialogContext).pop(),
       ),
     );
+    // Đóng bằng nút hay nút Back đều tới đây → luôn giải phóng ad.
+    unawaited(entry.$1.dispose());
+    _lastFullScreenAt = DateTime.now();
+    // Nạp sẵn cái kế tiếp chỉ khi bật preload cả chung lẫn riêng vị trí này.
+    if (cfg.preload && (cfg.unit(AdType.native, placement)?.preload ?? false)) {
+      _preloadNative(placement);
+    }
+    return true;
+  }
+
+  /// Cooldown tính từ lúc ad ĐÓNG (đóng ad → app resume → không bật app open chồng lên).
+  Future<bool> _track(Future<bool> show) async {
+    final shown = await show;
+    if (shown) _lastFullScreenAt = DateTime.now();
+    return shown;
   }
 
   /// Nạp sẵn trước khi vào màn sẽ hiện ad.
@@ -336,6 +335,7 @@ class AdManager {
   bool get _canRequest => _ready && consent.canRequestAds;
 
   bool get _inCooldown {
+    if (_fullScreen.any((e) => e.$2.isShowing)) return true;
     final last = _lastFullScreenAt;
     return last != null && DateTime.now().difference(last) < _cooldown;
   }
@@ -394,7 +394,7 @@ class AdManager {
     if (last != null && now.difference(last) < const Duration(seconds: 1)) {
       return; // chuyển app qua lại liên tục
     }
-    showAppOpen(AppOpenPlacement.resume);
+    unawaited(showAppOpen(AppOpenPlacement.resume));
   }
 
   List<(AdType, FullScreenAds<AdWithoutView>)> get _fullScreen => [
