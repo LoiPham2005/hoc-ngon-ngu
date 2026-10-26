@@ -379,8 +379,9 @@ class AdManager {
   /// Test id lọt lên prod = AdMob khoá account → báo lỗi (Crashlytics) + assert khi debug.
   void _assertNoTestIds(AdConfig cfg) {
     final ids = cfg.adUnits.all
-        .where((u) => u.isActive && u.id.startsWith(kGoogleTestPublisher))
-        .map((u) => u.id)
+        .where((u) => u.isActive)
+        .expand((u) => u.ids)
+        .where((id) => id.startsWith(kGoogleTestPublisher))
         .toSet();
     if (ids.isEmpty) return;
     talker.error('[ADS] ⛔ PROD đang dùng Google TEST ad id: ${ids.join(', ')}');
@@ -462,11 +463,14 @@ class AdManager {
     }
   }
 
-  void _preloadNative(String placement) {
+  /// Nạp sẵn native toàn màn; ID thứ [index] không có ad → thử ID dự phòng kế tiếp.
+  void _preloadNative(String placement, [int index = 0]) {
     final unit = config.value.unit(AdType.native, placement);
     if (unit == null || !_canRequest || _nativeLoading.contains(placement)) {
       return;
     }
+    final ids = unit.ids;
+    if (index >= ids.length) return;
     final cached = _native[placement];
     if (cached != null) {
       if (DateTime.now().difference(cached.$2) < const Duration(hours: 1)) {
@@ -476,7 +480,7 @@ class AdManager {
     }
     _nativeLoading.add(placement);
     final ad = NativeAd(
-      adUnitId: unit.id,
+      adUnitId: ids[index],
       factoryId: 'nativeFull', // factory native toàn màn (Android/iOS)
       request: const AdRequest(),
       listener: NativeAdListener(
@@ -488,6 +492,7 @@ class AdManager {
           _nativeLoading.remove(placement);
           ad.dispose();
           talker.warning('[ADS] native.$placement load failed: ${e.message}');
+          _preloadNative(placement, index + 1);
         },
       ),
     );

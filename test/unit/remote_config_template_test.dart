@@ -59,7 +59,11 @@ void main() {
       for (final MapEntry(key: type, value: units) in types.entries) {
         for (final unit in (units as Map<String, dynamic>).values) {
           final keys = (unit as Map<String, dynamic>).keys.toSet();
-          expect(keys, containsAll(['id', 'enable', 'preload']), reason: type);
+          expect(
+            keys,
+            containsAll(['id', 'fallback_ids', 'enable', 'preload']),
+            reason: type,
+          );
           if (type == 'interstitial') {
             expect(keys, contains('native_full_after'), reason: type);
           }

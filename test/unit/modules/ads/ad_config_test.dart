@@ -75,6 +75,15 @@ void main() {
     expect(rules.intervalOf(AdType.appOpen), 15);
   });
 
+  test('fallback ids are tried after the main id, blanks skipped', () {
+    final unit = AdUnit.fromJson(const {
+      'id': 'high-floor',
+      'fallback_ids': ['normal', ''],
+    });
+    expect(unit.ids, ['high-floor', 'normal']);
+    expect(const AdUnit(id: 'only').ids, ['only']);
+  });
+
   test('rewarded interstitial has its own limits, separate from rewarded', () {
     const rules = AdRules(
       rewardedInterval: 10,

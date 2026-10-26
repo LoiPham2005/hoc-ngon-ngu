@@ -52,12 +52,19 @@ abstract final class BannerPlacement {
   static const bottom = 'bottom';
 }
 
-/// 1 ad unit. JSON: `{ "id": "ca-app-pub-...", "enable": true, "preload": true, "native_full_after": true }`.
+/// 1 ad unit. JSON:
+/// `{ "id": "ca-app-pub-...", "fallback_ids": ["ca-app-pub-..."], "enable": true, "preload": true, "native_full_after": true }`.
 @freezed
 abstract class AdUnit with _$AdUnit {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory AdUnit({
     @Default('') String id,
+
+    /// ID dự phòng, thử lần lượt khi [id] không có ad. Dùng cho "giá sàn": [id] = ad unit đặt
+    /// giá sàn cao (ít ad nhưng đắt), dự phòng = ad unit thường (luôn có ad). Có ad đắt thì
+    /// ăn giá cao, không có thì vẫn có ad để hiện. Chỉ đáng dùng khi lượng hiển thị lớn —
+    /// app nhỏ thì bật "giá sàn tự động (Google optimized)" trên 1 ID là đủ.
+    @Default(<String>[]) List<String> fallbackIds,
     @Default(true) bool enable,
 
     /// false = không nạp sẵn, chỉ load lúc cần hiện (placement hiếm dùng → đỡ request thừa).
@@ -72,6 +79,9 @@ abstract class AdUnit with _$AdUnit {
   factory AdUnit.fromJson(Map<String, dynamic> json) => _$AdUnitFromJson(json);
 
   bool get isActive => enable && id.isNotEmpty;
+
+  /// Thứ tự thử: [id] rồi tới [fallbackIds].
+  List<String> get ids => [id, ...fallbackIds.where((e) => e.isNotEmpty)];
 }
 
 /// Giới hạn tần suất theo LOẠI ad. `*_interval` = giây giữa 2 lần hiện;

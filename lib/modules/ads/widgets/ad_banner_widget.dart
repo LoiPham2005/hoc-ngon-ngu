@@ -30,7 +30,7 @@ class _AdBannerWidgetState extends ConsumerState<AdBannerWidget> {
   late final AdManager _ads = ref.read(adManagerProvider);
   BannerAd? _ad;
   bool _loaded = false;
-  String? _key; // "id@width" của ad hiện tại
+  String? _key; // "id,dự phòng@width" của ad hiện tại
   int _width = 0;
   int _retries = 0;
 
@@ -52,20 +52,22 @@ class _AdBannerWidgetState extends ConsumerState<AdBannerWidget> {
 
   void _reload() {
     final unit = _ads.bannerUnit(widget.placement);
-    final key = unit == null ? null : '${unit.id}@$_width';
+    final key = unit == null ? null : '${unit.ids.join(',')}@$_width';
     if (key == _key) return;
     _clear();
     _key = key;
-    if (unit != null) _load(unit.id);
+    if (unit != null) _load(unit.ids);
   }
 
-  Future<void> _load(String id) async {
+  /// Thử ID thứ [index]; không có ad → ID dự phòng kế tiếp; hết ID → thử lại cả chuỗi (tối đa 2).
+  Future<void> _load(List<String> ids, [int index = 0]) async {
+    final key = '${ids.join(',')}@$_width';
     final size =
         await AdSize.getLargeAnchoredAdaptiveBannerAdSize(_width) ??
         AdSize.banner;
-    if (!mounted || _key != '$id@$_width') return;
+    if (!mounted || _key != key) return;
     final ad = _ad = BannerAd(
-      adUnitId: id,
+      adUnitId: ids[index],
       size: size,
       request: AdRequest(
         extras: {if (widget.collapsible case final c?) 'collapsible': c.name},
@@ -84,9 +86,14 @@ class _AdBannerWidgetState extends ConsumerState<AdBannerWidget> {
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
           if (identical(ad, _ad)) _ad = null;
-          if (!mounted || ++_retries > 2) return;
+          if (!mounted || _key != key) return;
+          if (index + 1 < ids.length) {
+            unawaited(_load(ids, index + 1));
+            return;
+          }
+          if (++_retries > 2) return;
           Timer(Duration(seconds: 2 * _retries), () {
-            if (mounted && _ad == null && _key == '$id@$_width') _load(id);
+            if (mounted && _ad == null && _key == key) _load(ids);
           });
         },
       ),

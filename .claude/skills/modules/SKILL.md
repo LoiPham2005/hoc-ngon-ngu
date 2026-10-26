@@ -44,9 +44,12 @@ const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 - Ad toàn màn chưa có sẵn phải tải tại chỗ (> 300ms) → tự hiện lớp phủ "Đang tải quảng cáo…" chặn chạm (`ad_loading_overlay.dart`), tránh ad bật lên đột ngột khi user đang bấm → click nhầm (AdMob phạt). Không cần làm gì ở nơi gọi.
 - Consent: `AdConsent.canRequestAds` theo `ConsentInformation.canRequestAds()` chính thức (offline → dùng lựa chọn đã lưu). Đặt nút "Quyền riêng tư" ở Cài đặt khi `isPrivacyOptionsRequired` → `ads.showPrivacyOptions()`.
 - Gỡ lỗi "không có ad": **Ad Inspector** (lingua không có trang demo ads → gọi tạm ở bản dev) — `MobileAds.instance.openAdInspector`. Chỉ mở trên máy test (máy ảo / `_testDeviceIds` / khai báo trên AdMob).
+- **ID dự phòng / giá sàn** (`fallback_ids`): `id` = ad unit đặt giá sàn cao (ít ad nhưng đắt), `fallback_ids` = ad unit thường (luôn có ad). Nạp sẵn song song mỗi ID 1 ad, lúc hiện ưu tiên ID đứng trước; tải tại chỗ / banner / native thử lần lượt. Chỉ đáng dùng khi lượng hiển thị lớn — app nhỏ: để trống, bật "Google optimized floor" trên 1 ID.
+- Đo lường: `ad_impression_custom` (theo placement + `ad_source` = mạng thắng khi mediation), `ad_requested`, `ad_load_failed`. Doanh thu xem ở Firebase (`ad_impression` tự ghi khi đã liên kết AdMob).
+- Ad tải tại chỗ về muộn hơn thời gian chờ → giữ lại cho lần hiện sau, không bỏ phí.
 - Placement = chuỗi = key trong `ad_units.<loại>` (hằng sẵn: `InterstitialPlacement`, `AppOpenPlacement`, `RewardedPlacement`, `NativePlacement`, `BannerPlacement`; truyền chuỗi khác cũng được).
 - `AdManager.initialize()` (step `Ads` ở AppInitializer) tự lo: áp Remote Config → consent (timeout 8s) → `MobileAds.initialize` → nạp sẵn → app open khi resume (bỏ qua nếu vừa hiện ad khác).
-- Remote Config key `ad_config` (JSON snake_case, field thiếu = mặc định): `show_all_ads`, `preload`, `enable_interstitial|app_open|rewarded|rewarded_interstitial|native|banner`, `enable_native_full_after_interstitial`, `rules` (`interstitial_interval`, `app_open_interval`, `rewarded_interval`, `native_full_interval`, `rewarded_interstitial_interval`, `max_interstitial_per_session`, `max_app_open_per_session`, `max_rewarded_per_session`, `max_rewarded_interstitial_per_session`, `max_native_full_per_session`; 0 = không giới hạn; banner / native trong màn không có giới hạn — refresh banner chỉnh trên AdMob), `ad_units.<loại>.<placement>` = `{id, enable, preload, native_full_after}`. Chưa có / JSON sai → tắt ads.
+- Remote Config key `ad_config` (JSON snake_case, field thiếu = mặc định): `show_all_ads`, `preload`, `enable_interstitial|app_open|rewarded|rewarded_interstitial|native|banner`, `enable_native_full_after_interstitial`, `rules` (`interstitial_interval`, `app_open_interval`, `rewarded_interval`, `native_full_interval`, `rewarded_interstitial_interval`, `max_interstitial_per_session`, `max_app_open_per_session`, `max_rewarded_per_session`, `max_rewarded_interstitial_per_session`, `max_native_full_per_session`; 0 = không giới hạn; banner / native trong màn không có giới hạn — refresh banner chỉnh trên AdMob), `ad_units.<loại>.<placement>` = `{id, fallback_ids, enable, preload, native_full_after}`. Chưa có / JSON sai → tắt ads.
 - Remote Config tắt (mặc định dev): `kDevAdConfig` (Google test ID, tự chọn bộ Android / iOS). Collapsible banner có test ID riêng (placement `bottom`); collapsible phải neo sát mép màn hình, chỉ lần load đầu được bung (auto-refresh sau đó là banner thường). Prod có test ID → `talker.error` + assert (AdMob khoá account nếu lọt).
 - Premium: `AppInitializer` nối `iap.premium` → `ads.setPremium` (khi IAP thật).
 - Native factory `nativeSmall` / `nativeMedium` / `nativeFull` đăng ký ở `MainActivity.kt` và `ios/Runner/NativeAdFactory*.swift`.
@@ -57,7 +60,7 @@ const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 Code ads không đổi gì: AdMob tự gọi các mạng khác qua adapter. Chỉ bật khi app đã có lượng hiển thị thật (ít traffic thì mediation không tăng doanh thu).
 1. Mở tài khoản từng mạng, lấy key / app id của mạng đó.
 2. AdMob Console → **Mediation** → tạo mediation group cho từng định dạng / ad unit → thêm ad source, ưu tiên **Bidding**; điền key của mạng ngay trên AdMob.
-3. Thêm adapter chính thức của Google: `flutter pub add gma_mediation_<mạng>` (vd `gma_mediation_applovin`, `gma_mediation_meta`, `gma_mediation_unity`) → `make get`, `cd ios && pod install`. Đọc README adapter: có mạng đòi `minSdk` / iOS tối thiểu cao hơn.
+3. Thêm adapter chính thức của Google: `make mediation networks="applovin meta unity"` (thêm `gma_mediation_<mạng>` + `pod install`; mạng có sẵn ghi trong Makefile). Đọc README adapter: có mạng đòi `minSdk` / iOS tối thiểu cao hơn.
 4. iOS: thêm `SKAdNetworkItems` của từng mạng vào `Info.plist` (danh sách trên trang tài liệu của mạng) — thiếu là mất doanh thu iOS.
 5. AdMob → **Privacy & messaging**: bật mạng mới trong danh sách đối tác của thông báo GDPR (UMP tự truyền consent cho đối tác Google chứng nhận).
 6. Cập nhật khai báo **Data safety** (Google Play) / **App Privacy** (App Store) vì có thêm SDK thu thập dữ liệu.
@@ -83,7 +86,7 @@ final isPremium = ref.watch(isPremiumProvider);       // tự cập nhật
 
 ## Analytics (lib/modules/analytics/analytics_service.dart)
 
-`analyticsServiceProvider` → `logEvent(name, params)` (tự bỏ param null), `logScreenView(name)`, `setUserId(id)`, `logAdRevenue(...)` (ads tự gọi). Tắt ở dev. Lỗi chỉ log, không ném.
+`analyticsServiceProvider` → `logEvent(name, params)` (tự bỏ param null), `logScreenView(name)`, `setUserId(id)`. Doanh thu quảng cáo KHÔNG tự ghi: liên kết AdMob ↔ Firebase thì Firebase tự ghi `ad_impression` (kèm doanh thu, mọi định dạng, cả mạng mediation) + `ad_click` — tự ghi thêm là đếm đôi. Tắt ở dev. Lỗi chỉ log, không ném.
 
 ## AppConfig (lib/modules/app_config/) — điều khiển app từ xa
 

@@ -10,7 +10,8 @@
         run-dev run-stg run-prod \
         apk-dev apk-stg apk-prod aab-dev aab-stg aab-prod \
         ios-dev ios-stg ios-prod ipa-dev ipa-stg ipa-prod \
-        rename-package rename-app rename-bundle-id
+        rename-package rename-app rename-bundle-id \
+        mediation
 
 # ─── HELP ─────────────────────────────────────────────────────────
 help:
@@ -56,6 +57,9 @@ help:
 	@echo "  make rename-package name=new_pkg"
 	@echo "  make rename-app     name=\"App Name\""
 	@echo "  make rename-bundle-id name=com.x.y"
+	@echo ""
+	@echo "💰 ADS"
+	@echo "  make mediation networks=\"applovin meta unity\"   Thêm adapter mediation (gma_mediation_<mạng>) + pod iOS"
 
 # ─── DEPENDENCIES ─────────────────────────────────────────────────
 get:
@@ -198,3 +202,12 @@ rename-app:
 rename-bundle-id:
 	@test -n "$(name)" || (echo "❌ Usage: make rename-bundle-id name=com.x.y" && exit 1)
 	fvm dart run rename setBundleId --targets android,ios --value "$(name)"
+
+# ─── ADS MEDIATION ────────────────────────────────────────────────
+# Thêm adapter mediation chính thức của Google rồi cài pod iOS. Code ads KHÔNG cần sửa;
+# phần còn lại (AdMob, SKAdNetwork, Data safety…) xem skill modules → Mediation.
+# Mạng có sẵn: applovin meta unity mintegral pangle ironsource liftoffmonetize inmobi dtexchange chartboost moloco
+mediation:
+	@test -n "$(networks)" || (echo "❌ Usage: make mediation networks=\"applovin meta unity\"" && exit 1)
+	@for n in $(networks); do fvm flutter pub add gma_mediation_$$n || exit 1; done
+	cd ios && pod install --repo-update

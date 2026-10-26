@@ -39,7 +39,7 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
   late final AdManager _ads = ref.read(adManagerProvider);
   NativeAd? _ad;
   bool _loaded = false;
-  String? _id;
+  String? _key; // "id,dự phòng" đang dùng
   int _retries = 0;
 
   @override
@@ -50,19 +50,22 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
   }
 
   void _reload() {
-    final id = _ads.nativeUnit(widget.placement)?.id;
-    if (id == _id) return;
+    final ids = _ads.nativeUnit(widget.placement)?.ids;
+    final key = ids?.join(',');
+    if (key == _key) return;
     _ad?.dispose();
     _ad = null;
     _retries = 0;
-    _id = id;
+    _key = key;
     if (_loaded && mounted) setState(() => _loaded = false);
-    if (id != null) _load(id);
+    if (ids != null) _load(ids);
   }
 
-  void _load(String id) {
+  /// Thử ID thứ [index]; không có ad → ID dự phòng kế tiếp; hết ID → thử lại cả chuỗi (tối đa 2).
+  void _load(List<String> ids, [int index = 0]) {
+    final key = ids.join(',');
     final ad = _ad = NativeAd(
-      adUnitId: id,
+      adUnitId: ids[index],
       factoryId: widget.size.factoryId,
       request: const AdRequest(),
       listener: NativeAdListener(
@@ -73,9 +76,14 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
           if (identical(ad, _ad)) _ad = null;
-          if (!mounted || ++_retries > 2) return;
+          if (!mounted || _key != key) return;
+          if (index + 1 < ids.length) {
+            _load(ids, index + 1);
+            return;
+          }
+          if (++_retries > 2) return;
           Timer(Duration(seconds: 2 * _retries), () {
-            if (mounted && _ad == null && _id == id) _load(id);
+            if (mounted && _ad == null && _key == key) _load(ids);
           });
         },
       ),

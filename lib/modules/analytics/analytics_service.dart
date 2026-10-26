@@ -38,21 +38,6 @@ class AnalyticsService {
       talker.error('Analytics setUserId failed', e, s);
     }
   }
-
-  /// Doanh thu quảng cáo theo chuẩn Firebase (event `ad_impression`).
-  Future<void> logAdRevenue({
-    required double valueMicros,
-    required String currency,
-    required String adUnitName,
-    required String adFormat,
-  }) => logEvent('ad_impression', {
-    'value': valueMicros / 1000000,
-    'currency': currency,
-    'ad_platform': 'AdMob',
-    'ad_source': 'AdMob',
-    'ad_unit_name': adUnitName,
-    'ad_format': adFormat,
-  });
 }
 
 @Riverpod(keepAlive: true)

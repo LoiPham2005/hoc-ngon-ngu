@@ -23,7 +23,7 @@ typedef _Preloader<T> = ({
 
 /// Hiện 1 loại ad toàn màn (interstitial, app open, rewarded, rewarded interstitial):
 /// lấy ad từ preloader (placement `preload: true`) hoặc load ngay lúc hiện,
-/// giới hạn tần suất theo loại, đo impression / click / doanh thu.
+/// giới hạn tần suất theo loại, đo lượt hiện theo placement (doanh thu: Firebase tự ghi).
 class FullScreenAds<T extends AdWithoutView> {
   FullScreenAds._(
     this.type,
@@ -130,8 +130,8 @@ class FullScreenAds<T extends AdWithoutView> {
   present;
   final _Preloader<T>? preloader;
 
-  /// placement → ad unit id đang chạy preloader.
-  final _preloading = <String, String>{};
+  /// placement → các ad unit id (chính + dự phòng) đang chạy preloader, theo thứ tự ưu tiên.
+  final _preloading = <String, List<String>>{};
 
   /// Ad tự nạp sẵn cho loại không có preloader.
   final _ready = <String, (T, DateTime)>{};
@@ -143,37 +143,47 @@ class FullScreenAds<T extends AdWithoutView> {
 
   String _preloadId(String placement) => '${type.name}.$placement';
 
+  /// Preloader thứ [i] của placement (0 = id chính, giữ nguyên tên cũ).
+  String _preloadIdAt(String placement, int i) =>
+      i == 0 ? _preloadId(placement) : '${_preloadId(placement)}#$i';
+
   /// Bắt đầu giữ sẵn ad cho placement (gọi lại an toàn; đổi ad id → khởi động lại).
+  /// Có ID dự phòng → giữ sẵn song song mỗi ID 1 ad; lúc hiện ưu tiên ID đứng trước (giá cao).
   Future<void> preload(String placement, AdUnit unit) async {
     final p = preloader;
     if (p == null) {
       unawaited(_preloadManually(placement, unit));
       return;
     }
-    if (_preloading[placement] == unit.id) return;
-    if (_preloading.containsKey(placement)) {
-      await p.destroy(_preloadId(placement));
+    final ids = unit.ids;
+    final current = _preloading[placement];
+    if (current != null && listEquals(current, ids)) return;
+    if (current != null) await _destroyPreloads(placement, current.length);
+    _preloading[placement] = ids;
+    for (final (i, id) in ids.indexed) {
+      await p.start(
+        preloadId: _preloadIdAt(placement, i),
+        preloadConfiguration: PreloadConfiguration(adUnitId: id, bufferSize: 1),
+        callback: PreloadCallback(
+          onAdFailedToPreload: (id, e) => talker.warning(
+            '[ADS] $id preload failed: ${e.code} ${e.message}',
+          ),
+        ),
+      );
     }
-    _preloading[placement] = unit.id;
-    await p.start(
-      preloadId: _preloadId(placement),
-      preloadConfiguration: PreloadConfiguration(
-        adUnitId: unit.id,
-        bufferSize: 1,
-      ),
-      callback: PreloadCallback(
-        onAdFailedToPreload: (id, e) =>
-            talker.warning('[ADS] $id preload failed: ${e.code} ${e.message}'),
-      ),
-    );
   }
 
   /// Ngừng giữ sẵn ad (placement bị tắt / unit đổi sang không preload).
   Future<void> stopPreload(String placement) async {
     final ready = _ready.remove(placement);
     if (ready != null) unawaited(ready.$1.dispose());
-    if (_preloading.remove(placement) != null) {
-      await preloader?.destroy(_preloadId(placement));
+    final ids = _preloading.remove(placement);
+    if (ids != null) await _destroyPreloads(placement, ids.length);
+  }
+
+  Future<void> _destroyPreloads(String placement, int count) async {
+    for (var i = 0; i < count; i++) {
+      await preloader?.destroy(_preloadIdAt(placement, i));
     }
   }
 
@@ -213,24 +223,25 @@ class FullScreenAds<T extends AdWithoutView> {
       unawaited(_analytics.logEvent('ad_requested', {'ad_unit_name': name}));
       final ad = await _take(placement, unit, timeout);
       if (ad == null) return false;
-      ad.onPaidEvent = (_, valueMicros, _, currency) => _analytics.logAdRevenue(
-        valueMicros: valueMicros,
-        currency: currency,
-        adUnitName: name,
-        adFormat: type.name,
-      );
+      // Doanh thu / click: KHÔNG tự ghi — liên kết AdMob ↔ Firebase thì Firebase tự ghi
+      // `ad_impression` (kèm doanh thu, mọi định dạng, cả mạng mediation) + `ad_click`.
+      // Tự ghi thêm = đếm đôi doanh thu trong Analytics.
       attach(
         ad,
         FullScreenContentCallback<T>(
           onAdShowedFullScreenContent: (_) {
             _lastShownAt = DateTime.now();
             _shownCount++;
-            _analytics.logEvent('ad_impression_custom', {'ad_unit_name': name});
+            // Theo placement + mạng nào thắng (mediation) — Firebase chỉ biết theo ad unit.
+            _analytics.logEvent('ad_impression_custom', {
+              'ad_unit_name': name,
+              'ad_source':
+                  ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName ??
+                  '',
+            });
             loading?.hide();
             onShowed?.call();
           },
-          onAdClicked: (_) =>
-              _analytics.logEvent('ad_click', {'ad_unit_name': name}),
           onAdDismissedFullScreenContent: (ad) {
             ad.dispose();
             _showing = false;
@@ -284,11 +295,15 @@ class FullScreenAds<T extends AdWithoutView> {
     return null;
   }
 
-  /// Lấy ad đã giữ sẵn; không có thì load ngay (chờ tối đa [timeout]).
+  /// Lấy ad đã giữ sẵn (ID giá cao trước); không có thì tải ngay theo thứ tự ID, chờ tối đa
+  /// [timeout]. Quá giờ mà ad về muộn → giữ lại cho lần sau, không bỏ phí.
   Future<T?> _take(String placement, AdUnit unit, Duration timeout) async {
-    if (_preloading[placement] == unit.id) {
-      final ad = await preloader!.poll(_preloadId(placement));
-      if (ad != null) return ad;
+    final ids = unit.ids;
+    if (listEquals(_preloading[placement], ids)) {
+      for (var i = 0; i < ids.length; i++) {
+        final ad = await preloader!.poll(_preloadIdAt(placement, i));
+        if (ad != null) return ad;
+      }
     }
     final ready = _ready.remove(placement);
     if (ready != null) {
@@ -297,7 +312,33 @@ class FullScreenAds<T extends AdWithoutView> {
       }
       unawaited(ready.$1.dispose());
     }
-    return _loadNow(unit.id).timeout(timeout, onTimeout: () => null);
+    final loading = _loadFirst(ids);
+    return loading.timeout(
+      timeout,
+      onTimeout: () {
+        unawaited(loading.then((late) => _keep(placement, late)));
+        return null;
+      },
+    );
+  }
+
+  /// Thử lần lượt từng ID tới khi có ad (ID đầu thường đặt giá sàn cao).
+  Future<T?> _loadFirst(List<String> ids) async {
+    for (final id in ids) {
+      final ad = await _loadNow(id);
+      if (ad != null) return ad;
+    }
+    return null;
+  }
+
+  /// Giữ ad tải xong muộn cho lần hiện sau (đã có ad giữ sẵn → bỏ).
+  void _keep(String placement, T? ad) {
+    if (ad == null) return;
+    if (_ready.containsKey(placement)) {
+      unawaited(ad.dispose());
+    } else {
+      _ready[placement] = (ad, DateTime.now());
+    }
   }
 
   Future<T?> _loadNow(String id) {
@@ -315,7 +356,7 @@ class FullScreenAds<T extends AdWithoutView> {
 
   Future<void> _preloadManually(String placement, AdUnit unit) async {
     if (_ready.containsKey(placement) || !_loading.add(placement)) return;
-    final ad = await _loadNow(unit.id);
+    final ad = await _loadFirst(unit.ids);
     _loading.remove(placement);
     if (ad != null) _ready[placement] = (ad, DateTime.now());
   }
