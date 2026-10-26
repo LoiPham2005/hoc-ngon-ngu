@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lingua/design/theme/styles/app_dimensions.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/home/home_page.dart';
@@ -301,6 +302,31 @@ void main() {
           null,
         ),
       };
+
+  // Chữ hệ thống ×2 trên máy nhỏ → app kẹp còn maxTextScale, không màn nào được tràn.
+  for (final MapEntry(key: name, value: (page, load, pagePrefs))
+      in screens.entries) {
+    testWidgets('$name fits a small phone with large system text', (
+      tester,
+    ) async {
+      tester.view
+        ..physicalSize = sizes['nhỏ']!
+        ..devicePixelRatio = 1;
+      tester.platformDispatcher.textScaleFactorTestValue = 2;
+      addTearDown(tester.view.reset);
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await pumpApp(tester, page, prefs: pagePrefs ?? prefs, settle: false);
+      await load?.call(tester);
+      await tester.pump(const Duration(seconds: 20));
+      expect(tester.takeException(), isNull);
+      expect(
+        MediaQuery.textScalerOf(
+          tester.element(find.byType(page.runtimeType)),
+        ).scale(10),
+        10 * AppDimensions.maxTextScale,
+      );
+    });
+  }
 
   for (final MapEntry(key: sizeName, value: size) in sizes.entries) {
     for (final (mode, locale) in variants) {

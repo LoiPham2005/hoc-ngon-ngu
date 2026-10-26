@@ -8,11 +8,13 @@ import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
+import 'package:lingua/design/theme/styles/app_dimensions.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Pump widget với ProviderScope (SharedPreferences giả) + MaterialApp (theme + l10n).
+/// Pump widget với ProviderScope (SharedPreferences giả) + MaterialApp (theme + l10n)
+/// + kẹp cỡ chữ như `App`.
 ///
 /// [settle]: `false` khi màn có animation vô hạn (spinner) — `pumpAndSettle` sẽ timeout.
 /// [prefs]: giá trị SharedPreferences ban đầu (vd tiến độ học).
@@ -46,6 +48,11 @@ Future<void> pumpApp(
           locale: ref.watch(localeProvider),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => MediaQuery.withClampedTextScaling(
+            minScaleFactor: AppDimensions.minTextScale,
+            maxScaleFactor: AppDimensions.maxTextScale,
+            child: child!,
+          ),
           home: child,
         ),
       ),

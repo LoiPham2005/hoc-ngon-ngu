@@ -11,6 +11,7 @@ import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/design/theme/app_theme.dart';
+import 'package:lingua/design/theme/styles/app_dimensions.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
@@ -75,8 +76,12 @@ class _AppView extends HookConsumerWidget {
                       ? SystemUiOverlayStyle.light
                       : SystemUiOverlayStyle.dark)
                   .copyWith(statusBarColor: AppPalette.transparent),
-          child: ConnectivityBanner(
-            child: AppGate(child: FlutterSmartDialog.init()(context, child)),
+          child: MediaQuery.withClampedTextScaling(
+            minScaleFactor: AppDimensions.minTextScale,
+            maxScaleFactor: AppDimensions.maxTextScale,
+            child: ConnectivityBanner(
+              child: AppGate(child: FlutterSmartDialog.init()(context, child)),
+            ),
           ),
         ),
       ),

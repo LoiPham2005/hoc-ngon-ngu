@@ -1,6 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 abstract class AppDimensions {
+  /// Cỡ chữ hệ thống được phép (kẹp 1 chỗ trong `App`): người cần chữ to vẫn to hơn,
+  /// nhưng không to tới mức vỡ layout (ô kana/kanji, lưới đáp án…).
+  static const double minTextScale = 0.85;
+  static const double maxTextScale = 1.3;
+
   // Spacing
   static const double space0 = 0;
   static const double space2 = 2;
