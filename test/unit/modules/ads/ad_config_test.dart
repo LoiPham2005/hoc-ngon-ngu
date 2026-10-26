@@ -73,12 +73,19 @@ void main() {
     const rules = AdRules(maxRewardedPerSession: 0, appOpenInterval: 15);
     expect(rules.maxPerSessionOf(AdType.rewarded), 0);
     expect(rules.intervalOf(AdType.appOpen), 15);
-    // rewarded interstitial dùng chung giới hạn của rewarded
-    expect(rules.maxPerSessionOf(AdType.rewardedInterstitial), 0);
-    expect(
-      rules.intervalOf(AdType.rewardedInterstitial),
-      rules.intervalOf(AdType.rewarded),
+  });
+
+  test('rewarded interstitial has its own limits, separate from rewarded', () {
+    const rules = AdRules(
+      rewardedInterval: 10,
+      maxRewardedPerSession: 0,
+      rewardedInterstitialInterval: 90,
+      maxRewardedInterstitialPerSession: 2,
     );
+    expect(rules.intervalOf(AdType.rewarded), 10);
+    expect(rules.maxPerSessionOf(AdType.rewarded), 0);
+    expect(rules.intervalOf(AdType.rewardedInterstitial), 90);
+    expect(rules.maxPerSessionOf(AdType.rewardedInterstitial), 2);
   });
 
   test('cấu hình dev chỉ dùng Google test ID', () {

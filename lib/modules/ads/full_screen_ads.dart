@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/ad_loading_overlay.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 
 /// Preloader chính thức của SDK (≥ 9.1.0): tự giữ sẵn ad, tự nạp lại sau khi lấy ra,
@@ -188,6 +189,7 @@ class FullScreenAds<T extends AdWithoutView> {
     String placement,
     AdUnit unit,
     AdRules rules, {
+    AdLoadingOverlay? loading,
     VoidCallback? onShowed,
     void Function(RewardItem reward)? onReward,
     Duration timeout = const Duration(seconds: 5),
@@ -203,6 +205,10 @@ class FullScreenAds<T extends AdWithoutView> {
     _showing = true;
     var presented = false;
     final closed = Completer<bool>();
+    // Ad sẵn thì lấy ngay (không thấy lớp phủ); phải tải tại chỗ > 300ms → hiện "Đang tải…".
+    final loadingTimer = loading == null
+        ? null
+        : Timer(const Duration(milliseconds: 300), loading.show);
     try {
       unawaited(_analytics.logEvent('ad_requested', {'ad_unit_name': name}));
       final ad = await _take(placement, unit, timeout);
@@ -220,6 +226,7 @@ class FullScreenAds<T extends AdWithoutView> {
             _lastShownAt = DateTime.now();
             _shownCount++;
             _analytics.logEvent('ad_impression_custom', {'ad_unit_name': name});
+            loading?.hide();
             onShowed?.call();
           },
           onAdClicked: (_) =>
@@ -247,6 +254,8 @@ class FullScreenAds<T extends AdWithoutView> {
       talker.error('[ADS] $name show threw', e, s);
       return false;
     } finally {
+      loadingTimer?.cancel();
+      loading?.hide();
       if (!presented) _showing = false;
     }
   }

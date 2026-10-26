@@ -9,6 +9,7 @@ import 'package:lingua/core/services/remote_config_service.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/modules/ads/ad_config.dart';
 import 'package:lingua/modules/ads/ad_consent.dart';
+import 'package:lingua/modules/ads/ad_loading_overlay.dart';
 import 'package:lingua/modules/ads/full_screen_ads.dart';
 import 'package:lingua/modules/ads/widgets/native_ad_full_screen.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
@@ -44,6 +45,7 @@ class AdManager {
   final FullScreenAds<RewardedAd> rewarded;
   final FullScreenAds<RewardedInterstitialAd> rewardedInterstitial;
   final consent = AdConsent();
+  final _loading = AdLoadingOverlay();
 
   /// Cấu hình đang áp dụng (đã tính premium / tạm tắt). Widget lắng nghe để ẩn/hiện realtime.
   final config = ValueNotifier<AdConfig>(AdConfig.disabled);
@@ -82,11 +84,13 @@ class AdManager {
     _applyRemote();
     _remote.onUpdated.listen((_) => _applyRemote());
 
-    // Consent PHẢI trước MobileAds.initialize. Quá 8s → vẫn chạy (ads non-personalized).
+    // Consent PHẢI trước MobileAds.initialize. Quá 8s → dùng lựa chọn đã lưu từ lần trước
+    // (lần đầu mà chưa có → chưa load ads cho tới lần mở sau).
     await consent.request().timeout(
       const Duration(seconds: 8),
       onTimeout: () => talker.warning('[ADS] consent timeout'),
     );
+    await consent.refresh();
     await MobileAds.instance.updateRequestConfiguration(
       RequestConfiguration(
         maxAdContentRating: MaxAdContentRating.t,
@@ -132,7 +136,13 @@ class AdManager {
       ); // kịp sẵn lúc interstitial đóng
     }
     final shown = await _track(
-      interstitial.show(placement, unit, cfg.rules, onShowed: onShowed),
+      interstitial.show(
+        placement,
+        unit,
+        cfg.rules,
+        loading: _loading,
+        onShowed: onShowed,
+      ),
     );
     if (shown && chain) {
       await showNativeFull(
@@ -160,7 +170,15 @@ class AdManager {
       );
       return false;
     }
-    return _track(appOpen.show(placement, unit, cfg.rules, onShowed: onShowed));
+    return _track(
+      appOpen.show(
+        placement,
+        unit,
+        cfg.rules,
+        loading: _loading,
+        onShowed: onShowed,
+      ),
+    );
   }
 
   Future<bool> showRewarded(
@@ -176,6 +194,7 @@ class AdManager {
         placement,
         unit,
         cfg.rules,
+        loading: _loading,
         onShowed: onShowed,
         onReward: onReward,
       ),
@@ -196,6 +215,7 @@ class AdManager {
         placement,
         unit,
         cfg.rules,
+        loading: _loading,
         onShowed: onShowed,
         onReward: onReward,
       ),

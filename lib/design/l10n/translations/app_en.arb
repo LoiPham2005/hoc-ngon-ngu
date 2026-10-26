@@ -225,6 +225,7 @@
   "notice_open": "View details",
   "about_privacy": "Privacy policy",
   "about_terms": "Terms of use",
+  "ads_loading": "Loading ad…",
   "error_unexpected": "Something unexpected happened.\nPlease try again.",
   "error_backHome": "Back to home",
   "tts_listen": "Listen",

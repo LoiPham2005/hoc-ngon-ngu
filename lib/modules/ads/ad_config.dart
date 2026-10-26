@@ -75,8 +75,8 @@ abstract class AdUnit with _$AdUnit {
 }
 
 /// Giới hạn tần suất theo LOẠI ad. `*_interval` = giây giữa 2 lần hiện;
-/// `max_*_per_session` = tối đa mỗi phiên (0 = không giới hạn). Rewarded interstitial dùng chung
-/// giới hạn của rewarded.
+/// `max_*_per_session` = tối đa mỗi phiên (0 = không giới hạn). Rewarded (user tự bấm xem) và
+/// rewarded interstitial (tự bật lúc chuyển màn, chen ngang như interstitial) giới hạn riêng.
 @freezed
 abstract class AdRules with _$AdRules {
   @JsonSerializable(fieldRename: FieldRename.snake)
@@ -84,10 +84,12 @@ abstract class AdRules with _$AdRules {
     @Default(30) int interstitialInterval,
     @Default(30) int appOpenInterval,
     @Default(30) int rewardedInterval,
+    @Default(30) int rewardedInterstitialInterval,
     @Default(30) int nativeFullInterval,
     @Default(3) int maxInterstitialPerSession,
     @Default(4) int maxAppOpenPerSession,
     @Default(5) int maxRewardedPerSession,
+    @Default(3) int maxRewardedInterstitialPerSession,
     @Default(3) int maxNativeFullPerSession,
   }) = _AdRules;
 
@@ -99,7 +101,8 @@ abstract class AdRules with _$AdRules {
   int intervalOf(AdType type) => switch (type) {
     AdType.interstitial => interstitialInterval,
     AdType.appOpen => appOpenInterval,
-    AdType.rewarded || AdType.rewardedInterstitial => rewardedInterval,
+    AdType.rewarded => rewardedInterval,
+    AdType.rewardedInterstitial => rewardedInterstitialInterval,
     AdType.native => nativeFullInterval,
     AdType.banner => 0,
   };
@@ -107,7 +110,8 @@ abstract class AdRules with _$AdRules {
   int maxPerSessionOf(AdType type) => switch (type) {
     AdType.interstitial => maxInterstitialPerSession,
     AdType.appOpen => maxAppOpenPerSession,
-    AdType.rewarded || AdType.rewardedInterstitial => maxRewardedPerSession,
+    AdType.rewarded => maxRewardedPerSession,
+    AdType.rewardedInterstitial => maxRewardedInterstitialPerSession,
     AdType.native => maxNativeFullPerSession,
     AdType.banner => 0,
   };
@@ -233,12 +237,14 @@ AdConfig _devConfig({required bool ios}) {
       // Giây giữa 2 lần hiện.
       interstitialInterval: 0,
       appOpenInterval: 15,
-      rewardedInterval: 30, // rewarded interstitial dùng chung
+      rewardedInterval: 30,
+      rewardedInterstitialInterval: 30,
       nativeFullInterval: 30,
       // Tối đa mỗi phiên, 0 = không giới hạn.
       maxInterstitialPerSession: 0,
       maxAppOpenPerSession: 0,
-      maxRewardedPerSession: 0, // rewarded interstitial dùng chung
+      maxRewardedPerSession: 0,
+      maxRewardedInterstitialPerSession: 0,
       maxNativeFullPerSession: 0,
     ),
     adUnits: AdUnits(

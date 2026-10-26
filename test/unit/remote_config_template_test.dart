@@ -43,13 +43,18 @@ void main() {
     }
   });
 
-  test('ad_config: every unit spells out all its fields', () {
+  test('ad_config: rules and every unit spell out all their fields', () {
     final ad = params['ad_config'] as Map<String, dynamic>;
     for (final raw in [
       ad['defaultValue'] as Map<String, dynamic>,
       ...(ad['conditionalValues'] as Map<String, dynamic>).values
           .cast<Map<String, dynamic>>(),
     ]) {
+      expect(
+        (value(raw)['rules'] as Map<String, dynamic>).keys,
+        containsAll(const AdRules().toJson().keys),
+        reason: 'rules',
+      );
       final types = value(raw)['ad_units'] as Map<String, dynamic>;
       for (final MapEntry(key: type, value: units) in types.entries) {
         for (final unit in (units as Map<String, dynamic>).values) {

@@ -84,6 +84,7 @@ iOS chọn plist theo scheme (`Runner-dev`/`-stg`/`-prod`). Thiếu `google-serv
 | API URL, Sentry DSN | `FlavorConfig.current` (lib/config/flavor_config.dart) |
 | AdMob App ID thật | `AndroidManifest.xml`, `Info.plist` |
 | Ad unit thật | Remote Config key `ad_config` |
+| `app-ads.txt` (app có ads) | File ở gốc website khai trong store listing (`https://<web>/app-ads.txt`), nội dung lấy ở AdMob → Apps → app-ads.txt (`google.com, pub-…, DIRECT, f08c47fec0942fa0`). Thiếu → AdMob giảm mạnh lượng ad trả về |
 | Bắt buộc cập nhật / bảo trì / thông báo, bật/tắt bán hàng | Remote Config key `app_config`, `iap_config` (import `firebase/remote_config.test.json` lần đầu) |
 | Id App Store, link chính sách bảo mật + điều khoản | `AppInfo` (lib/config/app_info.dart) — App Store bắt buộc có link chính sách trong app |
 | RevenueCat key | `_googleKey` / `_appleKey` trong `IapService` (lib/modules/iap/iap_service.dart) |

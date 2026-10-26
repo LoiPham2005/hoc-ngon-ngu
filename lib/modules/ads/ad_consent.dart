@@ -8,14 +8,21 @@ import 'package:lingua/core/utils/logger.dart';
 /// Consent BẮT BUỘC trước khi load ads: ATT (iOS 14.5+, không xin → CPM iOS tụt mạnh)
 /// rồi UMP (GDPR/CCPA — thiếu là AdMob flag account). Gọi trước `MobileAds.initialize()`.
 class AdConsent {
-  ConsentStatus? _status;
+  bool _canRequestAds = false;
   bool _requested = false;
 
-  /// `true` khi được phép request ads (chưa cần consent hoặc user đã đồng ý).
-  bool get canRequestAds =>
-      _status == null ||
-      _status == ConsentStatus.notRequired ||
-      _status == ConsentStatus.obtained;
+  /// Được phép request ads — theo `ConsentInformation.canRequestAds()` chính thức của Google
+  /// (không cần consent / đã đồng ý; offline thì dùng lựa chọn đã lưu từ lần trước).
+  bool get canRequestAds => _canRequestAds;
+
+  /// Đọc lại quyền request ads (gọi cả khi [request] quá giờ → dùng lựa chọn đã lưu).
+  Future<void> refresh() async {
+    try {
+      _canRequestAds = await ConsentInformation.instance.canRequestAds();
+    } on Object catch (e, s) {
+      talker.error('[ADS] canRequestAds failed', e, s);
+    }
+  }
 
   Future<void> request() async {
     if (_requested) return;
@@ -37,7 +44,7 @@ class AdConsent {
     } catch (e, s) {
       talker.error('[ADS] UMP failed', e, s);
     }
-    _status = await ConsentInformation.instance.getConsentStatus();
+    await refresh();
   }
 
   /// Màn chọn lại quyền riêng tư (đặt ở Settings khi [isPrivacyOptionsRequired]).
@@ -47,7 +54,7 @@ class AdConsent {
         (e) => done(e == null ? null : '${e.errorCode} ${e.message}'),
       ),
     );
-    _status = await ConsentInformation.instance.getConsentStatus();
+    await refresh();
   }
 
   Future<bool> get isPrivacyOptionsRequired async =>
