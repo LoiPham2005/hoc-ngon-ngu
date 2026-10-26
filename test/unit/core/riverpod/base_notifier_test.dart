@@ -270,6 +270,59 @@ void main() {
     expect(container.read(_provider).isLoading, isFalse);
     expect(value(), [2]);
   });
+
+  group('optimistic', () {
+    test('shows the change at once, without loading, and keeps it', () async {
+      final n = await ready();
+      final done = Completer<void>();
+      final running = n.run(
+        () => done.future,
+        optimistic: (list) => [...list, 1],
+      );
+      expect(value(), [1]); // trước khi server trả lời
+      expect(container.read(_provider).isLoading, isFalse);
+      done.complete();
+      expect(await running, isTrue);
+      expect(value(), [1]);
+    });
+
+    test('failure rolls back and reports the error', () async {
+      final n = await ready();
+      final errors = <String>[];
+      n.messages.listen((m) => errors.add(m.text));
+      final ok = await n.run<void>(
+        () async => throw const NetworkFailure(),
+        optimistic: (list) => [...list, 1],
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(ok, isFalse);
+      expect(value(), isEmpty);
+      expect(errors, hasLength(1));
+    });
+
+    test('server result replaces the optimistic guess', () async {
+      final n = await ready();
+      await n.run(() async => [7], optimistic: (list) => [...list, 1]);
+      expect(value(), [7]);
+    });
+
+    test(
+      'another change in between → reload instead of a blind rollback',
+      () async {
+        final n = await ready();
+        final first = n.run<void>(() async {
+          await Future<void>.delayed(const Duration(milliseconds: 20));
+          throw const NetworkFailure();
+        }, optimistic: (list) => [...list, 1]);
+        await n.run<void>(() async {}, optimistic: (list) => [...list, 2]);
+        expect(value(), [1, 2]);
+        await first;
+        // Không hoàn tác thô (sẽ mất số 2) → tải lại từ build() (= [])
+        await container.read(_provider.future);
+        expect(value(), isEmpty);
+      },
+    );
+  });
 }
 
 class _FailingNotifier extends AsyncNotifier<List<int>>

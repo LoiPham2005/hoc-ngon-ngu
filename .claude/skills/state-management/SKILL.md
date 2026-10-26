@@ -54,18 +54,25 @@ Future<bool> run<R>(
   bool silent = false,         // không đẩy loading (load-more, chạy nền)
   bool cancelPrevious = false, // search/filter: bỏ kết quả lần gọi cũ
   bool dropIfBusy = false,     // chống bấm 2 lần
+  T Function(T current)? optimistic, // đổi state NGAY, lỗi → tự hoàn tác
   String? successMessage,      // toast khi thành công
   String? errorMessage,        // tiền tố toast lỗi: '$errorMessage: ${failure.message}'
 })
 ```
 
-- Thành công: có `apply` → `state = apply(state, result)`; không có mà `result` cùng kiểu `T` → thay state; khác kiểu → giữ state. Trả `true`.
-- Đang chạy: còn data → giữ data + `isLoading` (AsyncView hiện thanh tiến trình); chưa có → `AsyncLoading`.
+- Thành công: có `apply` → `state = apply(state, result)`; không có mà `result` cùng kiểu `T` → thay state; khác kiểu (vd việc trả `void`) → giữ state. Trả `true`.
+- Đang chạy: còn data → giữ data + `isLoading` (AsyncView hiện thanh tiến trình, giữ tới khi lần chạy song song cuối cùng xong); chưa có → `AsyncLoading`; đang lỗi → nút "Thử lại" hiện vòng xoay.
 - Lỗi (`ErrorHandler.handle` → `Failure`, log qua talker): còn data → giữ data + phát `RunMessage` lỗi (toast); chưa có data → `AsyncError(failure)` (màn lỗi). Trả `false`.
 - `ApiResponse<T>` → `.data` (backend lỗi thì Dio đã ném, có response là có `data`).
 - Getter: `isBusy`, `messages` (`Stream<RunMessage>`, AsyncView tự nghe khi truyền `notifier`).
-- Gán state tay khi cần (logout, optimistic): `state = AsyncData(x)`.
-- Lưu ý: `T` nullable (vd `User?`) mà action trả `null` → state thành `null`.
+- **Lạc quan** (`optimistic`): đổi giao diện ngay, không hiện loading, không chờ server — cho việc nhỏ gần như luôn thành công (thích, bật/tắt, đánh dấu đã đọc). Lỗi → tự hoàn tác + toast; có thay đổi khác chen vào → tải lại (`invalidateSelf`) thay vì hoàn tác thô. KHÔNG dùng cho thanh toán / đặt hàng.
+  ```dart
+  Future<void> like(String id) => run(() => _api.like(id),
+      optimistic: (list) => [for (final p in list) p.id == id ? p.copyWith(liked: true) : p]);
+  ```
+- An toàn sẵn: kết quả về muộn không đè dữ liệu mới (chạy song song / provider build lại vì đổi bộ lọc → bỏ kết quả cũ); toast vẫn chạy sau khi build lại; lỗi mất mạng / 4xx chỉ ghi warning, chỉ lỗi lạ / 5xx mới lên Crashlytics + Sentry.
+- Gán state tay khi cần (logout): `state = AsyncData(x)`.
+- `T` nullable (vd `User?`): `null` chỉ xoá state khi action KHAI BÁO trả kiểu đó (vd `/me` trả `User?`); việc trả `void` (đổi mật khẩu…) giữ nguyên state.
 
 Quy tắc:
 - Lỗi nghiệp vụ → `throw ServerFailure('...')` (hoặc Failure khác) trong `action`, không tự `try/catch` rồi gán state.

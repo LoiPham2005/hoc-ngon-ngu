@@ -66,7 +66,7 @@ Mọi thao tác async đi qua **một hàm `run(action, ...)`** (trả `true` kh
 
 - Kết quả cùng kiểu state `T` → thay state. Khác kiểu → giữ state; muốn sửa tại chỗ thì truyền `apply: (current, result) => ...`.
 - Đang chạy: còn data thì giữ data + thanh tiến trình. Lỗi: còn data → giữ data + toast; chưa có data → màn lỗi.
-- Tuỳ chọn: `cancelPrevious` (search/filter), `dropIfBusy` (chống bấm 2 lần), `silent` (không hiện loading), `successMessage` / `errorMessage` (toast).
+- Tuỳ chọn: `cancelPrevious` (search/filter), `dropIfBusy` (chống bấm 2 lần), `silent` (không hiện loading), `optimistic` (đổi giao diện ngay, lỗi tự hoàn tác — thích / bật tắt), `successMessage` / `errorMessage` (toast).
 - Backend trả `{ "data": ... }` → service `Future<ApiResponse<T>>`, lấy `res.data`. Danh sách phân trang: `ApiResponse<PaginatedResponse<T>>` (`items` + `meta`: page, limit, total, totalPages, hasNext). Lỗi đi bằng HTTP status + `{error:{code,message,fields}}` → `ErrorHandler`.
 - JSON backend là camelCase (không đổi tên field); JSON snake_case (Remote Config) → `@JsonSerializable(fieldRename: FieldRename.snake)` trên model.
 - Phân trang: mixin `PaginatedNotifier<E>` (`fetchPage`, `loadFirstPage`, `loadMore`). Cache sau khi rời màn: `ref.cacheFor(Duration)`.

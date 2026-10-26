@@ -15,6 +15,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 ///   apply: (list, _) => list.where((e) => e.id != id).toList(), // sửa state tại chỗ
 ///   successMessage: 'Đã xoá',
 /// );
+/// // Lạc quan: đổi giao diện NGAY, lỗi thì tự hoàn tác (nút thích, công tắc…)
+/// Future<void> like(String id) => run(
+///   () => _api.like(id),
+///   optimistic: (list) => [for (final p in list) p.id == id ? p.copyWith(liked: true) : p],
+/// );
 /// ```
 // ignore: invalid_use_of_internal_member
 mixin BaseNotifier<T> on $AsyncNotifier<T> {
@@ -44,6 +49,9 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
   /// [silent]: không đẩy trạng thái loading (load-more, việc chạy nền).
   /// [cancelPrevious]: bỏ kết quả lần gọi trước (search/filter gõ liên tục).
   /// [dropIfBusy]: đang chạy thì bỏ qua lần gọi mới (chống bấm 2 lần).
+  /// [optimistic]: đổi state NGAY (không hiện loading, không chờ server) — cho việc nhỏ gần như
+  ///   luôn thành công: thích, bật/tắt, đánh dấu đã đọc. Lỗi → tự hoàn tác + toast lỗi.
+  ///   KHÔNG dùng cho thanh toán / đặt hàng / việc phải chắc chắn.
   ///
   /// Trả `true` khi thành công (vd: đóng màn sau khi lưu).
   Future<bool> run<R>(
@@ -52,6 +60,7 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
     bool silent = false,
     bool cancelPrevious = false,
     bool dropIfBusy = false,
+    T Function(T current)? optimistic,
     String? successMessage,
     String? errorMessage,
   }) async {
@@ -62,7 +71,15 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
     // hiệu lực → bỏ kết quả (không ghi đè dữ liệu của lần build mới, vd vừa đổi bộ lọc).
     final owner = ref;
     final previous = state;
-    if (!silent) {
+    // Lạc quan: đổi state ngay; nhớ trước / sau để hoàn tác nếu lỗi.
+    ({T before, T after})? guess;
+    if (optimistic != null && previous.hasValue) {
+      final before = previous.requireValue;
+      guess = (before: before, after: optimistic(before));
+      state = AsyncData(guess.after);
+    }
+    final showLoading = !silent && guess == null;
+    if (showLoading) {
       _pending[id] = (owner: owner, cancel: cancelPrevious);
       // ignore: invalid_use_of_internal_member
       state = AsyncValue<T>.loading().copyWithPrevious(previous);
@@ -81,7 +98,7 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
         if (state.hasValue) {
           final current = state.requireValue;
           final next = apply(current, result);
-          if (!silent || !identical(next, current)) set(AsyncData(next));
+          if (showLoading || !identical(next, current)) set(AsyncData(next));
           updated = true;
         }
       } else if (_replaces(result)) {
@@ -90,7 +107,7 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
       }
       // Không có gì để cập nhật (kết quả khác kiểu / chưa có data để apply) → bỏ loading
       // (kể cả đang lỗi) thay vì kẹt loading mãi.
-      if (!updated && !silent) set(_settled(previous));
+      if (!updated && showLoading) set(_settled(previous));
       if (successMessage != null) _emit(RunMessage(successMessage));
       return true;
     } catch (e, s) {
@@ -106,9 +123,18 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
       final text = errorMessage == null
           ? failure.message
           : '$errorMessage: ${failure.message}';
-      // Còn data (của lúc bắt đầu hoặc do lần chạy khác vừa cập nhật) → giữ data + toast lỗi.
-      if (state.hasValue) {
-        if (!silent) set(_settled(previous));
+      if (guess != null) {
+        // Hoàn tác thay đổi lạc quan. Đã có thay đổi khác chen vào (vd bấm thích nhiều bài
+        // liên tiếp) → hoàn tác thô sẽ làm mất thay đổi đó → tải lại từ nguồn cho đúng.
+        if (state.hasValue && identical(state.requireValue, guess.after)) {
+          set(AsyncData(guess.before));
+        } else {
+          ref.invalidateSelf();
+        }
+        _emit(RunMessage(text, failure: failure));
+      } else if (state.hasValue) {
+        // Còn data (của lúc bắt đầu hoặc do lần chạy khác vừa cập nhật) → giữ data + toast lỗi.
+        if (showLoading) set(_settled(previous));
         _emit(RunMessage(text, failure: failure));
       } else {
         set(AsyncError(failure, s));
@@ -119,7 +145,7 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
       _pending.remove(id);
       // Lần chạy giữ cờ loading cho mình đã bị bỏ (cancelPrevious / build lại) → khi không còn
       // lần nào chờ thì tắt cờ, tránh kẹt thanh tiến trình. Không động vào build() đang chạy.
-      if (!silent &&
+      if (showLoading &&
           owner.mounted &&
           state.isLoading &&
           (state.hasValue || state.hasError) &&
