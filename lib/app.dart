@@ -15,6 +15,8 @@ import 'package:lingua/design/theme/styles/app_dimensions.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
+import 'package:lingua/modules/analytics/analytics_route_observer.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/modules/app_config/app_gate.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/app_error_screen.dart';
@@ -37,6 +39,13 @@ class _AppView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Ghi màn đang xem lên Analytics; MainRoute chỉ là khung tab (tab bên trong tự ghi).
+    final screens = useMemoized(
+      () => ScreenTracker(
+        ref.read(analyticsServiceProvider),
+        shells: {MainRoute.name},
+      ),
+    );
     useEffect(() {
       ErrorWidget.builder = (details) => AppErrorScreen(details: details);
       // Áp lại System UI khi resume (nav bar Android hay lòi ra sau dialog/chuyển app).
@@ -67,7 +76,10 @@ class _AppView extends HookConsumerWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: appRouter.config(
-          navigatorObservers: () => [TalkerRouteObserver(talker)],
+          navigatorObservers: () => [
+            TalkerRouteObserver(talker),
+            AnalyticsRouteObserver(screens),
+          ],
         ),
         builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
           // Icon status bar sáng/tối theo theme (màn không có AppBar vẫn đúng).

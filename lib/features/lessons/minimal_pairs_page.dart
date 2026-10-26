@@ -11,10 +11,12 @@ import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/course/providers/learning_events.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/exercise_quiz.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
@@ -368,6 +370,13 @@ class _MinimalPairQuiz extends HookConsumerWidget {
                     index.value++;
                     if (index.value >= total) {
                       ref.read(soundServiceProvider).play(Sfx.complete);
+                      ref
+                          .read(analyticsServiceProvider)
+                          .practiceCompleted(
+                            'minimal_pairs',
+                            total: total,
+                            correct: correct.value,
+                          );
                     }
                   },
                   child: Text(

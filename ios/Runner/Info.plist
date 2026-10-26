@@ -71,6 +71,8 @@
 	     Khi release: thay bằng App ID thật từ https://apps.admob.com
 	     KHÔNG được dùng test ID trên prod → vi phạm policy → BAN account.
 	     ═══════════════════════════════════════════════════════════════ -->
+		<key>FirebaseAutomaticScreenReportingEnabled</key>
+		<false/>
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3940256099942544~1458002511</string>
 		<key>GADNativeAdValidatorEnabled</key>

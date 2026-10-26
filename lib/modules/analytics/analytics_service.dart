@@ -27,8 +27,18 @@ class AnalyticsService {
     }
   }
 
-  Future<void> logScreenView(String screenName) =>
-      logEvent('screen_view', {'screen_name': screenName});
+  /// Màn đang xem — `AnalyticsRouteObserver` tự gọi mỗi lần chuyển màn, không cần gọi tay.
+  Future<void> logScreenView(String screenName) async {
+    if (!_enabled) return;
+    try {
+      await FirebaseAnalytics.instance.logScreenView(
+        screenName: screenName,
+        screenClass: screenName,
+      );
+    } catch (e, s) {
+      talker.error('Analytics logScreenView "$screenName" failed', e, s);
+    }
+  }
 
   Future<void> setUserId(String? id) async {
     if (!_enabled) return;

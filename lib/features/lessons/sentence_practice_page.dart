@@ -12,9 +12,11 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/course/providers/learning_events.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/dialogs/permission_dialog.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -120,6 +122,13 @@ class _SentenceSession extends HookConsumerWidget {
       index.value++;
       if (index.value >= total) {
         ref.read(soundServiceProvider).play(Sfx.complete);
+        ref
+            .read(analyticsServiceProvider)
+            .practiceCompleted(
+              'sentence_practice',
+              total: total,
+              correct: correct.value,
+            );
       }
     }
 

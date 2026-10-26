@@ -4,9 +4,11 @@ import 'package:lingua/core/services/sound_service.dart';
 import 'package:lingua/design/l10n/locale_notifier.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/course/providers/learning_events.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_session_notifier.g.dart';
@@ -317,7 +319,21 @@ class QuizSessionNotifier extends _$QuizSessionNotifier {
   /// Câu tiếp theo; ở câu cuối → kết thúc bài (màn kết quả).
   void next() {
     if (!state.isAnswered) return;
-    if (state.isLast) ref.read(soundServiceProvider).play(Sfx.complete);
+    if (state.isLast) {
+      ref.read(soundServiceProvider).play(Sfx.complete);
+      ref
+          .read(analyticsServiceProvider)
+          .practiceCompleted(
+            topic.review != null ? 'review' : 'quiz',
+            topic: [
+              ?topic.module?.name,
+              ?topic.review?.name,
+              topic.mode.name,
+            ].join('.'),
+            total: state.questions.length,
+            correct: state.correctCount,
+          );
+    }
     state = QuizSession(
       questions: state.questions,
       index: state.isLast ? state.index : state.index + 1,

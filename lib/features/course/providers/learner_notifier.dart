@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/features/course/models/course_model.dart';
+import 'package:lingua/features/course/providers/learning_events.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'learner_notifier.g.dart';
@@ -326,6 +329,23 @@ class LearnerNotifier extends _$LearnerNotifier {
     );
   }
 
+  /// Mốc học tập lên Analytics: chọn khoá, đạt mục tiêu ngày (so trạng thái trước / sau).
+  void _track(Learner before, Learner after) {
+    final analytics = ref.read(analyticsServiceProvider);
+    if (after.course case final course? when course != before.course) {
+      unawaited(analytics.courseSelected(course, first: before.course == null));
+    }
+    final today = _today;
+    final was = before.lastActiveDay == today ? before.todayCount : 0;
+    if (after.lastActiveDay == today &&
+        was < after.dailyGoal &&
+        after.todayCount >= after.dailyGoal) {
+      unawaited(
+        analytics.dailyGoalReached(goal: after.dailyGoal, streak: after.streak),
+      );
+    }
+  }
+
   /// Thống kê [days] ngày gần nhất (cũ → mới), ngày không học = 0.
   List<(DateTime, DayStat)> lastDays(int days) {
     final d = now();
@@ -337,6 +357,7 @@ class LearnerNotifier extends _$LearnerNotifier {
   }
 
   Future<void> _save(Learner next) async {
+    _track(state, next);
     state = next;
     await ref
         .read(sharedPrefsProvider)

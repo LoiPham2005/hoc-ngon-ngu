@@ -29,6 +29,8 @@
              KHÔNG được dùng test ID trên prod → vi phạm policy → BAN account.
              ═══════════════════════════════════════════════════════════════ -->
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713"/>
+    <!-- Màn hình do app tự ghi theo route (AnalyticsRouteObserver); Firebase tự ghi chỉ ra "MainActivity". -->
+    <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false"/>
     <!-- Tắt lớp debugger của native ad (overlay kiểm tra layout của SDK). -->
     <meta-data android:name="com.google.android.gms.ads.flag.NATIVE_AD_DEBUGGER_ENABLED" android:value="false"/>
     <!-- flutter_local_notifications: thông báo hẹn giờ (nhắc học hằng ngày). -->

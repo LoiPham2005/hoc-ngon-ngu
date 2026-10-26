@@ -21,7 +21,7 @@ Mỗi module 1 key riêng (`ad_config`, `app_config`, `iap_config`): gỡ module
 
 ## Ads (lib/modules/ads)
 
-File: `ad_config.dart` (model + placement + cấu hình dev), `ad_manager.dart` (điểm vào duy nhất, `adManagerProvider`), `full_screen_ads.dart` (show chung cho interstitial / app open / rewarded / rewarded interstitial — giữ sẵn ad bằng **Preloader API chính thức của SDK** `InterstitialAdPreloader`/`RewardedAdPreloader`/`AppOpenAdPreloader`, SDK tự nạp lại + hết hạn + retry), `ad_consent.dart` (ATT + UMP), `widgets/` (banner, native, native toàn màn). Bản `google_mobile_ads` 9.1.0.
+File: `ad_config.dart` (model + placement + cấu hình dev), `ad_manager.dart` (điểm vào duy nhất, `adManagerProvider`), `full_screen_ads.dart` (show chung cho interstitial / app open / rewarded / rewarded interstitial — giữ sẵn ad bằng **Preloader API chính thức của SDK** `InterstitialAdPreloader`/`RewardedAdPreloader`/`AppOpenAdPreloader`, SDK tự nạp lại + hết hạn + retry), `ad_consent.dart` (ATT + UMP), `widgets/` (banner, native, native toàn màn). Bản `google_mobile_ads` 9.2.0.
 
 ```dart
 final ads = ref.read(adManagerProvider);
@@ -84,9 +84,19 @@ final isPremium = ref.watch(isPremiumProvider);       // tự cập nhật
   - Cố ý KHÔNG có cờ tước premium người đã trả tiền. Đổi giá / gói / tặng premium từng người → làm trên RevenueCat.
   - Bỏ hẳn gói trả phí khi còn người đăng ký: bật `premium_for_all` → ngừng bán gói trên App Store Connect / Play Console → giữ code IAP tới khi gói cuối hết hạn.
 
-## Analytics (lib/modules/analytics/analytics_service.dart)
+## Analytics (lib/modules/analytics/)
 
-`analyticsServiceProvider` → `logEvent(name, params)` (tự bỏ param null), `logScreenView(name)`, `setUserId(id)`. Doanh thu quảng cáo KHÔNG tự ghi: liên kết AdMob ↔ Firebase thì Firebase tự ghi `ad_impression` (kèm doanh thu, mọi định dạng, cả mạng mediation) + `ad_click` — tự ghi thêm là đếm đôi. Tắt ở dev. Lỗi chỉ log, không ném.
+`analyticsServiceProvider` → `logEvent(name, params)` (tự bỏ param null), `logScreenView(name)`, `setUserId(id)`.
+
+**Màn hình tự ghi**: `AnalyticsRouteObserver` (gắn trong `app.dart`) ghi `screen_view` mỗi lần chuyển màn / đổi tab, tên = route bỏ "Route" (`HomeRoute` → `Home`); dialog không tính. `ScreenTracker(shells: {MainRoute.name})`: route chỉ là khung tab không tính là màn. Thêm màn mới không phải làm gì. Đã tắt màn tự ghi của Firebase (`google_analytics_automatic_screen_reporting_enabled` trong AndroidManifest, `FirebaseAutomaticScreenReportingEnabled` trong Info.plist) — nếu không mọi màn đều ra "MainActivity".
+- Sự kiện mốc học tập của lingua: `features/course/providers/learning_events.dart` (extension trên `AnalyticsService`) — `course_selected` (`first` = xong onboarding), `practice_completed` (`type`, `topic`, `total`, `correct`, `accuracy`), `daily_goal_reached` (`goal`, `streak`). `course_selected` / `daily_goal_reached` tự ghi trong `LearnerNotifier._save`; màn luyện tập mới nhớ gọi `practiceCompleted` lúc xong bài.
+
+**Xem số liệu** (Firebase console → Analytics, hoặc Google Analytics):
+- Màn nào vào nhiều / ít, ở lại bao lâu: Reports → Engagement → *Pages and screens*.
+- Người dùng đi tiếp đâu, thoát ở màn nào: Explore → *Path exploration* (chọn màn bắt đầu).
+- Rơi rụng ở bước nào: Explore → *Funnel exploration* (dựng từ `screen_view` + sự kiện mốc).
+- Có quay lại không: Reports → *Retention*. Thoát vì crash: Crashlytics.
+- Thử ngay (bản dev KHÔNG gửi số liệu → chạy stg): Android `adb shell setprop debug.firebase.analytics.app <package>`; iOS thêm `-FIRDebugEnabled` vào Arguments của scheme → Firebase → DebugView. Số liệu báo cáo thường trễ vài giờ. Doanh thu quảng cáo KHÔNG tự ghi: liên kết AdMob ↔ Firebase thì Firebase tự ghi `ad_impression` (kèm doanh thu, mọi định dạng, cả mạng mediation) + `ad_click` — tự ghi thêm là đếm đôi. Tắt ở dev. Lỗi chỉ log, không ném.
 
 ## AppConfig (lib/modules/app_config/) — điều khiển app từ xa
 

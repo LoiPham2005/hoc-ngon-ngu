@@ -7,9 +7,11 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/features/course/providers/learning_events.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
 /// Tự gõ V2, V3 cho 10 động từ bất quy tắc (ưu tiên động từ chưa thuộc) — nhớ chắc hơn trắc nghiệm.
@@ -99,6 +101,13 @@ class _TypingSession extends HookConsumerWidget {
       index.value++;
       if (index.value >= total) {
         ref.read(soundServiceProvider).play(Sfx.complete);
+        ref
+            .read(analyticsServiceProvider)
+            .practiceCompleted(
+              'irregular_verbs',
+              total: total,
+              correct: correct.value,
+            );
       }
     }
 
