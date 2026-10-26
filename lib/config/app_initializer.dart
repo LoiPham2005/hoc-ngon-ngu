@@ -44,12 +44,11 @@ abstract class AppInitializer {
     final iap = globalContainer.read(iapServiceProvider);
     final ads = globalContainer.read(adManagerProvider);
     await _step('IAP', iap.initialize);
-    // Mua premium → tắt quảng cáo (chỉ khi IAP thật, giả lập không ghi đè trạng thái đã lưu).
-    if (!iap.isMock) {
-      void syncPremium() => ads.setPremium(iap.premium.value);
-      iap.premium.addListener(syncPremium);
-      syncPremium();
-    }
+    // Premium (đã mua / `premium_for_all` từ xa) → tắt quảng cáo. IAP giả lập (chưa có key):
+    // lần đầu không ghi đè trạng thái tự đặt bằng `ads.setPremium`, chỉ đồng bộ khi đổi.
+    globalContainer.listen<bool>(isPremiumProvider, (previous, premium) {
+      if (!iap.isMock || previous != null || premium) ads.setPremium(premium);
+    }, fireImmediately: true);
     await _step('Ads', ads.initialize);
 
     talker.info('✅ App ready (${FlavorConfig.current.flavor.name})');

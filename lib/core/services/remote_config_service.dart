@@ -70,9 +70,43 @@ class RemoteConfigService {
     }
   }
 
+  /// Đọc key JSON [key] thành model; chưa có / sai kiểu → [fallback] (cấu hình hỏng không làm sập app).
+  T decode<T>(
+    String key,
+    T Function(Map<String, dynamic>) fromJson,
+    T fallback,
+  ) {
+    final value = json(key);
+    if (value == null) return fallback;
+    try {
+      return fromJson(value);
+    } on Object catch (e) {
+      talker.error(
+        '[REMOTE-CONFIG] "$key" sai kiểu dữ liệu → dùng mặc định',
+        e,
+      );
+      return fallback;
+    }
+  }
+
   bool getBool(String key) => _rc?.getBool(key) ?? false;
   String getString(String key) => _rc?.getString(key) ?? '';
 }
 
 @Riverpod(keepAlive: true)
 RemoteConfigService remoteConfigService(Ref ref) => RemoteConfigService();
+
+extension RemoteConfigRef on Ref {
+  /// Model từ key JSON [key] cho provider cấu hình của module — tự build lại khi Remote Config
+  /// đổi (realtime). `AppConfig appConfig(Ref ref) => ref.remoteConfig('app_config', ...)`.
+  T remoteConfig<T>(
+    String key,
+    T Function(Map<String, dynamic>) fromJson,
+    T fallback,
+  ) {
+    final remote = read(remoteConfigServiceProvider);
+    final sub = remote.onUpdated.listen((_) => invalidateSelf());
+    onDispose(sub.cancel);
+    return remote.decode(key, fromJson, fallback);
+  }
+}

@@ -25,6 +25,13 @@
       },
       "valueType": "JSON",
       "description": "min_version: bản thấp hơn bắt buộc cập nhật · maintenance: khoá app bảo trì · notice_*: thông báo lúc mở app (để trống tiêu đề = tắt)"
+    },
+    "iap_config": {
+      "defaultValue": {
+        "value": "{\"purchase_enabled\": true, \"premium_for_all\": false}"
+      },
+      "valueType": "JSON",
+      "description": "purchase_enabled=false: ngừng bán (người đã mua vẫn giữ premium) · premium_for_all=true: mở premium cho mọi người (khẩn cấp)"
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:lingua/config/flavor_config.dart';
 import 'package:lingua/core/utils/logger.dart';
+import 'package:lingua/modules/iap/iap_config.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,6 +24,7 @@ class PurchaseResult {
 
 /// Mua hàng qua RevenueCat. Chưa điền API key (vd flavor dev) → chế độ giả lập:
 /// không gọi store, `debugSetPremium` để test UI premium.
+/// Bật/tắt bán hàng, mở premium cho mọi người từ xa: xem [IapConfig].
 ///
 /// ```dart
 /// final iap = ref.read(iapServiceProvider);
@@ -31,6 +33,9 @@ class PurchaseResult {
 /// final isPremium = ref.watch(isPremiumProvider);
 /// ```
 class IapService {
+  IapService({IapConfig Function()? config})
+    : _config = config ?? (() => const IapConfig());
+
   // Lấy tại https://app.revenuecat.com → Project → API keys.
   static const _googleKey = '';
   static const _appleKey = '';
@@ -38,6 +43,8 @@ class IapService {
 
   /// Trạng thái premium (entitlement [entitlement] còn hiệu lực).
   final premium = ValueNotifier<bool>(false);
+
+  final IapConfig Function() _config;
 
   bool _ready = false;
   Future<void>? _init;
@@ -68,9 +75,9 @@ class IapService {
     _ready = true;
   }
 
-  /// Các gói đang bán (offering `current` trên RevenueCat).
+  /// Các gói đang bán (offering `current` trên RevenueCat); ngừng bán từ xa → rỗng.
   Future<List<Package>> packages() async {
-    if (!_ready) return const [];
+    if (!_ready || !_config().purchaseEnabled) return const [];
     try {
       return (await Purchases.getOfferings()).current?.availablePackages ??
           const [];
@@ -80,17 +87,23 @@ class IapService {
     }
   }
 
-  Future<PurchaseResult> purchase(Package package) => _guard(() async {
-    talker.info('[IAP] purchase ${package.identifier}');
-    // ignore: deprecated_member_use
-    final info = (await Purchases.purchasePackage(package)).customerInfo;
-    return _update(info)
-        ? const PurchaseResult(PurchaseStatus.success)
-        : const PurchaseResult(
-            PurchaseStatus.failed,
-            'Chưa kích hoạt được gói',
-          );
-  });
+  Future<PurchaseResult> purchase(Package package) async {
+    if (!_config().purchaseEnabled) {
+      return const PurchaseResult(PurchaseStatus.failed, 'Tạm ngừng bán gói');
+    }
+    return _guard(() async {
+      talker.info('[IAP] purchase ${package.identifier}');
+      final info = (await Purchases.purchase(
+        PurchaseParams.package(package),
+      )).customerInfo;
+      return _update(info)
+          ? const PurchaseResult(PurchaseStatus.success)
+          : const PurchaseResult(
+              PurchaseStatus.failed,
+              'Chưa kích hoạt được gói',
+            );
+    });
+  }
 
   Future<PurchaseResult> restore() => _guard(() async {
     final ok = _update(await Purchases.restorePurchases());
@@ -155,17 +168,20 @@ class IapService {
 }
 
 @Riverpod(keepAlive: true)
-IapService iapService(Ref ref) => IapService();
+IapService iapService(Ref ref) =>
+    IapService(config: () => ref.read(iapConfigProvider));
 
-/// `ref.watch(isPremiumProvider)` — tự cập nhật khi mua / hết hạn / restore.
+/// `ref.watch(isPremiumProvider)` — tự cập nhật khi mua / hết hạn / restore / bật
+/// `premium_for_all` từ xa.
 @Riverpod(keepAlive: true)
 class IsPremium extends _$IsPremium {
   @override
   bool build() {
+    final forAll = ref.watch(iapConfigProvider).premiumForAll;
     final premium = ref.read(iapServiceProvider).premium;
-    void listener() => state = premium.value;
+    void listener() => state = forAll || premium.value;
     premium.addListener(listener);
     ref.onDispose(() => premium.removeListener(listener));
-    return premium.value;
+    return forAll || premium.value;
   }
 }

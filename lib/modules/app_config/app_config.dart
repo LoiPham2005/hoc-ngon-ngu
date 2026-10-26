@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:lingua/core/services/app_version_service.dart';
 import 'package:lingua/core/services/remote_config_service.dart';
-import 'package:lingua/core/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_config.freezed.dart';
@@ -44,31 +43,11 @@ abstract class AppConfig with _$AppConfig {
   bool get hasNotice => noticeTitle.isNotEmpty;
 
   /// Mã nội dung thông báo: sửa chữ → coi là thông báo mới, hiện lại cho mọi người.
-  String get noticeId =>
-      Object.hash(noticeTitle, noticeBody, noticeUrl).toString();
+  /// Ghép thẳng nội dung (không dùng hashCode: đổi giữa các lần mở app → hiện lại mãi).
+  String get noticeId => '$noticeTitle|$noticeBody|$noticeUrl';
 }
 
 /// `final cfg = ref.watch(appConfigProvider);` — tự cập nhật khi Remote Config đổi.
 @Riverpod(keepAlive: true)
-class AppConfigNotifier extends _$AppConfigNotifier {
-  static const _key = 'app_config';
-
-  @override
-  AppConfig build() {
-    final remote = ref.read(remoteConfigServiceProvider);
-    final sub = remote.onUpdated.listen((_) => state = _read(remote));
-    ref.onDispose(sub.cancel);
-    return _read(remote);
-  }
-
-  AppConfig _read(RemoteConfigService remote) {
-    final json = remote.json(_key);
-    if (json == null) return const AppConfig();
-    try {
-      return AppConfig.fromJson(json);
-    } on Object catch (e) {
-      talker.error('[APP-CONFIG] "$_key" sai kiểu dữ liệu → dùng mặc định', e);
-      return const AppConfig();
-    }
-  }
-}
+AppConfig appConfig(Ref ref) =>
+    ref.remoteConfig('app_config', AppConfig.fromJson, const AppConfig());

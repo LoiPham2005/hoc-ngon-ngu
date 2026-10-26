@@ -9,7 +9,15 @@ Mọi service là provider `@Riverpod(keepAlive: true)` đặt cạnh class. Tro
 
 ## Remote Config (lib/core/services/remote_config_service.dart)
 
-`remoteConfigServiceProvider` dùng chung cho ads + app_config: `initialize()` (boot, sau Firebase — dùng ngay giá trị đã cache, tải mới chạy nền nên không chờ mạng), `json(key)` (Map hoặc null), `getBool/getString`, `onUpdated` (stream realtime). Bật/tắt theo flavor: `FlavorConfig.useRemoteConfig` (mặc định dev `false` → module dùng cấu hình local; đổi `true` để dev đọc Remote Config của project Firebase dev).
+`remoteConfigServiceProvider` dùng chung cho ads, app_config, iap_config: `initialize()` (boot, sau Firebase — dùng ngay giá trị đã cache, tải mới chạy nền nên không chờ mạng), `json(key)` (Map hoặc null), `decode(key, fromJson, fallback)` (JSON sai → fallback), `getBool/getString`, `onUpdated` (stream realtime).
+
+Module thêm key cấu hình mới: provider 1 dòng, tự build lại khi Firebase đổi:
+```dart
+@Riverpod(keepAlive: true)
+IapConfig iapConfig(Ref ref) =>
+    ref.remoteConfig('iap_config', IapConfig.fromJson, const IapConfig());
+```
+Mỗi module 1 key riêng (`ad_config`, `app_config`, `iap_config`): gỡ module gọn, đặt điều kiện (Android/iOS, quốc gia) riêng từng key, JSON sai chỉ hỏng key đó. Bật/tắt theo flavor: `FlavorConfig.useRemoteConfig` (mặc định dev `false` → module dùng cấu hình local; đổi `true` để dev đọc Remote Config của project Firebase dev).
 
 ## Ads (lib/modules/ads)
 
@@ -40,7 +48,7 @@ const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 - Release: thay AdMob App ID test trong `AndroidManifest.xml` (`com.google.android.gms.ads.APPLICATION_ID`) và `Info.plist` (`GADApplicationIdentifier`).
 - Demo: `features/ads_demo` (route `/ads-demo`).
 
-## IAP — RevenueCat (lib/modules/iap/iap_service.dart)
+## IAP — RevenueCat (lib/modules/iap/)
 
 ```dart
 final iap = ref.read(iapServiceProvider);
@@ -51,6 +59,11 @@ final isPremium = ref.watch(isPremiumProvider);       // tự cập nhật
 ```
 - Key RevenueCat `_googleKey` / `_appleKey` trong file, entitlement `premium`. Key rỗng → chế độ giả lập (`isMock`): không gọi store, dùng `debugSetPremium(true)` để test UI.
 - `cancelled` thì không báo lỗi; `failed` có `message` tiếng Việt để toast.
+- Bật/tắt từ xa — Remote Config key `iap_config` (`iap_config.dart`), áp dụng ngay:
+  - `purchase_enabled: false` → ngừng bán (`packages()` rỗng, `purchase()` từ chối). Người đã mua vẫn giữ premium; nút "Khôi phục giao dịch" luôn phải hiện (Apple bắt buộc).
+  - `premium_for_all: true` → `isPremiumProvider` = true cho mọi người (khẩn cấp: store / màn mua lỗi; hoặc bỏ tính năng trả phí). Quảng cáo tự tắt theo (AppInitializer đồng bộ `isPremiumProvider` → `ads.setPremium`).
+  - Cố ý KHÔNG có cờ tước premium người đã trả tiền. Đổi giá / gói / tặng premium từng người → làm trên RevenueCat.
+  - Bỏ hẳn gói trả phí khi còn người đăng ký: bật `premium_for_all` → ngừng bán gói trên App Store Connect / Play Console → giữ code IAP tới khi gói cuối hết hạn.
 
 ## Analytics (lib/modules/analytics/analytics_service.dart)
 

@@ -65,7 +65,7 @@ class NotificationService { ... }
 @Riverpod(keepAlive: true)
 NotificationService notificationService(Ref ref) => NotificationService();
 ```
-Phụ thuộc service khác → `ref.read(...)` trong provider (vd `FcmService(ref.read(notificationServiceProvider))`). Provider có sẵn: `dioProvider`, `sharedPrefsProvider`, `secureStorageProvider`, `notificationServiceProvider`, `fcmServiceProvider`, `appVersionServiceProvider`, `analyticsServiceProvider`, `appConfigServiceProvider`, `iapServiceProvider`, provider Ads trong `lib/modules/ads/ads_providers.dart`.
+Phụ thuộc service khác → `ref.read(...)` trong provider (vd `FcmService(ref.read(notificationServiceProvider))`). Provider có sẵn: `dioProvider`, `sharedPrefsProvider`, `secureStorageProvider`, `notificationServiceProvider`, `fcmServiceProvider`, `appVersionServiceProvider`, `analyticsServiceProvider`, `appConfigProvider`, `iapServiceProvider`, `adManagerProvider` (lib/modules/ads/ad_manager.dart).
 
 Đọc:
 - Trong widget/notifier: `ref.read(xProvider)` / `ref.watch(xProvider)`.

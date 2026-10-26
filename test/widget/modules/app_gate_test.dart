@@ -9,19 +9,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../helpers/pump_app.dart';
 
-class _Config extends AppConfigNotifier {
-  _Config(this.value);
-  final AppConfig value;
-
-  @override
-  AppConfig build() => value;
-}
-
 Future<void> _pumpGate(WidgetTester tester, AppConfig config) => pumpApp(
   tester,
   const AppGate(child: Text('app')),
   overrides: [
-    appConfigProvider.overrideWith(() => _Config(config)),
+    appConfigProvider.overrideWithValue(config),
     packageInfoProvider.overrideWith(
       (ref) async => PackageInfo(
         appName: 'Lingua',
@@ -67,8 +59,8 @@ void main() {
         ),
       ),
       overrides: [
-        appConfigProvider.overrideWith(
-          () => _Config(const AppConfig(noticeTitle: 'Sale')),
+        appConfigProvider.overrideWithValue(
+          const AppConfig(noticeTitle: 'Sale'),
         ),
       ],
     );
