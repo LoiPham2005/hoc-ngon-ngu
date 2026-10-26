@@ -19,7 +19,6 @@ import 'package:lingua/modules/analytics/analytics_route_observer.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/modules/app_config/app_gate.dart';
 import 'package:lingua/routes/app_router.dart';
-import 'package:lingua/shared/states/app_error_screen.dart';
 import 'package:lingua/shared/states/connectivity_banner.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -47,7 +46,6 @@ class _AppView extends HookConsumerWidget {
       ),
     );
     useEffect(() {
-      ErrorWidget.builder = (details) => AppErrorScreen(details: details);
       // Áp lại System UI khi resume (nav bar Android hay lòi ra sau dialog/chuyển app).
       final lifecycle = AppLifecycleListener(
         onResume: SystemUIManager.applyUiMode,

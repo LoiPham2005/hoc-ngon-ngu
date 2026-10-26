@@ -136,4 +136,46 @@ void main() {
     expect(value(), [1]);
     expect(n.isBusy, false);
   });
+
+  test('messages keep working after the provider rebuilds', () async {
+    final n = await ready();
+    final got = <String>[];
+    n.messages.listen((m) => got.add(m.text));
+    await n.run(() async => 1, successMessage: 'before');
+    container.invalidate(_provider);
+    await container.read(_provider.future);
+    await container
+        .read(_provider.notifier)
+        .run(() async => 1, successMessage: 'after');
+    await Future<void>.delayed(Duration.zero);
+    expect(got, ['before', 'after']);
+  });
+
+  test(
+    'nothing to update while in error → back to the error, not stuck loading',
+    () async {
+      final c = ProviderContainer(retry: (_, _) => null);
+      addTearDown(c.dispose);
+      final p = AsyncNotifierProvider<_FailingNotifier, List<int>>(
+        _FailingNotifier.new,
+      );
+      c.listen(p, (_, _) {});
+      await Future<void>.delayed(Duration.zero);
+      expect(c.read(p).hasError, isTrue);
+
+      final n = c.read(p.notifier);
+      await n.run(() async => 'not a list');
+      expect(c.read(p).isLoading, isFalse);
+      expect(c.read(p).hasError, isTrue);
+
+      await n.run(() async => 5, apply: (list, r) => [...list, r]);
+      expect(c.read(p).isLoading, isFalse);
+    },
+  );
+}
+
+class _FailingNotifier extends AsyncNotifier<List<int>>
+    with BaseNotifier<List<int>> {
+  @override
+  Future<List<int>> build() async => throw Exception('load failed');
 }

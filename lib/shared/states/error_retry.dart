@@ -1,47 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
-import 'package:lingua/design/theme/styles/app_dimensions.dart';
+import 'package:lingua/shared/states/state_view.dart';
 
+/// Lỗi tải dữ liệu + nút "Thử lại": tiêu đề chung "Đã xảy ra lỗi", [message] = lý do cụ thể.
 class ErrorRetry extends StatelessWidget {
   const ErrorRetry({
     super.key,
     this.message,
     this.onRetry,
-    this.icon = Icons.error_outline,
+    this.icon = Icons.error_outline_rounded,
   });
 
-  /// `null` → "Đã xảy ra lỗi" theo ngôn ngữ app.
   final String? message;
   final VoidCallback? onRetry;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.space24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 64, color: t.colorScheme.error),
-            const SizedBox(height: AppDimensions.space16),
-            Text(
-              message ?? context.l10n.common_error,
-              textAlign: TextAlign.center,
-              style: t.textTheme.bodyMedium,
+    final l10n = context.l10n;
+    return StateView(
+      icon: icon,
+      tone: StateTone.error,
+      title: l10n.common_error,
+      message: message,
+      action: onRetry == null
+          ? null
+          : FilledButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh_rounded),
+              label: Text(l10n.common_retry),
             ),
-            if (onRetry != null) ...[
-              const SizedBox(height: AppDimensions.space16),
-              FilledButton.icon(
-                onPressed: onRetry,
-                icon: const Icon(Icons.refresh),
-                label: Text(context.l10n.common_retry),
-              ),
-            ],
-          ],
-        ),
-      ),
     );
   }
 }

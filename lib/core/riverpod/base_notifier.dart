@@ -18,11 +18,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 /// ```
 // ignore: invalid_use_of_internal_member
 mixin BaseNotifier<T> on $AsyncNotifier<T> {
+  // KHÔNG đóng ở `ref.onDispose`: Riverpod 3 giữ nguyên notifier khi provider build lại
+  // (invalidate / dependency đổi) nhưng vẫn gọi onDispose → đóng là mất mọi toast về sau.
+  // Broadcast không người nghe thì không tốn gì, được thu gom cùng notifier.
   final _messages = StreamController<RunMessage>.broadcast();
   int _busy = 0;
   int _seq = 0;
   int _latest = 0;
-  bool _hooked = false;
 
   /// Toast 1 lần (thành công / lỗi khi vẫn giữ data). `AsyncView` tự lắng nghe.
   Stream<RunMessage> get messages => _messages.stream;
@@ -50,10 +52,6 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
     String? errorMessage,
   }) async {
     if (dropIfBusy && isBusy) return false;
-    if (!_hooked) {
-      _hooked = true;
-      ref.onDispose(_messages.close);
-    }
     final id = ++_seq;
     if (cancelPrevious) _latest = id;
     final previous = state;
@@ -66,17 +64,21 @@ mixin BaseNotifier<T> on $AsyncNotifier<T> {
     try {
       final result = await action();
       if (!ref.mounted || (cancelPrevious && id != _latest)) return false;
+      var updated = false;
       if (apply != null) {
         if (state.hasValue) {
           final current = state.requireValue;
           final next = apply(current, result);
           if (!silent || !identical(next, current)) state = AsyncData(next);
+          updated = true;
         }
       } else if (result is T) {
         state = AsyncData(result as T);
-      } else if (!silent && previous.hasValue) {
-        state = AsyncData(previous.requireValue);
+        updated = true;
       }
+      // Không có gì để cập nhật (kết quả khác kiểu / chưa có data để apply) → bỏ loading,
+      // trả về trạng thái trước (kể cả đang lỗi) thay vì kẹt loading mãi.
+      if (!updated && !silent) state = previous;
       if (successMessage != null) _emit(RunMessage(successMessage));
       return true;
     } catch (e, s) {

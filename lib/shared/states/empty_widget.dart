@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
-import 'package:lingua/design/theme/styles/app_dimensions.dart';
+import 'package:lingua/shared/states/state_view.dart';
 
+/// Không có dữ liệu (danh sách rỗng, tìm không thấy…).
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
     super.key,
@@ -18,37 +19,10 @@ class EmptyWidget extends StatelessWidget {
   final Widget? action;
 
   @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.space24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 64, color: t.colorScheme.outline),
-            const SizedBox(height: AppDimensions.space16),
-            Text(
-              title ?? context.l10n.common_empty,
-              style: t.textTheme.titleMedium,
-            ),
-            if (message != null) ...[
-              const SizedBox(height: AppDimensions.space8),
-              Text(
-                message!,
-                textAlign: TextAlign.center,
-                style: t.textTheme.bodyMedium?.copyWith(
-                  color: t.colorScheme.outline,
-                ),
-              ),
-            ],
-            if (action != null) ...[
-              const SizedBox(height: AppDimensions.space16),
-              action!,
-            ],
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => StateView(
+    icon: icon,
+    title: title ?? context.l10n.common_empty,
+    message: message,
+    action: action,
+  );
 }

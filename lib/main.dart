@@ -9,6 +9,7 @@ import 'package:lingua/config/app_initializer.dart';
 import 'package:lingua/config/flavor_config.dart';
 import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/utils/logger.dart';
+import 'package:lingua/shared/states/app_error_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
@@ -76,6 +77,9 @@ Future<void> main() async {
       return true;
     };
 
+    // Lỗi lúc dựng widget → màn báo lỗi của app thay cho màn đỏ (debug) / ô xám (release).
+    // Đặt trước runApp để cả lỗi ở khung hình đầu tiên cũng dùng màn này.
+    ErrorWidget.builder = (details) => AppErrorScreen(details: details);
     runApp(const App());
   }, (error, stack) => talker.error('Zoned error', error, stack));
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lingua/core/di/global_providers.dart';
-import 'package:lingua/design/l10n/locale_notifier.dart';
-import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
 import 'package:lingua/routes/app_router.dart';
+import 'package:lingua/shared/states/state_view.dart';
 
-/// Thay `ErrorWidget.builder` mặc định: debug hiện exception, release hiện thông báo chung.
-/// Không dùng `Theme.of` vì có thể lỗi xảy ra trước khi MaterialApp build xong.
+/// Thay `ErrorWidget.builder` mặc định (màn đỏ debug / ô xám release): debug hiện nội dung lỗi,
+/// release hiện câu chung + nút về màn đầu. Chỗ hẹp (1 ô nhỏ bị lỗi) tự rút gọn chỉ còn icon.
+///
+/// Không được tự lỗi (nếu lỗi → Flutter lại dựng màn này → lặp vô hạn): không đọc provider,
+/// thiếu theme / ngôn ngữ thì dùng mặc định.
 class AppErrorScreen extends StatelessWidget {
   const AppErrorScreen({required this.details, super.key});
 
@@ -15,38 +16,22 @@ class AppErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = lookupAppLocalizations(globalContainer.read(localeProvider));
+    final l10n =
+        Localizations.of<AppLocalizations>(context, AppLocalizations) ??
+        lookupAppLocalizations(const Locale('en'));
     return Material(
-      color: AppPalette.lightBackground,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.error_outline,
-                size: 48,
-                color: AppPalette.error,
-              ),
-              const SizedBox(height: 16),
-              SelectableText(
-                kDebugMode
-                    ? details.exceptionAsString()
-                    : l10n.error_unexpected,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppPalette.lightText,
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: () => appRouter.replaceAll([const SplashRoute()]),
-                icon: const Icon(Icons.refresh_rounded),
-                label: Text(l10n.error_backHome),
-              ),
-            ],
+        child: StateView(
+          icon: Icons.error_outline_rounded,
+          tone: StateTone.error,
+          title: l10n.common_error,
+          message: l10n.error_unexpected,
+          details: kDebugMode ? details.exceptionAsString() : null,
+          action: FilledButton.icon(
+            onPressed: () => appRouter.replaceAll([const SplashRoute()]),
+            icon: const Icon(Icons.home_rounded),
+            label: Text(l10n.error_backHome),
           ),
         ),
       ),
