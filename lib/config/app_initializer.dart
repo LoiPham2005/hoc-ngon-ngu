@@ -11,6 +11,7 @@ import 'package:lingua/core/services/remote_config_service.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/modules/ads/ad_manager.dart';
+import 'package:lingua/modules/attribution/attribution_service.dart';
 import 'package:lingua/modules/iap/iap_service.dart';
 
 /// Khởi tạo lúc boot. Mỗi bước tự bắt lỗi — 1 bước hỏng không chặn app.
@@ -40,6 +41,11 @@ abstract class AppInitializer {
     await _step(
       'Remote Config',
       () => globalContainer.read(remoteConfigServiceProvider).initialize(),
+    );
+    // Nguồn cài đặt (Adjust, tắt khi chưa có app token) — trước Ads để chọn đúng `ad_config`.
+    await _step(
+      'Attribution',
+      () => globalContainer.read(attributionServiceProvider).initialize(),
     );
     final iap = globalContainer.read(iapServiceProvider);
     final ads = globalContainer.read(adManagerProvider);

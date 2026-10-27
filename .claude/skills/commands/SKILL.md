@@ -77,6 +77,8 @@ iOS chọn plist theo scheme (`Runner-dev`/`-stg`/`-prod`). Thiếu `google-serv
 - iOS: `ios/Runner/Info.plist` (`GADApplicationIdentifier`, `NSUserTrackingUsageDescription`, SKAdNetwork, các `NS...UsageDescription`), `NativeAdFactory*.swift`.
 - Signing Android: `cp android/key.properties.example android/key.properties`, điền thông tin keystore (`keytool -genkey -v -keystore android/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`). Có `key.properties` → ký release; không có → build.gradle.kts fallback ký debug.
 
+- Build release lỗi `GeneratedPluginRegistrant.java … package net.jonhanson.flutter_native_splash does not exist`: plugin dev_dependencies bị bỏ ở bản release nhưng file đăng ký plugin còn từ lần build debug → `flutter clean && flutter pub get` rồi build lại.
+
 ## Checklist release
 
 | Việc | Ở đâu |
@@ -85,6 +87,7 @@ iOS chọn plist theo scheme (`Runner-dev`/`-stg`/`-prod`). Thiếu `google-serv
 | AdMob App ID thật | `AndroidManifest.xml`, `Info.plist` |
 | Ad unit thật | Remote Config key `ad_config` |
 | Liên kết AdMob ↔ Firebase (app có ads) | AdMob → Apps → App settings → Link to Firebase. Bắt buộc để có doanh thu quảng cáo trong Firebase / Google Ads (app không tự ghi doanh thu) |
+| Adjust (khi chạy quảng cáo mua người dùng) | App token: `_codeAppToken` trong `lib/modules/attribution/attribution_service.dart` + Remote Config `attribution_config.app_token` (Remote Config được ưu tiên); Xcode → Runner → Build Phases → Link Binary With Libraries → thêm `AdServices.framework` (Optional) để đo Apple Search Ads; khai thêm Adjust trong Data safety / App Privacy; chạy ở EU → đọc tài liệu Adjust về DMA (đồng ý chia sẻ dữ liệu) |
 | `app-ads.txt` (app có ads) | File ở gốc website khai trong store listing (`https://<web>/app-ads.txt`), nội dung lấy ở AdMob → Apps → app-ads.txt (`google.com, pub-…, DIRECT, f08c47fec0942fa0`). Thiếu → AdMob giảm mạnh lượng ad trả về. Từng bước: `docs/app-ads-txt-guide.md` |
 | Bắt buộc cập nhật / bảo trì / thông báo, bật/tắt bán hàng | Remote Config key `app_config`, `iap_config` (import `firebase/remote_config.test.json` lần đầu) |
 | Id App Store, link chính sách bảo mật + điều khoản | `AppInfo` (lib/config/app_info.dart) — App Store bắt buộc có link chính sách trong app |

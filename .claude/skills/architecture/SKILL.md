@@ -21,7 +21,7 @@ lib/
   design/              theme (theme_tailor) + l10n (ARB, LocaleNotifier)
   shared/              base / dialogs / states
   features/<name>/     <name>_page.dart ở gốc · models/ services/ (chỉ khi gọi API) · providers/ · widgets/
-  modules/             ads, iap, analytics, app_config
+  modules/             ads, iap, analytics, attribution, app_config
   routes/              config/app_router.dart, route_guards.dart
   gen/                 sinh tự động (assets, l10n) — không sửa tay
 ```

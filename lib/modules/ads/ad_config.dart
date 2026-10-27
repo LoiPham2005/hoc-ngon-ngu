@@ -214,6 +214,62 @@ abstract class AdConfig with _$AdConfig {
   }
 }
 
+/// Trộn [override] đè lên [base] (JSON của `ad_config`): object lồng nhau trộn tiếp từng key,
+/// còn lại (số, bool, chuỗi, mảng) lấy giá trị của [override]. Dùng cho `ad_config_paid` — chỉ
+/// ghi phần khác, không phải chép lại cả `ad_config`.
+Map<String, dynamic> mergeAdConfigJson(
+  Map<String, dynamic> base,
+  Map<String, dynamic> override,
+) => {
+  ...base,
+  for (final MapEntry(:key, :value) in override.entries)
+    key: switch ((base[key], value)) {
+      (final Map<String, dynamic> a, final Map<String, dynamic> b) =>
+        mergeAdConfigJson(a, b),
+      _ => value,
+    },
+};
+
+/// Key gõ sai trong JSON cấu hình ads — không có trong model nên bị BỎ QUA IM LẶNG khi đọc
+/// (vd `interstitial_intervall`, `native_full_afer`). Trả đường dẫn từng key lạ để báo lỗi.
+/// Có [base] (kiểm `ad_config_paid`): báo thêm vị trí không có trong `ad_config` — vd gõ
+/// `after_quizz`: code không bao giờ gọi vị trí đó → phần khai thêm vô tác dụng.
+List<String> unknownAdConfigKeys(
+  Map<String, dynamic> json, {
+  Map<String, dynamic>? base,
+}) {
+  final unknown = <String>[];
+  void check(Map<String, dynamic> map, Iterable<String> known, String path) {
+    for (final key in map.keys) {
+      if (!known.contains(key)) unknown.add('$path$key');
+    }
+  }
+
+  check(json, const AdConfig().toJson().keys, '');
+  if (json['rules'] case final Map<String, dynamic> rules) {
+    check(rules, const AdRules().toJson().keys, 'rules.');
+  }
+  if (json['ad_units'] case final Map<String, dynamic> units) {
+    check(units, const AdUnits().toJson().keys, 'ad_units.');
+    final unitKeys = const AdUnit().toJson().keys;
+    final baseUnits = base?['ad_units'];
+    for (final MapEntry(key: type, value: places) in units.entries) {
+      if (places is! Map<String, dynamic>) continue;
+      final basePlaces = baseUnits is Map ? baseUnits[type] : null;
+      for (final MapEntry(key: place, value: unit) in places.entries) {
+        if (base != null &&
+            (basePlaces is! Map || !basePlaces.containsKey(place))) {
+          unknown.add('ad_units.$type.$place (không có trong ad_config)');
+        }
+        if (unit is Map<String, dynamic>) {
+          check(unit, unitKeys, 'ad_units.$type.$place.');
+        }
+      }
+    }
+  }
+  return unknown;
+}
+
 // ── Cấu hình dev: Google test ID ─────────────────────────────────
 
 /// Mọi id bắt đầu bằng tiền tố này là TEST id — tuyệt đối không lên prod.

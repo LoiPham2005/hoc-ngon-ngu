@@ -84,6 +84,95 @@ void main() {
     expect(const AdUnit(id: 'only').ids, ['only']);
   });
 
+  test(
+    'mergeAdConfigJson: nested objects merge, other values are replaced',
+    () {
+      final merged = mergeAdConfigJson(
+        {
+          'preload': true,
+          'rules': {'interstitial_interval': 30, 'app_open_interval': 15},
+          'ad_units': {
+            'interstitial': {
+              'splash': {'id': 'A', 'native_full_after': true},
+            },
+          },
+        },
+        {
+          'preload': false,
+          'rules': {'interstitial_interval': 45},
+          'ad_units': {
+            'interstitial': {
+              'splash': {'native_full_after': false},
+            },
+          },
+        },
+      );
+      expect(merged['preload'], isFalse);
+      expect(merged['rules'], {
+        'interstitial_interval': 45,
+        'app_open_interval': 15,
+      });
+      expect((merged['ad_units'] as Map)['interstitial'], {
+        'splash': {'id': 'A', 'native_full_after': false},
+      });
+    },
+  );
+
+  group('unknownAdConfigKeys', () {
+    test('valid keys pass, typos are reported at every level', () {
+      expect(
+        unknownAdConfigKeys({
+          'show_all_ads': true,
+          'rules': {'interstitial_interval': 30},
+          'ad_units': {
+            'interstitial': {
+              'after_quiz': {'id': 'x', 'native_full_after': true},
+            },
+          },
+        }),
+        isEmpty,
+      );
+      expect(
+        unknownAdConfigKeys({
+          'show_all_adz': true,
+          'rules': {'interstitial_intervall': 30},
+          'ad_units': {
+            'interstital': <String, dynamic>{},
+            'interstitial': {
+              'after_quiz': {'native_full_afer': true},
+            },
+          },
+        }),
+        [
+          'show_all_adz',
+          'rules.interstitial_intervall',
+          'ad_units.interstital',
+          'ad_units.interstitial.after_quiz.native_full_afer',
+        ],
+      );
+    });
+
+    test('override: a placement missing from ad_config is reported', () {
+      const base = {
+        'ad_units': {
+          'interstitial': {
+            'after_quiz': {'id': 'x'},
+          },
+        },
+      };
+      expect(
+        unknownAdConfigKeys({
+          'ad_units': {
+            'interstitial': {
+              'after_quizz': {'native_full_after': true},
+            },
+          },
+        }, base: base),
+        ['ad_units.interstitial.after_quizz (không có trong ad_config)'],
+      );
+    });
+  });
+
   test('rewarded interstitial has its own limits, separate from rewarded', () {
     const rules = AdRules(
       rewardedInterval: 10,

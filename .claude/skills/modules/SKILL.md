@@ -1,6 +1,6 @@
 ---
 name: modules
-description: Module trong lib/modules (Ads AdMob qua AdManager, IAP RevenueCat + isPremiumProvider, Analytics Firebase, AppConfig Remote Config) + RemoteConfigService dùng chung và core services trong lib/core/services (NotificationService, FcmService, AppVersionService.checkAndPrompt, AppQuickActions, SessionNotifier, BiometricNotifier vân tay/Face ID). Đọc khi hiện quảng cáo, mua premium, log event, bắt buộc cập nhật / bảo trì / thông báo từ Remote Config, bắn local notification, xử lý push FCM, kiểm tra cập nhật app, hoặc sửa app shortcut.
+description: Module trong lib/modules (Ads AdMob qua AdManager, Attribution Adjust (người dùng mua về / tự nhiên, ROAS), IAP RevenueCat + isPremiumProvider, Analytics Firebase, AppConfig Remote Config) + RemoteConfigService dùng chung và core services trong lib/core/services (NotificationService, FcmService, AppVersionService.checkAndPrompt, AppQuickActions, SessionNotifier, BiometricNotifier vân tay/Face ID). Đọc khi hiện quảng cáo, mua premium, log event, bắt buộc cập nhật / bảo trì / thông báo từ Remote Config, bắn local notification, xử lý push FCM, kiểm tra cập nhật app, hoặc sửa app shortcut.
 ---
 
 # Modules & core services
@@ -41,6 +41,7 @@ Scaffold(bottomNavigationBar: SafeArea(top: false, child: AdBannerWidget(placeme
 const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 ```
 - Mọi hàm show **chờ tới khi ad đóng hẳn** rồi mới xong → `await` xong là đi tiếp, không cần callback, không bao giờ kẹt. Trả `true` = đã hiện; `false` = không hiện (xong ngay): tắt ads/premium, chưa consent, vượt giới hạn, đang hiện / vừa đóng ad khác < 10s, offline, load quá 5s.
+- **Gõ sai key trên Remote Config** (`ad_config` / `ad_config_paid`) bị bỏ qua im lặng khi đọc → `AdManager` tự kiểm bằng `unknownAdConfigKeys` (so với cấu trúc model; `ad_config_paid` báo thêm vị trí không có trong `ad_config`) và báo `talker.error` (Crashlytics, mỗi lỗi 1 lần / phiên). Xem Crashlytics sau khi sửa cấu hình.
 - Ad toàn màn chưa có sẵn phải tải tại chỗ (> 300ms) → tự hiện lớp phủ "Đang tải quảng cáo…" chặn chạm (`ad_loading_overlay.dart`), tránh ad bật lên đột ngột khi user đang bấm → click nhầm (AdMob phạt). Không cần làm gì ở nơi gọi.
 - Consent: `AdConsent.canRequestAds` theo `ConsentInformation.canRequestAds()` chính thức (offline → dùng lựa chọn đã lưu). Đặt nút "Quyền riêng tư" ở Cài đặt khi `isPrivacyOptionsRequired` → `ads.showPrivacyOptions()`.
 - Gỡ lỗi "không có ad": **Ad Inspector** (lingua không có trang demo ads → gọi tạm ở bản dev) — `MobileAds.instance.openAdInspector`. Chỉ mở trên máy test (máy ảo / `_testDeviceIds` / khai báo trên AdMob).
@@ -54,7 +55,6 @@ const NativeAdWidget(placement: NativePlacement.home, size: NativeAdSize.small)
 - Premium: `AppInitializer` nối `iap.premium` → `ads.setPremium` (khi IAP thật).
 - Native factory `nativeSmall` / `nativeMedium` / `nativeFull` đăng ký ở `MainActivity.kt` và `ios/Runner/NativeAdFactory*.swift`.
 - Release: thay AdMob App ID test trong `AndroidManifest.xml` (`com.google.android.gms.ads.APPLICATION_ID`) và `Info.plist` (`GADApplicationIdentifier`).
-- Demo: `features/ads_demo` (route `/ads-demo`).
 
 ### Mediation (AppLovin, Meta, Unity, Mintegral, Pangle…) — làm theo từng app, KHÔNG sửa khung
 Code ads không đổi gì: AdMob tự gọi các mạng khác qua adapter. Chỉ bật khi app đã có lượng hiển thị thật (ít traffic thì mediation không tăng doanh thu).
@@ -64,8 +64,24 @@ Code ads không đổi gì: AdMob tự gọi các mạng khác qua adapter. Ch�
 4. iOS: thêm `SKAdNetworkItems` của từng mạng vào `Info.plist` (danh sách trên trang tài liệu của mạng) — thiếu là mất doanh thu iOS.
 5. AdMob → **Privacy & messaging**: bật mạng mới trong danh sách đối tác của thông báo GDPR (UMP tự truyền consent cho đối tác Google chứng nhận).
 6. Cập nhật khai báo **Data safety** (Google Play) / **App Privacy** (App Store) vì có thêm SDK thu thập dữ liệu.
-7. Kiểm tra: Ad Inspector (`ads_demo`) → từng ad source phải "loaded"; bật test mode của mạng khi thử, tắt trước khi release.
+7. Kiểm tra: Ad Inspector (`MobileAds.instance.openAdInspector`, gọi tạm ở bản dev) → từng ad source phải "loaded"; bật test mode của mạng khi thử, tắt trước khi release.
 8. Collapsible banner chỉ bung với ad của Google; ad từ mạng khác hiện như banner thường.
+
+## Attribution — Adjust (lib/modules/attribution/)
+
+Đo **nguồn cài đặt** (MMP): người dùng đến từ chiến dịch quảng cáo trả tiền hay tự nhiên + doanh thu quảng cáo từng người → ROAS theo chiến dịch. **Chỉ cần khi chạy quảng cáo mua người dùng ở nhiều nền tảng** (Meta, TikTok, Unity…); chỉ chạy Google Ads → Firebase (liên kết Google Ads) là đủ.
+
+- **App token** (Adjust dashboard → app → App token): Remote Config `attribution_config.app_token` (đổi không cần ra bản mới) → không có thì `_codeAppToken` trong `attribution_service.dart`. Cả hai trống → tắt hẳn. Lần mở đầu chưa có Remote Config mà token chỉ nằm trên đó → chờ tải xong mới khởi động (Adjust vẫn ghi nhận lượt cài). Nên điền cả 2 chỗ. dev/stg = `sandbox`, prod = `production`.
+- Remote Config `attribution_config` (`attribution_config.dart`): `app_token`, `paid_when_unknown` (chưa rõ nguồn — rỗng / Unattributed / Untrusted Devices — coi là mua về? mặc định không), `value_events` (`[{token, ad_revenue, currency}` hoặc `{token, ad_impressions}]`: doanh thu quảng cáo cộng dồn / số lượt vượt ngưỡng → gửi sự kiện Adjust 1 lần / người, Adjust chuyển cho Google / Meta / TikTok tối ưu chiến dịch). KHÔNG để API token Adjust ở đây (ai dịch ngược app cũng đọc được).
+- `attributionServiceProvider.isPaid` (`ValueNotifier<bool>`): lưu `network` Adjust trả về; Organic / Google Organic Search → tự nhiên, chưa rõ → theo `paid_when_unknown`, còn lại (tên mạng quảng cáo) → mua về. Tính lại khi Remote Config đổi.
+- **Hai chế độ quảng cáo**: người dùng mua về → Remote Config `ad_config_paid` **chỉ ghi phần khác** (giãn cách, bật thêm vị trí…), app trộn đè lên `ad_config` bằng `mergeAdConfigJson` (object lồng nhau trộn tiếp, giá trị khác thì thay). ID quảng cáo thường chỉ khai ở `ad_config`, không chép đôi. **Muốn ad unit riêng cho người dùng mua về** (tách doanh thu trong báo cáo AdMob, đặt giá sàn / mediation group khác): ghi `"id"` (và `fallback_ids`) cho vị trí đó trong `ad_config_paid` — khi ấy `ad_config_paid` cũng phải có giá trị điều kiện **iOS** riêng như `ad_config` (ID Android/iOS khác nhau). Không có key → dùng nguyên `ad_config`. Đổi realtime khi Adjust trả kết quả. Vẫn phải trong chính sách AdMob.
+  ```json
+  { "rules": { "interstitial_interval": 45, "max_interstitial_per_session": 6 },
+    "ad_units": { "interstitial": { "after_quiz": { "native_full_after": true } } } }
+  ```
+- **Doanh thu**: mọi lượt hiển thị (toàn màn, banner, native) tự gửi về Adjust qua `AdManager.reportPaid` (`onPaidEvent`, nguồn `admob_sdk`, kèm placement + mạng mediation thắng). Firebase vẫn tự ghi doanh thu riêng khi đã liên kết AdMob — không đếm đôi.
+- iOS: dùng chung hộp thoại ATT của `AdConsent`; Adjust chờ tối đa 30s cho người dùng trả lời (`attConsentWaitingInterval`) để lấy IDFA. SKAdNetwork do SDK tự lo.
+- Kiểm tra: build dev/stg → log `[ATTRIBUTION]` + log verbose của Adjust ("Install tracked"); Adjust dashboard → Testing console với mã thiết bị test.
 
 ## IAP — RevenueCat (lib/modules/iap/)
 

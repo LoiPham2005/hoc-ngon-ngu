@@ -22,7 +22,7 @@ lib/
     services/   {name}_service.dart   @RestApi (Retrofit) ┘
     providers/  {name}_notifier.dart  @riverpod class ... with BaseNotifier<T>
     widgets/    (khi page có widget con riêng)
-  modules/       ads (AdManager), iap (isPremiumProvider), analytics, app_config — Remote Config dùng chung ở core/services
+  modules/       ads (AdManager), iap (isPremiumProvider), analytics, attribution (Adjust: người dùng mua về / tự nhiên), app_config — Remote Config dùng chung ở core/services
   routes/        app_router (`appRouter` toàn cục), route_guards
 ```
 

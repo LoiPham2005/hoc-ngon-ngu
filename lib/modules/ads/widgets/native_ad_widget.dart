@@ -73,6 +73,12 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
           _retries = 0;
           if (mounted) setState(() => _loaded = true);
         },
+        onPaidEvent: (ad, valueMicros, _, currency) => _ads.reportPaid(
+          ad,
+          valueMicros,
+          currency,
+          'native.${widget.placement}',
+        ),
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
           if (identical(ad, _ad)) _ad = null;

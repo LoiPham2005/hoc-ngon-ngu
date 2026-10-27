@@ -19,6 +19,13 @@
       "valueType": "JSON",
       "description": "Cấu hình quảng cáo (TEST ID của Google) — chỉ dùng cho project test/stg, KHÔNG publish lên prod"
     },
+    "ad_config_paid": {
+      "defaultValue": {
+        "value": "{\"rules\": {\"interstitial_interval\": 45, \"rewarded_interval\": 0, \"rewarded_interstitial_interval\": 60, \"native_full_interval\": 60, \"max_interstitial_per_session\": 6}, \"ad_units\": {\"interstitial\": {\"splash\": {\"native_full_after\": false}, \"after_quiz\": {\"native_full_after\": true}}}}"
+      },
+      "valueType": "JSON",
+      "description": "Người dùng MUA VỀ (Adjust): CHỈ ghi phần khác, app trộn đè lên ad_config (ID quảng cáo chỉ khai ở ad_config). Dày hơn để thu hồi chi phí, vẫn trong chính sách AdMob. Xoá key → dùng nguyên ad_config."
+    },
     "app_config": {
       "defaultValue": {
         "value": "{\"min_version\": \"\", \"maintenance\": false, \"maintenance_message\": \"\", \"notice_title\": \"\", \"notice_body\": \"\", \"notice_url\": \"\"}"
@@ -32,6 +39,13 @@
       },
       "valueType": "JSON",
       "description": "purchase_enabled=false: ngừng bán (người đã mua vẫn giữ premium) · premium_for_all=true: mở premium cho mọi người (khẩn cấp)"
+    },
+    "attribution_config": {
+      "defaultValue": {
+        "value": "{\"app_token\": \"\", \"paid_when_unknown\": false, \"value_events\": []}"
+      },
+      "valueType": "JSON",
+      "description": "Adjust: app_token (trống → dùng token trong code), paid_when_unknown (chưa rõ nguồn → coi là mua về?), value_events [{token, ad_revenue, currency} | {token, ad_impressions}] gửi 1 lần/người. KHÔNG để API token ở đây."
     }
   }
 }

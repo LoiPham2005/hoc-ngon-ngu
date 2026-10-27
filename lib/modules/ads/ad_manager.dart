@@ -13,6 +13,7 @@ import 'package:lingua/modules/ads/ad_loading_overlay.dart';
 import 'package:lingua/modules/ads/full_screen_ads.dart';
 import 'package:lingua/modules/ads/widgets/native_ad_full_screen.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
+import 'package:lingua/modules/attribution/attribution_service.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,18 +33,19 @@ part 'ad_manager.g.dart';
 /// ads.setPremium(true);  ads.pauseAds(const Duration(minutes: 30));
 /// ```
 class AdManager {
-  AdManager(this._prefs, this._remote, AnalyticsService analytics)
-    : interstitial = FullScreenAds.interstitial(analytics),
-      appOpen = FullScreenAds.appOpen(analytics),
-      rewarded = FullScreenAds.rewarded(analytics),
-      rewardedInterstitial = FullScreenAds.rewardedInterstitial(analytics);
+  AdManager(this._prefs, this._remote, this._analytics, this._attribution);
 
   final SharedPreferences _prefs;
   final RemoteConfigService _remote;
-  final FullScreenAds<InterstitialAd> interstitial;
-  final FullScreenAds<AppOpenAd> appOpen;
-  final FullScreenAds<RewardedAd> rewarded;
-  final FullScreenAds<RewardedInterstitialAd> rewardedInterstitial;
+  final AnalyticsService _analytics;
+  final AttributionService _attribution;
+  late final interstitial = FullScreenAds.interstitial(_analytics, reportPaid);
+  late final appOpen = FullScreenAds.appOpen(_analytics, reportPaid);
+  late final rewarded = FullScreenAds.rewarded(_analytics, reportPaid);
+  late final rewardedInterstitial = FullScreenAds.rewardedInterstitial(
+    _analytics,
+    reportPaid,
+  );
   final consent = AdConsent();
   final _loading = AdLoadingOverlay();
 
@@ -51,6 +53,9 @@ class AdManager {
   final config = ValueNotifier<AdConfig>(AdConfig.disabled);
 
   static const _kRemoteKey = 'ad_config';
+
+  /// Người dùng mua về (Adjust) → phần khác biệt trộn đè lên [_kRemoteKey].
+  static const _kRemoteKeyPaid = 'ad_config_paid';
   static const _kPremium = 'ads_premium';
   static const _kPausedUntil = 'ads_paused_until';
 
@@ -83,6 +88,7 @@ class AdManager {
     if (ts != null) _setPause(DateTime.fromMillisecondsSinceEpoch(ts));
     _applyRemote();
     _remote.onUpdated.listen((_) => _applyRemote());
+    _attribution.isPaid.addListener(_applyRemote);
 
     // Consent PHẢI trước MobileAds.initialize. Quá 8s → dùng lựa chọn đã lưu từ lần trước
     // (lần đầu mà chưa có → chưa load ads cho tới lần mở sau).
@@ -363,7 +369,17 @@ class AdManager {
   void _applyRemote() {
     var base = kDevAdConfig;
     if (_remote.enabled) {
-      final json = _remote.json(_kRemoteKey);
+      // Người dùng mua về (chiến dịch trả tiền) → `ad_config_paid` CHỈ ghi phần khác
+      // (giãn cách, bật thêm vị trí…) và được trộn đè lên `ad_config`; ID quảng cáo chỉ khai
+      // 1 chỗ ở `ad_config`. Chưa khai `ad_config_paid` → dùng nguyên `ad_config`.
+      final common = _remote.json(_kRemoteKey);
+      final paid = _attribution.isPaid.value
+          ? _remote.json(_kRemoteKeyPaid)
+          : null;
+      _reportUnknownKeys(common);
+      final json = common == null || paid == null
+          ? common
+          : mergeAdConfigJson(common, paid);
       try {
         base = json == null ? AdConfig.disabled : AdConfig.fromJson(json);
       } catch (e, s) {
@@ -375,6 +391,28 @@ class AdManager {
     _base = base;
     _emit();
   }
+
+  /// Key gõ sai trên Remote Config bị bỏ qua im lặng → báo lỗi (Crashlytics, mỗi lỗi 1 lần /
+  /// phiên) để người sửa cấu hình biết. Kiểm cả `ad_config_paid` dù người này không phải
+  /// người dùng mua về — sai ở đâu cũng nên biết sớm.
+  void _reportUnknownKeys(Map<String, dynamic>? common) {
+    final issues = [
+      if (common != null)
+        for (final k in unknownAdConfigKeys(common)) '$_kRemoteKey.$k',
+      if (_remote.json(_kRemoteKeyPaid) case final p?)
+        for (final k in unknownAdConfigKeys(p, base: common))
+          '$_kRemoteKeyPaid.$k',
+    ];
+    for (final issue in issues) {
+      if (_reportedConfigIssues.add(issue)) {
+        talker.error(
+          '[ADS] Remote Config: key lạ / gõ sai → bị bỏ qua: $issue',
+        );
+      }
+    }
+  }
+
+  final _reportedConfigIssues = <String>{};
 
   /// Test id lọt lên prod = AdMob khoá account → báo lỗi (Crashlytics) + assert khi debug.
   void _assertNoTestIds(AdConfig cfg) {
@@ -463,6 +501,21 @@ class AdManager {
     }
   }
 
+  /// Doanh thu 1 lượt hiển thị (mọi định dạng) → Adjust tính ROAS theo chiến dịch.
+  /// Firebase tự ghi doanh thu khi đã liên kết AdMob, không gửi ở đây.
+  void reportPaid(
+    Ad ad,
+    double valueMicros,
+    String currency,
+    String placement,
+  ) => _attribution.trackAdRevenue(
+    valueMicros: valueMicros,
+    currency: currency,
+    placement: placement,
+    adSource: ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName,
+    adUnitId: ad.adUnitId,
+  );
+
   /// Nạp sẵn native toàn màn; ID thứ [index] không có ad → thử ID dự phòng kế tiếp.
   void _preloadNative(String placement, [int index = 0]) {
     final unit = config.value.unit(AdType.native, placement);
@@ -488,6 +541,8 @@ class AdManager {
           _nativeLoading.remove(placement);
           _native[placement] = (ad as NativeAd, DateTime.now());
         },
+        onPaidEvent: (ad, valueMicros, _, currency) =>
+            reportPaid(ad, valueMicros, currency, 'native.$placement'),
         onAdFailedToLoad: (ad, e) {
           _nativeLoading.remove(placement);
           ad.dispose();
@@ -505,4 +560,5 @@ AdManager adManager(Ref ref) => AdManager(
   ref.read(sharedPrefsProvider),
   ref.read(remoteConfigServiceProvider),
   ref.read(analyticsServiceProvider),
+  ref.read(attributionServiceProvider),
 );

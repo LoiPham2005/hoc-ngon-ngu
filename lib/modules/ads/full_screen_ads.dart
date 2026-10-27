@@ -21,89 +21,105 @@ typedef _Preloader<T> = ({
   Future<void> Function(String preloadId) destroy,
 });
 
+/// Doanh thu 1 lượt hiển thị (AdMob `onPaidEvent`, micro) → nơi đo ROAS (Adjust).
+typedef AdPaidCallback =
+    void Function(Ad ad, double valueMicros, String currency, String placement);
+
 /// Hiện 1 loại ad toàn màn (interstitial, app open, rewarded, rewarded interstitial):
 /// lấy ad từ preloader (placement `preload: true`) hoặc load ngay lúc hiện,
 /// giới hạn tần suất theo loại, đo lượt hiện theo placement (doanh thu: Firebase tự ghi).
 class FullScreenAds<T extends AdWithoutView> {
   FullScreenAds._(
     this.type,
-    this._analytics, {
+    this._analytics,
+    this._onPaid, {
     required this.load,
     required this.attach,
     required this.present,
     this.preloader,
   });
 
-  static FullScreenAds<InterstitialAd> interstitial(AnalyticsService a) =>
-      FullScreenAds._(
-        AdType.interstitial,
-        a,
-        load: (id, ok, fail) => InterstitialAd.load(
-          adUnitId: id,
-          request: const AdRequest(),
-          adLoadCallback: InterstitialAdLoadCallback(
-            onAdLoaded: ok,
-            onAdFailedToLoad: fail,
-          ),
-        ),
-        attach: (ad, cb) => ad.fullScreenContentCallback = cb,
-        present: (ad, _) => ad.show(),
-        preloader: (
-          start: InterstitialAdPreloader.start,
-          poll: InterstitialAdPreloader.pollAd,
-          destroy: InterstitialAdPreloader.destroy,
-        ),
-      );
+  static FullScreenAds<InterstitialAd> interstitial(
+    AnalyticsService a,
+    AdPaidCallback onPaid,
+  ) => FullScreenAds._(
+    AdType.interstitial,
+    a,
+    onPaid,
+    load: (id, ok, fail) => InterstitialAd.load(
+      adUnitId: id,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: ok,
+        onAdFailedToLoad: fail,
+      ),
+    ),
+    attach: (ad, cb) => ad.fullScreenContentCallback = cb,
+    present: (ad, _) => ad.show(),
+    preloader: (
+      start: InterstitialAdPreloader.start,
+      poll: InterstitialAdPreloader.pollAd,
+      destroy: InterstitialAdPreloader.destroy,
+    ),
+  );
 
-  static FullScreenAds<AppOpenAd> appOpen(AnalyticsService a) =>
-      FullScreenAds._(
-        AdType.appOpen,
-        a,
-        load: (id, ok, fail) => AppOpenAd.load(
-          adUnitId: id,
-          request: const AdRequest(),
-          adLoadCallback: AppOpenAdLoadCallback(
-            onAdLoaded: ok,
-            onAdFailedToLoad: fail,
-          ),
-        ),
-        attach: (ad, cb) => ad.fullScreenContentCallback = cb,
-        present: (ad, _) => ad.show(),
-        preloader: (
-          start: AppOpenAdPreloader.start,
-          poll: AppOpenAdPreloader.pollAd,
-          destroy: AppOpenAdPreloader.destroy,
-        ),
-      );
+  static FullScreenAds<AppOpenAd> appOpen(
+    AnalyticsService a,
+    AdPaidCallback onPaid,
+  ) => FullScreenAds._(
+    AdType.appOpen,
+    a,
+    onPaid,
+    load: (id, ok, fail) => AppOpenAd.load(
+      adUnitId: id,
+      request: const AdRequest(),
+      adLoadCallback: AppOpenAdLoadCallback(
+        onAdLoaded: ok,
+        onAdFailedToLoad: fail,
+      ),
+    ),
+    attach: (ad, cb) => ad.fullScreenContentCallback = cb,
+    present: (ad, _) => ad.show(),
+    preloader: (
+      start: AppOpenAdPreloader.start,
+      poll: AppOpenAdPreloader.pollAd,
+      destroy: AppOpenAdPreloader.destroy,
+    ),
+  );
 
-  static FullScreenAds<RewardedAd> rewarded(AnalyticsService a) =>
-      FullScreenAds._(
-        AdType.rewarded,
-        a,
-        load: (id, ok, fail) => RewardedAd.load(
-          adUnitId: id,
-          request: const AdRequest(),
-          rewardedAdLoadCallback: RewardedAdLoadCallback(
-            onAdLoaded: ok,
-            onAdFailedToLoad: fail,
-          ),
-        ),
-        attach: (ad, cb) => ad.fullScreenContentCallback = cb,
-        present: (ad, onReward) =>
-            ad.show(onUserEarnedReward: (_, reward) => onReward?.call(reward)),
-        preloader: (
-          start: RewardedAdPreloader.start,
-          poll: RewardedAdPreloader.pollAd,
-          destroy: RewardedAdPreloader.destroy,
-        ),
-      );
+  static FullScreenAds<RewardedAd> rewarded(
+    AnalyticsService a,
+    AdPaidCallback onPaid,
+  ) => FullScreenAds._(
+    AdType.rewarded,
+    a,
+    onPaid,
+    load: (id, ok, fail) => RewardedAd.load(
+      adUnitId: id,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: ok,
+        onAdFailedToLoad: fail,
+      ),
+    ),
+    attach: (ad, cb) => ad.fullScreenContentCallback = cb,
+    present: (ad, onReward) =>
+        ad.show(onUserEarnedReward: (_, reward) => onReward?.call(reward)),
+    preloader: (
+      start: RewardedAdPreloader.start,
+      poll: RewardedAdPreloader.pollAd,
+      destroy: RewardedAdPreloader.destroy,
+    ),
+  );
 
   /// SDK chưa có preloader cho loại này → nạp sẵn 1 ad tự giữ (hết hạn sau 1h).
   static FullScreenAds<RewardedInterstitialAd> rewardedInterstitial(
     AnalyticsService a,
+    AdPaidCallback onPaid,
   ) => FullScreenAds._(
     AdType.rewardedInterstitial,
     a,
+    onPaid,
     load: (id, ok, fail) => RewardedInterstitialAd.load(
       adUnitId: id,
       request: const AdRequest(),
@@ -119,6 +135,7 @@ class FullScreenAds<T extends AdWithoutView> {
 
   final AdType type;
   final AnalyticsService _analytics;
+  final AdPaidCallback _onPaid;
   final void Function(
     String id,
     void Function(T ad) onLoaded,
@@ -223,9 +240,10 @@ class FullScreenAds<T extends AdWithoutView> {
       unawaited(_analytics.logEvent('ad_requested', {'ad_unit_name': name}));
       final ad = await _take(placement, unit, timeout);
       if (ad == null) return false;
-      // Doanh thu / click: KHÔNG tự ghi — liên kết AdMob ↔ Firebase thì Firebase tự ghi
-      // `ad_impression` (kèm doanh thu, mọi định dạng, cả mạng mediation) + `ad_click`.
-      // Tự ghi thêm = đếm đôi doanh thu trong Analytics.
+      // Doanh thu cho Firebase: KHÔNG tự ghi — liên kết AdMob ↔ Firebase thì Firebase tự ghi
+      // `ad_impression` + `ad_click` (tự ghi thêm = đếm đôi). Chỉ chuyển cho Adjust (ROAS).
+      ad.onPaidEvent = (ad, valueMicros, _, currency) =>
+          _onPaid(ad, valueMicros, currency, name);
       attach(
         ad,
         FullScreenContentCallback<T>(
