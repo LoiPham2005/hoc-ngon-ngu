@@ -20,8 +20,17 @@ abstract final class InterstitialPlacement {
   /// Ngay khi xong 1 bài (màn kết quả) — điểm dừng tự nhiên, nguồn doanh thu chính.
   static const lessonDone = 'lesson_done';
 
-  /// Mở một học phần / danh sách bài từ màn Khoá học (`OpenContentAdObserver`).
+  /// Mở một học phần / danh sách bài từ màn Khoá học (`AdRouteObserver`).
   static const openContent = 'open_content';
+
+  /// Mở màn chi tiết (từ, kana, kanji, bài ngữ pháp, hội thoại), tìm kiếm, thống kê.
+  static const openDetail = 'open_detail';
+
+  /// Vào màn làm bài (trước câu đầu tiên — chưa làm gì nên không cắt ngang).
+  static const practiceStart = 'practice_start';
+
+  /// Đổi tab ở thanh dưới.
+  static const tabSwitch = 'tab_switch';
 }
 
 abstract final class RewardedPlacement {
@@ -46,6 +55,9 @@ abstract final class NativePlacement {
 
   /// Native nhỏ dưới điểm số ở màn kết quả bài.
   static const result = 'result';
+
+  /// Native vừa cuối các màn chi tiết (từ, kana, kanji, bài ngữ pháp, hội thoại).
+  static const detail = 'detail';
 
   /// Native xen giữa các dòng của danh sách (từ vựng, ngữ pháp, hội thoại, học phần).
   static const list = 'list';
@@ -305,9 +317,11 @@ AdConfig _devConfig({required bool ios}) {
     enableRewardedInterstitial: false,
     enableNative: true,
     enableBanner: true,
-    enableNativeFullAfterInterstitial: false,
+    // Dev bật để xem thử; bản thật chỉ bật cho người dùng mua về (ad_config_paid).
+    enableNativeFullAfterInterstitial: true,
     rules: const AdRules(
       interstitialInterval: 0,
+      nativeFullInterval: 0,
       appOpenInterval: 15,
       maxInterstitialPerSession: 0,
       maxAppOpenPerSession: 0,
@@ -318,12 +332,27 @@ AdConfig _devConfig({required bool ios}) {
         InterstitialPlacement.lessonDone: AdUnit(
           id: interstitial,
           preload: true,
-          nativeFullAfter: false,
+          nativeFullAfter: true,
         ),
         InterstitialPlacement.openContent: AdUnit(
           id: interstitial,
           preload: true,
-          nativeFullAfter: false,
+          nativeFullAfter: true,
+        ),
+        InterstitialPlacement.openDetail: AdUnit(
+          id: interstitial,
+          preload: true,
+          nativeFullAfter: true,
+        ),
+        InterstitialPlacement.practiceStart: AdUnit(
+          id: interstitial,
+          preload: true,
+          nativeFullAfter: true,
+        ),
+        InterstitialPlacement.tabSwitch: AdUnit(
+          id: interstitial,
+          preload: true,
+          nativeFullAfter: true,
         ),
       },
       // Người dùng tự bấm xem → nạp tay khi thẻ "giữ chuỗi" hiện, không giữ sẵn.
@@ -335,15 +364,12 @@ AdConfig _devConfig({required bool ios}) {
         AppOpenPlacement.resume: AdUnit(id: appOpen, preload: true),
       },
       native: {
-        // Tắt cho người dùng tự nhiên; bật trong ad_config_paid.
-        NativePlacement.afterInterstitial: AdUnit(
-          id: native,
-          enable: false,
-          preload: false,
-        ),
+        // Native toàn màn ngay sau interstitial — nạp sẵn để hiện liền.
+        NativePlacement.afterInterstitial: AdUnit(id: native, preload: true),
         // Trong màn — tự tải khi widget hiện (`preload` không áp dụng).
         NativePlacement.result: AdUnit(id: native, preload: false),
         NativePlacement.list: AdUnit(id: native, preload: false),
+        NativePlacement.detail: AdUnit(id: native, preload: false),
         NativePlacement.home: AdUnit(id: native, preload: false),
         NativePlacement.onboarding: AdUnit(id: native, preload: false),
       },

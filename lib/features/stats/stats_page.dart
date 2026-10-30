@@ -7,6 +7,8 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/course/providers/module_chars_provider.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
 /// Thống kê: hoạt động 7 / 30 ngày (biểu đồ cột), độ chính xác, lịch ôn, tiến độ từng học phần.
@@ -88,6 +90,10 @@ class StatsPage extends HookConsumerWidget {
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: colors.textMuted),
+          ),
+          const NativeAdWidget(
+            placement: NativePlacement.list,
+            padding: EdgeInsets.symmetric(vertical: 12),
           ),
           const SizedBox(height: 20),
           SectionTitle(l10n.review_title),

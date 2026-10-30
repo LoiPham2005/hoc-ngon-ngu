@@ -4,6 +4,8 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/japanese/widgets/writing_box.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 
@@ -107,6 +109,12 @@ class DetailLayout extends ConsumerWidget {
                     ),
                   ],
                 ),
+              // Nhỏ: bảng viết (Expanded) phía trên vẫn đủ chỗ.
+              const NativeAdWidget(
+                placement: NativePlacement.detail,
+                size: NativeAdSize.small,
+                padding: EdgeInsets.only(top: 12),
+              ),
             ],
           ),
         ),

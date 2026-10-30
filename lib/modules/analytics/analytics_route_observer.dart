@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 
@@ -76,21 +75,15 @@ class ScreenTracker {
 
   String? _pendingRoute;
 
-  /// Route đầu tiên được đẩy vào ngay lúc Navigator đang build → báo [route] lúc đó sẽ làm
-  /// widget phía trên (banner) bị đánh dấu build giữa chừng (lỗi `setState() called during
-  /// build`) → lùi sang sau frame, lấy giá trị mới nhất.
+  /// Observer chạy ngay lúc Navigator đang build (route đầu tiên, đổi tab…) → báo [route] lúc đó
+  /// làm widget phía trên (banner) bị đánh dấu build giữa chừng (`setState() called during
+  /// build`). Lùi sang microtask = sau khi build xong; gọi nhiều lần liền chỉ báo giá trị cuối.
   void _setRoute(String name) {
-    final scheduler = SchedulerBinding.instance;
-    if (scheduler.schedulerPhase != SchedulerPhase.persistentCallbacks) {
-      _pendingRoute = null;
-      route.value = name;
-      return;
-    }
     final scheduled = _pendingRoute != null;
     _pendingRoute = name;
     if (scheduled) return;
-    scheduler.addPostFrameCallback((_) {
-      if (_pendingRoute case final pending?) route.value = pending;
+    scheduleMicrotask(() {
+      route.value = _pendingRoute;
       _pendingRoute = null;
     });
   }

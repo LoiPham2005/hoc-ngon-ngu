@@ -10,6 +10,8 @@ import 'package:lingua/features/course/widgets/module_card.dart';
 import 'package:lingua/features/japanese/kana_table_page.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
 import 'package:lingua/features/japanese/providers/kanji_provider.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -72,6 +74,11 @@ class KanjiListPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
+              ),
+              const NativeAdWidget(
+                placement: NativePlacement.list,
+                size: NativeAdSize.small,
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
               ),
               Expanded(
                 child: items.isEmpty

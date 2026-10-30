@@ -16,6 +16,8 @@ import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/exercise_quiz.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
@@ -51,19 +53,21 @@ class MinimalPairsPage extends ConsumerWidget {
                 color: Module.enPronunciation.color,
               ),
               const SizedBox(height: 12),
-              for (final s in sets)
-                Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  clipBehavior: Clip.antiAlias,
-                  child: ListTile(
-                    onTap: () =>
-                        context.router.push(MinimalPairSetRoute(setId: s.id)),
-                    leading: LearnedToggle(s.key),
-                    title: Text(s.name(language)),
-                    subtitle: Text('${s.pairs.first.a} – ${s.pairs.first.b}'),
-                    trailing: const Icon(Icons.chevron_right_rounded),
+              ...withNativeAds([
+                for (final s in sets)
+                  Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    clipBehavior: Clip.antiAlias,
+                    child: ListTile(
+                      onTap: () =>
+                          context.router.push(MinimalPairSetRoute(setId: s.id)),
+                      leading: LearnedToggle(s.key),
+                      title: Text(s.name(language)),
+                      subtitle: Text('${s.pairs.first.a} – ${s.pairs.first.b}'),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                    ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },
@@ -117,20 +121,22 @@ class MinimalPairSetPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              for (final p in s.pairs)
-                Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Expanded(child: _Word(p.a, p.aVi)),
-                        Text('↔', style: theme.textTheme.titleMedium),
-                        Expanded(child: _Word(p.b, p.bVi)),
-                      ],
+              ...withNativeAds([
+                for (final p in s.pairs)
+                  Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          Expanded(child: _Word(p.a, p.aVi)),
+                          Text('↔', style: theme.textTheme.titleMedium),
+                          Expanded(child: _Word(p.b, p.bVi)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

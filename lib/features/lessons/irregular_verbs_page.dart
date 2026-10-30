@@ -9,6 +9,8 @@ import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
@@ -68,22 +70,24 @@ class IrregularVerbsPage extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              for (final v in shown)
-                Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  clipBehavior: Clip.antiAlias,
-                  child: ListTile(
-                    onTap: () => _showVerb(context, v),
-                    contentPadding: const EdgeInsets.fromLTRB(4, 2, 8, 2),
-                    leading: LearnedToggle(v.key),
-                    title: Text(
-                      '${v.base} · ${v.past} · ${v.participle}',
-                      style: theme.textTheme.titleMedium,
+              ...withNativeAds([
+                for (final v in shown)
+                  Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    clipBehavior: Clip.antiAlias,
+                    child: ListTile(
+                      onTap: () => _showVerb(context, v),
+                      contentPadding: const EdgeInsets.fromLTRB(4, 2, 8, 2),
+                      leading: LearnedToggle(v.key),
+                      title: Text(
+                        '${v.base} · ${v.past} · ${v.participle}',
+                        style: theme.textTheme.titleMedium,
+                      ),
+                      subtitle: Text(v.meaning),
+                      trailing: SpeakButton(v.speech, language: 'en-US'),
                     ),
-                    subtitle: Text(v.meaning),
-                    trailing: SpeakButton(v.speech, language: 'en-US'),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

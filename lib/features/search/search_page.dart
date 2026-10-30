@@ -10,6 +10,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/search/providers/recent_searches_notifier.dart';
 import 'package:lingua/features/search/providers/search_provider.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -142,6 +144,13 @@ class SearchPage extends HookConsumerWidget {
                       trailing: const Icon(Icons.chevron_right_rounded),
                     ),
                   ),
+                  // Native sau kết quả thứ 3, rồi cứ 8 kết quả (như withNativeAds).
+                  if (i == 2 || (i > 2 && (i - 2) % 8 == 0))
+                    const NativeAdWidget(
+                      placement: NativePlacement.list,
+                      size: NativeAdSize.small,
+                      padding: EdgeInsets.only(bottom: 8),
+                    ),
                 ],
               );
             },

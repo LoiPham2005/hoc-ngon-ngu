@@ -7,6 +7,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -35,7 +37,18 @@ class TopicsPage extends ConsumerWidget {
       builder: (context, topics) => ListView.separated(
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
         itemCount: topics.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 10),
+        // Native sau mục thứ 3, rồi cứ 8 mục một cái (như withNativeAds).
+        separatorBuilder: (_, i) => Column(
+          children: [
+            const SizedBox(height: 10),
+            if (i == 2 || (i > 2 && (i - 2) % 8 == 0))
+              const NativeAdWidget(
+                placement: NativePlacement.list,
+                size: NativeAdSize.small,
+                padding: EdgeInsets.only(bottom: 10),
+              ),
+          ],
+        ),
         itemBuilder: (context, i) {
           final t = topics[i];
           final total = t.items.length;

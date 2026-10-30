@@ -15,6 +15,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/profile/providers/backup_service.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/dialogs/app_confirmation_dialog.dart';
@@ -277,6 +279,10 @@ class ProfilePage extends HookConsumerWidget {
                     context.router.push(OnboardingRoute(changing: true)),
               ),
             ],
+          ),
+          const NativeAdWidget(
+            placement: NativePlacement.list,
+            padding: EdgeInsets.symmetric(vertical: 12),
           ),
           const SizedBox(height: 20),
 

@@ -7,6 +7,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
 import 'package:lingua/features/japanese/models/kana_model.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
@@ -37,6 +39,11 @@ class KanaTablePage extends ConsumerWidget {
           Text(
             l10n.learn_progress(p.learned, p.total),
             style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const NativeAdWidget(
+            placement: NativePlacement.list,
+            size: NativeAdSize.small,
+            padding: EdgeInsets.only(top: 12),
           ),
           const SizedBox(height: 12),
           SectionTitle(l10n.kana_basic),

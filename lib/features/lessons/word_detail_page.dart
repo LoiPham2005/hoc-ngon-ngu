@@ -8,6 +8,8 @@ import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -157,6 +159,10 @@ class _WordView extends ConsumerWidget {
                     ],
                   ),
                 ),
+              ),
+              const NativeAdWidget(
+                placement: NativePlacement.detail,
+                padding: EdgeInsets.only(top: 16),
               ),
             ],
           ),

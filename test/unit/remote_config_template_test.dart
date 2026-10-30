@@ -35,10 +35,14 @@ void main() {
         expect(cfg.unit(AdType.appOpen, AppOpenPlacement.resume), isNotNull);
         expect(cfg.unit(AdType.native, NativePlacement.result), isNotNull);
         expect(cfg.unit(AdType.banner, BannerPlacement.list), isNotNull);
-        expect(
-          cfg.unit(AdType.interstitial, InterstitialPlacement.openContent),
-          isNotNull,
-        );
+        for (final p in [
+          InterstitialPlacement.openContent,
+          InterstitialPlacement.openDetail,
+          InterstitialPlacement.practiceStart,
+          InterstitialPlacement.tabSwitch,
+        ]) {
+          expect(cfg.unit(AdType.interstitial, p), isNotNull, reason: p);
+        }
         expect(
           cfg.unit(AdType.rewarded, RewardedPlacement.streakFreeze),
           isNotNull,
@@ -47,6 +51,7 @@ void main() {
           NativePlacement.list,
           NativePlacement.home,
           NativePlacement.onboarding,
+          NativePlacement.detail,
         ]) {
           expect(cfg.unit(AdType.native, p), isNotNull, reason: p);
         }

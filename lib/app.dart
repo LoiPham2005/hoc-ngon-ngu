@@ -57,10 +57,18 @@ class _AppView extends HookConsumerWidget {
           TalkerRouteObserver(talker),
           AnalyticsRouteObserver(screens),
           // Mở một học phần từ màn Khoá học → interstitial (điểm chuyển màn tự nhiên).
-          AdRouteObserver(ref.read(adManagerProvider), {
-            for (final route in _contentRoutes)
-              route: InterstitialPlacement.openContent,
-          }),
+          AdRouteObserver(
+            ref.read(adManagerProvider),
+            {
+              for (final route in _contentRoutes)
+                route: InterstitialPlacement.openContent,
+              for (final route in _detailRoutes)
+                route: InterstitialPlacement.openDetail,
+              for (final route in _practiceRoutes)
+                route: InterstitialPlacement.practiceStart,
+            },
+            tabPlacement: InterstitialPlacement.tabSwitch,
+          ),
         ],
       ),
     );
@@ -120,10 +128,9 @@ class _AppView extends HookConsumerWidget {
   }
 }
 
-/// Đang làm bài / mở app lần đầu → không banner (không làm người học mất tập trung).
-final _noBannerRoutes = {
-  SplashRoute.name,
-  OnboardingRoute.name,
+/// Màn làm bài: không banner (không làm người học mất tập trung); vào màn → interstitial
+/// `practice_start` (chưa làm câu nào nên không cắt ngang).
+final _practiceRoutes = {
   QuizRoute.name,
   GrammarPracticeRoute.name,
   DialogueQuizRoute.name,
@@ -131,6 +138,26 @@ final _noBannerRoutes = {
   MinimalPairQuizRoute.name,
   IrregularTypingRoute.name,
   PhraseOrderRoute.name,
+};
+
+/// Mở app lần đầu / đang làm bài → không banner.
+final _noBannerRoutes = {
+  SplashRoute.name,
+  OnboardingRoute.name,
+  ..._practiceRoutes,
+};
+
+/// Màn chi tiết / tra cứu → interstitial `open_detail`.
+final _detailRoutes = {
+  WordDetailRoute.name,
+  KanaDetailRoute.name,
+  KanjiDetailRoute.name,
+  GrammarLessonRoute.name,
+  DialogueRoute.name,
+  VocabListRoute.name,
+  PracticeRoute.name,
+  SearchRoute.name,
+  StatsRoute.name,
 };
 
 /// Màn mở ra từ thẻ học phần ở Khoá học → interstitial `open_content`.

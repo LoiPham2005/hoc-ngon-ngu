@@ -11,6 +11,8 @@ import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/exercise_quiz.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/states/async_view.dart';
 
@@ -117,6 +119,10 @@ class DialoguePage extends HookConsumerWidget {
                   active: playing.value == i,
                   onTap: () => play(d, from: i, single: true),
                 ),
+              const NativeAdWidget(
+                placement: NativePlacement.detail,
+                padding: EdgeInsets.only(top: 16),
+              ),
             ],
           );
         },

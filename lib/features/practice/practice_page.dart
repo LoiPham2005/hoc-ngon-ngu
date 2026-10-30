@@ -13,6 +13,8 @@ import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/sentence_practice_page.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
@@ -292,7 +294,7 @@ class _LessonTiles extends ConsumerWidget {
     ];
 
     return Column(
-      children: [
+      children: withNativeAds([
         for (final (module, glyph, title, subtitle, onTap) in tiles)
           _PracticeTile(
             glyph: glyph,
@@ -301,7 +303,7 @@ class _LessonTiles extends ConsumerWidget {
             subtitle: subtitle,
             onTap: onTap,
           ),
-      ],
+      ], NativePlacement.list),
     );
   }
 }
