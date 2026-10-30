@@ -85,7 +85,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:346962283535:android:5eefb6e865d5c0725d277a",
         "android_client_info": {
-          "package_name": "com.loipham.lingua"
+          "package_name": "com.flutter.base"
         }
       },
       "oauth_client": [],
@@ -104,7 +104,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:346962283535:android:edf6b2938921afc65d277a",
         "android_client_info": {
-          "package_name": "com.loipham.lingua.dev"
+          "package_name": "com.flutter.base.dev"
         }
       },
       "oauth_client": [],
@@ -123,7 +123,26 @@
       "client_info": {
         "mobilesdk_app_id": "1:346962283535:android:b9bdb993a3e016335d277a",
         "android_client_info": {
-          "package_name": "com.loipham.lingua.stg"
+          "package_name": "com.flutter.base.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwPovpEfZCDvXh7zF-rQQJKHqO7AjfbuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346962283535:android:5221524959aa1ff45d277a",
+        "android_client_info": {
+          "package_name": "com.loipham.lingua.dev"
         }
       },
       "oauth_client": [],

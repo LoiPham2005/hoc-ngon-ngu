@@ -1,0 +1,26 @@
+{
+  "enable_native_full_after_interstitial": true,
+  "rules": {
+    "interstitial_interval": 30,
+    "max_interstitial_per_session": 8,
+    "app_open_interval": 60,
+    "max_app_open_per_session": 4,
+    "native_full_interval": 90,
+    "max_native_full_per_session": 2
+  },
+  "ad_units": {
+    "interstitial": {
+      "lesson_done": {
+        "native_full_after": true
+      },
+      "open_content": {
+        "native_full_after": true
+      }
+    },
+    "native": {
+      "after_interstitial": {
+        "enable": true
+      }
+    }
+  }
+}

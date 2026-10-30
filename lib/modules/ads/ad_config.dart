@@ -309,7 +309,7 @@ AdConfig _devConfig({required bool ios}) {
 
   // Theo docs/ad-plan.md (giai đoạn 1). Giãn cách để 0 cho dễ thử; bản thật đặt trên Remote Config.
   return AdConfig(
-    showAllAds: true,
+    showAllAds: false,
     preload: true,
     enableInterstitial: true,
     enableAppOpen: true,
