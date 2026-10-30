@@ -59,6 +59,19 @@
   },
   "home_streakHint": "Study every day to keep the flame 🔥",
   "home_streakStart": "Study today to start a streak 🔥",
+  "home_streakRestoreTitle": "Save your {days}-day streak 🔥",
+  "@home_streakRestoreTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "home_streakRestoreBody": "You missed yesterday — watch a short ad to keep your streak.",
+  "home_streakRestoreWatch": "Watch ad",
+  "home_streakRestoreFree": "Keep streak for free",
+  "home_streakRestoreDone": "Streak saved! Study today to keep it going 🔥",
+  "home_streakRestoreFailed": "The ad wasn't finished, so the streak wasn't saved.",
   "home_todayGoal": "Today's goal",
   "home_todayProgress": "{done}/{goal} reps",
   "@home_todayProgress": {

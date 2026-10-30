@@ -7,6 +7,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -46,45 +48,47 @@ class DialogueListPage extends ConsumerWidget {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 12),
-              for (final d in dialogues)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: ListTile(
-                      onTap: () => context.router.push(
-                        DialogueRoute(course: course, dialogueId: d.id),
-                      ),
-                      contentPadding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
-                      leading: Text(
-                        d.emoji,
-                        style: const TextStyle(fontSize: 28),
-                      ),
-                      title: Text(
-                        d.name(language),
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Row(
-                          children: [
-                            Tag(d.level),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                d.speakers.values.join(' · '),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: theme.textTheme.bodySmall,
-                              ),
-                            ),
-                          ],
+              ...withNativeAds([
+                for (final d in dialogues)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        onTap: () => context.router.push(
+                          DialogueRoute(course: course, dialogueId: d.id),
                         ),
+                        contentPadding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
+                        leading: Text(
+                          d.emoji,
+                          style: const TextStyle(fontSize: 28),
+                        ),
+                        title: Text(
+                          d.name(language),
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Row(
+                            children: [
+                              Tag(d.level),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  d.speakers.values.join(' · '),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.bodySmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        trailing: LearnedToggle(d.key),
                       ),
-                      trailing: LearnedToggle(d.key),
                     ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

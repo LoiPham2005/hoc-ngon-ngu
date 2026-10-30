@@ -17,39 +17,49 @@ enum AdType {
 /// Tên placement = key trong `ad_units.<loại>` trên Remote Config.
 /// Thêm placement: thêm hằng ở đây + key trên Firebase (hoặc truyền chuỗi bất kỳ).
 abstract final class InterstitialPlacement {
-  static const splash = 'splash';
-  static const afterQuiz = 'after_quiz';
-}
+  /// Ngay khi xong 1 bài (màn kết quả) — điểm dừng tự nhiên, nguồn doanh thu chính.
+  static const lessonDone = 'lesson_done';
 
-abstract final class AppOpenPlacement {
-  static const splash = 'splash';
-  static const resume = 'resume';
+  /// Mở một học phần / danh sách bài từ màn Khoá học (`OpenContentAdObserver`).
+  static const openContent = 'open_content';
 }
 
 abstract final class RewardedPlacement {
-  static const bonus = 'bonus';
+  /// "Xem quảng cáo để giữ chuỗi ngày học" (thẻ ở Trang chủ khi lỡ đúng 1 ngày).
+  static const streakFreeze = 'streak_freeze';
 }
 
-/// Rewarded interstitial: tự hiện ở điểm chuyển màn (không cần user bấm xem), vẫn có thưởng.
-abstract final class RewardedInterstitialPlacement {
-  static const levelEnd = 'level_end';
+abstract final class AppOpenPlacement {
+  /// Mở app từ lần thứ 2 (lần đầu không hiện — xem SplashPage).
+  static const splash = 'splash';
+
+  /// Quay lại app từ nền (AdManager tự hiện).
+  static const resume = 'resume';
 }
 
 abstract final class NativePlacement {
-  /// Native full tự hiện ngay sau khi đóng interstitial.
+  /// Native full tự hiện ngay sau khi đóng interstitial (chỉ bật cho người dùng mua về).
   static const afterInterstitial = 'after_interstitial';
 
   /// Native full gọi tay qua `showNativeFull()`.
   static const full = 'native_full';
-  static const language = 'language';
+
+  /// Native nhỏ dưới điểm số ở màn kết quả bài.
+  static const result = 'result';
+
+  /// Native xen giữa các dòng của danh sách (từ vựng, ngữ pháp, hội thoại, học phần).
+  static const list = 'list';
+
+  /// Native cuối Trang chủ.
   static const home = 'home';
+
+  /// Native dưới danh sách khoá ở màn chọn khoá học (lần mở đầu).
+  static const onboarding = 'onboarding';
 }
 
 abstract final class BannerPlacement {
-  static const home = 'home';
-
-  /// Banner neo đáy màn, dạng collapsible (dùng với `CollapsibleBanner.bottom`).
-  static const bottom = 'bottom';
+  /// Banner neo đáy MỌI màn (trừ lúc làm bài) — `AdBannerHost` trong `MaterialApp.builder`.
+  static const list = 'list';
 }
 
 /// 1 ad unit. JSON:
@@ -282,95 +292,62 @@ AdConfig _devConfig({required bool ios}) {
   final interstitial = id('1033173712', '4411468910');
   final appOpen = id('9257395921', '5575463023');
   final native = id('2247696110', '3986624511');
-  final rewarded = id('5224354917', '1712485313');
-  final rewardedInterstitial = id('5354046379', '6978759866');
   final banner = id('9214589741', '2435281174');
-  // Google có test ID riêng cho collapsible — dùng ID banner thường sẽ không bung.
-  final collapsibleBanner = id('2014213617', '8388050270');
+  final rewarded = id('5224354917', '1712485313');
 
-  // Viết đủ mọi field (kể cả bằng mặc định) để đổi nhanh khi test.
+  // Theo docs/ad-plan.md (giai đoạn 1). Giãn cách để 0 cho dễ thử; bản thật đặt trên Remote Config.
   return AdConfig(
-    showAllAds: false,
+    showAllAds: true,
     preload: true,
     enableInterstitial: true,
     enableAppOpen: true,
     enableRewarded: true,
-    enableRewardedInterstitial: true,
+    enableRewardedInterstitial: false,
     enableNative: true,
     enableBanner: true,
-    enableNativeFullAfterInterstitial: true,
+    enableNativeFullAfterInterstitial: false,
     rules: const AdRules(
-      // Giây giữa 2 lần hiện.
       interstitialInterval: 0,
       appOpenInterval: 15,
-      rewardedInterval: 30,
-      rewardedInterstitialInterval: 30,
-      nativeFullInterval: 30,
-      // Tối đa mỗi phiên, 0 = không giới hạn.
       maxInterstitialPerSession: 0,
       maxAppOpenPerSession: 0,
-      maxRewardedPerSession: 0,
-      maxRewardedInterstitialPerSession: 0,
-      maxNativeFullPerSession: 0,
     ),
     adUnits: AdUnits(
       interstitial: {
-        InterstitialPlacement.splash: AdUnit(
+        // Nạp sẵn: hiện thường xuyên → luôn có sẵn đúng lúc xong bài (show rate cao).
+        InterstitialPlacement.lessonDone: AdUnit(
           id: interstitial,
-          enable: true,
           preload: true,
-          nativeFullAfter: true,
+          nativeFullAfter: false,
         ),
-        InterstitialPlacement.afterQuiz: AdUnit(
+        InterstitialPlacement.openContent: AdUnit(
           id: interstitial,
-          enable: true,
           preload: true,
           nativeFullAfter: false,
         ),
       },
-      appOpen: {
-        AppOpenPlacement.splash: AdUnit(
-          id: appOpen,
-          enable: true,
-          preload: true,
-        ),
-        AppOpenPlacement.resume: AdUnit(
-          id: appOpen,
-          enable: true,
-          preload: true,
-        ),
-      },
+      // Người dùng tự bấm xem → nạp tay khi thẻ "giữ chuỗi" hiện, không giữ sẵn.
       rewarded: {
-        RewardedPlacement.bonus: AdUnit(
-          id: rewarded,
-          enable: true,
-          preload: true,
-        ),
+        RewardedPlacement.streakFreeze: AdUnit(id: rewarded, preload: false),
       },
-      rewardedInterstitial: {
-        RewardedInterstitialPlacement.levelEnd: AdUnit(
-          id: rewardedInterstitial,
-          enable: true,
-          preload: true,
-        ),
+      appOpen: {
+        AppOpenPlacement.splash: AdUnit(id: appOpen, preload: true),
+        AppOpenPlacement.resume: AdUnit(id: appOpen, preload: true),
       },
       native: {
-        // Toàn màn — nạp sẵn theo `preload`.
+        // Tắt cho người dùng tự nhiên; bật trong ad_config_paid.
         NativePlacement.afterInterstitial: AdUnit(
           id: native,
-          enable: true,
-          preload: true,
+          enable: false,
+          preload: false,
         ),
-        NativePlacement.full: AdUnit(id: native, enable: true, preload: true),
-        // Gắn trong màn — load khi widget hiện (`preload` không áp dụng).
-        NativePlacement.language: AdUnit(id: native, enable: true),
-        NativePlacement.home: AdUnit(id: native, enable: true),
+        // Trong màn — tự tải khi widget hiện (`preload` không áp dụng).
+        NativePlacement.result: AdUnit(id: native, preload: false),
+        NativePlacement.list: AdUnit(id: native, preload: false),
+        NativePlacement.home: AdUnit(id: native, preload: false),
+        NativePlacement.onboarding: AdUnit(id: native, preload: false),
       },
-      banner: {
-        // Banner load khi widget hiện (`preload` không áp dụng).
-        BannerPlacement.home: AdUnit(id: banner, enable: true),
-        BannerPlacement.bottom: AdUnit(id: collapsibleBanner, enable: true),
-      },
+      banner: {BannerPlacement.list: AdUnit(id: banner, preload: false)},
     ),
   );
 }

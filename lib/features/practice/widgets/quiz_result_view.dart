@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
+import 'package:lingua/features/practice/widgets/lesson_done_ad.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
 /// Kết quả bài luyện: vòng điểm, lời khen theo %, câu sai cần ôn, Làm lại / Xong.
-class QuizResultView extends StatelessWidget {
+class QuizResultView extends HookConsumerWidget {
   const QuizResultView({
     required this.session,
     required this.onRetry,
@@ -26,7 +28,8 @@ class QuizResultView extends StatelessWidget {
   final void Function(QuizItem item) onOpen;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useLessonDoneAd(ref, total: session.questions.length);
     final l10n = context.l10n;
     final colors = context.colors;
     final theme = Theme.of(context);
@@ -94,7 +97,9 @@ class QuizResultView extends StatelessWidget {
                       color: colors.textMuted,
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 16),
+                  const ResultNativeAd(),
+                  const SizedBox(height: 12),
                   if (mistakes.isEmpty)
                     Text(
                       l10n.result_perfect,

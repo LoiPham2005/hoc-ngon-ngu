@@ -2,11 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lingua/core/di/global_providers.dart';
 import 'package:lingua/core/services/app_version_service.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/gen/assets.gen.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/ad_manager.dart';
 import 'package:lingua/modules/app_config/app_notice.dart';
 import 'package:lingua/routes/app_router.dart';
 
@@ -20,6 +23,8 @@ class SplashPage extends HookConsumerWidget {
     useEffect(() {
       Future<void> bootstrap() async {
         try {
+          await _showLaunchAd(ref);
+          if (!context.mounted) return;
           await ref.read(appVersionServiceProvider).checkAndPrompt(context);
           if (context.mounted) await showAppNotice(context, ref);
         } catch (e, s) {
@@ -57,4 +62,22 @@ class SplashPage extends HookConsumerWidget {
       ),
     );
   }
+}
+
+const _kLaunches = 'launch_count_v1';
+
+/// App Open lúc mở app — bỏ qua LẦN ĐẦU (ấn tượng đầu quyết định giữ chân D1). Chờ tải tối đa
+/// 3 giây, không thêm lớp phủ (splash vốn là màn chờ); không có ad thì vào app ngay.
+Future<void> _showLaunchAd(WidgetRef ref) async {
+  final prefs = ref.read(sharedPrefsProvider);
+  final launches = (prefs.getInt(_kLaunches) ?? 0) + 1;
+  await prefs.setInt(_kLaunches, launches);
+  if (launches < 2) return;
+  await ref
+      .read(adManagerProvider)
+      .showAppOpen(
+        AppOpenPlacement.splash,
+        timeout: const Duration(seconds: 3),
+        loadingOverlay: false,
+      );
 }

@@ -7,6 +7,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
@@ -51,44 +53,46 @@ class VocabListPage extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 12),
-              for (final w in words)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: ListTile(
-                      onTap: () => context.router.push(
-                        WordDetailRoute(
-                          course: course,
-                          topicId: topicId,
-                          word: w.word,
+              ...withNativeAds([
+                for (final w in words)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        onTap: () => context.router.push(
+                          WordDetailRoute(
+                            course: course,
+                            topicId: topicId,
+                            word: w.word,
+                          ),
                         ),
-                      ),
-                      contentPadding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                      leading: LearnedToggle(w.key),
-                      title: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: w.word,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            if (w.readingLabel case final reading?)
+                        contentPadding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                        leading: LearnedToggle(w.key),
+                        title: Text.rich(
+                          TextSpan(
+                            children: [
                               TextSpan(
-                                text: '  $reading',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                text: w.word,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
-                          ],
+                              if (w.readingLabel case final reading?)
+                                TextSpan(
+                                  text: '  $reading',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                      subtitle: Text(w.meaning),
-                      trailing: SpeakButton(
-                        w.word,
-                        language: w.course.speechLanguage,
+                        subtitle: Text(w.meaning),
+                        trailing: SpeakButton(
+                          w.word,
+                          language: w.course.speechLanguage,
+                        ),
                       ),
                     ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

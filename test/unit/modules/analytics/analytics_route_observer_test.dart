@@ -20,6 +20,8 @@ Route<void> _dialog() =>
     RawDialogRoute<void>(pageBuilder: (_, _, _) => const SizedBox());
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late _FakeAnalytics analytics;
   late ScreenTracker screens;
   late AnalyticsRouteObserver observer;

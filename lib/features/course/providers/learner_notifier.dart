@@ -215,6 +215,25 @@ class LearnerNotifier extends _$LearnerNotifier {
     return last == _today || last == yesterday ? state.streak : 0;
   }
 
+  static const _kStreakRestored = 'streak_restored_v1';
+  static const _restoreEvery = 7;
+
+  /// Chuỗi vừa đứt vì lỡ ĐÚNG 1 ngày (học lần cuối hôm kia) → còn cứu được, trả số ngày;
+  /// không thì 0. Mỗi [_restoreEvery] ngày cứu tối đa 1 lần, chuỗi ≥ 2 ngày mới đáng cứu.
+  int get restorableStreak {
+    if (state.lastActiveDay != _inDays(-2) || state.streak < 2) return 0;
+    final last = ref.read(sharedPrefsProvider).getString(_kStreakRestored);
+    if (last != null && last.compareTo(_inDays(-_restoreEvery)) > 0) return 0;
+    return state.streak;
+  }
+
+  /// Cứu chuỗi: coi như hôm qua có học → học hôm nay là chuỗi nối tiếp.
+  Future<void> restoreStreak() async {
+    if (restorableStreak == 0) return;
+    await ref.read(sharedPrefsProvider).setString(_kStreakRestored, _today);
+    await _save(state.copyWith(lastActiveDay: _inDays(-1)));
+  }
+
   String _inDays(int days) {
     final d = now();
     return _day(DateTime(d.year, d.month, d.day + days));

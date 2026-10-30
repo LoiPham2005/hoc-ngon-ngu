@@ -6,7 +6,10 @@ import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
+import 'package:lingua/features/home/widgets/streak_restore_card.dart';
 import 'package:lingua/features/practice/providers/quiz_session_notifier.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
@@ -51,6 +54,7 @@ class HomePage extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 16),
+            const StreakRestoreCard(),
             _StreakCard(
               streak: notifier.currentStreak,
               today: notifier.todayCount,
@@ -76,6 +80,10 @@ class HomePage extends ConsumerWidget {
               ),
               icon: const Icon(Icons.bolt_rounded),
               label: Text(l10n.home_quickReview),
+            ),
+            const NativeAdWidget(
+              placement: NativePlacement.home,
+              padding: EdgeInsets.only(top: 24),
             ),
             const SizedBox(height: 24),
             SectionTitle(

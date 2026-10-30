@@ -25,11 +25,10 @@ part 'ad_manager.g.dart';
 /// ```dart
 /// final ads = ref.read(adManagerProvider);
 /// // Mọi hàm show CHỜ tới khi ad đóng hẳn (không hiện được → xong ngay) → await xong là đi tiếp.
-/// await ads.showInterstitial(InterstitialPlacement.splash);  goNext();
-/// await ads.showRewarded(RewardedPlacement.bonus, onReward: (r) => addCoin(r.amount));
-/// await ads.showRewardedInterstitial(RewardedInterstitialPlacement.levelEnd, onReward: (r) => ...);
+/// await ads.showInterstitial(InterstitialPlacement.lessonDone);  goNext();
+/// await ads.showRewarded('streak_freeze', onReward: (r) => keepStreak());
 /// await ads.showNativeFull();
-/// AdBannerWidget(placement: BannerPlacement.home);  NativeAdWidget(placement: NativePlacement.home);
+/// AdBannerWidget(placement: BannerPlacement.list);  NativeAdWidget(placement: NativePlacement.result);
 /// ads.setPremium(true);  ads.pauseAds(const Duration(minutes: 30));
 /// ```
 class AdManager {
@@ -160,7 +159,14 @@ class AdManager {
   }
 
   /// Placement không có unit → dùng unit `resume`.
-  Future<bool> showAppOpen(String placement, {VoidCallback? onShowed}) async {
+  /// [timeout]: chờ tải tối đa khi chưa nạp sẵn. [loadingOverlay] `false` ở màn khởi động
+  /// (splash vốn đã là màn chờ, không cần thêm "Đang tải quảng cáo…").
+  Future<bool> showAppOpen(
+    String placement, {
+    VoidCallback? onShowed,
+    Duration timeout = const Duration(seconds: 5),
+    bool loadingOverlay = true,
+  }) async {
     final cfg = config.value;
     final unit =
         cfg.unit(AdType.appOpen, placement) ??
@@ -181,8 +187,9 @@ class AdManager {
         placement,
         unit,
         cfg.rules,
-        loading: _loading,
+        loading: loadingOverlay ? _loading : null,
         onShowed: onShowed,
+        timeout: timeout,
       ),
     );
   }

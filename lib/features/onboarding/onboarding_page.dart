@@ -6,6 +6,8 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
@@ -96,6 +98,12 @@ class OnboardingPage extends HookConsumerWidget {
                   },
                 ),
               ),
+              const NativeAdWidget(
+                placement: NativePlacement.onboarding,
+                size: NativeAdSize.small,
+                padding: EdgeInsets.only(top: 12),
+              ),
+              const SizedBox(height: 12),
               FilledButton(
                 onPressed: start,
                 child: Text(l10n.onboarding_start),

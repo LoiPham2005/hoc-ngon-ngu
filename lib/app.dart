@@ -15,6 +15,10 @@ import 'package:lingua/design/theme/styles/app_dimensions.dart';
 import 'package:lingua/design/theme/theme_notifier.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/gen/l10n/app_localizations.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/ad_manager.dart';
+import 'package:lingua/modules/ads/ad_route_observer.dart';
+import 'package:lingua/modules/ads/widgets/ad_banner_host.dart';
 import 'package:lingua/modules/analytics/analytics_route_observer.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 import 'package:lingua/modules/app_config/app_gate.dart';
@@ -52,6 +56,11 @@ class _AppView extends HookConsumerWidget {
         navigatorObservers: () => [
           TalkerRouteObserver(talker),
           AnalyticsRouteObserver(screens),
+          // Mở một học phần từ màn Khoá học → interstitial (điểm chuyển màn tự nhiên).
+          AdRouteObserver(ref.read(adManagerProvider), {
+            for (final route in _contentRoutes)
+              route: InterstitialPlacement.openContent,
+          }),
         ],
       ),
     );
@@ -95,7 +104,14 @@ class _AppView extends HookConsumerWidget {
             minScaleFactor: AppDimensions.minTextScale,
             maxScaleFactor: AppDimensions.maxTextScale,
             child: ConnectivityBanner(
-              child: AppGate(child: FlutterSmartDialog.init()(context, child)),
+              child: AppGate(
+                child: AdBannerHost(
+                  route: screens.route,
+                  placement: BannerPlacement.list,
+                  hiddenOn: _noBannerRoutes,
+                  child: FlutterSmartDialog.init()(context, child),
+                ),
+              ),
             ),
           ),
         ),
@@ -103,3 +119,29 @@ class _AppView extends HookConsumerWidget {
     );
   }
 }
+
+/// Đang làm bài / mở app lần đầu → không banner (không làm người học mất tập trung).
+final _noBannerRoutes = {
+  SplashRoute.name,
+  OnboardingRoute.name,
+  QuizRoute.name,
+  GrammarPracticeRoute.name,
+  DialogueQuizRoute.name,
+  SentencePracticeRoute.name,
+  MinimalPairQuizRoute.name,
+  IrregularTypingRoute.name,
+  PhraseOrderRoute.name,
+};
+
+/// Màn mở ra từ thẻ học phần ở Khoá học → interstitial `open_content`.
+final _contentRoutes = {
+  KanaTableRoute.name,
+  KanjiListRoute.name,
+  PronunciationRoute.name,
+  TopicsRoute.name,
+  PhraseListRoute.name,
+  GrammarListRoute.name,
+  DialogueListRoute.name,
+  MinimalPairsRoute.name,
+  IrregularVerbsRoute.name,
+};

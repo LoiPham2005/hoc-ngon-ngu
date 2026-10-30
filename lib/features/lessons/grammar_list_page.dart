@@ -8,6 +8,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -45,47 +47,49 @@ class GrammarListPage extends ConsumerWidget {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 12),
-              for (final (i, g) in lessons.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: ListTile(
-                      onTap: () => context.router.push(
-                        GrammarLessonRoute(course: course, lessonId: g.id),
-                      ),
-                      contentPadding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
-                      leading: Text(
-                        g.emoji,
-                        style: const TextStyle(fontSize: 28),
-                      ),
-                      title: Text(
-                        '${i + 1}. ${g.name(language)}',
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Row(
-                          children: [
-                            Tag(g.level),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                g.summary,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: context.colors.textMuted,
+              ...withNativeAds([
+                for (final (i, g) in lessons.indexed)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        onTap: () => context.router.push(
+                          GrammarLessonRoute(course: course, lessonId: g.id),
+                        ),
+                        contentPadding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
+                        leading: Text(
+                          g.emoji,
+                          style: const TextStyle(fontSize: 28),
+                        ),
+                        title: Text(
+                          '${i + 1}. ${g.name(language)}',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Row(
+                            children: [
+                              Tag(g.level),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  g.summary,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: context.colors.textMuted,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+                        trailing: LearnedToggle(g.key),
                       ),
-                      trailing: LearnedToggle(g.key),
                     ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

@@ -5,6 +5,7 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_colors.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
+import 'package:lingua/features/practice/widgets/lesson_done_ad.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 
 /// Số mục đã thuộc trong [keys].
@@ -119,7 +120,7 @@ class AnswerFeedback extends StatelessWidget {
 
 /// Màn kết quả bài luyện tiếng Anh (ngữ pháp, nghe – chép, luyện nói, hội thoại).
 /// [note] = dòng thêm (vd "Đã thuộc bài này ✓") + tô xanh (true) hay cam (false).
-class PracticeResult extends StatelessWidget {
+class PracticeResult extends HookConsumerWidget {
   const PracticeResult({
     required this.correct,
     required this.total,
@@ -134,7 +135,8 @@ class PracticeResult extends StatelessWidget {
   final (String, bool)? note;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useLessonDoneAd(ref, total: total);
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final colors = context.colors;
@@ -181,6 +183,7 @@ class PracticeResult extends StatelessWidget {
                   ),
                 ),
               ],
+              const ResultNativeAd(),
               const Spacer(),
               Row(
                 children: [

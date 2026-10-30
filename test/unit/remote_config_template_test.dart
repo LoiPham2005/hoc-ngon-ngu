@@ -26,18 +26,36 @@ void main() {
             as Map<String, dynamic>,
       ]) {
         final cfg = AdConfig.fromJson(value(raw));
+        // Đúng các vị trí của docs/ad-plan.md.
         expect(
-          cfg.unit(AdType.interstitial, InterstitialPlacement.splash),
+          cfg.unit(AdType.interstitial, InterstitialPlacement.lessonDone),
+          isNotNull,
+        );
+        expect(cfg.unit(AdType.appOpen, AppOpenPlacement.splash), isNotNull);
+        expect(cfg.unit(AdType.appOpen, AppOpenPlacement.resume), isNotNull);
+        expect(cfg.unit(AdType.native, NativePlacement.result), isNotNull);
+        expect(cfg.unit(AdType.banner, BannerPlacement.list), isNotNull);
+        expect(
+          cfg.unit(AdType.interstitial, InterstitialPlacement.openContent),
           isNotNull,
         );
         expect(
-          cfg.unit(
-            AdType.rewardedInterstitial,
-            RewardedInterstitialPlacement.levelEnd,
-          ),
+          cfg.unit(AdType.rewarded, RewardedPlacement.streakFreeze),
           isNotNull,
         );
-        expect(cfg.unit(AdType.banner, BannerPlacement.bottom), isNotNull);
+        for (final p in [
+          NativePlacement.list,
+          NativePlacement.home,
+          NativePlacement.onboarding,
+        ]) {
+          expect(cfg.unit(AdType.native, p), isNotNull, reason: p);
+        }
+        // Người dùng tự nhiên: không native toàn màn sau interstitial.
+        expect(
+          cfg.unit(AdType.native, NativePlacement.afterInterstitial),
+          isNull,
+        );
+        expect(cfg.rules.interstitialInterval, greaterThanOrEqualTo(45));
         expect(
           cfg.adUnits.all.every((u) => u.id.startsWith(kGoogleTestPublisher)),
           isTrue,
@@ -118,17 +136,21 @@ void main() {
             .cast<Map<String, dynamic>>(),
       ]) {
         final cfg = AdConfig.fromJson(mergeAdConfigJson(value(raw), paid));
-        expect(cfg.rules.interstitialInterval, 45);
+        expect(cfg.rules.interstitialInterval, 30);
         expect(
-          cfg.unit(AdType.interstitial, InterstitialPlacement.afterQuiz)?.id,
+          cfg.unit(AdType.interstitial, InterstitialPlacement.lessonDone)?.id,
           startsWith(kGoogleTestPublisher),
         );
-        // Không chồng 2 quảng cáo toàn màn lúc mở app.
+        // Người dùng mua về: native toàn màn sau interstitial được bật.
         expect(
           cfg
-              .unit(AdType.interstitial, InterstitialPlacement.splash)
+              .unit(AdType.interstitial, InterstitialPlacement.lessonDone)
               ?.nativeFullAfter,
-          isFalse,
+          isTrue,
+        );
+        expect(
+          cfg.unit(AdType.native, NativePlacement.afterInterstitial),
+          isNotNull,
         );
       }
     });

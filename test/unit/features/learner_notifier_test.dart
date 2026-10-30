@@ -73,6 +73,49 @@ void main() {
     },
   );
 
+  test(
+    'streak restore: only after missing exactly 1 day, at most once per 7 days',
+    () async {
+      final c = newContainer();
+      final n = c.read(learnerProvider.notifier);
+      var day = DateTime(2026, 10, 1, 9);
+      n.now = () => day;
+      await n.recordAnswer(correct: true);
+      day = DateTime(2026, 10, 2, 9);
+      await n.recordAnswer(correct: true);
+      expect(n.restorableStreak, 0); // chuỗi còn nguyên
+
+      day = DateTime(2026, 10, 4, 9); // lỡ ngày 3
+      expect(n.currentStreak, 0);
+      expect(n.restorableStreak, 2);
+      await n.restoreStreak();
+      expect(n.currentStreak, 2);
+      expect(n.restorableStreak, 0);
+      await n.recordAnswer(correct: true);
+      expect(n.currentStreak, 3);
+
+      day = DateTime(2026, 10, 6, 9); // lỡ ngày 5, mới cứu 2 ngày trước
+      expect(n.restorableStreak, 0);
+
+      day = DateTime(2026, 10, 12, 9);
+      await n.recordAnswer(correct: true); // chuỗi mới = 1
+      day = DateTime(2026, 10, 14, 9);
+      expect(n.restorableStreak, 0); // chuỗi 1 ngày không đáng cứu
+    },
+  );
+
+  test('streak restore: a 2-day gap is too late', () async {
+    final c = newContainer();
+    final n = c.read(learnerProvider.notifier);
+    var day = DateTime(2026, 10, 1, 9);
+    n.now = () => day;
+    await n.recordAnswer(correct: true);
+    day = DateTime(2026, 10, 2, 9);
+    await n.recordAnswer(correct: true);
+    day = DateTime(2026, 10, 5, 9);
+    expect(n.restorableStreak, 0);
+  });
+
   test('đặt lại tiến độ giữ khoá học + mục tiêu', () async {
     final c = newContainer();
     final n = c.read(learnerProvider.notifier);

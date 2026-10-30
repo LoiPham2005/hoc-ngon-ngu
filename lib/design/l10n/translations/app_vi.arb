@@ -56,6 +56,19 @@
   },
   "home_streakHint": "Học mỗi ngày để giữ ngọn lửa 🔥",
   "home_streakStart": "Học hôm nay để bắt đầu chuỗi ngày 🔥",
+  "home_streakRestoreTitle": "Cứu chuỗi {days} ngày của bạn 🔥",
+  "@home_streakRestoreTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "home_streakRestoreBody": "Hôm qua bạn lỡ học — xem 1 quảng cáo ngắn để giữ chuỗi.",
+  "home_streakRestoreWatch": "Xem quảng cáo",
+  "home_streakRestoreFree": "Giữ chuỗi miễn phí",
+  "home_streakRestoreDone": "Đã giữ chuỗi! Học hôm nay để nối tiếp 🔥",
+  "home_streakRestoreFailed": "Chưa xem hết quảng cáo, chuỗi chưa được giữ.",
   "home_todayGoal": "Mục tiêu hôm nay",
   "home_todayProgress": "{done}/{goal} lượt",
   "@home_todayProgress": {

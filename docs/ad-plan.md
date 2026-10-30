@@ -90,20 +90,36 @@ Mở app sau khi lỡ 1 ngày ──► Home hiện thẻ:
 | `app_open.resume` | App Open | Quay lại app | Bật | Bật | 1 |
 | `interstitial.lesson_done` | Interstitial | Xong bài | Bật | Bật | 1 |
 | `native.result` | Native (nhỏ) | Màn kết quả | Bật | Bật | 1 |
-| `banner.list` | Banner neo đáy | Màn danh sách | Bật | Bật | 1 |
-| `rewarded.streak_freeze` | Rewarded | Lỡ 1 ngày | Bật | Bật | 2 |
-| `native.home` | Native (nhỏ) | Cuối Home | Tắt | Bật | 2 |
-| `native.onboarding` | Native (nhỏ) | Chọn khoá học | Tắt | Bật | 2 |
+| `banner.list` | Banner neo đáy | MỌI màn trừ lúc làm bài / splash / onboarding / bàn phím mở | Bật | Bật | 1 |
+| `interstitial.open_content` | Interstitial | Mở học phần (bảng kana, kanji, phát âm, chủ đề, câu, ngữ pháp, hội thoại, cặp âm, động từ bất quy tắc) | Bật | Bật | 2 |
+| `rewarded.streak_freeze` | Rewarded | Thẻ "Cứu chuỗi" ở Home khi lỡ đúng 1 ngày (≤ 1 lần / 7 ngày) | Bật | Bật | 2 |
+| `native.list` | Native (nhỏ) | Danh sách từ / câu / ngữ pháp / hội thoại (sau mục 3, rồi mỗi 8 mục) + sau nhóm đầu ở Khoá học | Bật | Bật | 2 |
+| `native.home` | Native (vừa) | Home, trước Thống kê | Bật | Bật | 2 |
+| `native.onboarding` | Native (nhỏ) | Dưới danh sách khoá ở Onboarding | Bật | Bật | 2 |
 | `native.after_interstitial` | Native toàn màn | Sau `lesson_done` | Tắt | Bật | 3 |
 
 ---
+
+## 4b. Nạp sẵn (preload) — để quảng cáo hiện ngay, không bắt chờ
+
+| Vị trí | Cách nạp | Gọi ở đâu |
+|---|---|---|
+| `app_open.splash`, `app_open.resume` | Tự động (`preload: true`) | AdManager nạp lúc mở app, hiện xong tự nạp cái kế |
+| `interstitial.lesson_done` | Tự động (`preload: true`) **+** gọi tay cho chắc | `useEffect` của mọi màn làm bài: `ads.preload(AdType.interstitial, InterstitialPlacement.lessonDone)` |
+| `rewarded.streak_freeze` | Gọi tay (`preload: false`) | Lúc Home hiện thẻ "giữ chuỗi" (chỉ khi lỡ 1 ngày) → `ads.preload(AdType.rewarded, RewardedPlacement.streakFreeze)` |
+| `native.after_interstitial` | Tự động khi interstitial bắt đầu hiện | Có sẵn trong `showInterstitial` |
+| `native.result`, `native.home`, `native.onboarding`, `banner.list` | Không cần | Tự tải khi widget hiện ra |
+
+- Gọi `preload` nhiều lần không sao (đã có sẵn thì bỏ qua); không cần huỷ khi rời màn (tự hết hạn ~1 giờ).
+- Premium / tạm tắt ads / chưa đồng ý quảng cáo → `preload` tự không làm gì.
+- Không nạp kịp → lúc hiện tự tải tại chỗ, có lớp phủ "Đang tải quảng cáo…" 1–3 giây.
 
 ## 5. Tần suất
 
 | Luật | Tự nhiên (`ad_config`) | Mua về (`ad_config_paid`) |
 |---|---|---|
-| `interstitial_interval` | 60s | 45s |
-| `max_interstitial_per_session` | 3 | 6 |
+| `interstitial_interval` (chung `lesson_done` + `open_content`) | 45s | 30s |
+| `max_interstitial_per_session` | 5 | 8 |
 | `app_open_interval` | 120s | 60s |
 | `max_app_open_per_session` | 3 | 4 |
 | `rewarded_interval` / max | 0 / 0 (người dùng tự chọn) | như tự nhiên |
@@ -203,7 +219,7 @@ Mở app sau khi lỡ 1 ngày ──► Home hiện thẻ:
 
 ## 9. Việc code cần làm
 
-**Giai đoạn 1**
+**Giai đoạn 1 — ✅ ĐÃ LÀM (30/10/2026)**, chỉ còn mục 6 (ID thật, app-ads.txt, privacy policy) — banner nay là `AdBannerHost` toàn app (xem giai đoạn 2).
 1. Đổi hằng vị trí trong `lib/modules/ads/ad_config.dart` theo bảng mục 4 (`InterstitialPlacement.lessonDone`, `NativePlacement.result`, `BannerPlacement.list`…) + cấu hình dev.
 2. Gọi `await ads.showInterstitial(InterstitialPlacement.lessonDone)` ở 5 chỗ đang ghi `practice_completed` (quiz, exercise quiz, nghe chép / luyện nói, cặp âm, động từ bất quy tắc), bỏ qua bài < 5 câu.
 3. Đặt `NativeAdWidget(placement: NativePlacement.result)` ở màn kết quả các bài.
@@ -211,9 +227,10 @@ Mở app sau khi lỡ 1 ngày ──► Home hiện thẻ:
 5. App Open: không hiện ở lần mở đầu tiên (đếm số lần mở).
 6. AdMob App ID thật + ad unit thật trên Remote Config; `app-ads.txt`; privacy policy.
 
-**Giai đoạn 2**
-7. Tính năng "giữ chuỗi" + thẻ ở Home + `showRewarded(RewardedPlacement.streakFreeze)`.
-8. `NativeAdWidget` cuối Home và dưới danh sách khoá ở Onboarding.
+**Giai đoạn 2 — ✅ ĐÃ LÀM (30/10/2026)**, bật sẵn cho cả người dùng tự nhiên
+7. "Cứu chuỗi": `LearnerNotifier.restorableStreak` / `restoreStreak()` + `StreakRestoreCard` ở Home (premium giữ miễn phí, hiện thẻ là nạp sẵn rewarded).
+8. Native: Home, Onboarding, Khoá học, 4 danh sách bài (`withNativeAds`).
+8b. Banner chuyển thành `AdBannerHost` toàn app (ở `app.dart`, theo `ScreenTracker.route`), interstitial `open_content` qua `AdRouteObserver`.
 
 **Giai đoạn 3**
 9. Điền token Adjust (code + `attribution_config`), tạo `ad_config_paid`.

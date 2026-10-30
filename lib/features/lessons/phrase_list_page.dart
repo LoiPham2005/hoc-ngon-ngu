@@ -7,6 +7,8 @@ import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/lessons/models/lesson_model.dart';
 import 'package:lingua/features/lessons/providers/lesson_provider.dart';
 import 'package:lingua/features/lessons/widgets/lesson_widgets.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_list.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 import 'package:lingua/shared/base/speak_button.dart';
 import 'package:lingua/shared/states/async_view.dart';
@@ -55,43 +57,45 @@ class PhraseListPage extends ConsumerWidget {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 12),
-              for (final p in phrases)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
-                      child: Row(
-                        children: [
-                          LearnedToggle(p.key),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SentenceText(
-                                  p.text,
-                                  reading: p.reading,
-                                  meaning: p.meaning,
-                                ),
-                                if (p.note != null) ...[
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '💡 ${p.note}',
-                                    style: theme.textTheme.bodySmall,
+              ...withNativeAds([
+                for (final p in phrases)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+                        child: Row(
+                          children: [
+                            LearnedToggle(p.key),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SentenceText(
+                                    p.text,
+                                    reading: p.reading,
+                                    meaning: p.meaning,
                                   ),
+                                  if (p.note != null) ...[
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '💡 ${p.note}',
+                                      style: theme.textTheme.bodySmall,
+                                    ),
+                                  ],
                                 ],
-                              ],
+                              ),
                             ),
-                          ),
-                          SpeakButton(
-                            p.text,
-                            language: p.course.speechLanguage,
-                          ),
-                        ],
+                            SpeakButton(
+                              p.text,
+                              language: p.course.speechLanguage,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+              ], NativePlacement.list),
             ],
           );
         },

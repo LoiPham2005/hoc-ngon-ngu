@@ -16,7 +16,7 @@ enum CollapsibleBanner { top, bottom }
 class AdBannerWidget extends ConsumerStatefulWidget {
   const AdBannerWidget({required this.placement, super.key, this.collapsible});
 
-  /// Key trong `ad_units.banner` (vd `BannerPlacement.home`).
+  /// Key trong `ad_units.banner` (vd `BannerPlacement.list`).
   final String placement;
 
   /// Đặt khi banner nằm sát mép trên/dưới màn hình → bật collapsible banner.

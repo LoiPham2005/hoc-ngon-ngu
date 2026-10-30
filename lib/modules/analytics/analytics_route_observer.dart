@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 
@@ -54,7 +55,12 @@ class ScreenTracker {
   String? _current;
   String? _tab;
 
+  /// Route đang hiện (vd `QuizRoute`, tab `HomeRoute`) — để nơi khác (banner, quảng cáo) biết
+  /// đang ở màn nào. Khác `screen_view`: không bỏ trùng, khung tab thay bằng tab đang mở.
+  final route = ValueNotifier<String?>(null);
+
   void page(String name) {
+    _setRoute(shells.contains(name) ? (_tab ?? name) : name);
     if (shells.contains(name)) {
       if (_tab case final tab?) _log(tab);
       return;
@@ -64,7 +70,29 @@ class ScreenTracker {
 
   void tab(String name) {
     _tab = name;
+    _setRoute(name);
     _log(name);
+  }
+
+  String? _pendingRoute;
+
+  /// Route đầu tiên được đẩy vào ngay lúc Navigator đang build → báo [route] lúc đó sẽ làm
+  /// widget phía trên (banner) bị đánh dấu build giữa chừng (lỗi `setState() called during
+  /// build`) → lùi sang sau frame, lấy giá trị mới nhất.
+  void _setRoute(String name) {
+    final scheduler = SchedulerBinding.instance;
+    if (scheduler.schedulerPhase != SchedulerPhase.persistentCallbacks) {
+      _pendingRoute = null;
+      route.value = name;
+      return;
+    }
+    final scheduled = _pendingRoute != null;
+    _pendingRoute = name;
+    if (scheduled) return;
+    scheduler.addPostFrameCallback((_) {
+      if (_pendingRoute case final pending?) route.value = pending;
+      _pendingRoute = null;
+    });
   }
 
   void _log(String name) {

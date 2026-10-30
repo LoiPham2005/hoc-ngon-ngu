@@ -5,6 +5,8 @@ import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/features/course/models/course_model.dart';
 import 'package:lingua/features/course/providers/learner_notifier.dart';
 import 'package:lingua/features/course/widgets/module_card.dart';
+import 'package:lingua/modules/ads/ad_config.dart';
+import 'package:lingua/modules/ads/widgets/native_ad_widget.dart';
 import 'package:lingua/routes/app_router.dart';
 import 'package:lingua/shared/base/app_ui.dart';
 
@@ -40,7 +42,7 @@ class LearnPage extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
         children: [
-          for (final section in ModuleSection.values)
+          for (final (i, section) in ModuleSection.values.indexed)
             if (modules.where((m) => m.section == section).toList()
                 case final group when group.isNotEmpty) ...[
               SectionTitle(section.title(context)),
@@ -48,7 +50,14 @@ class LearnPage extends ConsumerWidget {
                 ModuleCard(m),
                 const SizedBox(height: 10),
               ],
-              const SizedBox(height: 12),
+              const SizedBox(height: 2),
+              if (i == 0)
+                const NativeAdWidget(
+                  placement: NativePlacement.list,
+                  size: NativeAdSize.small,
+                  padding: EdgeInsets.only(bottom: 12),
+                ),
+              const SizedBox(height: 10),
             ],
         ],
       ),

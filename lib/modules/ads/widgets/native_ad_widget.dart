@@ -22,14 +22,18 @@ class NativeAdWidget extends ConsumerStatefulWidget {
     super.key,
     this.size = NativeAdSize.medium,
     this.height,
+    this.padding = EdgeInsets.zero,
   });
 
-  /// Key trong `ad_units.native` (vd `NativePlacement.home`).
+  /// Key trong `ad_units.native` (vd `NativePlacement.result`).
   final String placement;
   final NativeAdSize size;
 
   /// Ghi đè chiều cao mặc định của [size].
   final double? height;
+
+  /// Khoảng cách quanh ad — chỉ áp khi đã có ad (chưa có thì vẫn 0px, không chừa chỗ trống).
+  final EdgeInsetsGeometry padding;
 
   @override
   ConsumerState<NativeAdWidget> createState() => _NativeAdWidgetState();
@@ -108,10 +112,13 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
   Widget build(BuildContext context) {
     final ad = _ad;
     if (!_loaded || ad == null) return const SizedBox.shrink();
-    return SizedBox(
-      width: double.infinity,
-      height: widget.height ?? widget.size.height,
-      child: AdWidget(ad: ad),
+    return Padding(
+      padding: widget.padding,
+      child: SizedBox(
+        width: double.infinity,
+        height: widget.height ?? widget.size.height,
+        child: AdWidget(ad: ad),
+      ),
     );
   }
 }
