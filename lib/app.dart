@@ -45,6 +45,16 @@ class _AppView extends HookConsumerWidget {
         shells: {MainRoute.name},
       ),
     );
+    // Tạo 1 lần: gọi `appRouter.config()` trong build là mỗi lần đổi theme / ngôn ngữ lại tạo
+    // RouterConfig (bộ phân tích đường dẫn…) mới.
+    final routerConfig = useMemoized(
+      () => appRouter.config(
+        navigatorObservers: () => [
+          TalkerRouteObserver(talker),
+          AnalyticsRouteObserver(screens),
+        ],
+      ),
+    );
     useEffect(() {
       // Áp lại System UI khi resume (nav bar Android hay lòi ra sau dialog/chuyển app).
       final lifecycle = AppLifecycleListener(
@@ -73,12 +83,7 @@ class _AppView extends HookConsumerWidget {
         locale: ref.watch(localeProvider),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: appRouter.config(
-          navigatorObservers: () => [
-            TalkerRouteObserver(talker),
-            AnalyticsRouteObserver(screens),
-          ],
-        ),
+        routerConfig: routerConfig,
         builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
           // Icon status bar sáng/tối theo theme (màn không có AppBar vẫn đúng).
           value:
