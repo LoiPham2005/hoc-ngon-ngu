@@ -6,6 +6,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/modules/ads/ad_config.dart';
 import 'package:lingua/modules/ads/ad_loading_overlay.dart';
+import 'package:lingua/modules/ads/ad_stats.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
 
 /// Preloader chính thức của SDK (≥ 9.1.0): tự giữ sẵn ad, tự nạp lại sau khi lấy ra,
@@ -32,7 +33,8 @@ class FullScreenAds<T extends AdWithoutView> {
   FullScreenAds._(
     this.type,
     this._analytics,
-    this._onPaid, {
+    this._onPaid,
+    this._stats, {
     required this.load,
     required this.attach,
     required this.present,
@@ -42,10 +44,12 @@ class FullScreenAds<T extends AdWithoutView> {
   static FullScreenAds<InterstitialAd> interstitial(
     AnalyticsService a,
     AdPaidCallback onPaid,
+    AdStats stats,
   ) => FullScreenAds._(
     AdType.interstitial,
     a,
     onPaid,
+    stats,
     load: (id, ok, fail) => InterstitialAd.load(
       adUnitId: id,
       request: const AdRequest(),
@@ -66,10 +70,12 @@ class FullScreenAds<T extends AdWithoutView> {
   static FullScreenAds<AppOpenAd> appOpen(
     AnalyticsService a,
     AdPaidCallback onPaid,
+    AdStats stats,
   ) => FullScreenAds._(
     AdType.appOpen,
     a,
     onPaid,
+    stats,
     load: (id, ok, fail) => AppOpenAd.load(
       adUnitId: id,
       request: const AdRequest(),
@@ -90,10 +96,12 @@ class FullScreenAds<T extends AdWithoutView> {
   static FullScreenAds<RewardedAd> rewarded(
     AnalyticsService a,
     AdPaidCallback onPaid,
+    AdStats stats,
   ) => FullScreenAds._(
     AdType.rewarded,
     a,
     onPaid,
+    stats,
     load: (id, ok, fail) => RewardedAd.load(
       adUnitId: id,
       request: const AdRequest(),
@@ -116,10 +124,12 @@ class FullScreenAds<T extends AdWithoutView> {
   static FullScreenAds<RewardedInterstitialAd> rewardedInterstitial(
     AnalyticsService a,
     AdPaidCallback onPaid,
+    AdStats stats,
   ) => FullScreenAds._(
     AdType.rewardedInterstitial,
     a,
     onPaid,
+    stats,
     load: (id, ok, fail) => RewardedInterstitialAd.load(
       adUnitId: id,
       request: const AdRequest(),
@@ -136,6 +146,7 @@ class FullScreenAds<T extends AdWithoutView> {
   final AdType type;
   final AnalyticsService _analytics;
   final AdPaidCallback _onPaid;
+  final AdStats _stats;
   final void Function(
     String id,
     void Function(T ad) onLoaded,
@@ -182,9 +193,12 @@ class FullScreenAds<T extends AdWithoutView> {
         preloadId: _preloadIdAt(placement, i),
         preloadConfiguration: PreloadConfiguration(adUnitId: id, bufferSize: 1),
         callback: PreloadCallback(
-          onAdFailedToPreload: (id, e) => talker.warning(
-            '[ADS] $id preload failed: ${e.code} ${e.message}',
-          ),
+          onAdPreloaded: (_, _) =>
+              _stats.request(_preloadId(placement), matched: true),
+          onAdFailedToPreload: (id, e) {
+            talker.warning('[ADS] $id preload failed: ${e.code} ${e.message}');
+            _stats.request(_preloadId(placement), matched: false);
+          },
         ),
       );
     }
@@ -223,10 +237,11 @@ class FullScreenAds<T extends AdWithoutView> {
   }) async {
     final name = _preloadId(placement);
     final blocked = _showing
-        ? 'đang hiện 1 ad ${type.name}'
+        ? ('busy', 'đang hiện 1 ad ${type.name}')
         : _limitReason(rules);
-    if (blocked != null) {
-      talker.warning('[ADS] $name bỏ qua: $blocked');
+    if (blocked case (final code, final message)) {
+      talker.warning('[ADS] $name bỏ qua: $message');
+      _stats.skip(name, code);
       return false;
     }
     _showing = true;
@@ -239,7 +254,10 @@ class FullScreenAds<T extends AdWithoutView> {
     try {
       unawaited(_analytics.logEvent('ad_requested', {'ad_unit_name': name}));
       final ad = await _take(placement, unit, timeout);
-      if (ad == null) return false;
+      if (ad == null) {
+        _stats.skip(name, 'not_ready');
+        return false;
+      }
       // Doanh thu cho Firebase: KHÔNG tự ghi — liên kết AdMob ↔ Firebase thì Firebase tự ghi
       // `ad_impression` + `ad_click` (tự ghi thêm = đếm đôi). Chỉ chuyển cho Adjust (ROAS).
       ad.onPaidEvent = (ad, valueMicros, _, currency) =>
@@ -260,6 +278,8 @@ class FullScreenAds<T extends AdWithoutView> {
             loading?.hide();
             onShowed?.call();
           },
+          onAdImpression: (_) => _stats.impression(name),
+          onAdClicked: (_) => _stats.click(name),
           onAdDismissedFullScreenContent: (ad) {
             ad.dispose();
             _showing = false;
@@ -272,6 +292,7 @@ class FullScreenAds<T extends AdWithoutView> {
             ad.dispose();
             _showing = false;
             talker.warning('[ADS] $name show failed: ${e.code} ${e.message}');
+            _stats.skip(name, 'show_failed');
             closed.complete(false);
           },
         ),
@@ -297,18 +318,24 @@ class FullScreenAds<T extends AdWithoutView> {
     _lastShownAt = null;
   }
 
-  /// Lý do bị chặn bởi `rules`; `null` = được hiện.
-  String? _limitReason(AdRules rules) {
+  /// Lý do bị chặn bởi `rules` (mã ngắn cho [AdStats], câu cho log); `null` = được hiện.
+  (String, String)? _limitReason(AdRules rules) {
     final max = rules.maxPerSessionOf(type);
     if (max > 0 && _shownCount >= max) {
-      return 'đã hiện $_shownCount/$max lần trong phiên '
-          '(max_${type.name}_per_session; phiên = tới khi kill app)';
+      return (
+        'session_cap',
+        'đã hiện $_shownCount/$max lần trong phiên '
+            '(max_${type.name}_per_session; phiên = tới khi kill app)',
+      );
     }
     final last = _lastShownAt;
     final gap = last == null ? null : DateTime.now().difference(last).inSeconds;
     final interval = rules.intervalOf(type);
     if (gap != null && gap < interval) {
-      return 'mới cách lần trước ${gap}s < ${interval}s (${type.name}_interval)';
+      return (
+        'interval',
+        'mới cách lần trước ${gap}s < ${interval}s (${type.name}_interval)',
+      );
     }
     return null;
   }
@@ -330,7 +357,7 @@ class FullScreenAds<T extends AdWithoutView> {
       }
       unawaited(ready.$1.dispose());
     }
-    final loading = _loadFirst(ids);
+    final loading = _loadFirst(ids, _preloadId(placement));
     return loading.timeout(
       timeout,
       onTimeout: () {
@@ -341,9 +368,9 @@ class FullScreenAds<T extends AdWithoutView> {
   }
 
   /// Thử lần lượt từng ID tới khi có ad (ID đầu thường đặt giá sàn cao).
-  Future<T?> _loadFirst(List<String> ids) async {
+  Future<T?> _loadFirst(List<String> ids, String key) async {
     for (final id in ids) {
-      final ad = await _loadNow(id);
+      final ad = await _loadNow(id, key);
       if (ad != null) return ad;
     }
     return null;
@@ -359,22 +386,32 @@ class FullScreenAds<T extends AdWithoutView> {
     }
   }
 
-  Future<T?> _loadNow(String id) {
+  Future<T?> _loadNow(String id, String key) {
     final done = Completer<T?>();
-    load(id, done.complete, (e) {
-      talker.warning('[ADS] ${type.name} load failed: ${e.code} ${e.message}');
-      _analytics.logEvent('ad_load_failed', {
-        'ad_format': type.name,
-        'error_code': e.code,
-      });
-      done.complete(null);
-    });
+    load(
+      id,
+      (ad) {
+        _stats.request(key, matched: true);
+        done.complete(ad);
+      },
+      (e) {
+        _stats.request(key, matched: false);
+        talker.warning(
+          '[ADS] ${type.name} load failed: ${e.code} ${e.message}',
+        );
+        _analytics.logEvent('ad_load_failed', {
+          'ad_format': type.name,
+          'error_code': e.code,
+        });
+        done.complete(null);
+      },
+    );
     return done.future;
   }
 
   Future<void> _preloadManually(String placement, AdUnit unit) async {
     if (_ready.containsKey(placement) || !_loading.add(placement)) return;
-    final ad = await _loadFirst(unit.ids);
+    final ad = await _loadFirst(unit.ids, _preloadId(placement));
     _loading.remove(placement);
     if (ad != null) _ready[placement] = (ad, DateTime.now());
   }

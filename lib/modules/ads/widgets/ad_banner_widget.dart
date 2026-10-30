@@ -75,6 +75,7 @@ class _AdBannerWidgetState extends ConsumerState<AdBannerWidget> {
       listener: BannerAdListener(
         onAdLoaded: (ad) async {
           _retries = 0;
+          _ads.stats.request('banner.${widget.placement}', matched: true);
           if (widget.collapsible != null &&
               !await (ad as BannerAd).isCollapsible) {
             talker.debug(
@@ -89,8 +90,12 @@ class _AdBannerWidgetState extends ConsumerState<AdBannerWidget> {
           currency,
           'banner.${widget.placement}',
         ),
+        onAdImpression: (_) =>
+            _ads.stats.impression('banner.${widget.placement}'),
+        onAdClicked: (_) => _ads.stats.click('banner.${widget.placement}'),
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
+          _ads.stats.request('banner.${widget.placement}', matched: false);
           if (identical(ad, _ad)) _ad = null;
           if (!mounted || _key != key) return;
           if (index + 1 < ids.length) {

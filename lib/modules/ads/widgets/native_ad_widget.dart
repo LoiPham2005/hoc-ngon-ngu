@@ -75,6 +75,7 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
       listener: NativeAdListener(
         onAdLoaded: (_) {
           _retries = 0;
+          _ads.stats.request('native.${widget.placement}', matched: true);
           if (mounted) setState(() => _loaded = true);
         },
         onPaidEvent: (ad, valueMicros, _, currency) => _ads.reportPaid(
@@ -83,8 +84,12 @@ class _NativeAdWidgetState extends ConsumerState<NativeAdWidget> {
           currency,
           'native.${widget.placement}',
         ),
+        onAdImpression: (_) =>
+            _ads.stats.impression('native.${widget.placement}'),
+        onAdClicked: (_) => _ads.stats.click('native.${widget.placement}'),
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
+          _ads.stats.request('native.${widget.placement}', matched: false);
           if (identical(ad, _ad)) _ad = null;
           if (!mounted || _key != key) return;
           if (index + 1 < ids.length) {

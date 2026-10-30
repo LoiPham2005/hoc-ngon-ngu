@@ -10,6 +10,7 @@ import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/modules/ads/ad_config.dart';
 import 'package:lingua/modules/ads/ad_consent.dart';
 import 'package:lingua/modules/ads/ad_loading_overlay.dart';
+import 'package:lingua/modules/ads/ad_stats.dart';
 import 'package:lingua/modules/ads/full_screen_ads.dart';
 import 'package:lingua/modules/ads/widgets/native_ad_full_screen.dart';
 import 'package:lingua/modules/analytics/analytics_service.dart';
@@ -38,18 +39,30 @@ class AdManager {
   final RemoteConfigService _remote;
   final AnalyticsService _analytics;
   final AttributionService _attribution;
-  late final interstitial = FullScreenAds.interstitial(_analytics, reportPaid);
-  late final appOpen = FullScreenAds.appOpen(_analytics, reportPaid);
-  late final rewarded = FullScreenAds.rewarded(_analytics, reportPaid);
+
+  /// Đếm request / hiện / bấm theo vị trí trên máy này, in ra Debug Console.
+  late final stats = AdStats(_prefs);
+  late final interstitial = FullScreenAds.interstitial(
+    _analytics,
+    reportPaid,
+    stats,
+  );
+  late final appOpen = FullScreenAds.appOpen(_analytics, reportPaid, stats);
+  late final rewarded = FullScreenAds.rewarded(_analytics, reportPaid, stats);
   late final rewardedInterstitial = FullScreenAds.rewardedInterstitial(
     _analytics,
     reportPaid,
+    stats,
   );
   final consent = AdConsent();
   final _loading = AdLoadingOverlay();
 
   /// Cấu hình đang áp dụng (đã tính premium / tạm tắt). Widget lắng nghe để ẩn/hiện realtime.
   final config = ValueNotifier<AdConfig>(AdConfig.disabled);
+
+  /// Native toàn màn đang hiện (vẽ bằng Flutter, không đè được banner ngoài Navigator) →
+  /// banner phải ẩn: AdMob cấm quảng cáo khác nằm cùng màn quảng cáo toàn màn hình.
+  final nativeFullShowing = ValueNotifier<bool>(false);
 
   static const _kRemoteKey = 'ad_config';
 
@@ -110,7 +123,11 @@ class AdManager {
     globalContainer.listen(isOnlineProvider, (_, next) {
       if (next.value ?? false) _preloadAll();
     });
-    _lifecycle = AppLifecycleListener(onResume: _onResume);
+    // Ra nền → in bảng số liệu quảng cáo ra Debug Console (bản dev/stg).
+    _lifecycle = AppLifecycleListener(
+      onResume: _onResume,
+      onPause: FlavorConfig.isProd ? null : stats.logSummary,
+    );
     _preloadAll();
   }
 
@@ -245,32 +262,41 @@ class AdManager {
     final rules = cfg.rules;
     final max = rules.maxPerSessionOf(AdType.native);
     final last = _nativeShownAt;
-    final blocked =
-        cfg.unit(AdType.native, placement) == null ||
-        (max > 0 && _nativeShownCount >= max) ||
-        (last != null &&
-            DateTime.now().difference(last).inSeconds <
-                rules.intervalOf(AdType.native)) ||
-        (!ignoreCooldown && _inCooldown);
-    final entry = blocked ? null : _native.remove(placement);
+    if (cfg.unit(AdType.native, placement) == null) return false;
+    final blocked = (max > 0 && _nativeShownCount >= max)
+        ? 'session_cap'
+        : (last != null &&
+              DateTime.now().difference(last).inSeconds <
+                  rules.intervalOf(AdType.native))
+        ? 'interval'
+        : (!ignoreCooldown && _inCooldown)
+        ? 'cooldown'
+        : null;
+    final entry = blocked != null ? null : _native.remove(placement);
     final context = appRouter.navigatorKey.currentContext;
     if (entry == null || context == null) {
-      if (!blocked) _preloadNative(placement);
+      stats.skip('native.$placement', blocked ?? 'not_ready');
+      if (blocked == null) _preloadNative(placement);
       return false;
     }
     _nativeShownAt = DateTime.now();
     _nativeShownCount++;
     _lastFullScreenAt = DateTime.now();
     onShowed?.call();
-    await showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      useSafeArea: false,
-      builder: (dialogContext) => NativeAdFullScreen(
-        ad: entry.$1,
-        onClosed: () => Navigator.of(dialogContext).pop(),
-      ),
-    );
+    nativeFullShowing.value = true;
+    try {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        useSafeArea: false,
+        builder: (dialogContext) => NativeAdFullScreen(
+          ad: entry.$1,
+          onClosed: () => Navigator.of(dialogContext).pop(),
+        ),
+      );
+    } finally {
+      nativeFullShowing.value = false;
+    }
     // Đóng bằng nút hay nút Back đều tới đây → luôn giải phóng ad.
     unawaited(entry.$1.dispose());
     _lastFullScreenAt = DateTime.now();
@@ -508,20 +534,23 @@ class AdManager {
     }
   }
 
-  /// Doanh thu 1 lượt hiển thị (mọi định dạng) → Adjust tính ROAS theo chiến dịch.
+  /// Doanh thu 1 lượt hiển thị (mọi định dạng) → [stats] + Adjust tính ROAS theo chiến dịch.
   /// Firebase tự ghi doanh thu khi đã liên kết AdMob, không gửi ở đây.
   void reportPaid(
     Ad ad,
     double valueMicros,
     String currency,
     String placement,
-  ) => _attribution.trackAdRevenue(
-    valueMicros: valueMicros,
-    currency: currency,
-    placement: placement,
-    adSource: ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName,
-    adUnitId: ad.adUnitId,
-  );
+  ) {
+    stats.paid(placement, valueMicros, currency);
+    _attribution.trackAdRevenue(
+      valueMicros: valueMicros,
+      currency: currency,
+      placement: placement,
+      adSource: ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName,
+      adUnitId: ad.adUnitId,
+    );
+  }
 
   /// Nạp sẵn native toàn màn; ID thứ [index] không có ad → thử ID dự phòng kế tiếp.
   void _preloadNative(String placement, [int index = 0]) {
@@ -547,12 +576,16 @@ class AdManager {
         onAdLoaded: (ad) {
           _nativeLoading.remove(placement);
           _native[placement] = (ad as NativeAd, DateTime.now());
+          stats.request('native.$placement', matched: true);
         },
+        onAdImpression: (_) => stats.impression('native.$placement'),
+        onAdClicked: (_) => stats.click('native.$placement'),
         onPaidEvent: (ad, valueMicros, _, currency) =>
             reportPaid(ad, valueMicros, currency, 'native.$placement'),
         onAdFailedToLoad: (ad, e) {
           _nativeLoading.remove(placement);
           ad.dispose();
+          stats.request('native.$placement', matched: false);
           talker.warning('[ADS] native.$placement load failed: ${e.message}');
           _preloadNative(placement, index + 1);
         },

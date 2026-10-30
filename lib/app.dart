@@ -117,6 +117,7 @@ class _AppView extends HookConsumerWidget {
                   route: screens.route,
                   placement: BannerPlacement.list,
                   hiddenOn: _noBannerRoutes,
+                  suppressed: ref.read(adManagerProvider).nativeFullShowing,
                   child: FlutterSmartDialog.init()(context, child),
                 ),
               ),
