@@ -1478,6 +1478,155 @@
   ]
  },
  {
+  "id": "short-answers",
+  "emoji": "💬",
+  "name_vi": "Trả lời câu hỏi: trả lời ngắn và trả lời đầy đủ",
+  "name_en": "Answering questions",
+  "level": "A1",
+  "summary": "Câu hỏi Yes/No trả lời ngắn bằng Yes/No + đại từ + trợ động từ; câu hỏi Wh- trả lời bằng thông tin cụ thể, nói gọn hoặc nói đủ câu đều được.",
+  "formulas": [
+   {
+    "label": "Yes/No với to be",
+    "pattern": "Yes, S + am/is/are. / No, S + am not / isn't / aren't."
+   },
+   {
+    "label": "Yes/No với động từ thường",
+    "pattern": "Yes, S + do/does/did. / No, S + don't / doesn't / didn't."
+   },
+   {
+    "label": "Yes/No với can / will / have",
+    "pattern": "Yes, S + can/will/have. / No, S + can't / won't / haven't."
+   },
+   {
+    "label": "Trả lời câu hỏi Wh-",
+    "pattern": "Thông tin ngắn (In Hanoi.) / Câu đầy đủ (I live in Hanoi.)"
+   }
+  ],
+  "points": [
+   "Câu hỏi dùng trợ động từ nào thì trả lời ngắn dùng lại trợ động từ đó: Do you…? → Yes, I do. Can she…? → No, she can't.",
+   "Không lặp động từ chính trong câu trả lời ngắn: sai \"Yes, I like.\", đúng \"Yes, I do.\" hoặc \"Yes, I like it.\"",
+   "Trả lời ngắn khẳng định không rút gọn: sai \"Yes, I'm.\", đúng \"Yes, I am.\"; phủ định thì nên rút gọn: No, I'm not.",
+   "Đổi ngôi khi trả lời: hỏi you → trả lời I / we; hỏi your → trả lời my / our.",
+   "Không chắc thì nói: I think so. / I don't think so. / Maybe. / I'm not sure."
+  ],
+  "examples": [
+   {
+    "en": "Do you speak English? – Yes, I do.",
+    "vi": "Bạn có nói tiếng Anh không? – Có."
+   },
+   {
+    "en": "Is your brother a doctor? – No, he isn't. He's a teacher.",
+    "vi": "Anh trai bạn là bác sĩ à? – Không, anh ấy là giáo viên."
+   },
+   {
+    "en": "Can you swim? – Yes, I can.",
+    "vi": "Bạn biết bơi không? – Biết."
+   },
+   {
+    "en": "Where do you work? – I work at a bank.",
+    "vi": "Bạn làm việc ở đâu? – Tôi làm ở ngân hàng."
+   },
+   {
+    "en": "Will it rain tomorrow? – I don't think so.",
+    "vi": "Mai trời có mưa không? – Tôi nghĩ là không."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "Do you like coffee? – Yes, I ___.",
+    "options": [
+     "like",
+     "do",
+     "am",
+     "does"
+    ],
+    "answer": 1,
+    "explain": "Câu hỏi dùng Do, chủ ngữ I nên trả lời Yes, I do; không lặp lại like."
+   },
+   {
+    "type": "choice",
+    "prompt": "Is she your sister? – No, she ___.",
+    "options": [
+     "doesn't",
+     "isn't",
+     "not",
+     "don't"
+    ],
+    "answer": 1,
+    "explain": "Câu hỏi dùng Is nên phủ định là isn't."
+   },
+   {
+    "type": "choice",
+    "prompt": "Can your father cook? – Yes, he ___.",
+    "options": [
+     "can",
+     "does",
+     "is",
+     "cooks"
+    ],
+    "answer": 0,
+    "explain": "Câu hỏi dùng Can thì trả lời ngắn cũng dùng can."
+   },
+   {
+    "type": "choice",
+    "prompt": "Are you tired? – Yes, ___.",
+    "options": [
+     "I'm",
+     "I are",
+     "I am",
+     "me am"
+    ],
+    "answer": 2,
+    "explain": "Trả lời ngắn khẳng định không rút gọn: Yes, I am (không nói Yes, I'm)."
+   },
+   {
+    "type": "choice",
+    "prompt": "Did they come to the party? – No, they ___.",
+    "options": [
+     "don't",
+     "weren't",
+     "didn't",
+     "haven't"
+    ],
+    "answer": 2,
+    "explain": "Câu hỏi quá khứ dùng Did nên phủ định là didn't."
+   },
+   {
+    "type": "choice",
+    "prompt": "What's your job? – ___",
+    "options": [
+     "Yes, I am.",
+     "I'm a nurse.",
+     "No, I don't.",
+     "It's Monday."
+    ],
+    "answer": 1,
+    "explain": "Câu hỏi Wh- hỏi thông tin (nghề nghiệp) nên không trả lời bằng Yes / No."
+   },
+   {
+    "type": "order",
+    "answer": "No, I don't think so.",
+    "vi": "Không, tôi nghĩ là không."
+   },
+   {
+    "type": "order",
+    "answer": "Yes, she lives near here.",
+    "vi": "Đúng, cô ấy sống gần đây."
+   },
+   {
+    "type": "order",
+    "answer": "I go to school by bus.",
+    "vi": "Tôi đi học bằng xe buýt."
+   },
+   {
+    "type": "order",
+    "answer": "No, he isn't at home now.",
+    "vi": "Không, bây giờ anh ấy không ở nhà."
+   }
+  ]
+ },
+ {
   "id": "can",
   "emoji": "💪",
   "name_vi": "Can / can't (khả năng, xin phép)",
@@ -1623,6 +1772,304 @@
     "type": "order",
     "answer": "Can I sit here?",
     "vi": "Tôi ngồi đây được không?"
+   }
+  ]
+ },
+ {
+  "id": "imperatives",
+  "emoji": "👉",
+  "name_vi": "Câu mệnh lệnh, hướng dẫn và lời nhắc",
+  "name_en": "Imperatives",
+  "level": "A1",
+  "summary": "Đặt động từ nguyên mẫu ở đầu câu (không có chủ ngữ) để ra lệnh, hướng dẫn, chỉ đường, nhắc nhở hoặc mời; thêm please cho lịch sự.",
+  "formulas": [
+   {
+    "label": "Khẳng định",
+    "pattern": "V + (O) → Sit down. / Open the door."
+   },
+   {
+    "label": "Phủ định",
+    "pattern": "Don't + V + (O) → Don't touch it."
+   },
+   {
+    "label": "Lịch sự",
+    "pattern": "Please + V… / V…, please."
+   },
+   {
+    "label": "Luôn / đừng bao giờ",
+    "pattern": "Always / Never + V"
+   }
+  ],
+  "points": [
+   "Câu mệnh lệnh không có chủ ngữ, động từ ở nguyên mẫu: \"You sit down.\" nghe gắt, nên nói \"Sit down, please.\"",
+   "Phủ định luôn dùng Don't, kể cả với be: Don't be late. (không nói \"Not be late\").",
+   "Please đặt đầu câu, hoặc cuối câu sau dấu phẩy: Please wait. / Wait, please.",
+   "Chỉ đường dùng chuỗi mệnh lệnh: Go straight. Turn left. Take the second street on the right.",
+   "Muốn nhờ lịch sự hơn nữa thì chuyển sang câu hỏi: Could you open the door? (xem bài Nhờ, xin phép, mời và rủ)."
+  ],
+  "examples": [
+   {
+    "en": "Please sit down.",
+    "vi": "Mời bạn ngồi."
+   },
+   {
+    "en": "Don't be late tomorrow.",
+    "vi": "Ngày mai đừng đến muộn nhé."
+   },
+   {
+    "en": "Turn left at the traffic lights.",
+    "vi": "Rẽ trái ở chỗ đèn giao thông."
+   },
+   {
+    "en": "Never open the door to strangers.",
+    "vi": "Đừng bao giờ mở cửa cho người lạ."
+   },
+   {
+    "en": "Wait for me, please.",
+    "vi": "Đợi tôi với."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "___ the window, please. It's hot.",
+    "options": [
+     "Opens",
+     "Open",
+     "Opening",
+     "To open"
+    ],
+    "answer": 1,
+    "explain": "Câu mệnh lệnh dùng động từ nguyên mẫu đứng đầu: Open."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ touch that! It's hot.",
+    "options": [
+     "Not",
+     "No",
+     "Don't",
+     "Doesn't"
+    ],
+    "answer": 2,
+    "explain": "Phủ định của câu mệnh lệnh luôn là Don't + V."
+   },
+   {
+    "type": "choice",
+    "prompt": "Don't ___ noisy. The baby is sleeping.",
+    "options": [
+     "be",
+     "is",
+     "are",
+     "being"
+    ],
+    "answer": 0,
+    "explain": "Sau Don't dùng động từ nguyên mẫu; với to be là be: Don't be noisy."
+   },
+   {
+    "type": "choice",
+    "prompt": "Go straight and ___ right at the bank.",
+    "options": [
+     "turns",
+     "turning",
+     "turned",
+     "turn"
+    ],
+    "answer": 3,
+    "explain": "Chỉ đường bằng chuỗi mệnh lệnh, các động từ đều ở nguyên mẫu: go… turn…"
+   },
+   {
+    "type": "choice",
+    "prompt": "___ forget to call me!",
+    "options": [
+     "Don't",
+     "Not",
+     "No",
+     "Isn't"
+    ],
+    "answer": 0,
+    "explain": "Nhắc ai đừng quên: Don't forget to…"
+   },
+   {
+    "type": "choice",
+    "prompt": "___ your hands before dinner.",
+    "options": [
+     "Always wash",
+     "Wash always",
+     "Washes always",
+     "Always washing"
+    ],
+    "answer": 0,
+    "explain": "Always / Never đứng trước động từ nguyên mẫu trong câu mệnh lệnh."
+   },
+   {
+    "type": "order",
+    "answer": "Please close the door.",
+    "vi": "Làm ơn đóng cửa lại."
+   },
+   {
+    "type": "order",
+    "answer": "Don't park your car here.",
+    "vi": "Đừng đỗ xe ở đây."
+   },
+   {
+    "type": "order",
+    "answer": "Take the second street on the left.",
+    "vi": "Đi vào con đường thứ hai bên trái."
+   },
+   {
+    "type": "order",
+    "answer": "Never give your password to anyone.",
+    "vi": "Đừng bao giờ đưa mật khẩu cho bất kỳ ai."
+   }
+  ]
+ },
+ {
+  "id": "requests-offers",
+  "emoji": "🙏",
+  "name_vi": "Nhờ, xin phép, mời và rủ (Could you…? / May I…? / Would you like…? / Let's…)",
+  "name_en": "Requests, offers and suggestions",
+  "level": "A2",
+  "summary": "Các mẫu câu dùng hằng ngày để nhờ người khác, xin phép, mời, đề nghị giúp đỡ và rủ cùng làm — kèm cách đồng ý và từ chối lịch sự.",
+  "formulas": [
+   {
+    "label": "Nhờ",
+    "pattern": "Can / Could you + V…? → Could you help me?"
+   },
+   {
+    "label": "Xin phép",
+    "pattern": "Can / Could / May I + V…? → May I come in?"
+   },
+   {
+    "label": "Mời / đề nghị giúp",
+    "pattern": "Would you like + N / to V…? · Shall I + V…?"
+   },
+   {
+    "label": "Rủ",
+    "pattern": "Let's + V · Shall we + V…? · Why don't we + V…? · How about + V-ing…?"
+   }
+  ],
+  "points": [
+   "Could lịch sự hơn Can; May I… trang trọng nhất khi xin phép. Với người lạ, khách hàng nên dùng Could / May.",
+   "Would you like…? = \"Bạn có muốn…?\" (mời); khác Do you like…? = \"Bạn có thích…?\" (hỏi sở thích).",
+   "Sau Let's / Shall we / Why don't we dùng V nguyên mẫu; sau How about dùng V-ing: How about going out?",
+   "Đồng ý: Sure. / Of course. / Yes, please. / That's a good idea. Từ chối lịch sự: Sorry, I can't. / No, thanks. / I'd love to, but…",
+   "Trả lời khi người khác xin phép: Sure, go ahead. (Cứ tự nhiên) / I'm afraid not. (Tiếc là không được)"
+  ],
+  "examples": [
+   {
+    "en": "Could you speak more slowly, please? – Sure.",
+    "vi": "Bạn nói chậm hơn được không? – Được chứ."
+   },
+   {
+    "en": "May I use your phone? – Of course.",
+    "vi": "Tôi dùng điện thoại của bạn được không? – Tất nhiên rồi."
+   },
+   {
+    "en": "Would you like some tea? – Yes, please.",
+    "vi": "Bạn uống chút trà không? – Vâng, cho tôi xin."
+   },
+   {
+    "en": "Shall I carry your bag? – No, thanks. I'm fine.",
+    "vi": "Để tôi xách túi giúp nhé? – Không cần đâu, cảm ơn."
+   },
+   {
+    "en": "Let's go to the cinema tonight. – I'd love to, but I'm busy.",
+    "vi": "Tối nay đi xem phim đi. – Mình rất muốn nhưng bận mất rồi."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "___ you help me with this box? – Sure.",
+    "options": [
+     "Could",
+     "Shall",
+     "Let's",
+     "May"
+    ],
+    "answer": 0,
+    "explain": "Nhờ người khác làm gì: Could you + V…? (May chỉ đi với I / we khi xin phép)."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ I open the window? – Of course, go ahead.",
+    "options": [
+     "Would",
+     "May",
+     "Let's",
+     "Do"
+    ],
+    "answer": 1,
+    "explain": "Xin phép: May I + V…? Trả lời go ahead = cứ tự nhiên."
+   },
+   {
+    "type": "choice",
+    "prompt": "Would you like ___ coffee?",
+    "options": [
+     "drink",
+     "some",
+     "drinking",
+     "any"
+    ],
+    "answer": 1,
+    "explain": "Would you like + N; khi mời dùng some, không dùng any: Would you like some coffee?"
+   },
+   {
+    "type": "choice",
+    "prompt": "How about ___ to the beach this weekend?",
+    "options": [
+     "go",
+     "to go",
+     "going",
+     "goes"
+    ],
+    "answer": 2,
+    "explain": "Sau How about dùng V-ing."
+   },
+   {
+    "type": "choice",
+    "prompt": "Let's ___ a taxi. It's raining.",
+    "options": [
+     "take",
+     "taking",
+     "to take",
+     "takes"
+    ],
+    "answer": 0,
+    "explain": "Sau Let's dùng V nguyên mẫu."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: Would you like to come to my party? B: ___",
+    "options": [
+     "Yes, I like.",
+     "I'd love to!",
+     "Yes, I would like.",
+     "No, I don't like."
+    ],
+    "answer": 1,
+    "explain": "Nhận lời mời: I'd love to! / Yes, I'd love to. Không trả lời bằng like."
+   },
+   {
+    "type": "order",
+    "answer": "Could you tell me the way to the station?",
+    "vi": "Bạn chỉ giúp tôi đường đến nhà ga được không?"
+   },
+   {
+    "type": "order",
+    "answer": "Would you like something to drink?",
+    "vi": "Bạn có muốn uống gì không?"
+   },
+   {
+    "type": "order",
+    "answer": "Why don't we have lunch together?",
+    "vi": "Sao chúng ta không ăn trưa cùng nhau nhỉ?"
+   },
+   {
+    "type": "order",
+    "answer": "Shall I turn on the light?",
+    "vi": "Tôi bật đèn lên nhé?"
    }
   ]
  },
@@ -2207,6 +2654,155 @@
   ]
  },
  {
+  "id": "subject-questions",
+  "emoji": "🔍",
+  "name_vi": "Hỏi chủ ngữ và hỏi tân ngữ (Who called you? / Who did you call?)",
+  "name_en": "Subject and object questions",
+  "level": "A2",
+  "summary": "Khi từ để hỏi (who, what, which) chính là chủ ngữ, câu hỏi KHÔNG dùng do / does / did; khi hỏi tân ngữ thì vẫn cần trợ động từ như bình thường.",
+  "formulas": [
+   {
+    "label": "Hỏi chủ ngữ",
+    "pattern": "Who / What + V(s/es) / V2 + O? → Who lives here?"
+   },
+   {
+    "label": "Hỏi tân ngữ",
+    "pattern": "Who / What + do / does / did + S + V? → Who did you meet?"
+   },
+   {
+    "label": "Which / Whose + N làm chủ ngữ",
+    "pattern": "Which / Whose + N + V…? → Which bus goes to the airport?"
+   },
+   {
+    "label": "Giới từ cuối câu",
+    "pattern": "Who / What + trợ động từ + S + V + giới từ? → Who are you talking to?"
+   }
+  ],
+  "points": [
+   "So sánh: Who called you? (Ai gọi cho bạn? – chưa biết người gọi) và Who did you call? (Bạn gọi cho ai? – chưa biết người được gọi).",
+   "Hỏi chủ ngữ ở hiện tại đơn: động từ chia ngôi thứ ba số ít: Who wants coffee? (không nói Who want…).",
+   "Hỏi chủ ngữ ở quá khứ dùng V2 trực tiếp: What happened? (không nói What did happen?).",
+   "Khi nói, giới từ thường để cuối câu: Who are you waiting for? / What are you looking at?",
+   "Trả lời câu hỏi chủ ngữ thường rất ngắn: Who broke the glass? – Tom did."
+  ],
+  "examples": [
+   {
+    "en": "Who lives in that house? – My uncle does.",
+    "vi": "Ai sống trong ngôi nhà đó? – Chú tôi."
+   },
+   {
+    "en": "Who did you see at the party?",
+    "vi": "Bạn đã gặp ai ở bữa tiệc?"
+   },
+   {
+    "en": "What happened to your phone?",
+    "vi": "Điện thoại của bạn bị sao vậy?"
+   },
+   {
+    "en": "Which bus goes to the city center?",
+    "vi": "Xe buýt nào đi vào trung tâm thành phố?"
+   },
+   {
+    "en": "Who are you talking to?",
+    "vi": "Bạn đang nói chuyện với ai vậy?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "Who ___ the window? – Nam did.",
+    "options": [
+     "did break",
+     "broke",
+     "does break",
+     "breaked"
+    ],
+    "answer": 1,
+    "explain": "Hỏi người làm vỡ (chủ ngữ) ở quá khứ: Who + V2, không dùng did."
+   },
+   {
+    "type": "choice",
+    "prompt": "Who ___ visit yesterday? – My grandma.",
+    "options": [
+     "did you",
+     "you did",
+     "visited you",
+     "do you"
+    ],
+    "answer": 0,
+    "explain": "Hỏi người được thăm (tân ngữ): Who + did + S + V?"
+   },
+   {
+    "type": "choice",
+    "prompt": "What ___ at the meeting? – Nothing special.",
+    "options": [
+     "did happen",
+     "happened",
+     "happens did",
+     "was happen"
+    ],
+    "answer": 1,
+    "explain": "What là chủ ngữ của happen nên dùng happened, không có did."
+   },
+   {
+    "type": "choice",
+    "prompt": "Who ___ coffee? – Me, please!",
+    "options": [
+     "want",
+     "wants",
+     "does want",
+     "do want"
+    ],
+    "answer": 1,
+    "explain": "Who làm chủ ngữ được coi là ngôi thứ ba số ít: Who wants…?"
+   },
+   {
+    "type": "choice",
+    "prompt": "___ bag is this? – It's Linh's.",
+    "options": [
+     "Who",
+     "Whose",
+     "Which",
+     "What"
+    ],
+    "answer": 1,
+    "explain": "Hỏi chủ sở hữu: Whose + N."
+   },
+   {
+    "type": "choice",
+    "prompt": "Who are you waiting ___? – My sister.",
+    "options": [
+     "to",
+     "for",
+     "at",
+     "on"
+    ],
+    "answer": 1,
+    "explain": "wait for + người; giới từ đứng cuối câu hỏi: Who are you waiting for?"
+   },
+   {
+    "type": "order",
+    "answer": "Who taught you English?",
+    "vi": "Ai đã dạy bạn tiếng Anh?"
+   },
+   {
+    "type": "order",
+    "answer": "What did you buy at the market?",
+    "vi": "Bạn đã mua gì ở chợ?"
+   },
+   {
+    "type": "order",
+    "answer": "Which team won the game?",
+    "vi": "Đội nào đã thắng trận đấu?"
+   },
+   {
+    "type": "order",
+    "answer": "Who are you going with?",
+    "vi": "Bạn đi cùng ai?"
+   }
+  ]
+ },
+ {
   "id": "past-continuous",
   "emoji": "⏳",
   "name_vi": "Thì quá khứ tiếp diễn",
@@ -2654,6 +3250,155 @@
   ]
  },
  {
+  "id": "wants-opinions",
+  "emoji": "💭",
+  "name_vi": "Nói mong muốn và ý kiến (I'd like…, I want to…, I think…)",
+  "name_en": "Wants and opinions",
+  "level": "A2",
+  "summary": "Các mẫu câu để nói mình muốn gì, định làm gì, nghĩ gì, hỏi ý kiến người khác và đồng ý hay không đồng ý.",
+  "formulas": [
+   {
+    "label": "Muốn",
+    "pattern": "S + want + N / to V · S + would like ('d like) + N / to V"
+   },
+   {
+    "label": "Ý kiến",
+    "pattern": "I think (that) + S + V · I don't think + S + V · In my opinion, + S + V"
+   },
+   {
+    "label": "Hỏi ý kiến",
+    "pattern": "What do you think of / about + N? · Do you think + S + V?"
+   },
+   {
+    "label": "Đồng ý / không",
+    "pattern": "I agree (with you). · I don't agree. · Me too. / Me neither."
+   }
+  ],
+  "points": [
+   "I'd like… lịch sự hơn I want…, dùng khi gọi món, mua hàng: I'd like a coffee, please.",
+   "Sau want / would like dùng to V: I want to go home (không nói I want go home).",
+   "Phủ định ý kiến: đặt not ở think: I don't think it's true (tự nhiên hơn I think it isn't true).",
+   "Hưởng ứng: câu khẳng định → Me too. / So do I.; câu phủ định → Me neither. / Neither do I.",
+   "Agree là động từ thường: sai \"I am agree\", đúng \"I agree\"."
+  ],
+  "examples": [
+   {
+    "en": "I'd like a glass of water, please.",
+    "vi": "Cho tôi một cốc nước."
+   },
+   {
+    "en": "I want to learn Japanese next year.",
+    "vi": "Tôi muốn học tiếng Nhật vào năm sau."
+   },
+   {
+    "en": "I think this restaurant is too expensive.",
+    "vi": "Tôi nghĩ nhà hàng này đắt quá."
+   },
+   {
+    "en": "What do you think of my new haircut? – I love it!",
+    "vi": "Bạn thấy kiểu tóc mới của mình thế nào? – Mình rất thích!"
+   },
+   {
+    "en": "I don't like horror films. – Me neither.",
+    "vi": "Tôi không thích phim kinh dị. – Tôi cũng vậy."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "I ___ like a cup of tea, please.",
+    "options": [
+     "would",
+     "will",
+     "want",
+     "am"
+    ],
+    "answer": 0,
+    "explain": "I'd like = I would like: cách nói lịch sự khi gọi món."
+   },
+   {
+    "type": "choice",
+    "prompt": "She wants ___ a doctor.",
+    "options": [
+     "be",
+     "to be",
+     "being",
+     "is"
+    ],
+    "answer": 1,
+    "explain": "Sau want dùng to V."
+   },
+   {
+    "type": "choice",
+    "prompt": "I ___ think it will rain today. The sky is clear.",
+    "options": [
+     "am not",
+     "don't",
+     "not",
+     "doesn't"
+    ],
+    "answer": 1,
+    "explain": "Phủ định ý kiến: I don't think + S + V."
+   },
+   {
+    "type": "choice",
+    "prompt": "I ___ with you. It's a great idea.",
+    "options": [
+     "am agree",
+     "agree",
+     "agreeing",
+     "am agreed"
+    ],
+    "answer": 1,
+    "explain": "Agree là động từ thường, không đi với am."
+   },
+   {
+    "type": "choice",
+    "prompt": "A: I love pizza. B: Me ___!",
+    "options": [
+     "neither",
+     "too",
+     "either",
+     "so"
+    ],
+    "answer": 1,
+    "explain": "Hưởng ứng câu khẳng định: Me too."
+   },
+   {
+    "type": "choice",
+    "prompt": "What do you think ___ the new teacher?",
+    "options": [
+     "of",
+     "for",
+     "to",
+     "at"
+    ],
+    "answer": 0,
+    "explain": "Hỏi ý kiến: What do you think of / about + N?"
+   },
+   {
+    "type": "order",
+    "answer": "I would like to book a table.",
+    "vi": "Tôi muốn đặt một bàn."
+   },
+   {
+    "type": "order",
+    "answer": "Do you think she will come?",
+    "vi": "Bạn có nghĩ là cô ấy sẽ đến không?"
+   },
+   {
+    "type": "order",
+    "answer": "In my opinion, the city is too crowded.",
+    "vi": "Theo tôi, thành phố đông đúc quá."
+   },
+   {
+    "type": "order",
+    "answer": "I don't think he is right.",
+    "vi": "Tôi không nghĩ là anh ấy đúng."
+   }
+  ]
+ },
+ {
   "id": "comparison",
   "emoji": "📏",
   "name_vi": "So sánh hơn & so sánh nhất",
@@ -2948,6 +3693,155 @@
     "type": "order",
     "answer": "She has many friends at school.",
     "vi": "Cô ấy có nhiều bạn ở trường."
+   }
+  ]
+ },
+ {
+  "id": "more-wh",
+  "emoji": "🧭",
+  "name_vi": "Từ để hỏi mở rộng: which, whose, what time, how long / far / often",
+  "name_en": "More question words",
+  "level": "A2",
+  "summary": "Ghép từ để hỏi với danh từ hoặc tính từ để hỏi chính xác hơn: giờ giấc, loại, của ai, bao lâu, bao xa, bao lâu một lần, giá cả.",
+  "formulas": [
+   {
+    "label": "What / Which + N",
+    "pattern": "What time / What kind of / Which + N + trợ động từ + S + V?"
+   },
+   {
+    "label": "Whose + N",
+    "pattern": "Whose + N + is this / that?"
+   },
+   {
+    "label": "How + Adj / Adv",
+    "pattern": "How long / far / often / old / big + trợ động từ + S + V?"
+   },
+   {
+    "label": "Hỏi giá",
+    "pattern": "How much + is / are + N? · How much does + N + cost?"
+   }
+  ],
+  "points": [
+   "What hỏi chung (nhiều lựa chọn), Which hỏi trong vài lựa chọn có sẵn: Which color do you want, red or blue?",
+   "How long = bao lâu (hoặc dài bao nhiêu); How far = bao xa; How often = bao lâu một lần.",
+   "Whose = của ai: Whose phone is this? Đừng nhầm với Who's (= Who is).",
+   "What time…? hỏi giờ cụ thể; When…? hỏi chung (ngày, tháng, lúc nào).",
+   "Câu trả lời khớp từ để hỏi: How long…? – Two hours. / How far…? – About 5 km. / How often…? – Twice a week."
+  ],
+  "examples": [
+   {
+    "en": "What time does the train leave? – At 6:30.",
+    "vi": "Mấy giờ tàu chạy? – Lúc 6 giờ 30."
+   },
+   {
+    "en": "Which one do you prefer, tea or coffee?",
+    "vi": "Bạn thích cái nào hơn, trà hay cà phê?"
+   },
+   {
+    "en": "How long does it take to get to work? – About 20 minutes.",
+    "vi": "Đi làm mất bao lâu? – Khoảng 20 phút."
+   },
+   {
+    "en": "How far is the airport from here?",
+    "vi": "Sân bay cách đây bao xa?"
+   },
+   {
+    "en": "What kind of music do you like?",
+    "vi": "Bạn thích thể loại nhạc nào?"
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "___ do you go to the gym? – Three times a week.",
+    "options": [
+     "How long",
+     "How often",
+     "How far",
+     "How much"
+    ],
+    "answer": 1,
+    "explain": "Câu trả lời là số lần trong tuần nên hỏi How often."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ is it from Hanoi to Hai Phong? – About 120 km.",
+    "options": [
+     "How far",
+     "How long",
+     "How often",
+     "How many"
+    ],
+    "answer": 0,
+    "explain": "Câu trả lời là khoảng cách nên hỏi How far."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ jacket is this? – It's mine.",
+    "options": [
+     "Who",
+     "Who's",
+     "Whose",
+     "Which"
+    ],
+    "answer": 2,
+    "explain": "Hỏi chủ sở hữu: Whose + N. Who's = Who is."
+   },
+   {
+    "type": "choice",
+    "prompt": "___ shirt do you want, the white one or the black one?",
+    "options": [
+     "What",
+     "Which",
+     "Whose",
+     "How"
+    ],
+    "answer": 1,
+    "explain": "Chọn trong 2 lựa chọn có sẵn dùng Which."
+   },
+   {
+    "type": "choice",
+    "prompt": "How much ___ these shoes?",
+    "options": [
+     "is",
+     "are",
+     "does",
+     "do"
+    ],
+    "answer": 1,
+    "explain": "Shoes là số nhiều nên dùng How much are…?"
+   },
+   {
+    "type": "choice",
+    "prompt": "___ does the film start? – At eight.",
+    "options": [
+     "What time",
+     "How long",
+     "Which",
+     "How often"
+    ],
+    "answer": 0,
+    "explain": "Câu trả lời là giờ cụ thể (At eight) nên hỏi What time."
+   },
+   {
+    "type": "order",
+    "answer": "How long have you lived here?",
+    "vi": "Bạn sống ở đây bao lâu rồi?"
+   },
+   {
+    "type": "order",
+    "answer": "What kind of food do you like?",
+    "vi": "Bạn thích món ăn kiểu gì?"
+   },
+   {
+    "type": "order",
+    "answer": "How much does this bag cost?",
+    "vi": "Cái túi này giá bao nhiêu?"
+   },
+   {
+    "type": "order",
+    "answer": "What time do you usually get up?",
+    "vi": "Bạn thường dậy lúc mấy giờ?"
    }
   ]
  },
@@ -5037,6 +5931,155 @@
     "type": "order",
     "answer": "They were at home, weren't they?",
     "vi": "Họ đã ở nhà, đúng không?"
+   }
+  ]
+ },
+ {
+  "id": "indirect-questions",
+  "emoji": "🎩",
+  "name_vi": "Câu hỏi gián tiếp – hỏi lịch sự (Could you tell me where…?)",
+  "name_en": "Indirect questions",
+  "level": "B1",
+  "summary": "Đặt câu hỏi sau một cụm mở đầu lịch sự như Could you tell me… / Do you know…; phần câu hỏi phía sau trở về trật tự câu kể (S + V).",
+  "formulas": [
+   {
+    "label": "Có từ để hỏi",
+    "pattern": "Could you tell me / Do you know + Wh- + S + V? → Do you know where the bank is?"
+   },
+   {
+    "label": "Câu hỏi Yes/No",
+    "pattern": "Could you tell me / Do you know + if / whether + S + V?"
+   },
+   {
+    "label": "Mở đầu khác",
+    "pattern": "I wonder + Wh- / if + S + V. · Would you mind telling me + Wh- + S + V?"
+   },
+   {
+    "label": "So sánh",
+    "pattern": "Where is the station? → Could you tell me where the station is?"
+   }
+  ],
+  "points": [
+   "Sau cụm mở đầu KHÔNG đảo trợ động từ: sai \"Do you know where is the bank?\", đúng \"Do you know where the bank is?\".",
+   "Bỏ do / does / did và chia lại động từ: What time does it open? → Do you know what time it opens?",
+   "Câu hỏi Yes/No dùng if hoặc whether: Is she at home? → Do you know if she is at home?",
+   "Câu bắt đầu bằng I wonder… là câu kể nên kết thúc bằng dấu chấm.",
+   "Dùng với người lạ, nhân viên, cấp trên để nghe nhẹ nhàng, lịch sự hơn câu hỏi trực tiếp."
+  ],
+  "examples": [
+   {
+    "en": "Excuse me, could you tell me where the toilet is?",
+    "vi": "Xin lỗi, bạn có thể cho tôi biết nhà vệ sinh ở đâu không?"
+   },
+   {
+    "en": "Do you know what time the shop opens?",
+    "vi": "Bạn có biết mấy giờ cửa hàng mở cửa không?"
+   },
+   {
+    "en": "Could you tell me how much this costs?",
+    "vi": "Bạn cho tôi hỏi cái này giá bao nhiêu?"
+   },
+   {
+    "en": "Do you know if the bus stops here?",
+    "vi": "Bạn có biết xe buýt có dừng ở đây không?"
+   },
+   {
+    "en": "I wonder why she left so early.",
+    "vi": "Tôi tự hỏi sao cô ấy về sớm thế."
+   }
+  ],
+  "exercises": [
+   {
+    "type": "choice",
+    "prompt": "Do you know where ___?",
+    "options": [
+     "is the post office",
+     "the post office is",
+     "does the post office",
+     "the post office does"
+    ],
+    "answer": 1,
+    "explain": "Câu hỏi gián tiếp giữ trật tự S + V: where the post office is."
+   },
+   {
+    "type": "choice",
+    "prompt": "Could you tell me what time ___?",
+    "options": [
+     "does the train leave",
+     "the train leave",
+     "the train leaves",
+     "leaves the train"
+    ],
+    "answer": 2,
+    "explain": "Bỏ does, động từ chia theo chủ ngữ: the train leaves."
+   },
+   {
+    "type": "choice",
+    "prompt": "Do you know ___ he is married?",
+    "options": [
+     "if",
+     "what",
+     "that",
+     "who"
+    ],
+    "answer": 0,
+    "explain": "Câu hỏi Yes/No (Is he married?) chuyển thành if / whether."
+   },
+   {
+    "type": "choice",
+    "prompt": "I wonder ___ she is so angry. – Maybe she's tired.",
+    "options": [
+     "why",
+     "what",
+     "that",
+     "which"
+    ],
+    "answer": 0,
+    "explain": "Câu trả lời nói lý do nên dùng why."
+   },
+   {
+    "type": "choice",
+    "prompt": "Can you tell me how much ___?",
+    "options": [
+     "are these apples",
+     "these apples are",
+     "do these apples",
+     "these apples do"
+    ],
+    "answer": 1,
+    "explain": "Phần câu hỏi phía sau giữ trật tự S + V: these apples are."
+   },
+   {
+    "type": "choice",
+    "prompt": "Do you know who ___ this letter?",
+    "options": [
+     "did write",
+     "wrote",
+     "did he write",
+     "writes did"
+    ],
+    "answer": 1,
+    "explain": "Who là chủ ngữ của write nên giữ nguyên: who wrote this letter."
+   },
+   {
+    "type": "order",
+    "answer": "Could you tell me where the bank is?",
+    "vi": "Bạn có thể cho tôi biết ngân hàng ở đâu không?"
+   },
+   {
+    "type": "order",
+    "answer": "Do you know if the museum is open today?",
+    "vi": "Bạn có biết hôm nay bảo tàng có mở cửa không?"
+   },
+   {
+    "type": "order",
+    "answer": "I wonder what she is doing now.",
+    "vi": "Tôi tự hỏi bây giờ cô ấy đang làm gì."
+   },
+   {
+    "type": "order",
+    "answer": "Do you know how long the film is?",
+    "vi": "Bạn có biết bộ phim dài bao lâu không?"
    }
   ]
  },
