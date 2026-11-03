@@ -138,6 +138,12 @@ Remote Config key `app_config` (JSON, mẫu ở `firebase/remote_config.test.jso
 - **Thêm khoá**: thêm vào `buildHomeWidgetData` (+ test `test/unit/modules/home_widget_service_test.dart`) → đọc ở `LearnerEntry.load` (Swift) và `WidgetData.from` (Kotlin). Đổi giao diện: SwiftUI trong `AppWidget.swift`; Android sửa layout XML (chỉ view RemoteViews hỗ trợ: Frame/Linear/RelativeLayout, TextView, ImageView, ProgressBar…) rồi gán trong `bind`. Nhãn mới: thêm ARB `widget_*` (vi/en/ja) → `make l10n`.
 - **Máy thật iOS (bắt buộc)**: Apple Developer → Identifiers → App Groups: tạo `group.com.loipham.lingua.dev`, `.stg`, `group.com.loipham.lingua`; bật App Groups cho cả app id (`com.loipham.lingua[.dev|.stg]`) và id extension (`…AppWidget`) rồi gán đúng group, tạo lại provisioning profile. Chọn Team cho target `AppWidget` trong Xcode (Signing). Thiếu bước này widget vẫn hiện nhưng không đọc được dữ liệu (UserDefaults group rỗng). Máy ảo không cần.
 
+**Tắt widget** (không xoá code; phải ra bản mới — Remote Config không ẩn được vì danh sách widget nằm cố định trong app):
+1. Android: `android:enabled="false"` cho 3 `<receiver>` `.widget.SmallWidgetProvider`, `MediumWidgetProvider`, `LargeWidgetProvider` trong `AndroidManifest.xml` → biến khỏi bảng chọn, widget đã đặt cũng mất.
+2. iOS: `ios/AppWidget/AppWidget.swift` đổi `.supportedFamilies(...)` thành `.supportedFamilies([])`; bỏ hẳn thì Xcode → Runner → Build Phases → xoá `AppWidget.appex` khỏi "Embed Foundation Extensions".
+3. Flutter: bỏ bước `'Home widget'` trong `lib/config/app_initializer.dart` (thôi đẩy dữ liệu).
+Bật lại = làm ngược. Bỏ hẳn tính năng thì có thể bật lại deep link Flutter (`flutter_deeplinking_enabled` / `FlutterDeepLinkingEnabled`) nếu app cần.
+
 ## Core services (lib/core/services)
 
 ### NotificationService — local notification
