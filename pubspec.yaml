@@ -78,6 +78,7 @@ dependencies:
   speech_to_text_platform_interface: ^2.5.0
   in_app_update: ^4.2.5 # 5.x cần Flutter ≥ 3.44 (Dart 3.12) — nâng khi nâng Flutter
   adjust_sdk: ^5.8.0
+  home_widget: ^0.10.0
 
 dev_dependencies:
   flutter_test:

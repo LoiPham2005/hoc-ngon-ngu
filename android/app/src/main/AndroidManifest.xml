@@ -15,9 +15,15 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
       <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme"/>
+      <!-- Không dùng deep link route của Flutter: URL widget (lingua://widget/...) do home_widget xử lý. -->
+      <meta-data android:name="flutter_deeplinking_enabled" android:value="false"/>
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      <!-- Bấm widget màn hình chính (home_widget). -->
+      <intent-filter>
+        <action android:name="es.antonborri.home_widget.action.LAUNCH"/>
       </intent-filter>
     </activity>
     <!-- Don't delete the meta-data below.
@@ -33,6 +39,25 @@
     <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false"/>
     <!-- Tắt lớp debugger của native ad (overlay kiểm tra layout của SDK). -->
     <meta-data android:name="com.google.android.gms.ads.flag.NATIVE_AD_DEBUGGER_ENABLED" android:value="false"/>
+    <!-- Widget màn hình chính nhỏ / vừa / lớn (lib/modules/home_widget). -->
+    <receiver android:name=".widget.SmallWidgetProvider" android:exported="false" android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_small_info"/>
+    </receiver>
+    <receiver android:name=".widget.MediumWidgetProvider" android:exported="false" android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_medium_info"/>
+    </receiver>
+    <receiver android:name=".widget.LargeWidgetProvider" android:exported="false" android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_large_info"/>
+    </receiver>
     <!-- flutter_local_notifications: thông báo hẹn giờ (nhắc học hằng ngày). -->
     <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
     <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">

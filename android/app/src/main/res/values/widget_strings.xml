@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chữ ở màn chọn widget (theo ngôn ngữ máy). Nhãn trong widget do app gửi theo ngôn ngữ trong app. -->
+<resources>
+    <string name="widget_small_description">Study streak and today\'s goal</string>
+    <string name="widget_medium_description">Streak, today\'s goal and items to review</string>
+    <string name="widget_large_description">Streak, goal, review and the last 7 days</string>
+</resources>

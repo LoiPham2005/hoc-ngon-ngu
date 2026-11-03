@@ -12,6 +12,7 @@ import 'package:lingua/core/utils/logger.dart';
 import 'package:lingua/features/profile/providers/reminder_notifier.dart';
 import 'package:lingua/modules/ads/ad_manager.dart';
 import 'package:lingua/modules/attribution/attribution_service.dart';
+import 'package:lingua/modules/home_widget/home_widget_service.dart';
 import 'package:lingua/modules/iap/iap_service.dart';
 
 /// Khởi tạo lúc boot. Mỗi bước tự bắt lỗi — 1 bước hỏng không chặn app.
@@ -56,6 +57,10 @@ abstract class AppInitializer {
       if (!iap.isMock || previous != null || premium) ads.setPremium(premium);
     }, fireImmediately: true);
     await _step('Ads', ads.initialize);
+    await _step(
+      'Home widget',
+      () => globalContainer.read(homeWidgetServiceProvider).initialize(),
+    );
 
     talker.info('✅ App ready (${FlavorConfig.current.flavor.name})');
   }

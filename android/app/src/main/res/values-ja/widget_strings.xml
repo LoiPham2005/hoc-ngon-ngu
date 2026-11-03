@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_small_description">連続学習日数と今日の目標</string>
+    <string name="widget_medium_description">連続日数・今日の目標・復習</string>
+    <string name="widget_large_description">連続日数・目標・復習・直近7日間</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ảnh xem trước cho launcher < Android 12 (12+ dùng previewLayout). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp" android:height="160dp" android:viewportWidth="160" android:viewportHeight="160">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M20,0h120a20,20 0,0 1,20 20v120a20,20 0,0 1,-20 20h-120a20,20 0,0 1,-20 -20v-120a20,20 0,0 1,20 -20z" />
+    <path android:fillColor="#FFFF8A00" android:pathData="M48,22c10,14 22,20 22,38a22,22 0,0 1,-44 0c0,-10 6,-16 10,-22c2,8 6,10 8,10c0,-10 0,-18 4,-26z" />
+    <path android:fillColor="#FFEEF0F6" android:pathData="M116,96m-26,0a26,26 0,1 1,52 0a26,26 0,1 1,-52 0zM116,96m-17,0a17,17 0,1 0,34 0a17,17 0,1 0,-34 0z" />
+    <path android:fillColor="#FF5B5BD6" android:pathData="M116,70a26,26 0,0 1,26 26h-9a17,17 0,0 0,-17 -17z" />
+    <path android:fillColor="#FF181B29" android:pathData="M24,104h30v10h-30zM24,124h44v6h-44z" />
+</vector>

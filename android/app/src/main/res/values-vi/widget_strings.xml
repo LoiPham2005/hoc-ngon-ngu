@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_small_description">Chuỗi ngày học và mục tiêu hôm nay</string>
+    <string name="widget_medium_description">Chuỗi ngày, mục tiêu hôm nay và mục cần ôn</string>
+    <string name="widget_large_description">Chuỗi ngày, mục tiêu, mục cần ôn và 7 ngày qua</string>
+</resources>

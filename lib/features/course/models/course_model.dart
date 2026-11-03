@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:lingua/design/l10n/l10n_extensions.dart';
 import 'package:lingua/design/theme/app_palette.dart';
 import 'package:lingua/features/japanese/models/kanji_model.dart';
+import 'package:lingua/gen/l10n/app_localizations.dart';
 
 /// Ngôn ngữ có thể học. Thêm ngôn ngữ mới: thêm 1 giá trị + học phần ở [Module] + tên ở ARB `course_<id>`.
 enum Course {
@@ -170,20 +171,20 @@ enum Module {
       .where((m) => m.course == course && m.lessonKind == kind)
       .firstOrNull;
 
-  String title(BuildContext context) {
-    final l10n = context.l10n;
-    return switch (this) {
-      Module.hiragana => l10n.module_hiragana,
-      Module.katakana => l10n.module_katakana,
-      Module.enPronunciation => l10n.module_enPronunciation,
-      Module.enVocabulary || Module.jaVocabulary => l10n.module_enVocabulary,
-      Module.enPhrases || Module.jaPhrases => l10n.module_enPhrases,
-      Module.enDialogues || Module.jaDialogues => l10n.module_enDialogues,
-      Module.enGrammar || Module.jaGrammar => l10n.module_enGrammar,
-      Module.enIrregularVerbs => l10n.module_enIrregularVerbs,
-      _ => l10n.module_kanji(kanjiLevel!.label),
-    };
-  }
+  String title(BuildContext context) => titleIn(context.l10n);
+
+  /// Tên học phần không cần `context` (widget màn hình chính, thông báo).
+  String titleIn(AppLocalizations l10n) => switch (this) {
+    Module.hiragana => l10n.module_hiragana,
+    Module.katakana => l10n.module_katakana,
+    Module.enPronunciation => l10n.module_enPronunciation,
+    Module.enVocabulary || Module.jaVocabulary => l10n.module_enVocabulary,
+    Module.enPhrases || Module.jaPhrases => l10n.module_enPhrases,
+    Module.enDialogues || Module.jaDialogues => l10n.module_enDialogues,
+    Module.enGrammar || Module.jaGrammar => l10n.module_enGrammar,
+    Module.enIrregularVerbs => l10n.module_enIrregularVerbs,
+    _ => l10n.module_kanji(kanjiLevel!.label),
+  };
 
   String description(BuildContext context, int total) {
     final l10n = context.l10n;

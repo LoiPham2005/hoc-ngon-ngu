@@ -610,5 +610,10 @@
   "speaking_errBusy": "Micro đang bận, đợi một chút rồi bấm “Đọc lại”.",
   "speaking_errOther": "Không nhận được giọng nói, bấm “Đọc lại” để thử lần nữa.",
   "sound_effects": "Âm thanh & rung khi trả lời",
-  "sound_effects_desc": "“Ting” khi đúng, tiếng trầm khi sai, nhạc khi xong bài"
+  "sound_effects_desc": "“Ting” khi đúng, tiếng trầm khi sai, nhạc khi xong bài",
+  "widget_streakLabel": "ngày liên tiếp",
+  "widget_today": "Hôm nay",
+  "widget_due": "{count, plural, =0{Không có mục cần ôn} other{{count} mục cần ôn}}",
+  "widget_continue": "Học tiếp",
+  "widget_weekdays": "T2,T3,T4,T5,T6,T7,CN"
 }

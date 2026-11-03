@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget màn hình chính — khớp AppPalette (lib/design/theme/app_palette.dart), màu chủ đạo indigo. -->
+<resources>
+    <color name="widget_surface">#FFFFFFFF</color>
+    <color name="widget_track">#FFEEF0F6</color>
+    <color name="widget_text">#FF181B29</color>
+    <color name="widget_muted">#FF6A6F86</color>
+    <color name="widget_brand">#FF5B5BD6</color>
+    <color name="widget_brand_soft">#595B5BD6</color>
+    <color name="widget_streak">#FFFF8A00</color>
+</resources>

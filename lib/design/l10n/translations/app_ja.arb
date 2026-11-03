@@ -343,5 +343,10 @@
   "speaking_errBusy": "マイクが使用中です。少し待ってから「もう一度読む」を押してください。",
   "speaking_errOther": "音声を認識できませんでした。「もう一度読む」でもう一度お試しください。",
   "sound_effects": "回答時の効果音と振動",
-  "sound_effects_desc": "正解でチャイム、不正解で低い音、終了時に音楽"
+  "sound_effects_desc": "正解でチャイム、不正解で低い音、終了時に音楽",
+  "widget_streakLabel": "日連続",
+  "widget_today": "今日",
+  "widget_due": "{count, plural, =0{復習はありません} other{復習 {count} 件}}",
+  "widget_continue": "続き",
+  "widget_weekdays": "月,火,水,木,金,土,日"
 }

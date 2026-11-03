@@ -641,5 +641,20 @@
   "speaking_errBusy": "The microphone is busy — wait a moment and tap “Read again”.",
   "speaking_errOther": "Couldn't hear you — tap “Read again” to try once more.",
   "sound_effects": "Answer sounds & vibration",
-  "sound_effects_desc": "A chime when right, a soft tone when wrong, music when done"
+  "sound_effects_desc": "A chime when right, a soft tone when wrong, music when done",
+  "widget_streakLabel": "day streak",
+  "widget_today": "Today",
+  "widget_due": "{count, plural, =0{Nothing to review} =1{1 item to review} other{{count} items to review}}",
+  "@widget_due": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "widget_continue": "Continue",
+  "widget_weekdays": "M,T,W,T,F,S,S",
+  "@widget_weekdays": {
+    "description": "Chữ viết tắt thứ trong tuần, Thứ 2 → Chủ nhật, cách nhau bằng dấu phẩy (biểu đồ 7 ngày của widget màn hình chính)."
+  }
 }

@@ -33,7 +33,10 @@ class AdBannerHost extends StatelessWidget {
           !hiddenOn.contains(current) &&
           media.viewInsets.bottom == 0;
       if (!show) return child;
+      // stretch: khi banner chưa tải (0px rộng) vùng đáy an toàn vẫn được tô màu nền,
+      // không lộ khoảng đen dưới thanh tab.
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Banner chiếm phần đáy (gồm cả vùng thanh điều hướng của máy) → màn bên trên bỏ
           // khoảng đệm đáy, không bị hở 2 lần.
