@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:lingua/config/flavor_config.dart';
 import 'package:lingua/core/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,11 +115,11 @@ class AdStats {
     ),
   );
 
-  void impression(String key) => _update(
-    key,
-    'impression',
-    (r) => r.copyWith(impressions: r.impressions + 1),
-  );
+  void impression(String key) {
+    _update(key, 'impression', (r) => r.copyWith(impressions: r.impressions + 1));
+    // Mỗi lần quảng cáo hiện → in bảng luôn để xem ngay (bản dev/stg).
+    if (!FlavorConfig.isProd) logSummary();
+  }
 
   void click(String key) =>
       _update(key, 'click', (r) => r.copyWith(clicks: r.clicks + 1));
