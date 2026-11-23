@@ -1,5 +1,6 @@
 import java.io.FileInputStream
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
@@ -12,6 +13,12 @@ plugins {
     // - crashlytics: upload mapping (R8) cho stack trace prod
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 // ─── Read key.properties (release signing) ──────────────────────────
@@ -35,10 +42,6 @@ android {
         // 🔧 Enable Java 8+ APIs (java.time, java.util.stream...) trên Android cũ.
         // Bắt buộc cho flutter_local_notifications + 1 số plugin khác.
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
